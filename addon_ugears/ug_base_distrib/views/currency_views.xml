@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="view_currency_form_inherit" model="ir.ui.view">
+            <field name="name">res.currency.form.inherit.consolidation.fields</field>
+            <field name="model">res.currency</field>
+            <field name="inherit_id" ref="base.view_currency_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='currency_subunit_label']" position="after">
+                        <field name="code"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record id="view_currency_tree_inherit" model="ir.ui.view">
+            <field name="name">res.currency.tree.inherit.consolidation.fields</field>
+            <field name="model">res.currency</field>
+            <field name="inherit_id" ref="base.view_currency_tree"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='name']" position="after">
+                        <field name="code"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record id="view_currency_search_inherit" model="ir.ui.view">
+            <field name="name">res.currency.search.inherit.consolidation.fields</field>
+            <field name="model">res.currency</field>
+            <field name="inherit_id" ref="base.view_currency_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="code"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

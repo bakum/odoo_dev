@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+            id="menu_distrib_root"
+            name="Distributions"
+            sequence="10"/>
+    <menuitem
+            id="menu_distrib_review"
+            name="Review"
+            parent="menu_distrib_root"
+            action="product_template_action_distrib"
+            sequence="1"/>
+    <menuitem
+            id="menu_distrib_operations"
+            name="Operations"
+            parent="menu_distrib_root"
+            sequence="2"/>
+    <menuitem
+            id="menu_distrib_adjust"
+            name="Inventory Adjustements"
+            parent="menu_distrib_operations"
+            action="stock.action_view_inventory_tree"
+            sequence="1"/>
+    <menuitem
+            id="menu_distrib_settings"
+            name="Settings"
+            parent="menu_distrib_root"
+            sequence="3"/>
+    <menuitem id="menu_distrib_settings_product" name="Products" parent="menu_distrib_settings" sequence="1"/>
+    <menuitem
+            id="menu_distrib_products"
+            name="Products"
+            parent="menu_distrib_settings_product"
+            action="product_template_action_distrib"
+            sequence="10"/>
+    <menuitem
+            id="menu_distrib_category"
+            name="Product categories"
+            parent="menu_distrib_settings_product"
+            action="product.product_category_action_form"
+            sequence="10"/>
+    <menuitem
+            id="menu_distrib_price"
+            name="Pricelist"
+            parent="menu_distrib_settings_product"
+            action="product.product_pricelist_action2"
+            sequence="11"/>
+
+</odoo>
