@@ -122,6 +122,7 @@ media/
 db.json
 catalog.json
 catalog_group.json
+*.sh
 
 
 /community/
