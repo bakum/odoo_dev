@@ -20,6 +20,7 @@
         'views/product_category.xml',
         'views/pricelist_view.xml',
         'views/user_view.xml',
+        'views/partner_view.xml',
     ],
     'depends': [
         'base',

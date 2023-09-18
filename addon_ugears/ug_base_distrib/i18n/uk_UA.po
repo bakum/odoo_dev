@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-16 10:53+0000\n"
-"PO-Revision-Date: 2023-09-16 10:53+0000\n"
+"POT-Creation-Date: 2023-09-18 05:26+0000\n"
+"PO-Revision-Date: 2023-09-18 05:26+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -67,6 +67,11 @@ msgid "Allowed Distributor"
 msgstr "Дозволений дистриб'ютор"
 
 #. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_users_distrib__form_inherit
+msgid "Allowed Store"
+msgstr ""
+
+#. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_form
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_search
 msgid "Archived"
@@ -99,10 +104,20 @@ msgid "Company name"
 msgstr "Назва компанії"
 
 #. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_res_partner
+msgid "Contact"
+msgstr "Контакт"
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__country_id
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_form
 msgid "Country"
 msgstr "Країна"
+
+#. module: ug_base_distrib
+#: model_terms:ir.actions.act_window,help:ug_base_distrib.product_template_action_distrib
+msgid "Create a new product"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__create_uid
@@ -148,6 +163,7 @@ msgstr "Дистриб'ютор"
 #. module: ug_base_distrib
 #: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_options_form
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_distrib
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_settings_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_pricelist_distrib__form_inherit
 msgid "Distributors"
 msgstr "Дистриб'ютори"
@@ -182,6 +198,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_product_pricelist__guid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_product_product__guid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_product_template__guid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_res_partner__guid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_res_users__guid
 msgid "Guid 1C:Enterprise"
 msgstr "УІД 1С:Підприємство"
 
@@ -385,6 +403,7 @@ msgid "Product categories"
 msgstr "Категорії продуктів"
 
 #. module: ug_base_distrib
+#: model:ir.actions.act_window,name:ug_base_distrib.product_template_action_distrib
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_products
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_settings_product
 msgid "Products"
@@ -427,6 +446,7 @@ msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__stock_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_res_users__stock_id
 msgid "Stock"
 msgstr "Склад"
 
