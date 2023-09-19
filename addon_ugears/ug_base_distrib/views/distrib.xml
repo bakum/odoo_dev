@@ -99,6 +99,6 @@
             name="Distributors"
             parent="menu_distrib_settings_distrib"
             action="action_distrib_options_form"
-            groups="ug_base_distrib.group_distrib_manager"
+            groups="ug_base_distrib.group_distrib_manager,ug_base_distrib.group_distrib_user"
             sequence="12"/>
 </odoo>

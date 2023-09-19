@@ -9,15 +9,44 @@
         <record id="group_distrib_user" model="res.groups">
             <field name="name">User</field>
             <field name="category_id" ref="module_category_distrib_distributors"/>
-            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user')), (4, ref('stock.group_stock_user'))]"/>
         </record>
 
         <record id="group_distrib_manager" model="res.groups">
             <field name="name">Administrator</field>
             <field name="category_id" ref="module_category_distrib_distributors"/>
-            <field name="implied_ids" eval="[(4, ref('group_distrib_user'))]"/>
+            <field name="implied_ids" eval="[(4, ref('group_distrib_user')), (4, ref('stock.group_stock_user'))]"/>
             <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
         </record>
+
+        <record id="distrib_distributors_users_rule" model="ir.rule">
+            <field name="name">Distributor Records</field>
+            <field name="model_id" ref="model_distrib_distributors"/>
+            <field name="domain_force">[('id', '=', user.distrib_id.id)]</field>
+            <field name="groups" eval="[(4, ref('ug_base_distrib.group_distrib_user'))]"/>
+        </record>
+
+        <record id="distrib_distributors_manager_rule" model="ir.rule">
+            <field name="name">Distributor All Records</field>
+            <field name="model_id" ref="model_distrib_distributors"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('ug_base_distrib.group_distrib_manager'))]"/>
+        </record>
+
+        <record id="distrib_pricelist_manager_rule" model="ir.rule">
+            <field name="name">Distributor All Pricelists</field>
+            <field name="model_id" ref="model_product_pricelist"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('ug_base_distrib.group_distrib_manager'))]"/>
+        </record>
+
+        <record id="distrib_pricelist_user_rule" model="ir.rule">
+            <field name="name">Distributor Pricelists</field>
+            <field name="model_id" ref="model_product_pricelist"/>
+            <field name="domain_force">[('id', '=', user.distrib_id.pricelist_id.id)]</field>
+            <field name="groups" eval="[(4, ref('ug_base_distrib.group_distrib_user'))]"/>
+        </record>
+
     </data>
     <data noupdate="1">
         <record id="base.default_user" model="res.users">
