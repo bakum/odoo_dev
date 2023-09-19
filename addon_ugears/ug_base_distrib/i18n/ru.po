@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-18 05:25+0000\n"
-"PO-Revision-Date: 2023-09-18 05:25+0000\n"
+"POT-Creation-Date: 2023-09-19 14:59+0000\n"
+"PO-Revision-Date: 2023-09-19 14:59+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -109,6 +109,13 @@ msgid "Contact"
 msgstr "Контакт"
 
 #. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/res_currency.py:0
+#, python-format
+msgid "Could not connect to %s"
+msgstr "Не удалось подключиться к %s"
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__country_id
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_form
 msgid "Country"
@@ -132,6 +139,8 @@ msgstr ""
 #. module: ug_base_distrib
 #: model:ir.model,name:ug_base_distrib.model_res_currency
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__currency_id
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_currency
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_settings_currency
 msgid "Currency"
 msgstr "Валюта"
 
@@ -474,6 +483,11 @@ msgstr "Улица"
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors__activity_exception_decoration
 msgid "Type of the exception activity on record."
 msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.actions.server,name:ug_base_distrib.action_update_currency_code
+msgid "Update Currency code"
+msgstr "Обновить код валюты"
 
 #. module: ug_base_distrib
 #: model:ir.model,name:ug_base_distrib.model_res_users
