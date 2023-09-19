@@ -20,6 +20,9 @@ class ResCurrency(models.Model):
 
     def load_from_nbu(self):
         for rec in self:
+            if rec.name == 'UAH':
+                rec.code = '980'
+                continue
             URL = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode={0}&json'.format(rec.name)
             try:
                 res = json.load(urlopen(URL))
