@@ -22,7 +22,6 @@ class Distributors(models.Model):
     state_id = fields.Many2one('res.country.state', "State", tracking=True)
     partner_id = fields.Many2one('res.partner', 'Partner', tracking=True)
     pricelist_id = fields.Many2one('product.pricelist', 'Pricelist', tracking=True, required=True)
-    stock_id = fields.Many2one('stock.location', 'Stock', tracking=True, required=True)
     currency_id = fields.Many2one('res.currency', compute="_compute_currency")
 
     @api.depends('pricelist_id')
