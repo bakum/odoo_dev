@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-19 14:59+0000\n"
-"PO-Revision-Date: 2023-09-19 14:59+0000\n"
+"POT-Creation-Date: 2023-09-21 13:39+0000\n"
+"PO-Revision-Date: 2023-09-21 13:39+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -57,6 +57,17 @@ msgid "Activity Type Icon"
 msgstr ""
 
 #. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_move.py:0
+#: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_move_adj
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_distributors_move__operation__adjustements
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_move_adj
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_search
+#, python-format
+msgid "Adjustements"
+msgstr "Инвентаризация"
+
+#. module: ug_base_distrib
 #: model:res.groups,name:ug_base_distrib.group_distrib_manager
 msgid "Administrator"
 msgstr "Администратор"
@@ -65,11 +76,6 @@ msgstr "Администратор"
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_users_distrib__form_inherit
 msgid "Allowed Distributor"
 msgstr "Разрешенный дистрибутор"
-
-#. module: ug_base_distrib
-#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_users_distrib__form_inherit
-msgid "Allowed Store"
-msgstr ""
 
 #. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_form
@@ -81,6 +87,11 @@ msgstr "Архивированный"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_attachment_count
 msgid "Attachment Count"
 msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_distributors_move__state__cancel
+msgid "Cancelled"
+msgstr "Отменено"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__city
@@ -104,6 +115,11 @@ msgid "Company name"
 msgstr "Название компании"
 
 #. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_search
+msgid "Complete"
+msgstr "Выполнено"
+
+#. module: ug_base_distrib
 #: model:ir.model,name:ug_base_distrib.model_res_partner
 msgid "Contact"
 msgstr "Контакт"
@@ -124,15 +140,17 @@ msgstr "Страна"
 #. module: ug_base_distrib
 #: model_terms:ir.actions.act_window,help:ug_base_distrib.product_template_action_distrib
 msgid "Create a new product"
-msgstr ""
+msgstr "Создать новый продукт"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__create_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__create_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__create_date
 msgid "Created on"
 msgstr ""
 
@@ -145,7 +163,15 @@ msgid "Currency"
 msgstr "Валюта"
 
 #. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/res_currency.py:0
+#, python-format
+msgid "Currency code successfully loaded!"
+msgstr "Код валюты успешно загружен!"
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -165,6 +191,7 @@ msgid "Distributions"
 msgstr "Дистрибуция"
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__distrib_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_res_users__distrib_id
 msgid "Distributor"
 msgstr "Дистрибутор"
@@ -178,14 +205,42 @@ msgid "Distributors"
 msgstr "Дистрибьюторы"
 
 #. module: ug_base_distrib
+#: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_move_all
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_move
+msgid "Distributors Move"
+msgstr "Запасы (движения)"
+
+#. module: ug_base_distrib
 #: model:ir.model,name:ug_base_distrib.model_distrib_distributors
 msgid "Distributors records"
 msgstr "Дистрибьюторы"
 
 #. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_distrib_distributors_move
+msgid "Distributors stock records"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_distributors_move__state__draft
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_search
+msgid "Draft"
+msgstr "Черновик"
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__email
 msgid "EMail"
 msgstr "Электронная почта"
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_move.py:0
+#: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_move_out
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_distributors_move__operation__out
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_move_out
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_search
+#, python-format
+msgid "Expenses"
+msgstr "Списания"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_follower_ids
@@ -224,6 +279,7 @@ msgstr "Помогает управлять дистрибуторами"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__id
 msgid "ID"
 msgstr ""
 
@@ -263,14 +319,20 @@ msgid "Import Template for Product Categories"
 msgstr "Импортировать шаблон для категорий"
 
 #. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_move.py:0
+#: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_move_in
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_distributors_move__operation__inc
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_move_in
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_search
+#, python-format
+msgid "Income"
+msgstr "Оприходования"
+
+#. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_form
 msgid "Informations"
 msgstr "Общая информация"
-
-#. module: ug_base_distrib
-#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_adjust
-msgid "Inventory Adjustements"
-msgstr "Инвентаризация"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_is_follower
@@ -279,18 +341,26 @@ msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move____last_update
 msgid "Last Modified on"
 msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__write_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__write_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__write_date
 msgid "Last Updated on"
 msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_distributors_move__state__done
+msgid "Locked"
+msgstr "Выполнено"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_main_attachment_id
@@ -324,6 +394,7 @@ msgstr "Наименование"
 
 #. module: ug_base_distrib
 #. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_move.py:0
 #: code:addons/ug_base_distrib/models/distributors.py:0
 #, python-format
 msgid "New"
@@ -375,9 +446,19 @@ msgid "Number of messages with delivery error"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__operation
+msgid "Operation"
+msgstr "Операция"
+
+#. module: ug_base_distrib
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_operations
 msgid "Operations"
 msgstr "Операции"
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__date_order
+msgid "Order Date"
+msgstr "Дата"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__partner_id
@@ -419,6 +500,11 @@ msgid "Products"
 msgstr "Продукты"
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__name
+msgid "Ref"
+msgstr "Ссылка"
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__activity_user_id
 msgid "Responsible User"
 msgstr ""
@@ -434,6 +520,11 @@ msgid "SMS Delivery error"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__user_id
+msgid "Salesperson"
+msgstr "Ответственный"
+
+#. module: ug_base_distrib
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_settings
 msgid "Settings"
 msgstr "Настройки"
@@ -445,6 +536,11 @@ msgid "State"
 msgstr "Область"
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__state
+msgid "Status"
+msgstr "Состояние"
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors__activity_state
 msgid ""
 "Status based on activities\n"
@@ -452,12 +548,6 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
-
-#. module: ug_base_distrib
-#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__stock_id
-#: model:ir.model.fields,field_description:ug_base_distrib.field_res_users__stock_id
-msgid "Stock"
-msgstr "Склад"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__street
@@ -478,6 +568,13 @@ msgstr "Улица..."
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__street2
 msgid "Street2"
 msgstr "Улица"
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/res_currency.py:0
+#, python-format
+msgid "Success!"
+msgstr "Успешно!"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors__activity_exception_decoration

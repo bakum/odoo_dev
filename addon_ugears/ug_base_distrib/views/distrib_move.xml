@@ -15,9 +15,44 @@
         </field>
     </record>
 
-    <record id="action_distrib_move_options_form" model="ir.actions.act_window">
+    <record id="view_distributors_distrib_move_search" model="ir.ui.view">
+        <field name="name">distrib.distributors.move.search</field>
+        <field name="model">distrib.distributors.move</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" filter_domain="[('name', 'ilike', self)]"/>
+                <separator/>
+                <filter name="filter_adj" string="Adjustements" domain="[('operation','=','adjustements')]"/>
+                <filter name="filter_in" string="Income" domain="[('operation','=','inc')]"/>
+                <filter name="filter_out" string="Expenses" domain="[('operation','=','out')]"/>
+                <separator/>
+                <filter name="filter_draft" string="Draft" domain="[('state','=','draft')]"/>
+                <filter name="filter_done" string="Complete" domain="[('state','=','done')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_distrib_move_all" model="ir.actions.act_window">
         <field name="name">Distributors Move</field>
         <field name="res_model">distrib.distributors.move</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="action_distrib_move_adj" model="ir.actions.act_window">
+        <field name="name">Adjustements</field>
+        <field name="res_model">distrib.distributors.move</field>
+        <field name="context">{'search_default_filter_adj': 1, 'default_operation': 'adjustements'}</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="action_distrib_move_in" model="ir.actions.act_window">
+        <field name="name">Income</field>
+        <field name="res_model">distrib.distributors.move</field>
+        <field name="context">{'search_default_filter_in': 1}</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="action_distrib_move_out" model="ir.actions.act_window">
+        <field name="name">Expenses</field>
+        <field name="res_model">distrib.distributors.move</field>
+        <field name="context">{'search_default_filter_out': 1}</field>
         <field name="view_mode">tree,form</field>
     </record>
 
@@ -25,7 +60,28 @@
             id="menu_distrib_move"
             name="Distributors Move"
             parent="menu_distrib_operations"
-            action="action_distrib_move_options_form"
-            groups="ug_base_distrib.group_distrib_manager,ug_base_distrib.group_distrib_user"
+            action="action_distrib_move_all"
+            groups="ug_base_distrib.group_distrib_manager"
             sequence="12"/>
+    <menuitem
+            id="menu_distrib_move_adj"
+            name="Adjustements"
+            parent="menu_distrib_operations"
+            action="action_distrib_move_adj"
+            groups="ug_base_distrib.group_distrib_manager,ug_base_distrib.group_distrib_user"
+            sequence="13"/>
+    <menuitem
+            id="menu_distrib_move_in"
+            name="Income"
+            parent="menu_distrib_operations"
+            action="action_distrib_move_in"
+            groups="ug_base_distrib.group_distrib_manager,ug_base_distrib.group_distrib_user"
+            sequence="14"/>
+    <menuitem
+            id="menu_distrib_move_out"
+            name="Expenses"
+            parent="menu_distrib_operations"
+            action="action_distrib_move_out"
+            groups="ug_base_distrib.group_distrib_manager,ug_base_distrib.group_distrib_user"
+            sequence="15"/>
 </odoo>
