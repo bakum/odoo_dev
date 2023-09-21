@@ -18,13 +18,6 @@
             groups="ug_base_distrib.group_distrib_manager,ug_base_distrib.group_distrib_user"
             sequence="2"/>
     <menuitem
-            id="menu_distrib_adjust"
-            name="Inventory Adjustements"
-            parent="menu_distrib_operations"
-            action="stock.action_view_inventory_tree"
-            groups="ug_base_distrib.group_distrib_manager,ug_base_distrib.group_distrib_user"
-            sequence="1"/>
-    <menuitem
             id="menu_distrib_settings"
             name="Settings"
             parent="menu_distrib_root"

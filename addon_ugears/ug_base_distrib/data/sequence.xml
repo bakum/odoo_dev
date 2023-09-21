@@ -7,5 +7,27 @@
             <field name="prefix">DS</field>
             <field name="padding">3</field>
         </record>
+
+        <record id="sequence_distrib_move_adj" model="ir.sequence">
+            <field name="name">Distributors move sequence adj</field>
+            <field name="code">distrib.distributors.move.adj</field>
+            <field name="prefix">ADJ</field>
+            <field name="padding">10</field>
+        </record>
+
+        <record id="sequence_distrib_move_in" model="ir.sequence">
+            <field name="name">Distributors move sequence in</field>
+            <field name="code">distrib.distributors.move.in</field>
+            <field name="prefix">IN</field>
+            <field name="padding">10</field>
+        </record>
+
+        <record id="sequence_distrib_move_out" model="ir.sequence">
+            <field name="name">Distributors move sequence out</field>
+            <field name="code">distrib.distributors.move.out</field>
+            <field name="prefix">OUT</field>
+            <field name="padding">10</field>
+        </record>
+
     </data>
 </odoo>

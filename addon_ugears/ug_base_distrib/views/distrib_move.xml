@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_distributors_distrib_move_tree" model="ir.ui.view">
+        <field name="name">distrib.distributors.move.tree</field>
+        <field name="model">distrib.distributors.move</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="date_order"/>
+                <field name="name"/>
+                <field name="distrib_id"/>
+                <field name="operation"/>
+                <field name="state"/>
+                <field name="user_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_distrib_move_options_form" model="ir.actions.act_window">
+        <field name="name">Distributors Move</field>
+        <field name="res_model">distrib.distributors.move</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+            id="menu_distrib_move"
+            name="Distributors Move"
+            parent="menu_distrib_operations"
+            action="action_distrib_move_options_form"
+            groups="ug_base_distrib.group_distrib_manager,ug_base_distrib.group_distrib_user"
+            sequence="12"/>
+</odoo>

@@ -13,6 +13,7 @@
         'security/ir.model.access.csv',
         'data/sequence.xml',
         'views/actions.xml',
+        'views/distrib_move.xml',
         'views/menu.xml',
         'views/distrib.xml',
         'views/currency_views.xml',
@@ -25,6 +26,5 @@
     'depends': [
         'base',
         'product',
-        'stock'
     ],
 }

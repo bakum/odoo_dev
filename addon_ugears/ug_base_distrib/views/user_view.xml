@@ -11,7 +11,6 @@
                         <page string="Distribution" name="distrib">
                             <group name="calendar_accounts">
                                 <field string="Allowed Distributor" name="distrib_id" widget="many2one" options="{'no_open': True, 'no_quick_create': True}"/>
-                                <field string="Allowed Store" name="stock_id" widget="many2one" readonly="1"/>
                             </group>
                         </page>
                     </notebook>

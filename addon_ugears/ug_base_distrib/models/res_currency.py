@@ -9,6 +9,17 @@ class ResCurrency(models.Model):
     _inherit = "res.currency"
     code = fields.Char(string='Code of currency', size=3)
 
+    def create_notification(self):
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': _('Success!'),
+                'message': _('Currency code successfully loaded!'),
+                'sticky': False,
+            }
+        }
+
     @api.model
     def _update_val_code(self):
         for vals in self.search([('name', '=', 'USD')]):
@@ -30,3 +41,5 @@ class ResCurrency(models.Model):
                 raise UserError(_('Could not connect to %s' % URL))
             for line in res:
                 rec.code = line.get('r030', '')
+        if len(self) == 1:
+            return self.create_notification()
