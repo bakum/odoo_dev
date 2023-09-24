@@ -1,5 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="view_distributors_distrib_move_form" model="ir.ui.view">
+        <field name="name">distrib.distributors.move.form</field>
+        <field name="model">distrib.distributors.move</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_done" class="btn-primary" data-hotkey="v" string="Confirm" type="object" attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>
+                    <button name="action_cancel" type="object" string="Cancel" attrs="{'invisible': ['|', ('state', 'not in', ['done']), ('id', '=', False)]}" data-hotkey="z"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done,cancel"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Draft"/>
+                            <!-- <span attrs="{'invisible': [('state', '!=', 'draft')]}">Draft</span> -->
+                        </h1>
+                    </div>
+                    <group>
+                        <group id="header_left_group">
+                            <field name="distrib_id" widget="res_partner_many2one"/>
+                            <field name="operation"/>
+                        </group>
+                        <group id="header_right_group">
+                            <field name="date_order" options="{'datepicker': {'warn_future': true}}"/>
+                            <field name="user_id" widget="res_partner_many2one"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page id="move_tab" name="move_tab" string="Products">
+                            <field name="move_line" widget="section_and_note_one2many" mode="tree,kanban" context="{'default_display_type': 'product'}">
+                                <tree editable="bottom" string="Journal Items" default_order="sequence, id">
+                                    <control>
+                                        <create name="add_line_control" string="Add a line"/>
+                                    <!--    <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
+                                        <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/> -->
+                                    </control>
+
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="product_id" optional="show"/>
+                                    <field name="name" widget="section_and_note_text" optional="show"/>
+                                    <field name="product_uom_qty" optional="show"/>
+                                    <field name="product_uom_category_id" invisible="1"/>
+                                    <field name="product_uom" string="UoM" groups="uom.group_uom" optional="show"/>
+
+                                    <field name="display_type" force_save="1" invisible="1"/>
+                                    <!-- /l10n_in_edi.test_edi_json -->
+                                    <!-- required for @api.onchange('product_id') -->
+                                    <!--<field name="product_uom" invisible="1"/> -->
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+
+                <!-- Chatter -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
     <record id="view_distributors_distrib_move_tree" model="ir.ui.view">
         <field name="name">distrib.distributors.move.tree</field>
         <field name="model">distrib.distributors.move</field>
@@ -9,7 +73,7 @@
                 <field name="name"/>
                 <field name="distrib_id"/>
                 <field name="operation"/>
-                <field name="state"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'" decoration-info="state == 'draft'"/>
                 <field name="user_id"/>
             </tree>
         </field>
@@ -22,7 +86,6 @@
             <search>
                 <field name="name" filter_domain="[('name', 'ilike', self)]"/>
                 <separator/>
-                <filter name="filter_adj" string="Adjustements" domain="[('operation','=','adjustements')]"/>
                 <filter name="filter_in" string="Income" domain="[('operation','=','inc')]"/>
                 <filter name="filter_out" string="Expenses" domain="[('operation','=','out')]"/>
                 <separator/>
@@ -35,12 +98,6 @@
     <record id="action_distrib_move_all" model="ir.actions.act_window">
         <field name="name">Distributors Move</field>
         <field name="res_model">distrib.distributors.move</field>
-        <field name="view_mode">tree,form</field>
-    </record>
-    <record id="action_distrib_move_adj" model="ir.actions.act_window">
-        <field name="name">Adjustements</field>
-        <field name="res_model">distrib.distributors.move</field>
-        <field name="context">{'search_default_filter_adj': 1, 'default_operation': 'adjustements'}</field>
         <field name="view_mode">tree,form</field>
     </record>
     <record id="action_distrib_move_in" model="ir.actions.act_window">
@@ -63,13 +120,6 @@
             action="action_distrib_move_all"
             groups="ug_base_distrib.group_distrib_manager"
             sequence="12"/>
-    <menuitem
-            id="menu_distrib_move_adj"
-            name="Adjustements"
-            parent="menu_distrib_operations"
-            action="action_distrib_move_adj"
-            groups="ug_base_distrib.group_distrib_manager,ug_base_distrib.group_distrib_user"
-            sequence="13"/>
     <menuitem
             id="menu_distrib_move_in"
             name="Income"
