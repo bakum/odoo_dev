@@ -8,7 +8,7 @@ class DistributorMoveLines(models.Model):
     _order = 'move_id, distrib_id asc, id'
 
     _sql_constraints = [
-        ('quantity_check','CHECK(product_uom_qty>0)','Minimum 1 quantity allow')
+        ('quantity_check', 'CHECK(product_uom_qty>0)', 'Minimum 1 quantity allow')
     ]
 
     move_id = fields.Many2one(
@@ -22,6 +22,7 @@ class DistributorMoveLines(models.Model):
         related='move_id.distrib_id',
         store=True, index=True, precompute=True)
 
+    date = fields.Datetime(related='move_id.date_order', string="Move Data", store=True, precompute=True)
     salesman_id = fields.Many2one(
         related='move_id.user_id',
         string="User",
@@ -78,6 +79,18 @@ class DistributorMoveLines(models.Model):
         required=True,
         store=True, readonly=False, precompute=True, ondelete='restrict',
         domain="[('category_id', '=', product_uom_category_id)]")
+    balance = fields.Float(
+        string='Balance',
+        compute='_compute_balance', store=True, readonly=False, precompute=True,
+    )
+    debit = fields.Float(
+        string='Debit',
+        compute='_compute_debit_credit', store=True, readonly=False, precompute=True,
+    )
+    credit = fields.Float(
+        string='Credit',
+        compute='_compute_debit_credit', store=True, readonly=False, precompute=True,
+    )
 
     @api.depends('product_id')
     def _compute_name(self):
@@ -105,3 +118,21 @@ class DistributorMoveLines(models.Model):
         for line in self:
             if not line.product_uom or (line.product_id.uom_id.id != line.product_uom.id):
                 line.product_uom = line.product_id.uom_id
+
+    @api.depends('operation', 'product_uom_qty')
+    def _compute_balance(self):
+        for line in self:
+            if line.display_type in ('line_section', 'line_note'):
+                line.balance = False
+            elif line.operation == 'out':
+                line.balance = -line.product_uom_qty
+            else:
+                # Only act as a default value when none of balance/debit/credit is specified
+                # balance is always the written field because of `_sanitize_vals`
+                line.balance = line.product_uom_qty
+
+    @api.depends('balance')
+    def _compute_debit_credit(self):
+        for line in self:
+            line.debit = line.balance if line.balance > 0.0 else 0.0
+            line.credit = -line.balance if line.balance < 0.0 else 0.0

@@ -6,8 +6,11 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button name="action_done" class="btn-primary" data-hotkey="v" string="Confirm" type="object" attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>
-                    <button name="action_cancel" type="object" string="Cancel" attrs="{'invisible': ['|', ('state', 'not in', ['done']), ('id', '=', False)]}" data-hotkey="z"/>
+                    <button name="action_done" class="btn-primary" data-hotkey="v" string="Confirm" type="object"
+                            attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            attrs="{'invisible': ['|', ('state', 'not in', ['done']), ('id', '=', False)]}"
+                            data-hotkey="z"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,done,cancel"/>
                 </header>
                 <sheet>
@@ -29,12 +32,13 @@
                     </group>
                     <notebook>
                         <page id="move_tab" name="move_tab" string="Products">
-                            <field name="move_line" widget="section_and_note_one2many" mode="tree,kanban" context="{'default_display_type': 'product'}">
+                            <field name="move_line" widget="section_and_note_one2many" mode="tree,kanban"
+                                   context="{'default_display_type': 'product'}">
                                 <tree editable="bottom" string="Journal Items" default_order="sequence, id">
                                     <control>
                                         <create name="add_line_control" string="Add a line"/>
-                                    <!--    <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
-                                        <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/> -->
+                                        <!--    <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
+                                            <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/> -->
                                     </control>
 
                                     <field name="sequence" widget="handle"/>
@@ -48,6 +52,18 @@
                                     <!-- /l10n_in_edi.test_edi_json -->
                                     <!-- required for @api.onchange('product_id') -->
                                     <!--<field name="product_uom" invisible="1"/> -->
+                                </tree>
+                            </field>
+                        </page>
+                        <page id="posted_tab" name="posted_tab" string="Posted">
+                            <field name="posted_line" mode="tree" attrs="{'invisible': [('state', 'in', ('draft', 'cancel'))]}">
+                                <tree no_create_edit="1" string="Posted Items" default_order="id">
+                                    <field name="operation" widget="badge" decoration-success="operation == 'inc'"
+                                           decoration-warning="operation == 'out'"/>
+                                    <field name="name" widget="section_and_note_text" optional="show"/>
+                                    <field name="debit" optional="show"/>
+                                    <field name="credit" optional="show"/>
+                                    <field name="balance" optional="show"/>
                                 </tree>
                             </field>
                         </page>
@@ -70,10 +86,12 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="date_order"/>
+                <field name="operation" widget="badge" decoration-success="operation == 'inc'"
+                       decoration-warning="operation == 'out'"/>
                 <field name="name"/>
                 <field name="distrib_id"/>
-                <field name="operation"/>
-                <field name="state" widget="badge" decoration-success="state == 'done'" decoration-info="state == 'draft'"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'"
+                       decoration-warning="state == 'draft'"/>
                 <field name="user_id"/>
             </tree>
         </field>

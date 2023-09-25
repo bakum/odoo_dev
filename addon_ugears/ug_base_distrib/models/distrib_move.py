@@ -58,7 +58,14 @@ class DistributorMove(models.Model):
         inverse_name='move_id',
         string="Move Lines",
         states=LOCKED_FIELD_STATES,
-        copy=True, auto_join=True)
+        copy=True)
+
+    posted_line = fields.One2many(
+        comodel_name='distrib.distributors.move.line',
+        inverse_name='move_id',
+        string="Posted Lines",
+        states=LOCKED_FIELD_STATES,
+        copy=True)
 
     def init(self):
         create_index(self._cr, 'distrib_move_date_order_id_idx', 'distrib_distributors_move',

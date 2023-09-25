@@ -16,6 +16,7 @@
         'views/menu.xml',
         'views/distrib_move.xml',
         'views/distrib.xml',
+        'views/statistic.xml',
         'views/currency_views.xml',
         'views/product_public.xml',
         'views/product_category.xml',
