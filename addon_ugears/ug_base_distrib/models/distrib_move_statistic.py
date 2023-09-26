@@ -1,7 +1,7 @@
 from odoo import models, fields, api, _, tools
 
 
-class DistributorMoveLines(models.Model):
+class DistributorMoveLinesStatistic(models.Model):
     _name = 'distrib.distributors.move.statistic'
     _auto = False
 

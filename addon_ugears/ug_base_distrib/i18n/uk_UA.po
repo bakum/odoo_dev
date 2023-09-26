@@ -280,7 +280,7 @@ msgstr "Запаси (рухи)"
 #: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_statistic
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_stock_report
 msgid "Distributors Stock"
-msgstr "Залишки дистриб'юторів"
+msgstr "Залишки"
 
 #. module: ug_base_distrib
 #: model:ir.model,name:ug_base_distrib.model_distrib_distributors
