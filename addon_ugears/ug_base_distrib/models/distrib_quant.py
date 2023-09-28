@@ -69,10 +69,10 @@ class DistributorQuant(models.Model):
 
     @api.model
     def _get_removal_strategy(self, product_id):
-        if product_id.categ_id.removal_strategy_id:
-            return product_id.categ_id.removal_strategy_id.method
-        else:
-            return 'fifo'
+        # if product_id.categ_id.removal_strategy_id:
+        #     return product_id.categ_id.removal_strategy_id.method
+        # else:
+        return 'fifo'
 
     @api.model
     def _get_removal_strategy_order(self, removal_strategy):

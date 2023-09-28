@@ -135,14 +135,15 @@ class DistributorMoveLines(models.Model):
 
         for ml, vals in zip(mls, vals_list):
             if ml.state == 'done':
-                if ml.product_id.type == 'product':
+                if ml.product_id.type != 'service':
                     Quant = self.env['distrib.quant']
                     quantity = ml.product_uom_id._compute_quantity(ml.product_uom_qty, ml.move_id.product_id.uom_id,
                                                                    rounding_method='HALF-UP')
-                    in_date = None
-                    available_qty, in_date = Quant._update_available_quantity(ml.product_id, -quantity,
-                                                                              distrib_id=ml.distrib_id)
-                    Quant._update_available_quantity(ml.product_id, quantity, distrib_id=ml.distrib_id, in_date=in_date)
+                    # in_date = None
+                    # available_qty, in_date = Quant._update_available_quantity(ml.product_id, quantity,
+                    #                                                           distrib_id=ml.distrib_id)
+                    Quant._update_available_quantity(ml.product_id, quantity, distrib_id=ml.distrib_id)
+                    # Quant._update_available_quantity(ml.product_id, quantity, distrib_id=ml.distrib_id, in_date=in_date)
 
         return mls
 

@@ -92,7 +92,7 @@ class DistributorMove(models.Model):
             mls = self.move_line
             for ml in mls:
                 if vals['state'] == 'done':
-                    if ml.product_id.type == 'product':
+                    if ml.product_id.type != 'service':
                         Quant = self.env['distrib.quant']
                         quantity = ml.product_uom_id._compute_quantity(ml.balance, ml.product_id.uom_id,
                                                                        rounding_method='HALF-UP')
