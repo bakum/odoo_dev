@@ -7,6 +7,20 @@
             <field name="inherit_id" ref="product.product_template_only_form_view"/>
             <field name="arch" type="xml">
                 <data>
+                    <div name="button_box" position="inside">
+                        <t groups="ug_base_distrib.group_distrib_user">
+                            <button type="object" class="oe_stat_button" icon="fa-shopping-basket"
+                                   name="action_open_distrib_quants">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_value" widget="statinfo">
+                                        <field name="qty_available_dist" widget="statinfo" nolabel="1" class="mr4"/>
+                                        <field name="uom_name"/>
+                                    </span>
+                                    <span class="o_stat_text">Distributors</span>
+                                </div>
+                            </button>
+                        </t>
+                    </div>
                     <xpath expr="//field[@name='uom_po_id']" position="after">
                         <field name="guid" readonly="1"/>
                     </xpath>

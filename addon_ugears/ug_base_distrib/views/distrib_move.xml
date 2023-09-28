@@ -22,8 +22,8 @@
                     </div>
                     <group>
                         <group id="header_left_group">
-                            <field name="distrib_id" widget="res_partner_many2one"/>
-                            <field name="operation"/>
+                            <field name="distrib_id" widget="res_partner_many2one" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="operation" readonly="context.get('readonly_operation')"/>
                         </group>
                         <group id="header_right_group">
                             <field name="date_order" options="{'datepicker': {'warn_future': true}}"/>
@@ -42,11 +42,14 @@
                                     </control>
 
                                     <field name="sequence" widget="handle"/>
-                                    <field name="product_id" optional="show"/>
-                                    <field name="name" widget="section_and_note_text" optional="show"/>
+                                    <field name="product_id" optional="show" options="{'no_create': True, 'no_open': True}"/>
+                                    <field name="name" widget="section_and_note_text" optional="show" readonly="1"/>
                                     <field name="product_uom_qty" optional="show"/>
+                                    <field name="price_unit" optional="show" readonly="1"/>
+                                    <field name="currency_id" optional="show" invisible="1"/>
                                     <field name="product_uom_category_id" invisible="1"/>
-                                    <field name="product_uom" string="UoM" groups="uom.group_uom" optional="show"/>
+                                    <field name="product_uom" string="UoM" groups="uom.group_uom" optional="show" options="{'no_create': True, 'no_open': True}"/>
+                                    <field name="price_total" optional="show" readonly="1"/>
 
                                     <field name="display_type" force_save="1" invisible="1"/>
                                     <!-- /l10n_in_edi.test_edi_json -->
@@ -54,6 +57,16 @@
                                     <!--<field name="product_uom" invisible="1"/> -->
                                 </tree>
                             </field>
+                            <group name="note_group" col="6" class="mt-2 mt-md-0">
+                             <!--   <group colspan="4">
+                                    <field colspan="2" name="note" nolabel="1" placeholder="Terms and conditions..."/>
+                                </group> -->
+                                <group class="oe_subtotal_footer oe_right" colspan="2">
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="amount_untaxed" decoration-bf="amount_untaxed >= 0" colspan="2" readonly="1"/>
+                                </group>
+                                <div class="clearfix"/>
+                            </group>
                         </page>
                         <page id="posted_tab" name="posted_tab" string="Posted">
                             <field name="posted_line" mode="tree" attrs="{'invisible': [('state', 'in', ('draft', 'cancel'))]}">
@@ -121,13 +134,13 @@
     <record id="action_distrib_move_in" model="ir.actions.act_window">
         <field name="name">Income</field>
         <field name="res_model">distrib.distributors.move</field>
-        <field name="context">{'search_default_filter_in': 1, 'default_operation': 'inc'}</field>
+        <field name="context">{'search_default_filter_in': 1, 'default_operation': 'inc', 'readonly_operation':1}</field>
         <field name="view_mode">tree,form</field>
     </record>
     <record id="action_distrib_move_out" model="ir.actions.act_window">
         <field name="name">Expenses</field>
         <field name="res_model">distrib.distributors.move</field>
-        <field name="context">{'search_default_filter_out': 1, 'default_operation': 'out'}</field>
+        <field name="context">{'search_default_filter_out': 1, 'default_operation': 'out','readonly_operation':1}</field>
         <field name="view_mode">tree,form</field>
     </record>
 

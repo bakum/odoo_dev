@@ -1,4 +1,5 @@
 from odoo import models, fields, api, _
+from odoo.exceptions import UserError
 from odoo.tools import create_index
 
 LOCKED_FIELD_STATES = {
@@ -67,6 +68,12 @@ class DistributorMove(models.Model):
         states=LOCKED_FIELD_STATES,
         copy=True)
 
+    currency_id = fields.Many2one(
+        related='distrib_id.pricelist_id.currency_id',
+        store=True, index=True, precompute=True)
+
+    amount_untaxed = fields.Monetary(string="Amount", store=True, compute='_compute_amounts')
+
     def init(self):
         create_index(self._cr, 'distrib_move_date_order_id_idx', 'distrib_distributors_move',
                      ["date_order desc", "id desc"])
@@ -79,6 +86,41 @@ class DistributorMove(models.Model):
             else:
                 vals['name'] = self.env['ir.sequence'].next_by_code('distrib.distributors.move.out')
         return super(DistributorMove, self).create(vals_list)
+
+    def write(self, vals):
+        if 'state' in vals:
+            mls = self.move_line
+            for ml in mls:
+                if vals['state'] == 'done':
+                    if ml.product_id.type == 'product':
+                        Quant = self.env['distrib.quant']
+                        quantity = ml.product_uom_id._compute_quantity(ml.balance, ml.product_id.uom_id,
+                                                                       rounding_method='HALF-UP')
+                        # in_date = None
+                        # available_qty, in_date = Quant._update_available_quantity(ml.product_id, quantity,
+                        #                                                           distrib_id=ml.distrib_id)
+                        Quant._update_available_quantity(ml.product_id, quantity, distrib_id=ml.distrib_id)
+                        # Quant._update_available_quantity(ml.product_id, quantity, distrib_id=ml.distrib_id, in_date=in_date)
+                elif vals['state'] == 'cancel':
+                    if ml.product_id.type == 'product':
+                        Quant = self.env['distrib.quant']
+                        quantity = ml.product_uom_id._compute_quantity(ml.balance, ml.product_id.uom_id,
+                                                                       rounding_method='HALF-UP')
+                        # in_date = None
+                        # available_qty, in_date = Quant._update_available_quantity(ml.product_id, quantity,
+                        #                                                           distrib_id=ml.distrib_id)
+                        Quant._update_available_quantity(ml.product_id, -quantity, distrib_id=ml.distrib_id)
+                        # Quant._update_available_quantity(ml.product_id, quantity, distrib_id=ml.distrib_id, in_date=in_date)
+
+        res = super(DistributorMove, self).write(vals)
+
+        return res
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_except_done_or_cancel(self):
+        for ml in self:
+            if ml.state in ('done'):
+                raise UserError(_('You can not delete the moves if is done.'))
 
     def name_get(self):
         if self._context.get('sale_show_partner_name'):
@@ -96,3 +138,12 @@ class DistributorMove(models.Model):
 
     def action_cancel(self):
         self.write({'state': 'cancel'})
+
+    @api.depends('move_line.price_total')
+    def _compute_amounts(self):
+        for order in self:
+            # order_lines = order.move_line.filtered(lambda x: not x.display_type)
+            order_lines = order.move_line
+            amount_untaxed = sum(order_lines.mapped('price_total'))
+
+            order.amount_untaxed = amount_untaxed
