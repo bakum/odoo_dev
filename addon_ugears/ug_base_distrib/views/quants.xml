@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_distributors_quants_tree" model="ir.ui.view">
+        <field name="name">distrib.quants.tree</field>
+        <field name="model">distrib.quant</field>
+        <field name="arch" type="xml">
+            <tree editable="top" delete="0">
+                <field name="is_manager" invisible="1"/>
+                <field name="product_id" options="{'no_create': True, 'no_open': True}"/>
+                <field name="distrib_id" widget="res_partner_many2one" options="{'no_create': True, 'no_open': True}"
+                       attrs="{'readonly': [('is_manager', '==', False)]}"/>
+                <field name="quantity"/>
+                <field name="inventory_quantity"/>
+                <field name="inventory_diff_quantity"/>
+                <field name="inventory_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_distrib_quants" model="ir.actions.act_window">
+        <field name="name">Balance adjustment</field>
+        <field name="res_model">distrib.quant</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem
+            id="menu_distrib_quant"
+            name="Balance adjustment"
+            parent="menu_distrib_operations"
+            action="action_distrib_quants"
+            groups="ug_base_distrib.group_distrib_manager,ug_base_distrib.group_distrib_user"
+            sequence="13"/>
+</odoo>

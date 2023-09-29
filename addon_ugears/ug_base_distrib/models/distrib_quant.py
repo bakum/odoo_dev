@@ -7,9 +7,15 @@ class DistributorQuant(models.Model):
     _name = 'distrib.quant'
     _description = 'Quants'
 
+    # def _distrib_readonly(self):
+    #     distrib_id = self.user.distrib_id.id
+    #     if distrib_id:
+    #         return True
+    #     return False
+
     product_id = fields.Many2one(
         'product.product', 'Product',
-        domain="[('type', '=', 'product')]",
+        domain="[('type', '!=', 'service')]",
         ondelete='restrict', required=True, index=True)
 
     product_tmpl_id = fields.Many2one(
@@ -48,6 +54,11 @@ class DistributorQuant(models.Model):
     inventory_date = fields.Date(
         'Scheduled Date', compute='_compute_inventory_date', store=True, readonly=False,
         help="Next date the On Hand Quantity should be counted.")
+    is_manager = fields.Boolean(compute='_compute_is_manager')
+
+    @api.depends_context('uid')
+    def _compute_is_manager(self):
+        self.is_manager = self.env.user.has_group("ug_base_distrib.group_distrib_manager")
 
     @api.depends('quantity')
     def _compute_inventory_quantity_auto_apply(self):
@@ -132,7 +143,8 @@ class DistributorQuant(models.Model):
                 'distrib_id': distrib_id and distrib_id.id,
                 'in_date': in_date,
             })
-        return self._get_available_quantity(product_id, distrib_id=distrib_id, strict=False, allow_negative=True), in_date
+        return self._get_available_quantity(product_id, distrib_id=distrib_id, strict=False,
+                                            allow_negative=True), in_date
 
     @api.model
     def _get_available_quantity(self, product_id, distrib_id, strict=False, allow_negative=False):

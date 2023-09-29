@@ -102,7 +102,7 @@ class DistributorMove(models.Model):
                         Quant._update_available_quantity(ml.product_id, quantity, distrib_id=ml.distrib_id)
                         # Quant._update_available_quantity(ml.product_id, quantity, distrib_id=ml.distrib_id, in_date=in_date)
                 elif vals['state'] == 'cancel':
-                    if ml.product_id.type == 'product':
+                    if ml.product_id.type != 'service':
                         Quant = self.env['distrib.quant']
                         quantity = ml.product_uom_id._compute_quantity(ml.balance, ml.product_id.uom_id,
                                                                        rounding_method='HALF-UP')
