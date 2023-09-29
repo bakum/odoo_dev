@@ -7,6 +7,14 @@ class DistributorQuant(models.Model):
     _name = 'distrib.quant'
     _description = 'Quants'
 
+    _sql_constraints = [
+        (
+            'unique_product',
+            'unique(product_id, distrib_id)',
+            "Cannot Use one distribution's product twice!\nPlease, select a different product or distributor"
+        )
+    ]
+
     # def _distrib_readonly(self):
     #     distrib_id = self.user.distrib_id.id
     #     if distrib_id:
@@ -57,6 +65,7 @@ class DistributorQuant(models.Model):
     is_manager = fields.Boolean(compute='_compute_is_manager')
 
     @api.depends_context('uid')
+    @api.depends('product_id', 'inventory_quantity')
     def _compute_is_manager(self):
         self.is_manager = self.env.user.has_group("ug_base_distrib.group_distrib_manager")
 
