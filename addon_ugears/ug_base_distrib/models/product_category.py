@@ -7,7 +7,7 @@ class PublicProduct(models.Model):
 
     guid = fields.Char(string='Guid 1C:Enterprise')
     qty_available_dist = fields.Float(
-        'Quantity On Hand', compute='_compute_quantities_dist',
+        'Quantity On Distributor', compute='_compute_quantities_dist',
         compute_sudo=False, digits='Product Unit of Measure')
 
     def _compute_quantities_dist(self):
@@ -39,7 +39,7 @@ class PublicProductDistrib(models.Model):
 
     quant_ids = fields.One2many('distrib.quant', 'product_id')  # used to compute quantities
     move_ids = fields.One2many('distrib.distributors.move.line', 'product_id')  # used to compute quantities
-    qty_available_dist = fields.Float('Quantity On Hand',
+    qty_available_dist = fields.Float('Quantity On Distributor',
                                       compute='_compute_quantities_dist',
                                       digits='Product Unit of Measure', compute_sudo=False,
                                       help="Current quantity of products.\n"
@@ -53,7 +53,7 @@ class PublicProductDistrib(models.Model):
                                            "Otherwise, this includes goods stored in any Stock Location "
                                            "with 'internal' type.")
     virtual_available_dist = fields.Float(
-        'Forecasted Quantity', compute='_compute_quantities_dist',
+        'Forecasted Quantity Distributor', compute='_compute_quantities_dist',
         digits='Product Unit of Measure', compute_sudo=False,
         help="Forecast quantity (computed as Quantity On Hand "
              "- Outgoing + Incoming)\n"
@@ -66,7 +66,7 @@ class PublicProductDistrib(models.Model):
              "with 'internal' type.")
 
     incoming_qty_dist = fields.Float(
-        'Incoming', compute='_compute_quantities_dist',
+        'Incoming Qtt', compute='_compute_quantities_dist',
         digits='Product Unit of Measure', compute_sudo=False,
         help="Quantity of planned incoming products.\n"
              "In a context with a single Stock Location, this includes "
@@ -77,7 +77,7 @@ class PublicProductDistrib(models.Model):
              "Otherwise, this includes goods arriving to any Stock "
              "Location with 'internal' type.")
     outgoing_qty_dist = fields.Float(
-        'Outgoing', compute='_compute_quantities_dist',
+        'Outgoing Qtt', compute='_compute_quantities_dist',
         digits='Product Unit of Measure', compute_sudo=False,
         help="Quantity of planned outgoing products.\n"
              "In a context with a single Stock Location, this includes "

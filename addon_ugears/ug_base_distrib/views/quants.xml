@@ -14,7 +14,7 @@
                 <field name="product_uom_id"/>
                 <field name="inventory_quantity"/>
                 <field name="inventory_diff_quantity"/>
-             <!--   <field name="inventory_date"/> -->
+                <field name="in_date"/>
                 <button name="action_apply_inventory"
                         groups="ug_base_distrib.group_distrib_user"
                         type="object" string="Apply" class="btn btn-link" icon="fa-save"

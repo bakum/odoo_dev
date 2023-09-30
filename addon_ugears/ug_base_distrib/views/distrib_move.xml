@@ -10,7 +10,7 @@
                             attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>
                     <button name="action_cancel" type="object" string="Cancel"
                             attrs="{'invisible': ['|', ('state', 'not in', ['done']), ('id', '=', False)]}"
-                            data-hotkey="z"/>
+                            data-hotkey="z" confirm="The selected operation will change the status and cancel transaction. Are you sure you want to do this?"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,done,cancel"/>
                 </header>
                 <sheet>
