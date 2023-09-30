@@ -31,7 +31,7 @@ class PublicProduct(models.Model):
         return prod_available
 
     def action_open_distrib_quants(self):
-        pass
+        return self.product_variant_ids.filtered(lambda p: p.active or p.qty_available != 0).action_open_distrib_quants()
 
 
 class PublicProductDistrib(models.Model):
@@ -192,6 +192,19 @@ class PublicProductDistrib(models.Model):
                 qty_available_dist + res[product_id]['incoming_qty_dist'] - res[product_id]['outgoing_qty_dist'],
                 precision_rounding=rounding)
         return res
+
+    def action_open_distrib_quants(self):
+        if len(self) == 1:
+            self = self.with_context(
+                default_product_id=self.id,
+                single_product=True
+            )
+        else:
+            self = self.with_context(product_tmpl_ids=self.product_tmpl_id.ids)
+        action = self.env['distrib.quant'].action_view_inventory()
+        action['domain'] = [('product_id', 'in', self.ids)]
+        action["name"] = _('Update Quantity')
+        return action
 
 
 class ProductCategoryImport(models.Model):

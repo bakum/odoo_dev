@@ -7,20 +7,32 @@
             <tree editable="top" delete="0">
                 <field name="is_manager" invisible="1"/>
                 <field name="inventory_quantity_set" invisible="1"/>
-                <field name="product_id" options="{'no_create': True, 'no_open': True}"/>
+                <field name="product_id" attrs="{'readonly': [('id', '!=', False)]}"
+                       readonly="context.get('single_product', False)" force_save="1"
+                       options="{'no_create': True}" widget="many2one"/>
                 <field name="distrib_id" widget="res_partner_many2one" options="{'no_create': True, 'no_open': True}"
                        attrs="{'readonly': [('is_manager', '==', False)]}" force_save="1"/>
                 <field name="quantity"/>
                 <field name="product_uom_id"/>
                 <field name="inventory_quantity"/>
                 <field name="inventory_diff_quantity"/>
-                <field name="in_date"/>
+                <field name="in_date" optional="show"/>
                 <button name="action_apply_inventory"
                         groups="ug_base_distrib.group_distrib_user"
-                        type="object" string="Apply" class="btn btn-link" icon="fa-save"
-                        attrs="{'invisible': [('inventory_quantity_set', '=', False)]}"/>
+                        type="object" string="Apply" class="btn btn-link" icon="fa-save"/>
+                   <!--     attrs="{'invisible': [('inventory_quantity_set', '=', False)]}"/> -->
 
             </tree>
+        </field>
+    </record>
+
+    <record id="view_distributors_quants_search" model="ir.ui.view">
+        <field name="name">distrib.quants.search</field>
+        <field name="model">distrib.quant</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="product_id" filter_domain="[('product_id.name', 'ilike', self)]"/>
+            </search>
         </field>
     </record>
 

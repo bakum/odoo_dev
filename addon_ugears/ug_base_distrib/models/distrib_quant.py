@@ -260,8 +260,32 @@ class DistributorQuant(models.Model):
         self._apply_inventory()
         self.inventory_quantity_set = False
 
+    def action_view_inventory(self):
+        #self = self._set_view_context()
+        ctx = dict(self.env.context or {})
+        action = {
+            'name': _('Inventory Adjustments'),
+            'view_mode': 'list',
+            'view_id': self.env.ref('ug_base_distrib.view_distributors_quants_tree').id,
+            'res_model': 'distrib.quant',
+            'type': 'ir.actions.act_window',
+            'context': ctx,
+            #'domain': [('location_id.usage', 'in', ['internal', 'transit'])],
+            'help': """
+                <p class="o_view_nocontent_smiling_face">
+                    {}
+                </p><p>
+                    {} <span class="fa fa-long-arrow-right"/> {}</p>
+                """.format(_('Your stock is currently empty'),
+                           _('Press the CREATE button to define quantity for each product in your stock or import them from a spreadsheet throughout Favorites'),
+                           _('Import')),
+        }
+        return action
+
     def _apply_inventory(self):
         move_vals = []
+        if not self.inventory_quantity_set:
+            raise UserError(_('inventory quantity is not set.'))
         if not self.user_has_groups('ug_base_distrib.group_distrib_user'):
             raise UserError(_('Only a stock manager can validate an inventory adjustment.'))
 
@@ -272,7 +296,9 @@ class DistributorQuant(models.Model):
             elif float_compare(quant.inventory_diff_quantity, 0, precision_rounding=quant.product_uom_id.rounding) < 0:
                 move_vals.append(quant._get_inventory_move_values(-quant.inventory_diff_quantity, out=True))
             else:
-                raise UserError(_('Only a stock manager can validate an inventory adjustment.'))
+                self.write({'inventory_quantity': 0, 'user_id': False})
+                self.write({'inventory_diff_quantity': 0})
+                return
         moves = self.env['distrib.distributors.move']
         moves.with_context(inventory_mode=False).create(move_vals)
         # moves.action_done()

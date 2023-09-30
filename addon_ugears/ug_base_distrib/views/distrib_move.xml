@@ -119,9 +119,6 @@
             <search>
                 <field name="name" filter_domain="[('name', 'ilike', self)]"/>
                 <separator/>
-                <filter name="filter_in" string="Income" domain="[('operation','=','inc')]"/>
-                <filter name="filter_out" string="Expenses" domain="[('operation','=','out')]"/>
-                <separator/>
                 <filter name="filter_draft" string="Draft" domain="[('state','=','draft')]"/>
                 <filter name="filter_done" string="Complete" domain="[('state','=','done')]"/>
             </search>
