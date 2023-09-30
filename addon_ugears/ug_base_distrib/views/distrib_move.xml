@@ -22,8 +22,9 @@
                     </div>
                     <group>
                         <group id="header_left_group">
+                            <field name="is_manager" invisible="1"/>
                             <field name="distrib_id" widget="res_partner_many2one" options="{'no_create': True, 'no_open': True}"/>
-                            <field name="operation" readonly="context.get('readonly_operation')"/>
+                            <field name="operation" attrs="{'readonly' : [('is_manager', '==', False)] }" force_save="1"/>
                         </group>
                         <group id="header_right_group">
                             <field name="date_order" options="{'datepicker': {'warn_future': true}}"/>
@@ -106,6 +107,7 @@
                 <field name="state" widget="badge" decoration-success="state == 'done'"
                        decoration-warning="state == 'draft'"/>
                 <field name="user_id"/>
+                <field name="is_inventory"/>
             </tree>
         </field>
     </record>
@@ -134,13 +136,13 @@
     <record id="action_distrib_move_in" model="ir.actions.act_window">
         <field name="name">Income</field>
         <field name="res_model">distrib.distributors.move</field>
-        <field name="context">{'search_default_filter_in': 1, 'default_operation': 'inc', 'readonly_operation':1}</field>
+        <field name="context">{'search_default_filter_in': 1, 'default_operation': 'inc'}</field>
         <field name="view_mode">tree,form</field>
     </record>
     <record id="action_distrib_move_out" model="ir.actions.act_window">
         <field name="name">Expenses</field>
         <field name="res_model">distrib.distributors.move</field>
-        <field name="context">{'search_default_filter_out': 1, 'default_operation': 'out','readonly_operation':1}</field>
+        <field name="context">{'search_default_filter_out': 1, 'default_operation': 'out'}</field>
         <field name="view_mode">tree,form</field>
     </record>
 

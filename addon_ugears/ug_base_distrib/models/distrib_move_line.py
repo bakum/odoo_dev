@@ -35,6 +35,10 @@ class DistributorMoveLines(models.Model):
         related='move_id.state',
         string="Move Status",
         copy=False, store=True, precompute=True)
+    is_inventory = fields.Boolean(
+        related='move_id.is_inventory',
+        string="Inventory",
+        copy=False, store=True, precompute=True)
     operation = fields.Selection(
         related='move_id.operation',
         string="Move Operation",
@@ -137,7 +141,7 @@ class DistributorMoveLines(models.Model):
             if ml.state == 'done':
                 if ml.product_id.type != 'service':
                     Quant = self.env['distrib.quant']
-                    quantity = ml.product_uom_id._compute_quantity(ml.product_uom_qty, ml.move_id.product_id.uom_id,
+                    quantity = ml.product_uom_id._compute_quantity(ml.balance, ml.product_id.uom_id,
                                                                    rounding_method='HALF-UP')
                     # in_date = None
                     # available_qty, in_date = Quant._update_available_quantity(ml.product_id, quantity,

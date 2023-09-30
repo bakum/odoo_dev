@@ -73,6 +73,13 @@ class DistributorMove(models.Model):
         store=True, index=True, precompute=True)
 
     amount_untaxed = fields.Monetary(string="Amount", store=True, compute='_compute_amounts')
+    is_inventory = fields.Boolean('Inventory', default=False)
+    is_manager = fields.Boolean(compute='_compute_is_manager')
+
+    @api.depends_context('uid')
+    @api.depends('operation', 'distrib_id')
+    def _compute_is_manager(self):
+        self.is_manager = self.env.user.has_group("ug_base_distrib.group_distrib_manager")
 
     def init(self):
         create_index(self._cr, 'distrib_move_date_order_id_idx', 'distrib_distributors_move',
@@ -81,10 +88,13 @@ class DistributorMove(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            if vals['operation'] == 'inc':
-                vals['name'] = self.env['ir.sequence'].next_by_code('distrib.distributors.move.in')
-            else:
-                vals['name'] = self.env['ir.sequence'].next_by_code('distrib.distributors.move.out')
+            if 'operation' in list(vals.keys()):
+                if 'is_inventory' in list(vals.keys()) and vals['is_inventory']:
+                    vals['name'] = self.env['ir.sequence'].next_by_code('distrib.distributors.move.adj')
+                elif vals['operation'] == 'inc':
+                    vals['name'] = self.env['ir.sequence'].next_by_code('distrib.distributors.move.in')
+                else:
+                    vals['name'] = self.env['ir.sequence'].next_by_code('distrib.distributors.move.out')
         return super(DistributorMove, self).create(vals_list)
 
     def write(self, vals):

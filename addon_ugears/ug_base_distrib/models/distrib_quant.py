@@ -1,4 +1,5 @@
 from odoo import models, fields, api, _
+from odoo.exceptions import UserError
 from odoo.tools import float_compare
 from odoo.osv import expression
 
@@ -63,11 +64,48 @@ class DistributorQuant(models.Model):
         'Scheduled Date', compute='_compute_inventory_date', store=True, readonly=False,
         help="Next date the On Hand Quantity should be counted.")
     is_manager = fields.Boolean(compute='_compute_is_manager')
+    last_count_date = fields.Date(compute='_compute_last_count_date', help='Last time the Quantity was Updated')
+    inventory_quantity_set = fields.Boolean(store=True, compute='_compute_inventory_quantity_set', readonly=False,
+                                            default=False)
+    user_id = fields.Many2one(
+        'res.users', 'Assigned To', help="User assigned to do product count.")
 
     @api.depends_context('uid')
     @api.depends('product_id', 'inventory_quantity')
     def _compute_is_manager(self):
         self.is_manager = self.env.user.has_group("ug_base_distrib.group_distrib_manager")
+
+    def _compute_last_count_date(self):
+        """ We look at the stock move lines associated with every quant to get the last count date.
+        """
+        self.last_count_date = False
+        groups = self.env['distrib.distributors.move.line']._read_group(
+            [
+                ('state', '=', 'done'),
+                ('is_inventory', '=', True),
+                ('product_id', 'in', self.product_id.ids),
+                ('distrib_id', 'in', self.distrib_id.ids),
+            ],
+            ['date:max', 'product_id', 'distrib_id'],
+            ['product_id', 'distrib_id'],
+            lazy=False)
+
+        def _update_dict(date_by_quant, key, value):
+            current_date = date_by_quant.get(key)
+            if not current_date or value > current_date:
+                date_by_quant[key] = value
+
+        date_by_quant = {}
+        for group in groups:
+            move_line_date = group['date']
+            distrib_id = group['distrib_id'] and group['distrib_id'][0]
+            product_id = group['product_id'][0]
+            _update_dict(date_by_quant, (product_id, distrib_id), move_line_date)
+            # _update_dict(date_by_quant, (location_dest_id, package_id, product_id, lot_id, owner_id), move_line_date)
+            # _update_dict(date_by_quant, (location_id, result_package_id, product_id, lot_id, owner_id), move_line_date)
+            # _update_dict(date_by_quant, (location_dest_id, result_package_id, product_id, lot_id, owner_id), move_line_date)
+        for quant in self:
+            quant.last_count_date = date_by_quant.get((quant.product_id.id, quant.distrib_id.id))
 
     @api.depends('quantity')
     def _compute_inventory_quantity_auto_apply(self):
@@ -78,6 +116,10 @@ class DistributorQuant(models.Model):
     def _compute_inventory_diff_quantity(self):
         for quant in self:
             quant.inventory_diff_quantity = quant.inventory_quantity - quant.quantity
+
+    @api.depends('inventory_quantity')
+    def _compute_inventory_quantity_set(self):
+        self.inventory_quantity_set = True
 
     @api.model
     def _is_inventory_mode(self):
@@ -172,3 +214,67 @@ class DistributorQuant(models.Model):
     @api.depends('distrib_id')
     def _compute_inventory_date(self):
         pass
+
+    @api.model
+    def read_group(self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True):
+        """ Override to set the `inventory_quantity` field if we're in "inventory mode" as well
+        as to compute the sum of the `available_quantity` field.
+        """
+        if 'available_quantity' in fields:
+            if 'quantity' not in fields:
+                fields.append('quantity')
+        if 'inventory_quantity_auto_apply' in fields and 'quantity' not in fields:
+            fields.append('quantity')
+        result = super(DistributorQuant, self).read_group(domain, fields, groupby, offset=offset, limit=limit,
+                                                          orderby=orderby, lazy=lazy)
+        for group in result:
+            if 'available_quantity' in fields:
+                group['available_quantity'] = group['quantity']
+            if 'inventory_quantity_auto_apply' in fields:
+                group['inventory_quantity_auto_apply'] = group['quantity']
+        return result
+
+    def _get_inventory_move_values(self, qty, out=False):
+        self.ensure_one()
+        if fields.Float.is_zero(qty, 0, precision_rounding=self.product_uom_id.rounding):
+            name = _('Product Quantity Confirmed')
+        else:
+            name = _('Product Quantity Updated')
+
+        return {
+            'name': self.env.context.get('inventory_name') or name,
+            'distrib_id': self.distrib_id.id,
+            'state': 'done',
+            'is_inventory': True,
+            'operation': 'out' if out else 'inc',
+            'move_line': [(0, 0, {
+                'product_id': self.product_id.id,
+                'product_uom_id': self.product_uom_id.id,
+                'distrib_id': self.distrib_id.id,
+                'product_uom_qty': qty,
+                'operation': 'out' if out else 'inc',
+            })]
+        }
+
+    def action_apply_inventory(self):
+        self._apply_inventory()
+        self.inventory_quantity_set = False
+
+    def _apply_inventory(self):
+        move_vals = []
+        if not self.user_has_groups('ug_base_distrib.group_distrib_user'):
+            raise UserError(_('Only a stock manager can validate an inventory adjustment.'))
+
+        for quant in self:
+            # Create and validate a move so that the quant matches its `inventory_quantity`.
+            if float_compare(quant.inventory_diff_quantity, 0, precision_rounding=quant.product_uom_id.rounding) > 0:
+                move_vals.append(quant._get_inventory_move_values(quant.inventory_diff_quantity))
+            elif float_compare(quant.inventory_diff_quantity, 0, precision_rounding=quant.product_uom_id.rounding) < 0:
+                move_vals.append(quant._get_inventory_move_values(-quant.inventory_diff_quantity, out=True))
+            else:
+                raise UserError(_('Only a stock manager can validate an inventory adjustment.'))
+        moves = self.env['distrib.distributors.move']
+        moves.with_context(inventory_mode=False).create(move_vals)
+        # moves.action_done()
+        self.write({'inventory_quantity': 0, 'user_id': False})
+        self.write({'inventory_diff_quantity': 0})

@@ -6,13 +6,20 @@
         <field name="arch" type="xml">
             <tree editable="top" delete="0">
                 <field name="is_manager" invisible="1"/>
+                <field name="inventory_quantity_set" invisible="1"/>
                 <field name="product_id" options="{'no_create': True, 'no_open': True}"/>
                 <field name="distrib_id" widget="res_partner_many2one" options="{'no_create': True, 'no_open': True}"
-                       attrs="{'readonly': [('is_manager', '==', False)]}"/>
+                       attrs="{'readonly': [('is_manager', '==', False)]}" force_save="1"/>
                 <field name="quantity"/>
+                <field name="product_uom_id"/>
                 <field name="inventory_quantity"/>
                 <field name="inventory_diff_quantity"/>
-                <field name="inventory_date"/>
+             <!--   <field name="inventory_date"/> -->
+                <button name="action_apply_inventory"
+                        groups="ug_base_distrib.group_distrib_user"
+                        type="object" string="Apply" class="btn btn-link" icon="fa-save"
+                        attrs="{'invisible': [('inventory_quantity_set', '=', False)]}"/>
+
             </tree>
         </field>
     </record>
