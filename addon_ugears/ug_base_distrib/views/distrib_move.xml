@@ -136,13 +136,15 @@
     <record id="action_distrib_move_in" model="ir.actions.act_window">
         <field name="name">Income</field>
         <field name="res_model">distrib.distributors.move</field>
-        <field name="context">{'search_default_filter_in': 1, 'default_operation': 'inc'}</field>
+        <field name="context">{'default_operation': 'inc'}</field>
+        <field name="domain">[('is_inventory', '=', False),('operation','=','inc')]</field>
         <field name="view_mode">tree,form</field>
     </record>
     <record id="action_distrib_move_out" model="ir.actions.act_window">
         <field name="name">Expenses</field>
         <field name="res_model">distrib.distributors.move</field>
-        <field name="context">{'search_default_filter_out': 1, 'default_operation': 'out'}</field>
+        <field name="context">{'default_operation': 'out'}</field>
+        <field name="domain">[('is_inventory', '=', False),('operation','=','out')]</field>
         <field name="view_mode">tree,form</field>
     </record>
 
