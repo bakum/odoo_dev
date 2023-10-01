@@ -125,6 +125,26 @@
         </field>
     </record>
 
+    <record id="view_distributors_distrib_move_line_tree" model="ir.ui.view">
+        <field name="name">distrib.distributors.move.line.tree</field>
+        <field name="model">distrib.distributors.move.line</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="date"/>
+                <field name="product_id"/>
+                <field name="balance"/>
+                <field name="operation" widget="badge" decoration-success="operation == 'inc'"
+                       decoration-warning="operation == 'out'"/>
+                <field name="move_id"/>
+                <field name="name"/>
+                <field name="distrib_id"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'"
+                       decoration-warning="state == 'draft'"/>
+                <field name="is_inventory" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
     <record id="action_distrib_move_all" model="ir.actions.act_window">
         <field name="name">Distributors Move</field>
         <field name="res_model">distrib.distributors.move</field>

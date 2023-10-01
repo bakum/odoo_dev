@@ -17,6 +17,7 @@
                 <field name="inventory_quantity"/>
                 <field name="inventory_diff_quantity"/>
                 <field name="in_date" optional="show"/>
+                <button name="action_inventory_history" type="object" class="btn btn-link text-info" icon="fa-history" string="History"/>
                 <button name="action_apply_inventory"
                         groups="ug_base_distrib.group_distrib_user"
                         type="object" string="Apply" class="btn btn-link" icon="fa-save"/>

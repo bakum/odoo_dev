@@ -304,3 +304,24 @@ class DistributorQuant(models.Model):
         # moves.action_done()
         self.write({'inventory_quantity': 0, 'user_id': False})
         self.write({'inventory_diff_quantity': 0})
+
+    def action_inventory_history(self):
+        self.ensure_one()
+        action = {
+            'name': _('History'),
+            'view_mode': 'list,form',
+            'res_model': 'distrib.distributors.move.line',
+            'views': [(self.env.ref('ug_base_distrib.view_distributors_distrib_move_line_tree').id, 'list'), (False, 'form')],
+            'type': 'ir.actions.act_window',
+            # 'context': {
+            #     'search_default_inventory': 1,
+            #     'search_default_done': 1,
+            #     'search_default_product_id': self.product_id.id,
+            # },
+            'domain': [
+                ('product_id', '=', self.product_id.id),
+                ('is_inventory', '=', True),
+                ('distrib_id', '=', self.distrib_id.id),
+            ],
+        }
+        return action
