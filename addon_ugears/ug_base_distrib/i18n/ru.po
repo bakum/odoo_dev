@@ -29,7 +29,7 @@ msgstr ""
 #. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_product_public_form_inherit
 msgid "<span class=\"o_stat_text\">Distributors</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Дистрибьюторы</span>"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_needaction
