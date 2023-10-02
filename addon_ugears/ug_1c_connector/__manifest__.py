@@ -8,6 +8,7 @@
     'license' : 'LGPL-3',
     'depends': [
         'base',
+        'product',
         'ug_base_distrib',
     ],
     "external_dependencies": {
