@@ -1,5 +1,5 @@
 import pydantic
-from typing import Any
+from typing import Optional
 
 from pydantic import Json
 
@@ -9,9 +9,9 @@ from . import utils
 class Category(pydantic.BaseModel):
     id: int
     name: str
-    complete_name: str | None
+    complete_name: Optional[str] = None
     parent_path: str
-    guid: str | None
+    guid: Optional[str] = None
 
     class Config:
         orm_mode = True
