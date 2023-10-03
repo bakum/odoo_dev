@@ -1,9 +1,8 @@
 import json
 
+from odoo import http
 from .orm.product_category import Category
 from .orm.utils import get_search_criterias, apply_update_from_request
-from odoo import http
-import json
 
 
 class PublicCategoryController(http.Controller):
@@ -12,7 +11,6 @@ class PublicCategoryController(http.Controller):
                 methods=['GET'])
     def test(self):
         return json.dumps({"success": True})
-        #return json.loads(result)
 
     @http.route(['/api/v2/category',
                  '/api/v2/category/<string:guid>',
@@ -20,8 +18,9 @@ class PublicCategoryController(http.Controller):
                 auth='bearer_api_key', website=False, cors="*", csrf=False,
                 methods=['GET', 'PUT', 'POST', 'DELETE'])
     def index(self, guid=None, **kw):
-        search_criterias = get_search_criterias(kw)
-        result_dict = apply_update_from_request(kw, http.request, search_criterias, 'product.category', guid)
+        data = json.loads(http.request.httprequest.data)
+        search_criterias = get_search_criterias(data['params'])
+        result_dict = apply_update_from_request(data['params'], http.request, search_criterias, 'product.category', guid)
         if type(result_dict) is dict:
             return json.dumps(result_dict)
         result = []
