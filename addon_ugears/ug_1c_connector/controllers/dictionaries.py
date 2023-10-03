@@ -3,19 +3,20 @@ import json
 from .orm.product_category import Category
 from .orm.utils import get_search_criterias, apply_update_from_request
 from odoo import http
+import json
 
 
 class PublicCategoryController(http.Controller):
     @http.route(['/api/v2/test', ],
-                auth='none', website=False, type='json', cors=False,
+                auth='none', website=False, type='json', cors="*", csrf=False,
                 methods=['GET'])
     def test(self):
-        return {"success": True}
+        return json.dumps({"success": True})
 
     @http.route(['/api/v2/category',
                  '/api/v2/category/<string:guid>',
                  ],
-                auth='bearer_api_key', website=False, type='json', cors=False,
+                auth='bearer_api_key', website=False, type='json', cors="*", csrf=False,
                 methods=['GET', 'PUT', 'POST', 'DELETE'])
     def index(self, guid=None, **kw):
         search_criterias = get_search_criterias(kw)
