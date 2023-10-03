@@ -8,10 +8,11 @@ import json
 
 class PublicCategoryController(http.Controller):
     @http.route(['/api/v2/test', ],
-                auth='none', website=False, type='json', cors="*", csrf=False,
+                auth='none', website=False, cors="*", csrf=False,
                 methods=['GET'])
     def test(self):
         return json.dumps({"success": True})
+        #return json.loads(result)
 
     @http.route(['/api/v2/category',
                  '/api/v2/category/<string:guid>',
