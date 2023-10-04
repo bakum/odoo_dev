@@ -17,13 +17,15 @@ class PublicCategoryController(http.Controller):
                  ],
                 auth='bearer_api_key', website=False, cors="*", csrf=False,
                 methods=['GET', 'PUT', 'POST', 'DELETE'])
-    def index(self, guid=None):
+    def index(self, guid=None, **kw):
         try:
             data = json.loads(http.request.httprequest.data)
+            if 'params' not in data:
+                data['params'] = data.copy()
         except:
             data = {'params':{}}
-        search_criterias = get_search_criterias(data['params'])
-        result_dict = apply_update_from_request(data['params'], http.request, search_criterias, 'product.category', guid)
+        #search_criterias = get_search_criterias(data['params'])
+        result_dict = apply_update_from_request(get_search_criterias(kw), http.request, data['params'], 'product.category', guid)
         if type(result_dict) is dict:
             return json.dumps(result_dict)
         result = []

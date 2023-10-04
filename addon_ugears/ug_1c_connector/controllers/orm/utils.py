@@ -7,10 +7,11 @@ from odoo import fields, models, http
 
 from pydantic.utils import GetterDict
 
+
 def apply_update_from_request(kw, request, search_criterias, modelname, guid=None):
     if request.httprequest.method == 'GET':
         try:
-            moves = request.env[modelname].sudo().search(search_criterias)
+            moves = request.env[modelname].sudo().search(kw)
         except Exception:
             raise http.BadRequest("Bad request")
 
@@ -18,39 +19,39 @@ def apply_update_from_request(kw, request, search_criterias, modelname, guid=Non
 
     if http.request.httprequest.method == 'POST':
         try:
-            moves = http.request.env[modelname].sudo().search(search_criterias, limit=1)
+            moves = http.request.env[modelname].sudo().search(kw, limit=1)
         except:
             raise http.BadRequest("Bad request")
 
-        if len(moves) > 0:
-            written = moves.write(kw)
-            mod = {"success" : written}
+        if len(kw) != 0 and len(moves) > 0:
+            written = moves.write(search_criterias)
+            mod = {"success": written}
             return mod
         else:
-            written = http.request.env[modelname].sudo().create(kw)
+            written = http.request.env[modelname].sudo().create(search_criterias)
             return written
 
     if http.request.httprequest.method == 'PUT':
         try:
             if guid:
-                found = http.request.env["product.category"].sudo().search([('guid', '=', guid)], limit=1)
+                found = http.request.env[modelname].sudo().search([('guid', '=', guid)], limit=1)
             else:
-                return {"success" : "not found"}
+                return {"success": "not found"}
         except Exception:
             raise http.BadRequest("Bad request")
 
         if len(found) > 0:
-            written = found.write(kw)
+            written = found.write(search_criterias)
         else:
             written = False
-        return {"success" : written}
+        return {"success": written}
 
     if http.request.httprequest.method == 'DELETE':
         try:
             if guid:
-                found = http.request.env["product.public.category"].sudo().search([('guid', '=', guid)], limit=1)
+                found = http.request.env[modelname].sudo().search([('guid', '=', guid)], limit=1)
             else:
-                return {"success" : "not found"}
+                return {"success": "not found"}
         except Exception:
             raise http.BadRequest("Bad request")
         if len(found) > 0:
@@ -58,7 +59,8 @@ def apply_update_from_request(kw, request, search_criterias, modelname, guid=Non
         else:
             deleted = False
 
-        return {"success" : deleted}
+        return {"success": deleted}
+
 
 def get_search_criterias(kw):
     search_criterias = []
