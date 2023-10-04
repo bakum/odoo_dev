@@ -16,3 +16,14 @@ class Category(pydantic.BaseModel):
     class Config:
         orm_mode = True
         getter_dict = utils.GenericOdooGetter
+
+class Product(pydantic.BaseModel):
+    id: int
+    categ_id: Category
+    name: str
+    type: str
+    guid: Optional[str] = None
+
+    class Config:
+        orm_mode = True
+        getter_dict = utils.GenericOdooGetter
