@@ -1,20 +1,21 @@
 # Copyright 2021 ACSONE SA/NV
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html)
 
+import json
 from typing import Any
-
-from odoo import fields, models, http
 
 from pydantic.utils import GetterDict
 
+from odoo import fields, models, http
 
-def apply_update_from_request(kw, request, search_criterias, modelname, guid=None):
-    if request.httprequest.method == 'GET':
+
+def apply_update_from_request(kw, search_criterias, modelname, guid=None):
+    if http.request.httprequest.method == 'GET':
         try:
             if guid:
                 moves = http.request.env[modelname].sudo().search([('guid', '=', guid)])
             else:
-                moves = request.env[modelname].sudo().search(kw)
+                moves = http.request.env[modelname].sudo().search(kw)
         except Exception:
             raise http.BadRequest("Bad request")
 
@@ -29,7 +30,7 @@ def apply_update_from_request(kw, request, search_criterias, modelname, guid=Non
         except:
             raise http.BadRequest("Bad request")
 
-        if len(kw) != 0 and len(moves) > 0:
+        if (len(kw) != 0 or guid) and len(moves) > 0:
             written = moves.write(search_criterias)
             mod = {"success": written}
             return mod
@@ -67,6 +68,15 @@ def apply_update_from_request(kw, request, search_criterias, modelname, guid=Non
 
         return {"success": deleted}
 
+def parse_data_from_request(kw=None):
+    try:
+        data = json.loads(http.request.httprequest.data)
+        if 'params' not in data:
+            data['params'] = data.copy()
+    except:
+        data = {'params': {}}
+
+    return data['params'] if kw==None else data['params'], get_search_criterias(kw)
 
 def get_search_criterias(kw):
     search_criterias = []
