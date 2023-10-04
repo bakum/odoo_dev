@@ -23,9 +23,10 @@ class PublicCategoryController(http.Controller):
             if 'params' not in data:
                 data['params'] = data.copy()
         except:
-            data = {'params':{}}
-        #search_criterias = get_search_criterias(data['params'])
-        result_dict = apply_update_from_request(get_search_criterias(kw), http.request, data['params'], 'product.category', guid)
+            data = {'params': {}}
+        # search_criterias = get_search_criterias(data['params'])
+        result_dict = apply_update_from_request(get_search_criterias(kw), http.request, data['params'],
+                                                'product.category', guid)
         if type(result_dict) is dict:
             return json.dumps(result_dict)
         result = []

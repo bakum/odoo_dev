@@ -11,7 +11,10 @@ from pydantic.utils import GetterDict
 def apply_update_from_request(kw, request, search_criterias, modelname, guid=None):
     if request.httprequest.method == 'GET':
         try:
-            moves = request.env[modelname].sudo().search(kw)
+            if guid:
+                moves = http.request.env[modelname].sudo().search([('guid', '=', guid)])
+            else:
+                moves = request.env[modelname].sudo().search(kw)
         except Exception:
             raise http.BadRequest("Bad request")
 
@@ -19,7 +22,10 @@ def apply_update_from_request(kw, request, search_criterias, modelname, guid=Non
 
     if http.request.httprequest.method == 'POST':
         try:
-            moves = http.request.env[modelname].sudo().search(kw, limit=1)
+            if guid:
+                moves = http.request.env[modelname].sudo().search([('guid', '=', guid)], limit=1)
+            else:
+                moves = http.request.env[modelname].sudo().search(kw, limit=1)
         except:
             raise http.BadRequest("Bad request")
 
