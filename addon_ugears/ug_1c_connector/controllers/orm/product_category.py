@@ -1,9 +1,6 @@
 import pydantic
 from typing import Optional, List
 
-from pydantic import Json
-from pydantic.types import date
-
 from . import utils
 
 
