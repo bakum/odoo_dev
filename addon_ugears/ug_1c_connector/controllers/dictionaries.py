@@ -1,7 +1,7 @@
 import json
 
 from odoo import http
-from .orm.product_category import Category, Product
+from .orm.product_category import Category, Product, Pricelist, PricelistItem
 from .orm.utils import get_search_criterias, apply_update_from_request, parse_data_from_request
 
 
@@ -50,6 +50,10 @@ class PublicCategoryController(http.Controller):
                 mod = Product.from_orm(move).dict()
             elif model_name == 'product.template':
                 mod = Product.from_orm(move).dict()
+            elif model_name == 'product.pricelist':
+                mod = Pricelist.from_orm(move).dict()
+            elif model_name == 'product.pricelist.item':
+                mod = PricelistItem.from_orm(move).dict()
             else:
                 continue
             result.append(mod)
