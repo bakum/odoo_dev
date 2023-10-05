@@ -35,7 +35,7 @@ class PublicCategoryController(http.Controller):
                  ],
                 auth='bearer_api_key', website=False, cors="*", csrf=False,
                 methods=['GET', 'PUT', 'POST', 'DELETE'])
-    def modl(self, guid=None, **kw):
+    def index(self, guid=None, **kw):
         model_name = kw['modelname']
         del kw['modelname']
         data, sk = parse_data_from_request(kw)
