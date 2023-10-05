@@ -29,7 +29,6 @@ class PublicCategoryController(http.Controller):
     #         result.append(mod)
     #     return json.dumps(result)
 
-
     @http.route(['/api/v2/<string:modelname>',
                  '/api/v2/<string:modelname>/<string:guid>',
                  ],

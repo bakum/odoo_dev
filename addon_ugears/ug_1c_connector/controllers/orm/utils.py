@@ -8,6 +8,7 @@ from pydantic.utils import GetterDict
 
 from odoo import fields, models, http
 
+
 def apply_update_from_request(kw, search_criterias, modelname, guid=None):
     try:
         if guid:
@@ -40,6 +41,7 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None):
             deleted = False
         return {"success": deleted}
 
+
 def parse_data_from_request(kw=None):
     try:
         data = json.loads(http.request.httprequest.data)
@@ -48,7 +50,8 @@ def parse_data_from_request(kw=None):
     except:
         data = {'params': {}}
 
-    return data['params'] if kw==None else data['params'], get_search_criterias(kw)
+    return data['params'] if kw == None else data['params'], get_search_criterias(kw)
+
 
 def get_search_criterias(kw):
     search_criterias = []
