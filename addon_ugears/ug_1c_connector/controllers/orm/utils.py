@@ -8,64 +8,36 @@ from pydantic.utils import GetterDict
 
 from odoo import fields, models, http
 
-
 def apply_update_from_request(kw, search_criterias, modelname, guid=None):
+    try:
+        if guid:
+            moves = http.request.env[modelname].sudo().search([('guid', '=', guid)], limit=1)
+        else:
+            moves = http.request.env[modelname].sudo().search(kw)
+    except Exception:
+        raise http.BadRequest("Bad request")
+
     if http.request.httprequest.method == 'GET':
-        try:
-            if guid:
-                moves = http.request.env[modelname].sudo().search([('guid', '=', guid)])
-            else:
-                moves = http.request.env[modelname].sudo().search(kw)
-        except Exception:
-            raise http.BadRequest("Bad request")
-
         return moves
-
-    if http.request.httprequest.method == 'POST':
-        try:
-            if guid:
-                moves = http.request.env[modelname].sudo().search([('guid', '=', guid)], limit=1)
-            else:
-                moves = http.request.env[modelname].sudo().search(kw, limit=1)
-        except:
-            raise http.BadRequest("Bad request")
-
+    elif http.request.httprequest.method == 'POST':
         if (len(kw) != 0 or guid) and len(moves) > 0:
-            written = moves.write(search_criterias)
+            written = moves[0].write(search_criterias)
             mod = {"success": written}
             return mod
         else:
             written = http.request.env[modelname].sudo().create(search_criterias)
             return written
-
-    if http.request.httprequest.method == 'PUT':
-        try:
-            if guid:
-                found = http.request.env[modelname].sudo().search([('guid', '=', guid)], limit=1)
-            else:
-                return {"success": "not found"}
-        except Exception:
-            raise http.BadRequest("Bad request")
-
-        if len(found) > 0:
-            written = found.write(search_criterias)
+    elif http.request.httprequest.method == 'PUT':
+        if (len(moves) > 0) and guid:
+            written = moves[0].write(search_criterias)
         else:
             written = False
         return {"success": written}
-
-    if http.request.httprequest.method == 'DELETE':
-        try:
-            if guid:
-                found = http.request.env[modelname].sudo().search([('guid', '=', guid)], limit=1)
-            else:
-                return {"success": "not found"}
-        except Exception:
-            raise http.BadRequest("Bad request")
-        if len(found) > 0:
-            deleted = found.unlink()
+    elif http.request.httprequest.method == 'DELETE':
+        if (len(moves) > 0) and guid:
+            deleted = moves[0].unlink()
         else:
             deleted = False
-
         return {"success": deleted}
 
 def parse_data_from_request(kw=None):
