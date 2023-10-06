@@ -24,14 +24,14 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None):
     except Exception:
         raise http.BadRequest("Bad request")
 
+    id_ext = None
+    if 'id' in search_criterias:
+        id_ext = search_criterias.get('id')
+        del search_criterias['id']
+
     if http.request.httprequest.method == 'GET':
         return moves
     elif http.request.httprequest.method == 'POST':
-        id_ext = None
-        if 'id' in search_criterias:
-            id_ext = search_criterias.get('id')
-            del search_criterias['id']
-
         if (len(kw) != 0 or guid) and len(moves) > 0:
             written = moves[0].write(search_criterias)
             mod = {"success": written}
@@ -50,18 +50,12 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None):
 
             return written
     elif http.request.httprequest.method == 'PUT':
-        if 'id' in search_criterias:
-            del search_criterias['id']
-
         if (len(moves) > 0) and guid:
             written = moves[0].write(search_criterias)
         else:
             written = False
         return {"success": written}
     elif http.request.httprequest.method == 'DELETE':
-        if 'id' in search_criterias:
-            del search_criterias['id']
-
         if (len(moves) > 0) and guid:
             deleted = moves[0].unlink()
         else:
