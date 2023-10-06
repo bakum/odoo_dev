@@ -12,7 +12,13 @@ from odoo import fields, models, http
 def apply_update_from_request(kw, search_criterias, modelname, guid=None):
     try:
         if guid:
-            moves = http.request.env[modelname].sudo().search([('guid', '=', guid)], limit=1)
+            ext_id = http.request.env['ir.model.data'].sudo().search([('name', '=ilike', '%' + guid)], limit=1)
+            if len(ext_id) > 0:
+                for line in ext_id:
+                    id = line.res_id
+                    moves = http.request.env[modelname].sudo().search([('id', '=', id)], limit=1)
+            else:
+                moves = http.request.env[modelname].sudo().search([('guid', '=', guid)], limit=1)
         else:
             moves = http.request.env[modelname].sudo().search(kw)
     except Exception:
@@ -21,20 +27,41 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None):
     if http.request.httprequest.method == 'GET':
         return moves
     elif http.request.httprequest.method == 'POST':
+        id_ext = None
+        if 'id' in search_criterias:
+            id_ext = search_criterias.get('id')
+            del search_criterias['id']
+
         if (len(kw) != 0 or guid) and len(moves) > 0:
             written = moves[0].write(search_criterias)
             mod = {"success": written}
             return mod
         else:
             written = http.request.env[modelname].sudo().create(search_criterias)
+            if id_ext:
+                found = http.request.env['ir.model.data'].sudo().search([('name', '=', id_ext)], limit=1)
+                if len(found) == 0:
+                    http.request.env['ir.model.data'].sudo().create({
+                        'name': id_ext,
+                        'model': modelname,
+                        'module': '__import__',
+                        'res_id': written.id
+                    })
+
             return written
     elif http.request.httprequest.method == 'PUT':
+        if 'id' in search_criterias:
+            del search_criterias['id']
+
         if (len(moves) > 0) and guid:
             written = moves[0].write(search_criterias)
         else:
             written = False
         return {"success": written}
     elif http.request.httprequest.method == 'DELETE':
+        if 'id' in search_criterias:
+            del search_criterias['id']
+
         if (len(moves) > 0) and guid:
             deleted = moves[0].unlink()
         else:
