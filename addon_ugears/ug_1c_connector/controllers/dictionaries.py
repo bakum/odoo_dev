@@ -62,7 +62,7 @@ class PublicCategoryController(http.Controller):
         '/api/v2/<string:modelname>/synchronization',
     ],
         auth='bearer_api_key', website=False, cors="*", csrf=False,
-        methods=['GET', 'PUT', 'POST', 'DELETE'])
+        methods=['POST'])
     def full_update(self, **kw):
         model_name = kw['modelname']
         del kw['modelname']
