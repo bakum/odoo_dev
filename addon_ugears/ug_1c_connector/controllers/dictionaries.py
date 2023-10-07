@@ -2,7 +2,7 @@ import json
 
 from odoo import http
 from .orm.product_category import Category, Product, Pricelist, PricelistItem
-from .orm.utils import get_search_criterias, apply_update_from_request, parse_data_from_request
+from .orm.utils import get_search_criterias, apply_update_from_request, parse_data_from_request, batch_update_from
 
 
 class PublicCategoryController(http.Controller):
@@ -57,3 +57,14 @@ class PublicCategoryController(http.Controller):
                 continue
             result.append(mod)
         return json.dumps(result)
+
+    @http.route([
+        '/api/v2/<string:modelname>/synchronization',
+    ],
+        auth='bearer_api_key', website=False, cors="*", csrf=False,
+        methods=['GET', 'PUT', 'POST', 'DELETE'])
+    def full_update(self, **kw):
+        model_name = kw['modelname']
+        del kw['modelname']
+        data, sk = parse_data_from_request(kw)
+        return json.dumps(batch_update_from(data,model_name))

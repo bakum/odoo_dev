@@ -63,6 +63,51 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None):
         return {"success": deleted}
 
 
+def batch_update_from(data, modelname):
+    res = []
+    for line in data:
+        moves = dict()
+        code = None
+        if 'id' in line:
+            code = line['id']
+            ext_id = http.request.env['ir.model.data'].sudo().search([('name', '=ilike', '%' + code)], limit=1)
+            if len(ext_id) > 0:
+                for linext in ext_id:
+                    id = linext.res_id
+                    moves = http.request.env[modelname].sudo().search([('id', '=', id)], limit=1)
+            del line['id']
+        if 'guid' in line:
+            if len(moves) == 0:
+                moves = http.request.env[modelname].sudo().search([('guid', '=', line['guid'])], limit=1)
+
+        if moves and len(moves) > 0:
+            written = moves[0].write(line)
+            res.append({
+                'guid': moves[0].guid,
+                'name': moves[0].name,
+                'operation': 'update',
+                'success': written
+            })
+        else:
+            written = http.request.env[modelname].sudo().create(line)
+            if code:
+                found = http.request.env['ir.model.data'].sudo().search([('name', '=', code)], limit=1)
+                if len(found) == 0:
+                    http.request.env['ir.model.data'].sudo().create({
+                        'name': code,
+                        'model': modelname,
+                        'module': '__import__',
+                        'res_id': written.id
+                    })
+            res.append({
+                'guid': written.guid,
+                'name': written.name,
+                'operation': 'create',
+                'success': True
+            })
+    return res
+
+
 def parse_data_from_request(kw=None):
     try:
         data = json.loads(http.request.httprequest.data)
