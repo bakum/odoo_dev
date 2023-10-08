@@ -8,6 +8,16 @@ from pydantic.utils import GetterDict
 
 from odoo import fields, models, http
 
+def parse_external_id(data_dict):
+    code = None
+    for key in data_dict:
+        if key == 'id':
+            code = data_dict[key]
+        ext_id = http.request.env['ir.model.data'].sudo().search([('name', '=', data_dict[key])], limit=1)
+        if len(ext_id) > 0:
+            data_dict[key] = ext_id[0].res_id
+
+    return data_dict, code
 
 def apply_update_from_request(kw, search_criterias, modelname, guid=None):
     try:
@@ -66,22 +76,18 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None):
 def batch_update_from(data, modelname):
     res = []
     for line in data:
+        ln, code = parse_external_id(line)
         moves = dict()
-        code = None
-        if 'id' in line:
-            code = line['id']
-            ext_id = http.request.env['ir.model.data'].sudo().search([('name', '=ilike', '%' + code)], limit=1)
-            if len(ext_id) > 0:
-                for linext in ext_id:
-                    id = linext.res_id
-                    moves = http.request.env[modelname].sudo().search([('id', '=', id)], limit=1)
-            del line['id']
-        if 'guid' in line:
+
+        if 'id' in ln:
+            moves = http.request.env[modelname].sudo().search([('id', '=', ln['id'])], limit=1)
+            del ln['id']
+        if 'guid' in ln:
             if len(moves) == 0:
-                moves = http.request.env[modelname].sudo().search([('guid', '=', line['guid'])], limit=1)
+                moves = http.request.env[modelname].sudo().search([('guid', '=', ln['guid'])], limit=1)
 
         if moves and len(moves) > 0:
-            written = moves[0].write(line)
+            written = moves[0].write(ln)
             res.append({
                 'guid': moves[0].guid,
                 'name': moves[0].name,
@@ -89,7 +95,7 @@ def batch_update_from(data, modelname):
                 'success': written
             })
         else:
-            written = http.request.env[modelname].sudo().create(line)
+            written = http.request.env[modelname].sudo().create(ln)
             if code:
                 found = http.request.env['ir.model.data'].sudo().search([('name', '=', code)], limit=1)
                 if len(found) == 0:

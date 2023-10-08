@@ -4,6 +4,13 @@ from odoo import http
 from .orm.product_category import Category, Product, Pricelist, PricelistItem
 from .orm.utils import get_search_criterias, apply_update_from_request, parse_data_from_request, batch_update_from
 
+ORM_DICT = {
+    'product.category' : Category,
+    'product.product' : Product,
+    'product.template' : Product,
+    'product.pricelist' : Pricelist,
+    'product.pricelist.item' : PricelistItem
+}
 
 class PublicCategoryController(http.Controller):
     @http.route(['/api/v2/test', ],
@@ -43,18 +50,20 @@ class PublicCategoryController(http.Controller):
             return json.dumps(result_dict)
         result = []
         for move in result_dict:
-            if model_name == 'product.category':
-                mod = Category.from_orm(move).dict()
-            elif model_name == 'product.product':
-                mod = Product.from_orm(move).dict()
-            elif model_name == 'product.template':
-                mod = Product.from_orm(move).dict()
-            elif model_name == 'product.pricelist':
-                mod = Pricelist.from_orm(move).dict()
-            elif model_name == 'product.pricelist.item':
-                mod = PricelistItem.from_orm(move).dict()
-            else:
-                continue
+            function = ORM_DICT[model_name]
+            mod = function.from_orm(move).dict()
+            # if model_name == 'product.category':
+            #     mod = Category.from_orm(move).dict()
+            # elif model_name == 'product.product':
+            #     mod = Product.from_orm(move).dict()
+            # elif model_name == 'product.template':
+            #     mod = Product.from_orm(move).dict()
+            # elif model_name == 'product.pricelist':
+            #     mod = Pricelist.from_orm(move).dict()
+            # elif model_name == 'product.pricelist.item':
+            #     mod = PricelistItem.from_orm(move).dict()
+            # else:
+            #     continue
             result.append(mod)
         return json.dumps(result)
 
