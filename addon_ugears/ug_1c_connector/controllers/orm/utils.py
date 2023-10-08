@@ -8,6 +8,7 @@ from pydantic.utils import GetterDict
 
 from odoo import fields, models, http
 
+
 def parse_external_id(data_dict):
     code = None
     for key in data_dict:
@@ -19,10 +20,11 @@ def parse_external_id(data_dict):
 
     return data_dict, code
 
+
 def apply_update_from_request(kw, search_criterias, modelname, guid=None):
     try:
         if guid:
-            ext_id = http.request.env['ir.model.data'].sudo().search([('name', '=ilike', '%' + guid)], limit=1)
+            ext_id = http.request.env['ir.model.data'].sudo().search([('name', '=', guid)], limit=1)
             if len(ext_id) > 0:
                 for line in ext_id:
                     id = line.res_id
@@ -75,6 +77,8 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None):
 
 def batch_update_from(data, modelname):
     res = []
+    if type(data) != list:
+        return res
     for line in data:
         ln, code = parse_external_id(line)
         moves = dict()
