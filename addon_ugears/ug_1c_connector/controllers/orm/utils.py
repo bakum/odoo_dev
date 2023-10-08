@@ -78,7 +78,9 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None):
 def batch_update_from(data, modelname):
     res = []
     if type(data) != list:
-        return res
+        dict_1 = data
+        data = []
+        data.append(dict_1)
     for line in data:
         ln, code = parse_external_id(line)
         moves = dict()
