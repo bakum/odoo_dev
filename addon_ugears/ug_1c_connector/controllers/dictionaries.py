@@ -50,8 +50,11 @@ class PublicCategoryController(http.Controller):
             return json.dumps(result_dict)
         result = []
         for move in result_dict:
-            function = ORM_DICT[model_name]
-            mod = function.from_orm(move).dict()
+            try:
+                function = ORM_DICT[model_name]
+                mod = function.from_orm(move).dict()
+            except KeyError:
+                continue
             # if model_name == 'product.category':
             #     mod = Category.from_orm(move).dict()
             # elif model_name == 'product.product':
