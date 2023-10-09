@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from odoo import models, fields, api, _
 import json
 from urllib.request import urlopen
@@ -34,12 +36,25 @@ class ResCurrency(models.Model):
             if rec.name == 'UAH':
                 rec.code = '980'
                 continue
-            URL = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode={0}&json'.format(rec.name)
+            x = datetime.now()
+            URL = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode={0}&date={1}{2}{3}&json'.format(
+                rec.name, x.strftime("%Y"), x.strftime("%m"), x.strftime("%d"))
             try:
                 res = json.load(urlopen(URL))
             except:
                 raise UserError(_('Could not connect to %s' % URL))
+
             for line in res:
                 rec.code = line.get('r030', '')
+                rec.rate_ids = [(0, 0, {
+                    'rate': line.get('rate', 1),
+                    # 'company_id': None
+                })]
+                # rec.write({
+                #     'rate_ids': [(0, 0, {
+                #         'rate': line.get('rate', 1)
+                #     })]
+                # })
+
         if len(self) == 1:
             return self.create_notification()
