@@ -46,10 +46,19 @@ class ResCurrency(models.Model):
 
             for line in res:
                 rec.code = line.get('r030', '')
-                rec.rate_ids = [(0, 0, {
-                    'rate': line.get('rate', 1),
-                    # 'company_id': None
-                })]
+                rates = self.env['res.currency.rate'].sudo().search([
+                    ('company_id', '=', self.env.user.company_id.id),
+                    ('currency_id', '=', rec.id),
+                    ('name', '=', x.date())
+                ])
+
+                if len(rates) > 0:
+                    rates[0].write({'rate': line.get('rate', 1)})
+                else:
+                    rec.rate_ids = [(0, 0, {
+                        'rate': line.get('rate', 1),
+                        # 'company_id': None
+                    })]
                 # rec.write({
                 #     'rate_ids': [(0, 0, {
                 #         'rate': line.get('rate', 1)
