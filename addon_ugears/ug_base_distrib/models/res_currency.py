@@ -32,6 +32,31 @@ class ResCurrency(models.Model):
             vals.code = "980"
 
     def load_from_nbu(self):
+        uah = self.env['res.currency'].sudo().search([('name', '=', 'UAH'), ('active', '=', True)])
+        if len(uah) == 0:
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'type': 'warning',
+                    'title': _('Warning!'),
+                    'message': _('UAH currency is not used in accounting!'),
+                    'sticky': False,
+                }
+            }
+
+        operation_allow = self.env.company.currency_id.id == uah[0].id
+        if not operation_allow:
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'type': 'warning',
+                    'title': _('Warning!'),
+                    'message': _('UAH is not the currency of the current organization!'),
+                    'sticky': False,
+                }
+            }
         for rec in self:
             if rec.name == 'UAH':
                 rec.code = '980'
@@ -47,7 +72,7 @@ class ResCurrency(models.Model):
             for line in res:
                 rec.code = line.get('r030', '')
                 rates = self.env['res.currency.rate'].sudo().search([
-                    ('company_id', '=', self.env.user.company_id.id),
+                    ('company_id', '=', self.env.company.id),
                     ('currency_id', '=', rec.id),
                     ('name', '=', x.date())
                 ])
@@ -57,7 +82,7 @@ class ResCurrency(models.Model):
                 else:
                     rec.rate_ids = [(0, 0, {
                         'rate': line.get('rate', 1),
-                        # 'company_id': None
+                        'company_id': self.env.company.id
                     })]
                 # rec.write({
                 #     'rate_ids': [(0, 0, {
