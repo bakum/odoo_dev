@@ -29,14 +29,14 @@
                     <notebook>
                         <page string="Currency">
                             <field name="currency_ids">
-                                <tree create="true" editable="bottom">
-                                    <field name="currency" optional="show"/>
+                                <tree create="true" editable="top">
+                                    <field name="currency" options="{'no_create': True, 'no_open': True}"/>
                                 </tree>
                             </field>
                         </page>
                         <page string="Rates" attrs="{'invisible': [('len_rates', '=', 0)]}">
                             <field name="rates_ids">
-                                <tree create="false" editable="bottom">
+                                <tree create="false" editable="top">
                                     <field name="name" readonly="1"/>
                                     <field name="currency" readonly="1"/>
                                     <field name="company_id" readonly="1" optional="show"/>
