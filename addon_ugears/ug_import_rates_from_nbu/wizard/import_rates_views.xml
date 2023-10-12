@@ -8,43 +8,45 @@
                 <form string="Import currency rates from NBU">
                     <header>
                     </header>
-                    <group>
-                        <field name="len_rates" invisible="1"/>
-                        <field name="len_currency" invisible="1"/>
-                        <field name="company" readonly="1"/>
-                    </group>
-                    <div class="oe_title">
-                        <H3>
-                            <field name="name" readonly="1"/>
-                        </H3>
-                    </div>
-                    <group>
+                    <sheet>
                         <group>
-                            <field name="date_from"/>
+                            <field name="len_rates" invisible="1"/>
+                            <field name="len_currency" invisible="1"/>
+                            <field name="company" readonly="1"/>
                         </group>
+                        <div class="oe_title">
+                            <H3>
+                                <field name="name" readonly="1"/>
+                            </H3>
+                        </div>
                         <group>
-                            <field name="date_to"/>
+                            <group>
+                                <field name="date_from"/>
+                            </group>
+                            <group>
+                                <field name="date_to"/>
+                            </group>
                         </group>
-                    </group>
-                    <notebook>
-                        <page string="Currency">
-                            <field name="currency_ids">
-                                <tree create="true" editable="top">
-                                    <field name="currency" options="{'no_create': True, 'no_open': True}"/>
-                                </tree>
-                            </field>
-                        </page>
-                        <page string="Rates" attrs="{'invisible': [('len_rates', '=', 0)]}">
-                            <field name="rates_ids">
-                                <tree create="false" editable="top">
-                                    <field name="name" readonly="1"/>
-                                    <field name="currency" readonly="1"/>
-                                    <field name="company_id" readonly="1" optional="show"/>
-                                    <field name="rate" readonly="1"/>
-                                </tree>
-                            </field>
-                        </page>
-                    </notebook>
+                        <notebook>
+                            <page string="Currency">
+                                <field name="currency_ids">
+                                    <tree create="true" editable="top">
+                                        <field name="currency" options="{'no_create': True, 'no_open': True}"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Rates" attrs="{'invisible': [('len_rates', '=', 0)]}">
+                                <field name="rates_ids">
+                                    <tree create="false" editable="top">
+                                        <field name="name" readonly="1"/>
+                                        <field name="currency" readonly="1"/>
+                                        <field name="company_id" readonly="1" optional="show"/>
+                                        <field name="rate" readonly="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
                     <footer>
                         <button string="Load rates" name="load_rates_from_nbu" class="oe_highlight" type="object"
                                 attrs="{'invisible': [('len_currency', '=', 0)]}" default_focus="1"/>
