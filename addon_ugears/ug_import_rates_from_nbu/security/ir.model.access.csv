@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+ug_import_rates_from_nbu.access_ug_rates_from_nbu,access_ug_rates_from_nbu,ug_import_rates_from_nbu.model_ug_rates_from_nbu,base.group_user,1,1,1,1
+ug_import_rates_from_nbu.access_ug_rates_from_nbu_list,access_ug_rates_from_nbu_list,ug_import_rates_from_nbu.model_ug_rates_from_nbu_list,base.group_user,1,1,1,1
+ug_import_rates_from_nbu.access_ug_currency_from_nbu_list,access_ug_currency_from_nbu_list,ug_import_rates_from_nbu.model_ug_currency_from_nbu_list,base.group_user,1,1,1,1

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="ug_import_rates_from_nbu_view" model="ir.ui.view">
+            <field name="name">Import currency rates from NBU</field>
+            <field name="model">ug.rates.from.nbu</field>
+            <field name="arch" type="xml">
+                <form string="Import currency rates from NBU">
+                    <header>
+                    </header>
+                    <group>
+                        <field name="len_rates" invisible="1"/>
+                        <field name="len_currency" invisible="1"/>
+                        <field name="company" readonly="1"/>
+                    </group>
+                    <div class="oe_title">
+                        <H3>
+                            <field name="name" readonly="1"/>
+                        </H3>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="date_from"/>
+                        </group>
+                        <group>
+                            <field name="date_to"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Currency">
+                            <field name="currency_ids">
+                                <tree create="true" editable="bottom">
+                                    <field name="currency" optional="show"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Rates" attrs="{'invisible': [('len_rates', '=', 0)]}">
+                            <field name="rates_ids">
+                                <tree create="false" editable="bottom">
+                                    <field name="name" readonly="1"/>
+                                    <field name="currency" readonly="1"/>
+                                    <field name="company_id" readonly="1" optional="show"/>
+                                    <field name="rate" readonly="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button string="Load rates" name="load_rates_from_nbu" class="oe_highlight" type="object"
+                                attrs="{'invisible': [('len_currency', '=', 0)]}" default_focus="1"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_import_rates_from_nbu" model="ir.actions.act_window">
+            <field name="name">Import currency rates from NBU</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ug.rates.from.nbu</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="ug_import_rates_from_nbu_view"/>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>
