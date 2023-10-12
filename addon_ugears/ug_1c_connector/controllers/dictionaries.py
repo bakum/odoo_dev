@@ -1,16 +1,18 @@
 import json
 
 from odoo import http
-from .orm.product_category import Category, Product, Pricelist, PricelistItem
+from .orm.product_category import Category, Product, Pricelist, PricelistItem, Rates
 from .orm.utils import get_search_criterias, apply_update_from_request, parse_data_from_request, batch_update_from
 
 ORM_DICT = {
-    'product.category' : Category,
-    'product.product' : Product,
-    'product.template' : Product,
-    'product.pricelist' : Pricelist,
-    'product.pricelist.item' : PricelistItem
+    'product.category': Category,
+    'product.product': Product,
+    'product.template': Product,
+    'product.pricelist': Pricelist,
+    'product.pricelist.item': PricelistItem,
+    'res.currency.rate': Rates
 }
+
 
 class PublicCategoryController(http.Controller):
     @http.route(['/api/v2/test', ],
@@ -79,4 +81,4 @@ class PublicCategoryController(http.Controller):
         model_name = kw['modelname']
         del kw['modelname']
         data, sk = parse_data_from_request(kw)
-        return json.dumps(batch_update_from(data,model_name))
+        return json.dumps(batch_update_from(data, model_name))

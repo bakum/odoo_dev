@@ -199,8 +199,10 @@ class GenericOdooGetter(GetterDict):
             field = self._obj._fields[key]
             if res is False and field.type != "boolean":
                 return None
-            if field.type == "date" and not res:
-                return None
+            if field.type == "date":
+                if not res:
+                    return None
+                return str(res)
             if field.type == "datetime":
                 if not res:
                     return None

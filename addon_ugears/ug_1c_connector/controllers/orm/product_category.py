@@ -1,7 +1,15 @@
-import pydantic
 from typing import Optional, List
 
+import pydantic
+
 from . import utils
+
+
+class Company(pydantic.BaseModel):
+    id: int
+    name: str
+    email: Optional[str] = None
+    phone: Optional[str] = None
 
 
 class Category(pydantic.BaseModel):
@@ -61,6 +69,18 @@ class Pricelist(pydantic.BaseModel):
     name: str
     guid: Optional[str] = None
     item_ids: List[PricelistItem]
+
+    class Config:
+        orm_mode = True
+        getter_dict = utils.GenericOdooGetter
+
+
+class Rates(pydantic.BaseModel):
+    id: int
+    name: str
+    currency_id: Currency
+    company_id: int
+    rate: float
 
     class Config:
         orm_mode = True
