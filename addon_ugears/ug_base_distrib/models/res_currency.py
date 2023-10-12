@@ -31,7 +31,41 @@ class ResCurrency(models.Model):
         for vals in self.search([('name', '=', 'UAH')]):
             vals.code = "980"
 
+    def _cron_load_from_nbu(self):
+        uah = self.env['res.currency'].sudo().search([('name', '=', 'UAH'), ('active', '=', True)])
+        if len(uah) == 0:
+            return
+        operation_allow = self.env.company.currency_id.id == uah[0].id
+        if not operation_allow:
+            return
+        currency = self.env['res.currency'].sudo().search([('name', '!=', 'UAH'), ('active', '=', True)])
+        x = datetime.now()
+        for rec in currency:
+            URL = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode={0}&date={1}{2}{3}&json'.format(
+                rec.name, x.strftime("%Y"), x.strftime("%m"), x.strftime("%d"))
+            try:
+                res = json.load(urlopen(URL))
+            except:
+                raise UserError(_('Could not connect to %s' % URL))
+
+            for line in res:
+                # rec.code = line.get('r030', '')
+                rates = self.env['res.currency.rate'].sudo().search([
+                    ('company_id', '=', self.env.company.id),
+                    ('currency_id', '=', rec.id),
+                    ('name', '=', x.date())
+                ])
+
+                if len(rates) > 0:
+                    rates[0].write({'rate': line.get('rate', 1)})
+                else:
+                    rec.rate_ids = [(0, 0, {
+                        'rate': line.get('rate', 1),
+                        'company_id': self.env.company.id
+                    })]
+
     def load_from_nbu(self):
+        # self._cron_load_from_nbu()
         uah = self.env['res.currency'].sudo().search([('name', '=', 'UAH'), ('active', '=', True)])
         if len(uah) == 0:
             return {
