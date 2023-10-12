@@ -67,7 +67,7 @@ class UgImportRatesFromNbu(models.TransientModel):
             'tag': 'display_notification',
             'params': {
                 'title': _('Success!'),
-                'message': _('Currency code successfully loaded!'),
+                'message': _('Currency rates successfully loaded!'),
                 'sticky': False,
             }
         }
