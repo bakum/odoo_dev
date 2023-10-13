@@ -25,6 +25,7 @@
         'views/user_view.xml',
         'views/partner_view.xml',
         'views/distrib_theme.xml',
+        'views/distrib_channels.xml',
     ],
     'depends': [
         'base',

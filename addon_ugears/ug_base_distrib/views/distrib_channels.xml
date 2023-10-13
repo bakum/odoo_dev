@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_distrib_sales_channels_form" model="ir.ui.view">
+        <field name="name">distrib.sales.channels.form</field>
+        <field name="model">distrib.sales.channels</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="active" invisible="1"/>
+                    <div class="oe_button_box" name="button_box"/>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
+                            attrs="{'invisible': [('active', '=', True)]}"/>
+
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="guid" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_distrib_sales_channels_tree" model="ir.ui.view">
+        <field name="name">distrib.sales.channels.tree</field>
+        <field name="model">distrib.sales.channels</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_distrib_sales_channels_search" model="ir.ui.view">
+        <field name="name">distrib.sales.channels.search</field>
+        <field name="model">distrib.sales.channels</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" filter_domain="[('name', 'ilike', self)]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived" domain="[('active','=',False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_distrib_sales_channels_form" model="ir.actions.act_window">
+        <field name="name">Sales channels</field>
+        <field name="res_model">distrib.sales.channels</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+            id="menu_distrib_sales_channels"
+            name="Sales Channels"
+            parent="menu_distrib_settings_distrib"
+            action="ug_base_distrib.action_distrib_sales_channels_form"
+            groups="ug_base_distrib.group_distrib_manager"
+            sequence="12"/>
+</odoo>

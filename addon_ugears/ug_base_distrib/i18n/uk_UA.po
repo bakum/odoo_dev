@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-13 08:32+0000\n"
-"PO-Revision-Date: 2023-10-13 08:32+0000\n"
+"POT-Creation-Date: 2023-10-13 10:09+0000\n"
+"PO-Revision-Date: 2023-10-13 10:09+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -40,6 +40,7 @@ msgstr ""
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__active
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__active
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__active
 msgid "Active"
 msgstr "Активний"
 
@@ -93,6 +94,8 @@ msgid "Apply"
 msgstr "Застосувати"
 
 #. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_sales_channels_form
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_sales_channels_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_theme_form
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_theme_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_form
@@ -226,6 +229,7 @@ msgstr "Створити новий продукт"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__create_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__create_uid
 msgid "Created by"
 msgstr ""
 
@@ -235,6 +239,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__create_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__create_date
 msgid "Created on"
 msgstr ""
 
@@ -299,6 +304,7 @@ msgstr "Різниця"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_statistic__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -432,6 +438,7 @@ msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__guid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__guid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_product_category__guid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_product_pricelist__guid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_product_product__guid
@@ -467,6 +474,7 @@ msgstr "Історія"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_statistic__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__id
 msgid "ID"
 msgstr ""
 
@@ -602,6 +610,7 @@ msgstr "Дата останньої інвентаризації"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_statistic____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels____last_update
 msgid "Last Modified on"
 msgstr ""
 
@@ -611,6 +620,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__write_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__write_uid
 msgid "Last Updated by"
 msgstr ""
 
@@ -620,6 +630,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__write_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__write_date
 msgid "Last Updated on"
 msgstr ""
 
@@ -701,6 +712,7 @@ msgstr ""
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__name
 msgid "Name"
 msgstr "Назва"
 
@@ -987,6 +999,17 @@ msgstr "Огляд"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__message_has_sms_error
 msgid "SMS Delivery error"
 msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_distrib_sales_channels
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_sales_channels
+msgid "Sales Channels"
+msgstr "Канали продажу"
+
+#. module: ug_base_distrib
+#: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_sales_channels_form
+msgid "Sales channels"
+msgstr "Канали продажу"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__inventory_date

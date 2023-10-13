@@ -1,4 +1,5 @@
 from . import distributors
+from . import distrib_sales_channels
 from . import distrib_move
 from . import distrib_move_line
 from . import distrib_quant

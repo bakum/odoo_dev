@@ -96,3 +96,13 @@ class Theme(pydantic.BaseModel):
     class Config:
         orm_mode = True
         getter_dict = utils.GenericOdooGetter
+
+
+class SalesChannels(pydantic.BaseModel):
+    id: int
+    name: str
+    guid: Optional[str] = None
+
+    class Config:
+        orm_mode = True
+        getter_dict = utils.GenericOdooGetter
