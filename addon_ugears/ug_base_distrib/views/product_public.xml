@@ -24,6 +24,7 @@
                     </div>
                     <xpath expr="//field[@name='uom_po_id']" position="after">
                         <field name="guid" readonly="1"/>
+                        <field name="theme_id" options="{'no_open': True, 'no_quick_create': True}"/>
                     </xpath>
                 </data>
             </field>

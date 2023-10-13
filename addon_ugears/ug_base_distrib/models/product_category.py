@@ -9,6 +9,7 @@ class PublicProduct(models.Model):
     qty_available_dist = fields.Float(
         'Quantity On Distributor', compute='_compute_quantities_dist',
         compute_sudo=False, digits='Product Unit of Measure')
+    theme_id = fields.Many2one('distrib.product.theme','Theme')
 
     def _compute_quantities_dist(self):
         res = self._compute_quantities_dict_dist()

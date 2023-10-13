@@ -1,7 +1,7 @@
 import json
 
 from odoo import http
-from .orm.product_category import Category, Product, Pricelist, PricelistItem, Rates
+from .orm.product_category import Category, Product, Pricelist, PricelistItem, Rates, Theme
 from .orm.utils import get_search_criterias, apply_update_from_request, parse_data_from_request, batch_update_from
 
 ORM_DICT = {
@@ -10,7 +10,8 @@ ORM_DICT = {
     'product.template': Product,
     'product.pricelist': Pricelist,
     'product.pricelist.item': PricelistItem,
-    'res.currency.rate': Rates
+    'res.currency.rate': Rates,
+    'distrib.product.theme': Theme,
 }
 
 

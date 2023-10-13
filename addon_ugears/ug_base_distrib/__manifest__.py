@@ -24,6 +24,7 @@
         'views/pricelist_view.xml',
         'views/user_view.xml',
         'views/partner_view.xml',
+        'views/distrib_theme.xml',
     ],
     'depends': [
         'base',
