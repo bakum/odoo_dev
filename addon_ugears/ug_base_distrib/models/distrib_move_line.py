@@ -26,6 +26,10 @@ class DistributorMoveLines(models.Model):
         related='move_id.distrib_id.pricelist_id.currency_id',
         store=True, index=True, precompute=True)
 
+    channel_id = fields.Many2one(
+        related='move_id.channel_id',
+        store=True, index=True, precompute=True)
+
     date = fields.Datetime(related='move_id.date_order', string="Move Data", store=True, precompute=True)
     salesman_id = fields.Many2one(
         related='move_id.user_id',
@@ -336,7 +340,7 @@ class DistributorMoveLines(models.Model):
             if not line.product_uom or not line.product_id or not line.distrib_id.pricelist_id:
                 line.price_unit = 0.0
             else:
-                #price = line.with_company(line.company_id)._get_display_price()
+                # price = line.with_company(line.company_id)._get_display_price()
                 price = line._get_display_price()
                 line.price_unit = price
                 # line.price_unit = line.product_id._get_tax_included_unit_price(

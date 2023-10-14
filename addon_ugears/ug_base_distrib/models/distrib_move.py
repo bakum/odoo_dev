@@ -54,6 +54,12 @@ class DistributorMove(models.Model):
         default=lambda self: self.env.user.id,
         readonly=False, index=True, tracking=True
     )
+    channel_id = fields.Many2one(
+        comodel_name='distrib.sales.channels',
+        string="Sales Channel",
+        states=LOCKED_FIELD_STATES,
+        readonly=False, index=True, tracking=True
+    )
     move_line = fields.One2many(
         comodel_name='distrib.distributors.move.line',
         inverse_name='move_id',

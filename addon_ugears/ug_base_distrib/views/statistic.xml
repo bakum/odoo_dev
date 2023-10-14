@@ -34,12 +34,71 @@
         <field name="res_model">distrib.distributors.move.statistic</field>
         <field name="view_mode">pivot,tree</field>
     </record>
+    <record id="view_distributors_distrib_statistic_search" model="ir.ui.view">
+        <field name="name">distrib.distributors.move.statistic.search</field>
+        <field name="model">distrib.distributors.move.statistic</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="product_id" filter_domain="['|', ('product_id', 'ilike', self), ('distrib_id', 'ilike', self)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_distrib_channels_statistic_pivot" model="ir.ui.view">
+        <field name="name">distrib.move.channels.statistic.pivot</field>
+        <field name="model">distrib.move.channels.statistic</field>
+        <field name="arch" type="xml">
+            <pivot string="Journal Items" sample="1">
+                <field name="distrib_id" type="row"/>
+                <field name="channel_id" type="row"/>
+                <!--    <field name="debit" type="measure"/>
+                    <field name="credit" type="measure"/> -->
+                <field name="qtt" type="measure"/>
+                <field name="total" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="view_distrib_channels_statistic_tree" model="ir.ui.view">
+        <field name="name">distrib.move.channels.statistic.tree</field>
+        <field name="model">distrib.move.channels.statistic</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="distrib_id"/>
+                <field name="channel_id"/>
+                <field name="qtt" type="measure"/>
+                <field name="total" type="measure"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_distrib_channels_statistic_search" model="ir.ui.view">
+        <field name="name">distrib.move.channels.statistic.search</field>
+        <field name="model">distrib.move.channels.statistic</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="channel_id" filter_domain="['|', ('channel_id', 'ilike', self), ('distrib_id', 'ilike', self)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_distrib_channels_statistic" model="ir.actions.act_window">
+        <field name="name">Distributors Sales Channels</field>
+        <field name="res_model">distrib.move.channels.statistic</field>
+        <field name="view_mode">pivot,tree</field>
+    </record>
 
     <menuitem
             id="menu_distrib_stock_report"
             name="Distributors Stock"
             parent="menu_distrib_report"
             action="action_distrib_statistic"
+            groups="ug_base_distrib.group_distrib_manager,ug_base_distrib.group_distrib_user"
+            sequence="12"/>
+
+    <menuitem
+            id="menu_distrib_stock_channels_report"
+            name="Sales Channels"
+            parent="menu_distrib_report"
+            action="action_distrib_channels_statistic"
             groups="ug_base_distrib.group_distrib_manager,ug_base_distrib.group_distrib_user"
             sequence="12"/>
 </odoo>
