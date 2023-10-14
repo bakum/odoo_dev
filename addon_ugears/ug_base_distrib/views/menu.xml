@@ -4,7 +4,7 @@
             id="menu_distrib_root"
             name="Distributions"
             groups="ug_base_distrib.group_distrib_manager,ug_base_distrib.group_distrib_user"
-            sequence="10"/>
+            sequence="4"/>
     <menuitem
             id="menu_distrib_review"
             name="Review"
