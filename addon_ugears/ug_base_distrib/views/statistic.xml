@@ -50,7 +50,8 @@
         <field name="arch" type="xml">
             <pivot string="Journal Items" sample="1">
                 <field name="distrib_id" type="row"/>
-                <field name="channel_id" type="row"/>
+                <field name="currency_id" type="row"/>
+                <field name="channel_id" type="col"/>
                 <!--    <field name="debit" type="measure"/>
                     <field name="credit" type="measure"/> -->
                 <field name="qtt" type="measure"/>
