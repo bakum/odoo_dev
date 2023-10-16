@@ -1,4 +1,4 @@
-from odoo import models, fields, tools
+from odoo import models, fields, tools, api
 
 
 class DistributorMoveLinesStatistic(models.Model):
@@ -56,14 +56,16 @@ class MoveLinesChannelsStatistic(models.Model):
                                           string="Category",
                                           readonly=True)
     currency_id = fields.Many2one(comodel_name='res.currency',
-                                          string="Currency",
-                                          readonly=True)
+                                  string="Currency",
+                                  readonly=True)
     channel_id = fields.Many2one(comodel_name='distrib.sales.channels',
-                                          string="Sales Channel",
-                                          readonly=True)
+                                 string="Sales Channel",
+                                 readonly=True)
     qtt = fields.Float('Quantity', readonly=True)
     total = fields.Float('Total', readonly=True)
     avg_price = fields.Float('Average Price', readonly=True)
+    rate = fields.Float(compute='_compute_current_rate', string='Current Rate', digits=(12, 6),
+                        help='The rate of the currency to the currency of rate 1.')
 
     def init(self):
         tools.drop_view_if_exists(self._cr, 'distrib_move_channels_statistic')
@@ -89,3 +91,18 @@ class MoveLinesChannelsStatistic(models.Model):
             order by line.product_id
             )""")
 
+    @api.depends('currency_id')
+    def _compute_current_rate(self):
+        date = self._context.get('date') or fields.Date.today()
+        company_id = self.env.company.id or self.env.user.company_id.id
+        query = """SELECT c.id, (SELECT r.rate FROM res_currency_rate r
+                                  WHERE r.currency_id = c.id AND r.name <= %s
+                                    AND (r.company_id IS NULL OR r.company_id = %s)
+                               ORDER BY r.company_id, r.name DESC
+                                  LIMIT 1) AS rate
+                   FROM res_currency c
+                   WHERE c.id = %s"""
+        self._cr.execute(query, (date, company_id, self.currency_id.id))
+        currency_rates = dict(self._cr.fetchall())
+        for currency in self:
+            currency.rate = (1 / currency_rates.get(currency.currency_id.id)) or 1.0
