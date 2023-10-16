@@ -62,10 +62,12 @@ class MoveLinesChannelsStatistic(models.Model):
                                  string="Sales Channel",
                                  readonly=True)
     qtt = fields.Float('Quantity', readonly=True)
-    total = fields.Float('Total', readonly=True)
-    avg_price = fields.Float('Average Price', readonly=True)
+    total = fields.Monetary('Total', readonly=True)
+    avg_price = fields.Monetary('Average Price', readonly=True)
     rate = fields.Float(compute='_compute_current_rate', string='Current Rate', digits=(12, 6),
                         help='The rate of the currency to the currency of rate 1.')
+
+    total_uah = fields.Float('Total UAH', compute='_compute_total_uah', )
 
     def init(self):
         tools.drop_view_if_exists(self._cr, 'distrib_move_channels_statistic')
@@ -105,4 +107,12 @@ class MoveLinesChannelsStatistic(models.Model):
         self._cr.execute(query, (date, company_id, self.currency_id.id))
         currency_rates = dict(self._cr.fetchall())
         for currency in self:
-            currency.rate = (1 / currency_rates.get(currency.currency_id.id)) or 1.0
+            if currency_rates.get(currency.currency_id.id):
+                currency.rate = (1 / currency_rates.get(currency.currency_id.id)) or 1.0
+            else:
+                currency.rate = 1.0
+
+    @api.depends('currency_id', 'rate')
+    def _compute_total_uah(self):
+        for currency in self:
+            currency.total_uah = currency.rate * currency.total
