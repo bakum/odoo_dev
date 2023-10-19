@@ -23,7 +23,7 @@ class ResCurrency(models.Model):
         }
 
     @api.model
-    def _update_val_code(self):
+    def _update_code(self):
         for vals in self.search([('name', '=', 'USD')]):
             vals.code = "840"
         for vals in self.search([('name', '=', 'EUR')]):
