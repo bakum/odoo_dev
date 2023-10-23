@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-14 16:41+0000\n"
-"PO-Revision-Date: 2023-10-14 16:41+0000\n"
+"POT-Creation-Date: 2023-10-23 12:46+0000\n"
+"PO-Revision-Date: 2023-10-23 12:46+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -41,6 +41,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__active
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__active
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__active
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__active
 msgid "Active"
 msgstr "Активный"
 
@@ -98,6 +99,7 @@ msgstr "Применить"
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_sales_channels_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_theme_form
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_theme_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_types_marketing_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_form
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_search
 msgid "Archived"
@@ -236,6 +238,7 @@ msgstr "Создать новый продукт"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__create_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__create_uid
 msgid "Created by"
 msgstr ""
 
@@ -246,6 +249,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__create_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__create_date
 msgid "Created on"
 msgstr ""
 
@@ -272,6 +276,11 @@ msgstr "Валюта"
 #, python-format
 msgid "Currency code successfully loaded!"
 msgstr "Код валюты успешно загружен!"
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__rate
+msgid "Current Rate"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,help:ug_base_distrib.field_product_product__qty_available_dist
@@ -313,6 +322,7 @@ msgstr "Разница"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -490,6 +500,7 @@ msgstr "История"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__id
 msgid "ID"
 msgstr ""
 
@@ -628,6 +639,7 @@ msgstr "Последняя инвентаризация"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings____last_update
 msgid "Last Modified on"
 msgstr ""
 
@@ -638,6 +650,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__write_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__write_uid
 msgid "Last Updated by"
 msgstr ""
 
@@ -648,6 +661,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__write_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__write_date
 msgid "Last Updated on"
 msgstr ""
 
@@ -672,6 +686,11 @@ msgstr "Выполнено"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__message_main_attachment_id
 msgid "Main Attachment"
 msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_settings_marketings
+msgid "Marketing"
+msgstr "Маркетинг"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_has_error
@@ -730,6 +749,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__name
 msgid "Name"
 msgstr "Наименование"
 
@@ -1112,6 +1132,11 @@ msgid "The product's counted quantity."
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_move_channels_statistic__rate
+msgid "The rate of the currency to the currency of rate 1."
+msgstr ""
+
+#. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_form
 msgid ""
 "The selected operation will change the status and cancel transaction. Are "
@@ -1143,10 +1168,26 @@ msgid "Total"
 msgstr "Всего"
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__total_uah
+msgid "Total UAH"
+msgstr "Всего ГРН"
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors__activity_exception_decoration
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors_move__activity_exception_decoration
 msgid "Type of the exception activity on record."
 msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_types_of_marketings
+msgid "Types of Marketings"
+msgstr "Типы статей маркетинговых расходов"
+
+#. module: ug_base_distrib
+#: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_types_marketing
+#: model:ir.model,name:ug_base_distrib.model_distrib_types_marketings
+msgid "Types of marketings"
+msgstr "Типы статей маркетинговых расходов"
 
 #. module: ug_base_distrib
 #. odoo-python
