@@ -4,8 +4,10 @@
         <field name="name">distrib.types.marketings.tree</field>
         <field name="model">distrib.types.marketings</field>
         <field name="arch" type="xml">
-            <tree editable="top" delete="0">
+       <!--     <tree editable="top" delete="0" multi_edit="1"> -->
+            <tree multi_edit="1">
                 <field name="name"/>
+                <field name="active"/>
             </tree>
         </field>
     </record>

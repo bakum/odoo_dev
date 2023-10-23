@@ -1181,13 +1181,13 @@ msgstr ""
 #. module: ug_base_distrib
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_types_of_marketings
 msgid "Types of Marketings"
-msgstr "Типы статей маркетинговых расходов"
+msgstr "Статьи маркетинговых расходов"
 
 #. module: ug_base_distrib
 #: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_types_marketing
 #: model:ir.model,name:ug_base_distrib.model_distrib_types_marketings
 msgid "Types of marketings"
-msgstr "Типы статей маркетинговых расходов"
+msgstr "Статьи маркетинговых расходов"
 
 #. module: ug_base_distrib
 #. odoo-python
