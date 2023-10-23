@@ -26,6 +26,8 @@
         'views/partner_view.xml',
         'views/distrib_theme.xml',
         'views/distrib_channels.xml',
+        'data/type_of_marketings.xml',
+        'views/type_of_marketings.xml',
     ],
     'depends': [
         'base',

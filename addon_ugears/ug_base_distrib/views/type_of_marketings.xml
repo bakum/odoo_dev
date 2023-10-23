@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_distrib_types_marketing_tree" model="ir.ui.view">
+        <field name="name">distrib.types.marketings.tree</field>
+        <field name="model">distrib.types.marketings</field>
+        <field name="arch" type="xml">
+            <tree editable="top" delete="0">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_distrib_types_marketing_search" model="ir.ui.view">
+        <field name="name">distrib.types.marketings.search</field>
+        <field name="model">distrib.types.marketings</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" filter_domain="[('name', 'ilike', self)]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived" domain="[('active','=',False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_distrib_types_marketing" model="ir.actions.act_window">
+        <field name="name">Types of marketings</field>
+        <field name="res_model">distrib.types.marketings</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem id="menu_distrib_settings_marketings" name="Marketing" parent="menu_distrib_settings" sequence="4"/>
+    <menuitem
+            id="menu_distrib_types_of_marketings"
+            name="Types of Marketings"
+            parent="menu_distrib_settings_marketings"
+            action="ug_base_distrib.action_distrib_types_marketing"
+            groups="ug_base_distrib.group_distrib_manager"
+            sequence="11"/>
+</odoo>

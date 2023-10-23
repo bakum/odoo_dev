@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="type_1" model="distrib.types.marketings">
+            <field name="name">Mass Media</field>
+            <field name="active">True</field>
+        </record>
+        <record id="type_2" model="distrib.types.marketings">
+            <field name="name">TV</field>
+            <field name="active">True</field>
+        </record>
+        <record id="type_3" model="distrib.types.marketings">
+            <field name="name">Amazon</field>
+            <field name="active">True</field>
+        </record>
+        <record id="type_4" model="distrib.types.marketings">
+            <field name="name">Advertising</field>
+            <field name="active">True</field>
+        </record>
+        <record id="type_5" model="distrib.types.marketings">
+            <field name="name">Social network</field>
+            <field name="active">True</field>
+        </record>
+        <record id="type_6" model="distrib.types.marketings">
+            <field name="name">Retail</field>
+            <field name="active">True</field>
+        </record>
+    </data>
+</odoo>
