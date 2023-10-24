@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-23 12:46+0000\n"
-"PO-Revision-Date: 2023-10-23 12:46+0000\n"
+"POT-Creation-Date: 2023-10-24 08:11+0000\n"
+"PO-Revision-Date: 2023-10-24 08:11+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -25,6 +25,20 @@ msgstr ""
 "<span class=\"o_form_label o_td_label\" name=\"address_name\">\n"
 "                                <b>Адрес</b>\n"
 "                            </span>"
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.res_config_settings_view_form
+msgid ""
+"<span class=\"o_form_label\">Currency of multi-currency accounting of "
+"distributors.</span>"
+msgstr ""
+"<span class=\"o_form_label\">Валюта мультивалютного учета "
+"дистрибьюторов.</span>"
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.res_config_settings_view_form
+msgid "<span class=\"o_form_label\">Distributor accounting currency</span>"
+msgstr "<span class=\"o_form_label\">Валюта учета дистрибьюторов</span>"
 
 #. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_product_public_form_inherit
@@ -95,6 +109,13 @@ msgid "Apply"
 msgstr "Применить"
 
 #. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#, python-format
+msgid "April"
+msgstr "Апрель"
+
+#. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_sales_channels_form
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_sales_channels_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_theme_form
@@ -115,6 +136,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__message_attachment_count
 msgid "Attachment Count"
 msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#, python-format
+msgid "August"
+msgstr "Август"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__avg_price
@@ -191,6 +219,11 @@ msgid "Complete"
 msgstr "Выполнено"
 
 #. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_res_config_settings
+msgid "Config Settings"
+msgstr "Конфигурационные настройки"
+
+#. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_form
 msgid "Confirm"
 msgstr "Подтвердить"
@@ -206,6 +239,9 @@ msgid ""
 "Conversion between Units of Measure can only occur if they belong to the "
 "same category. The conversion will be made based on the ratios."
 msgstr ""
+"Преобразование между единицами измерения возможно только в том случае, если "
+"они принадлежат одной категории. Преобразование будет производиться на "
+"основе коэффициентов."
 
 #. module: ug_base_distrib
 #. odoo-python
@@ -278,6 +314,11 @@ msgid "Currency code successfully loaded!"
 msgstr "Код валюты успешно загружен!"
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_res_config_settings__accounting_currency_id
+msgid "Currency of multi-currency accounting of distributors."
+msgstr ""
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__rate
 msgid "Current Rate"
 msgstr ""
@@ -297,6 +338,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_statistic__debit
 msgid "Debit"
 msgstr "Дебит"
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#, python-format
+msgid "December"
+msgstr "Декабрь"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_quant__product_uom_id
@@ -332,12 +380,14 @@ msgid "Display Type"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.res_config_settings_view_form
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_users_distrib__form_inherit
 msgid "Distribution"
 msgstr "Дистрибуция"
 
 #. module: ug_base_distrib
 #: model:ir.module.category,name:ug_base_distrib.module_category_distrib_distributors
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.res_config_settings_view_form
 msgid "Distribution Management"
 msgstr "Управление дистрибуцией"
 
@@ -360,6 +410,11 @@ msgstr "Дистрибутор"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__move_id
 msgid "Distributor Move Reference"
 msgstr "Ссылка на документ"
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_res_config_settings__accounting_currency_id
+msgid "Distributor accounting currency"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_options_form
@@ -427,6 +482,13 @@ msgstr "Списания"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__product_no_variant_attribute_value_ids
 msgid "Extra Values"
 msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#, python-format
+msgid "February"
+msgstr "Февраль"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_follower_ids
@@ -619,11 +681,32 @@ msgid "Is Manager"
 msgstr "Это менеджер"
 
 #. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#, python-format
+msgid "January"
+msgstr "Январь"
+
+#. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_channels_statistic_pivot
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_form
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_statistic_pivot
 msgid "Journal Items"
 msgstr "Проводки"
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#, python-format
+msgid "July"
+msgstr "Июль"
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#, python-format
+msgid "June"
+msgstr "Июнь"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__last_count_date
@@ -688,9 +771,23 @@ msgid "Main Attachment"
 msgstr ""
 
 #. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#, python-format
+msgid "March"
+msgstr "Март"
+
+#. module: ug_base_distrib
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_settings_marketings
 msgid "Marketing"
 msgstr "Маркетинг"
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#, python-format
+msgid "May"
+msgstr "Май"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_has_error
@@ -755,6 +852,7 @@ msgstr "Наименование"
 
 #. module: ug_base_distrib
 #. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
 #: code:addons/ug_base_distrib/models/distrib_move.py:0
 #: code:addons/ug_base_distrib/models/distributors.py:0
 #, python-format
@@ -796,6 +894,13 @@ msgid "Note"
 msgstr ""
 
 #. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#, python-format
+msgid "November"
+msgstr "Ноябрь"
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__ref
 msgid "Number"
 msgstr "Код"
@@ -823,6 +928,13 @@ msgstr ""
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors_move__message_has_error_counter
 msgid "Number of messages with delivery error"
 msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#, python-format
+msgid "October"
+msgstr "Октябрь"
 
 #. module: ug_base_distrib
 #. odoo-python
@@ -1069,11 +1181,20 @@ msgid "Section"
 msgstr ""
 
 #. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#, python-format
+msgid "September"
+msgstr "Сентябрь"
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__sequence
 msgid "Sequence"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.actions.act_window,name:ug_base_distrib.distrib_config_settings_action
+#: model:ir.ui.menu,name:ug_base_distrib.distrib_config_settings_menu
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_settings
 msgid "Settings"
 msgstr "Настройки"
@@ -1098,6 +1219,11 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_settings_stock
+msgid "Stock"
+msgstr "Склад"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__street

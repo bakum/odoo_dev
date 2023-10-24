@@ -46,7 +46,7 @@
     <menuitem
             id="menu_distrib_quant"
             name="Balance adjustment"
-            parent="menu_distrib_operations"
+            parent="menu_distrib_settings_stock"
             action="action_distrib_quants"
             groups="ug_base_distrib.group_distrib_manager,ug_base_distrib.group_distrib_user"
             sequence="13"/>

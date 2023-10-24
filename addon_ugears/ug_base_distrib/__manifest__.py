@@ -28,6 +28,7 @@
         'views/distrib_channels.xml',
         'data/type_of_marketings.xml',
         'views/type_of_marketings.xml',
+        'views/res_config_settings_views.xml',
     ],
     'depends': [
         'base',

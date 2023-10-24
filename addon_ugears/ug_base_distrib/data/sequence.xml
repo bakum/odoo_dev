@@ -33,5 +33,13 @@
             <field name="company_id" eval="False"/>
         </record>
 
+        <record id="sequence_distrib_marketing_exp" model="ir.sequence">
+            <field name="name">Distributors Marketing Expenses</field>
+            <field name="code">distrib.marketing.exp</field>
+            <field name="prefix">EXP/%(year)s/%(month)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
     </data>
 </odoo>
