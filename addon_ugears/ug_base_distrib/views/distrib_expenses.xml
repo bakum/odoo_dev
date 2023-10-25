@@ -82,6 +82,7 @@
         <field name="model">distrib.marketing.expenses</field>
         <field name="arch" type="xml">
             <tree>
+                <field name="currency_id" invisible="1"/>
                 <field name="date_order"/>
                 <field name="month"/>
                 <field name="year"/>
