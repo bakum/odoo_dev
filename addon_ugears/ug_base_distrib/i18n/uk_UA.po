@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-24 08:11+0000\n"
-"PO-Revision-Date: 2023-10-24 08:11+0000\n"
+"POT-Creation-Date: 2023-10-25 08:59+0000\n"
+"PO-Revision-Date: 2023-10-25 08:59+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -48,6 +48,7 @@ msgstr "<span class=\"o_stat_text\">Дистриб'ютори</span>"
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_needaction
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__message_needaction
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__message_needaction
 msgid "Action Needed"
 msgstr ""
 
@@ -84,6 +85,7 @@ msgid "Activity Type Icon"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_expenses_form
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_form
 msgid "Add a line"
 msgstr "Додати рядок"
@@ -100,6 +102,7 @@ msgstr "Дозволений дистриб'ютор"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__amount_untaxed
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__amount_untaxed
 msgid "Amount"
 msgstr "Разом"
 
@@ -111,6 +114,7 @@ msgstr "Застосувати"
 #. module: ug_base_distrib
 #. odoo-python
 #: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__month__april
 #, python-format
 msgid "April"
 msgstr "Квітень"
@@ -134,12 +138,14 @@ msgstr "Пов'язано с"
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_attachment_count
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__message_attachment_count
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__message_attachment_count
 msgid "Attachment Count"
 msgstr ""
 
 #. module: ug_base_distrib
 #. odoo-python
 #: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__month__august
 #, python-format
 msgid "August"
 msgstr "Серпень"
@@ -167,12 +173,14 @@ msgid "Begin"
 msgstr "Початок"
 
 #. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_expenses_form
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_form
 msgid "Cancel"
 msgstr "Відміна"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_distributors_move__state__cancel
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__state__cancel
 msgid "Cancelled"
 msgstr "Скасовано"
 
@@ -214,6 +222,7 @@ msgid "Company name"
 msgstr "Назва компанії"
 
 #. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_expenses_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_search
 msgid "Complete"
 msgstr "Завершено"
@@ -224,6 +233,7 @@ msgid "Config Settings"
 msgstr "Налаштування"
 
 #. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_expenses_form
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_form
 msgid "Confirm"
 msgstr ""
@@ -270,6 +280,8 @@ msgstr "Створити новий продукт"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__create_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__create_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__create_uid
@@ -281,6 +293,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__create_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__create_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__create_date
@@ -299,6 +313,8 @@ msgstr "Кредит"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__currency_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__currency_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__currency_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__currency_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__currency_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__currency_id
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_currency
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_settings_currency
@@ -341,6 +357,7 @@ msgstr "Дебіт"
 #. module: ug_base_distrib
 #. odoo-python
 #: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__month__december
 #, python-format
 msgid "December"
 msgstr "Грудень"
@@ -352,6 +369,7 @@ msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__descr
 msgid "Description"
 msgstr "Опис"
 
@@ -365,6 +383,8 @@ msgstr "Різниця"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_statistic__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__display_name
@@ -375,6 +395,7 @@ msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__display_type
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__display_type
 msgid "Display Type"
 msgstr ""
 
@@ -399,11 +420,18 @@ msgstr "Дистрибуція"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__distrib_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__distrib_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_statistic__distrib_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__distrib_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__distrib_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__distrib_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__distrib_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_res_users__distrib_id
 msgid "Distributor"
 msgstr "Дистриб'ютор"
+
+#. module: ug_base_distrib
+#: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_expenses
+msgid "Distributor Marketing Expenses"
+msgstr "Маркетингові витрати"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__move_id
@@ -457,6 +485,9 @@ msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_distributors_move__state__draft
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__state__draft
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_expenses_form
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_expenses_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_form
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_search
 msgid "Draft"
@@ -468,14 +499,55 @@ msgid "EMail"
 msgstr "Електронна пошта"
 
 #. module: ug_base_distrib
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses_line__display_type__expense
+msgid "Expense"
+msgstr ""
+
+#. module: ug_base_distrib
 #. odoo-python
 #: code:addons/ug_base_distrib/models/distrib_move.py:0
 #: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_move_out
 #: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_distributors_move__operation__out
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_move_out
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_expenses_form
 #, python-format
 msgid "Expenses"
 msgstr "Списання"
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__date
+msgid "Expenses Data"
+msgstr "Дата витрати"
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_expenses_form
+msgid "Expenses Items"
+msgstr "Витрати"
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__move_line
+msgid "Expenses Lines"
+msgstr "Витрати"
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__month
+msgid "Expenses Month"
+msgstr "Місяць витрати"
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__move_id
+msgid "Expenses Move Reference"
+msgstr "Посилання"
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__year
+msgid "Expenses Year"
+msgstr "Рік витрати"
+
+#. module: ug_base_distrib
+#: model:ir.model.constraint,message:ug_base_distrib.constraint_distrib_marketing_expenses_line_expenses_total__check
+msgid "Expenses amount cannot be zero"
+msgstr "Сума витрат не може дорівнювати нулю"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__product_no_variant_attribute_value_ids
@@ -485,6 +557,7 @@ msgstr ""
 #. module: ug_base_distrib
 #. odoo-python
 #: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__month__february
 #, python-format
 msgid "February"
 msgstr "Лютий"
@@ -492,12 +565,14 @@ msgstr "Лютий"
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_follower_ids
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__message_follower_ids
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__message_follower_ids
 msgid "Followers"
 msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_partner_ids
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__message_partner_ids
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__message_partner_ids
 msgid "Followers (Partners)"
 msgstr ""
 
@@ -536,6 +611,7 @@ msgstr "УІД 1С:Підприємство"
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__has_message
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__has_message
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__has_message
 msgid "Has Message"
 msgstr ""
 
@@ -557,6 +633,8 @@ msgstr "Історія"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_statistic__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__id
@@ -580,6 +658,7 @@ msgstr ""
 #. module: ug_base_distrib
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors__message_needaction
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors_move__message_needaction
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_marketing_expenses__message_needaction
 msgid "If checked, new messages require your attention."
 msgstr ""
 
@@ -588,6 +667,8 @@ msgstr ""
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors__message_has_sms_error
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors_move__message_has_error
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors_move__message_has_sms_error
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_marketing_expenses__message_has_error
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_marketing_expenses__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr ""
 
@@ -670,11 +751,13 @@ msgstr "Кількість встановлена"
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_is_follower
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__message_is_follower
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__message_is_follower
 msgid "Is Follower"
 msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__is_manager
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__is_manager
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__is_manager
 msgid "Is Manager"
 msgstr "Це менеджер"
@@ -682,6 +765,7 @@ msgstr "Це менеджер"
 #. module: ug_base_distrib
 #. odoo-python
 #: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__month__january
 #, python-format
 msgid "January"
 msgstr "Січень"
@@ -696,6 +780,7 @@ msgstr "Проводки"
 #. module: ug_base_distrib
 #. odoo-python
 #: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__month__july
 #, python-format
 msgid "July"
 msgstr "Липень"
@@ -703,9 +788,15 @@ msgstr "Липень"
 #. module: ug_base_distrib
 #. odoo-python
 #: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__month__june
 #, python-format
 msgid "June"
 msgstr "Червень"
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__name
+msgid "Label"
+msgstr "Мітка"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__last_count_date
@@ -717,6 +808,8 @@ msgstr "Дата останньої інвентаризації"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_statistic____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant____last_update
@@ -729,6 +822,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__write_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__write_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__write_uid
@@ -740,6 +835,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__write_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__write_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__write_date
@@ -760,30 +857,41 @@ msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_distributors_move__state__done
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__state__done
 msgid "Locked"
 msgstr "Виконано"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_main_attachment_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__message_main_attachment_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__message_main_attachment_id
 msgid "Main Attachment"
 msgstr ""
 
 #. module: ug_base_distrib
 #. odoo-python
 #: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__month__march
 #, python-format
 msgid "March"
 msgstr "Березень"
 
 #. module: ug_base_distrib
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_settings_marketing
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_settings_marketings
 msgid "Marketing"
 msgstr "Маркетинг"
 
 #. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_distrib_marketing_expenses
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_marketing_expenses
+msgid "Marketing Expenses"
+msgstr "Маркетингові витрати"
+
+#. module: ug_base_distrib
 #. odoo-python
 #: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__month__may
 #, python-format
 msgid "May"
 msgstr "Травень"
@@ -791,12 +899,14 @@ msgstr "Травень"
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_has_error
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__message_has_error
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__message_has_error
 msgid "Message Delivery error"
 msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_ids
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__message_ids
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__message_ids
 msgid "Messages"
 msgstr ""
 
@@ -811,9 +921,14 @@ msgid "Mobile"
 msgstr "Мобільний"
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__month
+msgid "Month"
+msgstr "Місяць"
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_product_product__move_ids
 msgid "Move"
-msgstr ""
+msgstr "Рухи"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__date
@@ -832,8 +947,14 @@ msgstr "Операція"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__state
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__state
 msgid "Move Status"
 msgstr "Статус"
+
+#. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_distrib_marketing_expenses_line
+msgid "Msrketing Expenses Lines"
+msgstr "Рухи маркетингових витрат"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__my_activity_date_deadline
@@ -889,12 +1010,14 @@ msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_distributors_move_line__display_type__line_note
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses_line__display_type__line_note
 msgid "Note"
 msgstr ""
 
 #. module: ug_base_distrib
 #. odoo-python
 #: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__month__november
 #, python-format
 msgid "November"
 msgstr "Листопад"
@@ -907,30 +1030,35 @@ msgstr "Код"
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_needaction_counter
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__message_needaction_counter
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__message_needaction_counter
 msgid "Number of Actions"
 msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_has_error_counter
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__message_has_error_counter
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__message_has_error_counter
 msgid "Number of errors"
 msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors__message_needaction_counter
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors_move__message_needaction_counter
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_marketing_expenses__message_needaction_counter
 msgid "Number of messages which requires an action"
 msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors__message_has_error_counter
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors_move__message_has_error_counter
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_marketing_expenses__message_has_error_counter
 msgid "Number of messages with delivery error"
 msgstr ""
 
 #. module: ug_base_distrib
 #. odoo-python
 #: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__month__october
 #, python-format
 msgid "October"
 msgstr "Жовтень"
@@ -949,6 +1077,7 @@ msgstr "Операція"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__date_order
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__date_order
 msgid "Operation Date"
 msgstr "Дата"
 
@@ -984,6 +1113,7 @@ msgstr "Проводки"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__posted_line
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__posted_line
 msgid "Posted Lines"
 msgstr "Проводки"
 
@@ -1125,6 +1255,7 @@ msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__name
 msgid "Ref"
 msgstr "Посилання"
 
@@ -1147,6 +1278,7 @@ msgstr "Огляд"
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_has_sms_error
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__message_has_sms_error
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__message_has_sms_error
 msgid "SMS Delivery error"
 msgstr ""
 
@@ -1176,12 +1308,14 @@ msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_distributors_move_line__display_type__line_section
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses_line__display_type__line_section
 msgid "Section"
-msgstr ""
+msgstr "Секція"
 
 #. module: ug_base_distrib
 #. odoo-python
 #: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__month__september
 #, python-format
 msgid "September"
 msgstr "Вересень"
@@ -1206,6 +1340,7 @@ msgstr "Область"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__state
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__state
 msgid "Status"
 msgstr "Статус"
 
@@ -1262,13 +1397,14 @@ msgid "The rate of the currency to the currency of rate 1."
 msgstr ""
 
 #. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_expenses_form
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_form
 msgid ""
 "The selected operation will change the status and cancel transaction. Are "
 "you sure you want to do this?"
 msgstr ""
-"The selected operation will change the status and cancel transactions\\n"
-"                                         Are you sure you want to do this?"
+"Вибрана операція змінить статус і скасує транзакції."
+"                                          Продовжити?"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_product_product__theme_id
@@ -1288,6 +1424,7 @@ msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__price_total
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__expense_total
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__total
 msgid "Total"
 msgstr "Сума"
@@ -1296,6 +1433,11 @@ msgstr "Сума"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__total_uah
 msgid "Total UAH"
 msgstr "Загалом ГРН"
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__expense_id
+msgid "Type of Expense"
+msgstr "Стаття"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors__activity_exception_decoration
@@ -1361,6 +1503,8 @@ msgstr "Оновити кількість"
 #: model:ir.model,name:ug_base_distrib.model_res_users
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__user_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__salesman_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__user_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__salesman_id
 #: model:res.groups,name:ug_base_distrib.group_distrib_user
 msgid "User"
 msgstr "Користувач"
@@ -1386,17 +1530,25 @@ msgstr "WWW"
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__website_message_ids
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__website_message_ids
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__website_message_ids
 msgid "Website Messages"
 msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors__website_message_ids
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors_move__website_message_ids
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_marketing_expenses__website_message_ids
 msgid "Website communication history"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__year
+msgid "Year"
+msgstr "Рік"
+
+#. module: ug_base_distrib
 #. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
 #: code:addons/ug_base_distrib/models/distrib_move.py:0
 #, python-format
 msgid "You can not delete the moves if is done."

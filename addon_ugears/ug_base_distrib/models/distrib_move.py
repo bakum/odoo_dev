@@ -45,7 +45,7 @@ class DistributorMove(models.Model):
         states=LOCKED_FIELD_STATES,
         required=True,
         string="Operation",
-        copy=False, index=True)
+        copy=True, index=True)
 
     user_id = fields.Many2one(
         comodel_name='res.users',
@@ -71,8 +71,7 @@ class DistributorMove(models.Model):
         comodel_name='distrib.distributors.move.line',
         inverse_name='move_id',
         string="Posted Lines",
-        states=LOCKED_FIELD_STATES,
-        copy=True)
+        states=LOCKED_FIELD_STATES)
 
     currency_id = fields.Many2one(
         related='distrib_id.pricelist_id.currency_id',

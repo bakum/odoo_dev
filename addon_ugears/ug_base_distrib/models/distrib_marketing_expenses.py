@@ -8,20 +8,6 @@ LOCKED_FIELD_STATES = {
     state: [('readonly', True)]
     for state in {'done', 'cancel'}
 }
-MONTHS = [
-    ('january', _('January')),
-    ('february', _('February')),
-    ('march', _('March')),
-    ('april', _('April')),
-    ('may', _('May')),
-    ('june', _('June')),
-    ('july', _('July')),
-    ('august', _('August')),
-    ('september', _('September')),
-    ('october', _('October')),
-    ('november', _('November')),
-    ('december', _('December')),
-]
 
 
 class MarketingExpenses(models.Model):
@@ -69,7 +55,20 @@ class MarketingExpenses(models.Model):
         readonly=False, index=True, tracking=True
     )
     month = fields.Selection(
-        selection=MONTHS,
+        selection=[
+            ('january', _('January')),
+            ('february', _('February')),
+            ('march', _('March')),
+            ('april', _('April')),
+            ('may', _('May')),
+            ('june', _('June')),
+            ('july', _('July')),
+            ('august', _('August')),
+            ('september', _('September')),
+            ('october', _('October')),
+            ('november', _('November')),
+            ('december', _('December')),
+        ],
         states=LOCKED_FIELD_STATES,
         required=True,
         string="Month", default=_default_month,
@@ -81,7 +80,18 @@ class MarketingExpenses(models.Model):
         string="Expenses Lines",
         states=LOCKED_FIELD_STATES,
         copy=True)
+    posted_line = fields.One2many(
+        comodel_name='distrib.marketing.expenses.line',
+        inverse_name='move_id',
+        string="Posted Lines",
+        states=LOCKED_FIELD_STATES)
     amount_untaxed = fields.Monetary(string="Amount", store=True, compute='_compute_amounts')
+    is_manager = fields.Boolean(compute='_compute_is_manager')
+
+    @api.depends_context('uid')
+    @api.depends('distrib_id')
+    def _compute_is_manager(self):
+        self.is_manager = self.env.user.has_group("ug_base_distrib.group_distrib_manager")
 
     def init(self):
         create_index(self._cr, 'distrib_marketing_date_order_id_idx', 'distrib_marketing_expenses',

@@ -23,6 +23,7 @@
                     </div>
                     <group>
                         <group id="header_left_group">
+                            <field name="is_manager" invisible="1"/>
                             <field name="distrib_id" widget="res_partner_many2one"
                                    options="{'no_create': True, 'no_open': True}"/>
                             <field name="year"/>
@@ -33,6 +34,38 @@
                             <field name="user_id" widget="res_partner_many2one"/>
                         </group>
                     </group>
+                    <notebook>
+                        <page id="move_tab" name="move_tab" string="Expenses">
+                            <field name="move_line" widget="section_and_note_one2many" mode="tree"
+                                   context="{'default_display_type': 'expense'}">
+                                <tree editable="bottom" string="Expenses Items" default_order="id">
+                                    <control>
+                                        <create name="add_line_control" string="Add a line"/>
+                                        <!--    <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
+                                            <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/> -->
+                                    </control>
+                                    <field name="expense_id" optional="show"
+                                           options="{'no_create': True, 'no_open': True}"/>
+                                    <field name="descr"/>
+                                 <!--   <field name="name" widget="section_and_note_text" optional="show" readonly="1"/> -->
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="expense_total" optional="show"/>
+                                    <field name="display_type" force_save="1" invisible="1"/>
+                                </tree>
+                            </field>
+                            <group name="note_group" col="6" class="mt-2 mt-md-0">
+                                <!--   <group colspan="4">
+                                       <field colspan="2" name="note" nolabel="1" placeholder="Terms and conditions..."/>
+                                   </group> -->
+                                <group class="oe_subtotal_footer oe_right" colspan="2">
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="amount_untaxed" decoration-bf="amount_untaxed >= 0" colspan="2"
+                                           readonly="1"/>
+                                </group>
+                                <div class="clearfix"/>
+                            </group>
+                        </page>
+                    </notebook>
                 </sheet>
                 <!-- Chatter -->
                 <div class="oe_chatter">

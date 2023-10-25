@@ -1,5 +1,14 @@
 from odoo import models, fields, api
 
+DISCRIPTION_DICT = {
+    'Mass Media': 'n/a',
+    'TV': 'n/a',
+    'Amazon': 'n/a',
+    'Advertising': 'Google Ad-Words',
+    'Social network': 'FB, Twitter, Instagram, Pinterest',
+    'Retail': 'n/a'
+}
+
 
 class MarketingExpensesLines(models.Model):
     _name = 'distrib.marketing.expenses.line'
@@ -42,6 +51,7 @@ class MarketingExpensesLines(models.Model):
         change_default=True, ondelete='restrict', index='btree_not_null',
         required=True,
         domain="[('active', '=', True)]")
+    descr = fields.Text('Description', required=True, copy=True)
     expense_total = fields.Monetary(
         string="Total",
         required=True
@@ -53,6 +63,13 @@ class MarketingExpensesLines(models.Model):
             ('line_note', "Note"),
         ],
         default=False)
+
+    @api.onchange('expense_id')
+    def _onchange_expense_id(self):
+        for line in self:
+            if line.expense_id:
+                # types = self.env['distrib.types.marketings'].sudo().search_read([('active', '=', True)])
+                line.descr = DISCRIPTION_DICT[line.expense_id.name]
 
     @api.depends('expense_id')
     def _compute_name(self):
