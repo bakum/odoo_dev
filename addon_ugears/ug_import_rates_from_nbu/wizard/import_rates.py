@@ -43,13 +43,13 @@ class UgImportRatesFromNbu(models.TransientModel):
                 ('name', '=', line.name)
             ])
             if len(rates) > 0:
-                rates[0].write({'rate': (1.0 / line.rate)})
+                rates[0].write({'inverse_company_rate': line.rate})
             else:
                 re = self.env['res.currency.rate'].sudo().create({
                     'company_id': line.company_id.id,
                     'currency_id': line.currency.id,
                     'name': line.name,
-                    'rate': (1.0 / line.rate),
+                    'inverse_company_rate': line.rate,
                 })
         return result
 

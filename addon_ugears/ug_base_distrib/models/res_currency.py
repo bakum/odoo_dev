@@ -57,10 +57,10 @@ class ResCurrency(models.Model):
                 ])
 
                 if len(rates) > 0:
-                    rates[0].write({'rate': (1.0 / line.get('rate', 1))})
+                    rates[0].write({'inverse_company_rate': line.get('rate', 1)})
                 else:
                     rec.rate_ids = [(0, 0, {
-                        'rate': (1.0 / line.get('rate', 1)),
+                        'inverse_company_rate': line.get('rate', 1),
                         'company_id': self.env.company.id
                     })]
 
@@ -112,10 +112,10 @@ class ResCurrency(models.Model):
                 ])
 
                 if len(rates) > 0:
-                    rates[0].write({'rate': (1.0 / line.get('rate', 1))})
+                    rates[0].write({'inverse_company_rate': line.get('rate', 1)})
                 else:
                     rec.rate_ids = [(0, 0, {
-                        'rate': (1.0 / line.get('rate', 1)),
+                        'inverse_company_rate': line.get('rate', 1),
                         'company_id': self.env.company.id
                     })]
                 # rec.write({
