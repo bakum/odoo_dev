@@ -26,7 +26,7 @@
                             <field name="is_manager" invisible="1"/>
                             <field name="distrib_id" widget="res_partner_many2one"
                                    options="{'no_create': True, 'no_open': True}"/>
-                            <field name="operation" attrs="{'readonly' : [('is_manager', '==', False)] }"
+                            <field name="operation" attrs="{'readonly' : ['|',('is_manager', '=', False),('state','not in',['draft'])] }"
                                    force_save="1"/>
                         </group>
                         <group id="header_right_group">
