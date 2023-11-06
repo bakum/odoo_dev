@@ -3,8 +3,7 @@ from odoo.exceptions import UserError
 from odoo.tools import create_index
 
 LOCKED_FIELD_STATES = {
-    state: [('readonly', True)]
-    for state in {'done', 'cancel'}
+    state: [('readonly', True)] for state in {'done', 'cancel'}
 }
 
 
