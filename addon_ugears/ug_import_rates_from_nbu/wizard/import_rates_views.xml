@@ -36,7 +36,7 @@
                                     </tree>
                                 </field>
                             </page>
-                            <page string="Rates" attrs="{'invisible': [('len_rates', '=', 0)]}">
+                            <page string="Rates" invisible="len_rates == 0">
                                 <field name="rates_ids">
                                     <tree create="false" editable="top">
                                         <field name="name" readonly="1"/>
@@ -50,7 +50,7 @@
                     </sheet>
                     <footer>
                         <button string="Load rates" name="load_rates_from_nbu" class="oe_highlight" type="object"
-                                attrs="{'invisible': [('len_currency', '=', 0)]}" default_focus="1"/>
+                                invisible="len_currency == '0'" default_focus="1"/>
                     </footer>
                 </form>
             </field>

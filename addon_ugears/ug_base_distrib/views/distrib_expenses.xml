@@ -7,9 +7,9 @@
             <form>
                 <header>
                     <button name="action_done" class="btn-primary" data-hotkey="v" string="Confirm" type="object"
-                            attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>
+                            invisible="state not in ('draft')"/>
                     <button name="action_cancel" type="object" string="Cancel"
-                            attrs="{'invisible': ['|', ('state', 'not in', ['done']), ('id', '=', False)]}"
+                            invisible="state not in ('done') or id == False"
                             data-hotkey="z"
                             confirm="The selected operation will change the status and cancel transaction. Are you sure you want to do this?"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,done,cancel"/>
@@ -25,19 +25,20 @@
                         <group id="header_left_group">
                             <field name="is_manager" invisible="1"/>
                             <field name="distrib_id" widget="res_partner_many2one"
+                                   readonly="is_manager == False or state in ['cancel', 'done']"
                                    options="{'no_create': True, 'no_open': True}"/>
-                            <field name="year"/>
+                            <field name="year" readonly="state in ['cancel', 'done']"/>
                         </group>
                         <group id="header_right_group">
-                            <field name="date_order" options="{'datepicker': {'warn_future': true}}"/>
-                            <field name="month"/>
-                            <field name="user_id" widget="res_partner_many2one"/>
+                            <field name="date_order" options="{'datepicker': {'warn_future': true}}" readonly="state in ['cancel', 'done']"/>
+                            <field name="month" readonly="state in ['cancel', 'done']"/>
+                            <field name="user_id" widget="res_partner_many2one" readonly="is_manager == False or state in ['cancel', 'done']"/>
                         </group>
                     </group>
                     <notebook>
                         <page id="move_tab" name="move_tab" string="Expenses">
                             <field name="move_line" widget="section_and_note_one2many" mode="tree"
-                                   context="{'default_display_type': 'expense'}">
+                                   context="{'default_display_type': 'expense'}" readonly="state in ['cancel', 'done']">
                                 <tree editable="bottom" string="Expenses Items" default_order="id">
                                     <control>
                                         <create name="add_line_control" string="Add a line"/>
@@ -48,9 +49,9 @@
                                            options="{'no_create': True, 'no_open': True}"/>
                                     <field name="descr"/>
                                  <!--   <field name="name" widget="section_and_note_text" optional="show" readonly="1"/> -->
-                                    <field name="currency_id" invisible="1"/>
+                                    <field name="currency_id" column_invisible="1"/>
                                     <field name="expense_total" optional="show"/>
-                                    <field name="display_type" force_save="1" invisible="1"/>
+                                    <field name="display_type" force_save="1" column_invisible="1"/>
                                 </tree>
                             </field>
                             <group name="note_group" col="6" class="mt-2 mt-md-0">

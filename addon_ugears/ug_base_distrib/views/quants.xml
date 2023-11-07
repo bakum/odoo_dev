@@ -5,13 +5,13 @@
         <field name="model">distrib.quant</field>
         <field name="arch" type="xml">
             <tree editable="top" delete="0">
-                <field name="is_manager" invisible="1"/>
-                <field name="inventory_quantity_set" invisible="1"/>
-                <field name="product_id" attrs="{'readonly': [('id', '!=', False)]}"
-                       readonly="context.get('single_product', False)" force_save="1"
+                <field name="is_manager" column_invisible="1"/>
+                <field name="inventory_quantity_set" column_invisible="1"/>
+                <field name="product_id"
+                       readonly="context.get('single_product', False) or id != False" force_save="1"
                        options="{'no_create': True}" widget="many2one"/>
                 <field name="distrib_id" widget="res_partner_many2one" options="{'no_create': True, 'no_open': True}"
-                       attrs="{'readonly': [('is_manager', '==', False)]}" force_save="1"/>
+                       readonly="is_manager == False" force_save="1"/>
                 <field name="quantity"/>
                 <field name="product_uom_id"/>
                 <field name="inventory_quantity"/>

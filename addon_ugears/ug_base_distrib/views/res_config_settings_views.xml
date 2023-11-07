@@ -7,26 +7,17 @@
             <field name="priority" eval="90"/>
             <field name="inherit_id" ref="base.res_config_settings_view_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//div[hasclass('settings')]" position="inside">
-                    <div class="app_settings_block"
-                         data-string="Distributions"
-                         id="ug_base_distrib" string="Distribution"
-                         data-key="ug_base_distrib"
-                         groups="ug_base_distrib.group_distrib_manager">
-                        <h2>Distribution Management</h2>
-                        <div class="row mt16 o_settings_container" id="end_contract_setting">
-                            <div class="col-12 col-lg-6 o_setting_box">
-                                <div class="o_setting_left_pane"/>
-                                <div class="o_setting_right_pane">
-                                    <span class="o_form_label">Distributor accounting currency</span>
-                                    <div class="text-muted content-group mt16">
-                                        <field name="accounting_currency_id" />
-                                    </div>
-                                    <span class="o_form_label">Currency of multi-currency accounting of distributors.</span>
+                <xpath expr="//form" position="inside">
+                    <app data-string="Distributions" id="ug_base_distrib" string="Distributions" name="ug_base_distrib" groups="ug_base_distrib.group_distrib_manager">
+                        <block title="Distribution Management" id="end_contract_setting">
+                            <setting string="Distributor accounting currency">
+                                <div class="text-muted content-group mt16">
+                                    <field name="accounting_currency_id" />
                                 </div>
-                            </div>
-                        </div>
-                    </div>
+                                <span class="o_form_label">Currency of multi-currency accounting of distributors.</span>
+                            </setting>
+                        </block>
+                    </app>
                 </xpath>
             </field>
         </record>

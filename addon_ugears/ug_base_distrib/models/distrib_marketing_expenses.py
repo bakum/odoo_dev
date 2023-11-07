@@ -4,10 +4,10 @@ from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 from odoo.tools import create_index
 
-LOCKED_FIELD_STATES = {
-    state: [('readonly', True)]
-    for state in {'done', 'cancel'}
-}
+# LOCKED_FIELD_STATES = {
+#     state: [('readonly', True)]
+#     for state in {'done', 'cancel'}
+# }
 
 
 class MarketingExpenses(models.Model):
@@ -28,11 +28,11 @@ class MarketingExpenses(models.Model):
     distrib_id = fields.Many2one(
         'distrib.distributors', 'Distributor',
         default=lambda self: self.env.user.distrib_id.id,
-        states=LOCKED_FIELD_STATES,
+       # states=LOCKED_FIELD_STATES,
         index=True, required=True, tracking=True)
     date_order = fields.Datetime(
         string="Operation Date",
-        states=LOCKED_FIELD_STATES,
+     #   states=LOCKED_FIELD_STATES,
         required=True, readonly=False, copy=False,
         default=fields.Datetime.now, tracking=True)
     state = fields.Selection(
@@ -50,7 +50,7 @@ class MarketingExpenses(models.Model):
     user_id = fields.Many2one(
         comodel_name='res.users',
         string="User",
-        states=LOCKED_FIELD_STATES,
+       # states=LOCKED_FIELD_STATES,
         default=lambda self: self.env.user.id,
         readonly=False, index=True, tracking=True
     )
@@ -69,7 +69,7 @@ class MarketingExpenses(models.Model):
             ('november', _('November')),
             ('december', _('December')),
         ],
-        states=LOCKED_FIELD_STATES,
+       # states=LOCKED_FIELD_STATES,
         required=True,
         string="Month", default=_default_month,
         copy=False, index=True, tracking=True)
@@ -78,13 +78,13 @@ class MarketingExpenses(models.Model):
         comodel_name='distrib.marketing.expenses.line',
         inverse_name='move_id',
         string="Expenses Lines",
-        states=LOCKED_FIELD_STATES,
+       # states=LOCKED_FIELD_STATES,
         copy=True)
     posted_line = fields.One2many(
         comodel_name='distrib.marketing.expenses.line',
         inverse_name='move_id',
-        string="Posted Lines",
-        states=LOCKED_FIELD_STATES)
+        # states=LOCKED_FIELD_STATES,
+        string="Posted Lines")
     amount_untaxed = fields.Monetary(string="Amount", store=True, compute='_compute_amounts')
     is_manager = fields.Boolean(compute='_compute_is_manager')
 

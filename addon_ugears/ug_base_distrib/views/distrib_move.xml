@@ -7,9 +7,9 @@
             <form>
                 <header>
                     <button name="action_done" class="btn-primary" data-hotkey="v" string="Confirm" type="object"
-                            attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>
+                            invisible="state not in ('draft')"/>
                     <button name="action_cancel" type="object" string="Cancel"
-                            attrs="{'invisible': ['|', ('state', 'not in', ['done']), ('id', '=', False)]}"
+                            invisible="state not in ('done') or id==False"
                             data-hotkey="z"
                             confirm="The selected operation will change the status and cancel transaction. Are you sure you want to do this?"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,done,cancel"/>
@@ -25,22 +25,26 @@
                         <group id="header_left_group">
                             <field name="is_manager" invisible="1"/>
                             <field name="distrib_id" widget="res_partner_many2one"
+                                   readonly="is_manager == False or state in ['cancel', 'done']"
                                    options="{'no_create': True, 'no_open': True}"/>
-                            <field name="operation" attrs="{'readonly' : ['|',('is_manager', '=', False),('state','not in',['draft'])] }"
+                            <field name="operation"
+                                   readonly="is_manager == False or state in ['cancel', 'done']"
                                    force_save="1"/>
                         </group>
                         <group id="header_right_group">
-                            <field name="date_order" options="{'datepicker': {'warn_future': true}}"/>
+                            <field name="date_order" options="{'datepicker': {'warn_future': true}}"
+                                   readonly="state in ['cancel', 'done']"/>
                             <field name="channel_id" widget="res_partner_many2one"
-                                   attrs="{'invisible': [('operation', '!=', 'out')],'required' : [('operation', '=', 'out')]}"
+                                   readonly="state in ['cancel', 'done']"
+                                   invisible="operation != 'out'" required="operation == 'out'"
                                    options="{'no_open' : True, 'no_create': True}"/>
-                            <field name="user_id" widget="res_partner_many2one"/>
+                            <field name="user_id" widget="res_partner_many2one" readonly="is_manager == False or state in ['cancel', 'done']"/>
                         </group>
                     </group>
                     <notebook>
                         <page id="move_tab" name="move_tab" string="Products">
                             <field name="move_line" widget="section_and_note_one2many" mode="tree,kanban"
-                                   context="{'default_display_type': 'product'}">
+                                   context="{'default_display_type': 'product'}" readonly="state in ['cancel', 'done']">
                                 <tree editable="bottom" string="Journal Items" default_order="sequence, id">
                                     <control>
                                         <create name="add_line_control" string="Add a line"/>
@@ -54,13 +58,13 @@
                                     <field name="name" widget="section_and_note_text" optional="show" readonly="1"/>
                                     <field name="product_uom_qty" optional="show"/>
                                     <field name="price_unit" optional="show" readonly="1"/>
-                                    <field name="currency_id" optional="show" invisible="1"/>
-                                    <field name="product_uom_category_id" invisible="1"/>
+                                    <field name="currency_id" optional="show" column_invisible="1"/>
+                                    <field name="product_uom_category_id" column_invisible="1"/>
                                     <field name="product_uom" string="UoM" groups="uom.group_uom" optional="show"
                                            options="{'no_create': True, 'no_open': True}"/>
                                     <field name="price_total" optional="show" readonly="1"/>
 
-                                    <field name="display_type" force_save="1" invisible="1"/>
+                                    <field name="display_type" force_save="1" column_invisible="1"/>
                                     <!-- /l10n_in_edi.test_edi_json -->
                                     <!-- required for @api.onchange('product_id') -->
                                     <!--<field name="product_uom" invisible="1"/> -->
@@ -78,16 +82,17 @@
                                 <div class="clearfix"/>
                             </group>
                         </page>
-                        <page id="posted_tab" name="posted_tab" string="Posted">
+                        <page id="posted_tab" name="posted_tab" string="Posted" invisible="state in ['draft', 'cancel']">
                             <field name="posted_line" mode="tree"
-                                   attrs="{'invisible': [('state', 'in', ('draft', 'cancel'))]}">
+                                   invisible="state in ['draft', 'cancel']"
+                                   >
                                 <tree no_create_edit="1" string="Posted Items" default_order="id">
                                     <field name="operation" widget="badge" decoration-success="operation == 'inc'"
                                            decoration-warning="operation == 'out'"/>
                                     <field name="name" widget="section_and_note_text" optional="show"/>
                                     <field name="operation" invisible="1"/>
                                     <field name="channel_id" widget="res_partner_many2one" optional="show" readonly="1"
-                                           attrs="{'invisible': [('operation', '!=', 'out')]}"/>
+                                           invisible="operation != 'out'"/>
                                     <field name="debit" optional="show"/>
                                     <field name="credit" optional="show"/>
                                     <field name="balance" optional="show"/>

@@ -3,7 +3,7 @@
     'author' : 'Bakum Viacheslav',
     'website' : 'https://ugears.ua',
     'category': 'Sales/Distribution Management',
-    'version': '16.0.0.1',
+    'version': '17.0.0.1',
     'license' : 'LGPL-3',
     'depends': [
         'base',

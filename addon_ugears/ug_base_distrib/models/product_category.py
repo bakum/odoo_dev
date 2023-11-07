@@ -141,14 +141,17 @@ class PublicProductDistrib(models.Model):
         Move = self.env['distrib.distributors.move.line'].with_context(active_test=False)
         Quant = self.env['distrib.quant'].with_context(active_test=False)
 
-        moves_in_res = dict((item['product_id'][0], item['product_uom_qty']) for item in
-                            Move._read_group(domain_move_in, ['product_id', 'product_uom_qty'], ['product_id'],
-                                             orderby='id'))
-        moves_out_res = dict((item['product_id'][0], item['product_uom_qty']) for item in
-                             Move._read_group(domain_move_out, ['product_id', 'product_uom_qty'], ['product_id'],
-                                              orderby='id'))
-        quants_res = dict((item['product_id'][0], (item['quantity'])) for item in
-                          Quant._read_group(domain_quant, ['product_id', 'quantity'], ['product_id'], orderby='id'))
+        moves_in_res = {product.id: product_uom_qty for product, product_uom_qty in Move._read_group(domain_move_in, ['product_id'], ['product_uom_qty:sum'])}
+        moves_out_res = {product.id: product_uom_qty for product, product_uom_qty in Move._read_group(domain_move_out, ['product_id'], ['product_uom_qty:sum'])}
+        quants_res = {product.id: quantity for product, quantity in Quant._read_group(domain_quant, ['product_id'], ['quantity:sum'])}
+
+        # moves_in_res = dict((item['product_id'][0], item['product_uom_qty']) for item in
+        #                     Move._read_group(domain_move_in, ['product_id', 'product_uom_qty:sum']))
+        # moves_out_res = dict((item['product_id'][0], item['product_uom_qty']) for item in
+        #                      Move._read_group(domain_move_out, ['product_id', 'product_uom_qty'], ['product_id'],
+        #                                       order='id'))
+        # quants_res = dict((item['product_id'][0], (item['quantity'])) for item in
+        #                   Quant._read_group(domain_quant, ['product_id', 'quantity'], ['product_id'], orderby='id'))
         if dates_in_the_past:
             # Calculate the moves that were done before now to calculate back in time (as most questions will be recent ones)
             domain_move_in_done = [('state', '=', 'done'), ('date', '>', to_date)] + domain_move_in_done
