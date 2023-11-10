@@ -1,14 +1,14 @@
 {
     'name': 'Distribution Base',
-    'author' : 'Bakum Viacheslav',
-    'website' : 'https://ugears.ua',
-    'summary' : 'Provides a base for adding distribution support to models',
+    'author': 'Bakum Viacheslav',
+    'website': 'https://ugears.ua',
+    'summary': 'Provides a base for adding distribution support to models',
     'category': 'Sales/Distribution Management',
     'version': '17.0.0.1',
-    'license' : 'LGPL-3',
+    'license': 'LGPL-3',
     'installable': True,
     'application': True,
-    'data' : [
+    'data': [
         'security/distrib_security.xml',
         'security/ir.model.access.csv',
         'data/sequence.xml',
