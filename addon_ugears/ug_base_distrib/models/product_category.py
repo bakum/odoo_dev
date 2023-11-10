@@ -9,7 +9,7 @@ class PublicProduct(models.Model):
     qty_available_dist = fields.Float(
         'Quantity On Distributor', compute='_compute_quantities_dist',
         compute_sudo=False, digits='Product Unit of Measure')
-    theme_id = fields.Many2one('distrib.product.theme','Theme')
+    theme_id = fields.Many2one('distrib.product.theme', 'Theme')
 
     def _compute_quantities_dist(self):
         res = self._compute_quantities_dict_dist()
@@ -32,7 +32,8 @@ class PublicProduct(models.Model):
         return prod_available
 
     def action_open_distrib_quants(self):
-        return self.product_variant_ids.filtered(lambda p: p.active or p.qty_available != 0).action_open_distrib_quants()
+        return self.product_variant_ids.filtered(
+            lambda p: p.active or p.qty_available != 0).action_open_distrib_quants()
 
 
 class PublicProductDistrib(models.Model):
@@ -141,9 +142,12 @@ class PublicProductDistrib(models.Model):
         Move = self.env['distrib.distributors.move.line'].with_context(active_test=False)
         Quant = self.env['distrib.quant'].with_context(active_test=False)
 
-        moves_in_res = {product.id: product_uom_qty for product, product_uom_qty in Move._read_group(domain_move_in, ['product_id'], ['product_uom_qty:sum'])}
-        moves_out_res = {product.id: product_uom_qty for product, product_uom_qty in Move._read_group(domain_move_out, ['product_id'], ['product_uom_qty:sum'])}
-        quants_res = {product.id: quantity for product, quantity in Quant._read_group(domain_quant, ['product_id'], ['quantity:sum'])}
+        moves_in_res = {product.id: product_uom_qty for product, product_uom_qty in
+                        Move._read_group(domain_move_in, ['product_id'], ['product_uom_qty:sum'])}
+        moves_out_res = {product.id: product_uom_qty for product, product_uom_qty in
+                         Move._read_group(domain_move_out, ['product_id'], ['product_uom_qty:sum'])}
+        quants_res = {product.id: quantity for product, quantity in
+                      Quant._read_group(domain_quant, ['product_id'], ['quantity:sum'])}
 
         # moves_in_res = dict((item['product_id'][0], item['product_uom_qty']) for item in
         #                     Move._read_group(domain_move_in, ['product_id', 'product_uom_qty:sum']))
