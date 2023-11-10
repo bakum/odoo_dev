@@ -1,10 +1,10 @@
 {
     'name': 'Import of NBU currency rates',
-    'author' : 'Bakum Viacheslav',
-    'website' : 'https://ugears.ua',
+    'author': 'Bakum Viacheslav',
+    'website': 'https://ugears.ua',
     'category': 'Sales/Distribution Management',
     'version': '16.0.0.1',
-    'license' : 'LGPL-3',
+    'license': 'LGPL-3',
     'depends': [
         'base',
     ],
