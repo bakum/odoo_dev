@@ -2,6 +2,7 @@ from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 from odoo.tools import create_index
 
+
 # LOCKED_FIELD_STATES = {
 #     state: [('readonly', True)]
 #     for state in {'done', 'cancel'}
@@ -18,12 +19,12 @@ class DistributorMove(models.Model):
     distrib_id = fields.Many2one(
         'distrib.distributors', 'Distributor',
         default=lambda self: self.env.user.distrib_id.id,
-      #  states=LOCKED_FIELD_STATES,
+        #  states=LOCKED_FIELD_STATES,
         index=True, required=True, tracking=True)
 
     date_order = fields.Datetime(
         string="Operation Date",
-       # states=LOCKED_FIELD_STATES,
+        # states=LOCKED_FIELD_STATES,
         required=True, readonly=False, copy=False,
         default=fields.Datetime.now, tracking=True)
 
@@ -42,7 +43,7 @@ class DistributorMove(models.Model):
             ('inc', _("Income")),
             ('out', _("Expenses")),
         ],
-       # states=LOCKED_FIELD_STATES,
+        # states=LOCKED_FIELD_STATES,
         required=True,
         string="Operation",
         copy=True, index=True)
@@ -50,21 +51,21 @@ class DistributorMove(models.Model):
     user_id = fields.Many2one(
         comodel_name='res.users',
         string="User",
-       # states=LOCKED_FIELD_STATES,
+        # states=LOCKED_FIELD_STATES,
         default=lambda self: self.env.user.id,
         readonly=False, index=True, tracking=True
     )
     channel_id = fields.Many2one(
         comodel_name='distrib.sales.channels',
         string="Sales Channel",
-       # states=LOCKED_FIELD_STATES,
+        # states=LOCKED_FIELD_STATES,
         readonly=False, index=True, tracking=True
     )
     move_line = fields.One2many(
         comodel_name='distrib.distributors.move.line',
         inverse_name='move_id',
         string="Move Lines",
-       # states=LOCKED_FIELD_STATES,
+        # states=LOCKED_FIELD_STATES,
         copy=True)
 
     posted_line = fields.One2many(
@@ -72,7 +73,7 @@ class DistributorMove(models.Model):
         inverse_name='move_id',
         # states=LOCKED_FIELD_STATES,
         string="Posted Lines"
-       )
+    )
 
     currency_id = fields.Many2one(
         related='distrib_id.pricelist_id.currency_id',
@@ -139,15 +140,13 @@ class DistributorMove(models.Model):
                 raise UserError(_('You can not delete the moves if is done.'))
 
     def name_get(self):
-        if self._context.get('sale_show_partner_name'):
-            res = []
-            for order in self:
-                name = order.name
-                if order.distrib_id.name:
-                    name = '%s - %s' % (name, order.distrib_id.name)
+        res = []
+        for order in self:
+            name = order.name
+            if order.distrib_id.name:
+                name = '%s - %s' % (name, order.distrib_id.name)
                 res.append((order.id, name))
-            return res
-        return super().name_get()
+        return res
 
     def action_done(self):
         self.write({'state': 'done'})
