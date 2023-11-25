@@ -1,0 +1,235 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* bv_import_rates_from_nbu
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-11-25 08:51+0000\n"
+"PO-Revision-Date: 2023-11-25 08:51+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: bv_import_rates_from_nbu
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_res_currency__code
+msgid "Code of currency"
+msgstr "Код"
+
+#. module: bv_import_rates_from_nbu
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_rates_from_nbu__company
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_rates_from_nbu_list__company_id
+msgid "Company"
+msgstr "Компания"
+
+#. module: bv_import_rates_from_nbu
+#. odoo-python
+#: code:addons/bv_import_rates_from_nbu/models/res_currency.py:0
+#: code:addons/bv_import_rates_from_nbu/models/res_currency.py:0
+#: code:addons/bv_import_rates_from_nbu/wizard/import_rates.py:0
+#, python-format
+msgid "Could not connect to %s"
+msgstr "Не могу соединиться с %s"
+
+#. module: bv_import_rates_from_nbu
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_currency_from_nbu_list__create_uid
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_rates_from_nbu__create_uid
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_rates_from_nbu_list__create_uid
+msgid "Created by"
+msgstr "Создано"
+
+#. module: bv_import_rates_from_nbu
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_currency_from_nbu_list__create_date
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_rates_from_nbu__create_date
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_rates_from_nbu_list__create_date
+msgid "Created on"
+msgstr "Создано"
+
+#. module: bv_import_rates_from_nbu
+#: model:ir.model,name:bv_import_rates_from_nbu.model_res_currency
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_currency_from_nbu_list__currency
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_rates_from_nbu__currency_ids
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_rates_from_nbu_list__currency
+#: model_terms:ir.ui.view,arch_db:bv_import_rates_from_nbu.bv_import_rates_from_nbu_view
+msgid "Currency"
+msgstr "Валюта"
+
+#. module: bv_import_rates_from_nbu
+#. odoo-python
+#: code:addons/bv_import_rates_from_nbu/models/res_currency.py:0
+#, python-format
+msgid "Currency code successfully loaded!"
+msgstr "Код валюты успешно загружен"
+
+#. module: bv_import_rates_from_nbu
+#: model:ir.model,name:bv_import_rates_from_nbu.model_ug_currency_from_nbu_list
+msgid "Currency list"
+msgstr "Список валют"
+
+#. module: bv_import_rates_from_nbu
+#. odoo-python
+#: code:addons/bv_import_rates_from_nbu/wizard/import_rates.py:0
+#, python-format
+msgid "Currency rates successfully loaded!"
+msgstr "Курсы валют успешно загружены"
+
+#. module: bv_import_rates_from_nbu
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_currency_from_nbu_list__display_name
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_rates_from_nbu__display_name
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_rates_from_nbu_list__display_name
+msgid "Display Name"
+msgstr "Наименование"
+
+#. module: bv_import_rates_from_nbu
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_rates_from_nbu__date_from
+msgid "From"
+msgstr "С"
+
+#. module: bv_import_rates_from_nbu
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_currency_from_nbu_list__id
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_rates_from_nbu__id
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_rates_from_nbu_list__id
+msgid "ID"
+msgstr "Ид"
+
+#. module: bv_import_rates_from_nbu
+#. odoo-python
+#. odoo-javascript
+#: code:addons/bv_import_rates_from_nbu/static/src/views/res_currency_list.xml:0
+#: code:addons/bv_import_rates_from_nbu/wizard/import_rates.py:0
+#: code:addons/bv_import_rates_from_nbu/wizard/import_rates.py:0
+#: model:ir.actions.act_window,name:bv_import_rates_from_nbu.action_import_rates_from_nbu
+#: model:ir.model,name:bv_import_rates_from_nbu.model_ug_rates_from_nbu
+#: model_terms:ir.ui.view,arch_db:bv_import_rates_from_nbu.bv_import_rates_from_nbu_view
+#, python-format
+msgid "Import currency rates from NBU"
+msgstr "Загрузка курсов валют НБУ"
+
+#. module: bv_import_rates_from_nbu
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_currency_from_nbu_list____last_update
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_rates_from_nbu____last_update
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_rates_from_nbu_list____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: bv_import_rates_from_nbu
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_currency_from_nbu_list__write_uid
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_rates_from_nbu__write_uid
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_rates_from_nbu_list__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: bv_import_rates_from_nbu
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_currency_from_nbu_list__write_date
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_rates_from_nbu__write_date
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_rates_from_nbu_list__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: bv_import_rates_from_nbu
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_rates_from_nbu__len_currency
+msgid "Len Currency"
+msgstr ""
+
+#. module: bv_import_rates_from_nbu
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_rates_from_nbu__len_rates
+msgid "Len Rates"
+msgstr ""
+
+#. module: bv_import_rates_from_nbu
+#: model_terms:ir.ui.view,arch_db:bv_import_rates_from_nbu.bv_import_rates_from_nbu_view
+msgid "Load rates"
+msgstr "Загрузить курсы"
+
+#. module: bv_import_rates_from_nbu
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_rates_from_nbu__name
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_rates_from_nbu_list__name
+msgid "Name"
+msgstr "Дата"
+
+#. module: bv_import_rates_from_nbu
+#. odoo-python
+#: code:addons/bv_import_rates_from_nbu/wizard/import_rates.py:0
+#, python-format
+msgid "Nothing to update"
+msgstr ""
+
+#. module: bv_import_rates_from_nbu
+#. odoo-python
+#: code:addons/bv_import_rates_from_nbu/wizard/import_rates.py:0
+#, python-format
+msgid "Please load the list"
+msgstr "Загрузите курсы"
+
+#. module: bv_import_rates_from_nbu
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_rates_from_nbu_list__rate
+msgid "Rate"
+msgstr "Курс"
+
+#. module: bv_import_rates_from_nbu
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_rates_from_nbu__rates_ids
+#: model_terms:ir.ui.view,arch_db:bv_import_rates_from_nbu.bv_import_rates_from_nbu_view
+msgid "Rates"
+msgstr "Курсы"
+
+#. module: bv_import_rates_from_nbu
+#: model:ir.model,name:bv_import_rates_from_nbu.model_ug_rates_from_nbu_list
+msgid "Rates list"
+msgstr "Курсы"
+
+#. module: bv_import_rates_from_nbu
+#. odoo-python
+#: code:addons/bv_import_rates_from_nbu/models/res_currency.py:0
+#: code:addons/bv_import_rates_from_nbu/wizard/import_rates.py:0
+#, python-format
+msgid "Success!"
+msgstr "Успешно!"
+
+#. module: bv_import_rates_from_nbu
+#. odoo-python
+#: code:addons/bv_import_rates_from_nbu/wizard/import_rates.py:0
+#, python-format
+msgid "Successfully updated"
+msgstr "Успешно обновлено"
+
+#. module: bv_import_rates_from_nbu
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_rates_from_nbu__date_to
+msgid "To"
+msgstr "По"
+
+#. module: bv_import_rates_from_nbu
+#. odoo-python
+#: code:addons/bv_import_rates_from_nbu/models/res_currency.py:0
+#, python-format
+msgid "UAH currency is not used in accounting!"
+msgstr "ГРН не используется в учете"
+
+#. module: bv_import_rates_from_nbu
+#. odoo-python
+#: code:addons/bv_import_rates_from_nbu/models/res_currency.py:0
+#, python-format
+msgid "UAH is not the currency of the current organization!"
+msgstr "ГРН не является валютой текущей организации"
+
+#. module: bv_import_rates_from_nbu
+#: model:ir.actions.server,name:bv_import_rates_from_nbu.action_update_currency_code
+msgid "Update Currency code"
+msgstr "Обновить код валюты"
+
+#. module: bv_import_rates_from_nbu
+#. odoo-python
+#: code:addons/bv_import_rates_from_nbu/models/res_currency.py:0
+#: code:addons/bv_import_rates_from_nbu/models/res_currency.py:0
+#, python-format
+msgid "Warning!"
+msgstr "Внимание!"
+
+#. module: bv_import_rates_from_nbu
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_currency_from_nbu_list__wizard_id
+#: model:ir.model.fields,field_description:bv_import_rates_from_nbu.field_ug_rates_from_nbu_list__wizard_id
+msgid "Wizard"
+msgstr "Помощник"
