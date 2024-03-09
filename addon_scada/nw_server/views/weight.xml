@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_scada_weight_tree" model="ir.ui.view">
+        <field name="name">nw.weight.tree</field>
+        <field name="model">nw.weight</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="moxa_id"/>
+                <field name="nid"/>
+                <field name="value"/>
+                <field name="count"/>
+                <field name="error"/>
+                <field name="message"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_scada_weight_form" model="ir.actions.act_window">
+        <field name="name">Weight values</field>
+        <field name="res_model">nw.weight</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+            id="menu_scada_weight"
+            name="Weight values"
+            parent="menu_scada_root"
+            action="nw_server.action_scada_weight_form"
+            groups="nw_server.group_scada_user,nw_server.group_scada_manager"
+            sequence="3"/>
+</odoo>

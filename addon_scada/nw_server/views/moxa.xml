@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_scada_moxa_form" model="ir.ui.view">
+        <field name="name">nw.moxa.form</field>
+        <field name="model">nw.moxa</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="active" invisible="1"/>
+                    <div class="oe_button_box" name="button_box"/>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
+                            invisible="active == True"/>
+
+                    <group>
+                        <field name="name"/>
+                        <field name="module" invisible="1"/>
+                        <field name="controller_id" can_create="False" can_write="False"/>
+                        <field name="serial_type"/>
+
+                    </group>
+                    <notebook>
+                        <page name="description" string="Description">
+                            <field name="desc" options="{'resizable': false}" placeholder="Controller description..."
+                                   field_id="description_0"/>
+                        </page>
+                        <page name="settings" string="Settings">
+                            <group>
+                                <group>
+                                    <field name="ip"/>
+                                    <field name="port"/>
+                                </group>
+                                <group>
+                                    <field name="connection_timeout"/>
+                                    <field name="repeat_timeout"/>
+                                    <field name="error_timeout"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_scada_moxa_tree" model="ir.ui.view">
+        <field name="name">nw.moxa.tree</field>
+        <field name="model">nw.moxa</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="controller_id"/>
+                <field name="serial_type"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_scada_moxa_form" model="ir.actions.act_window">
+        <field name="name">Control points</field>
+        <field name="res_model">nw.moxa</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+            id="menu_scada_moxa"
+            name="Control points"
+            parent="menu_scada_settings"
+            action="nw_server.action_scada_moxa_form"
+            groups="nw_server.group_scada_user,nw_server.group_scada_manager"
+            sequence="11"/>
+</odoo>

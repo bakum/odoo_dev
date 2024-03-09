@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_scada_controllers_form" model="ir.ui.view">
+        <field name="name">nw.types.controllers.form</field>
+        <field name="model">nw.types.controllers</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="active" invisible="1"/>
+                    <div class="oe_button_box" name="button_box"/>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
+                            invisible="active == True"/>
+
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_scada_controllers_search" model="ir.ui.view">
+        <field name="name">nw.types.controllers.search</field>
+        <field name="model">nw.types.controllers</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" filter_domain="[('name', 'ilike', self)]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived" domain="[('active','=',False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_scada_controllers__tree" model="ir.ui.view">
+        <field name="name">nw.types.controllers.tree</field>
+        <field name="model">nw.types.controllers</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_scada_controller_form" model="ir.actions.act_window">
+        <field name="name">Controllers Types</field>
+        <field name="res_model">nw.types.controllers</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+            id="menu_scada_controllers"
+            name="Controllers types"
+            parent="menu_scada_settings"
+            action="nw_server.action_scada_controller_form"
+            groups="nw_server.group_scada_user,nw_server.group_scada_manager"
+            sequence="12"/>
+
+</odoo>

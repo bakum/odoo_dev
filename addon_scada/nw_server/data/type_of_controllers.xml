@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="type_1" model="nw.types.controllers">
+            <field name="name">TVA</field>
+            <field name="active">True</field>
+        </record>
+        <record id="type_2" model="nw.types.controllers">
+            <field name="name">TVV</field>
+            <field name="active">True</field>
+        </record>
+        <record id="type_3" model="nw.types.controllers">
+            <field name="name">MODBUS</field>
+            <field name="active">True</field>
+        </record>
+    </data>
+</odoo>
