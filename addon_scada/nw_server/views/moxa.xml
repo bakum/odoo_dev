@@ -23,11 +23,24 @@
                             <field name="desc" options="{'resizable': false}" placeholder="Controller description..."
                                    field_id="description_0"/>
                         </page>
-                        <page name="settings" string="Settings">
+                        <page name="tcp" string="TCP/IP">
                             <group>
                                 <group>
                                     <field name="ip"/>
                                     <field name="port"/>
+                                </group>
+                                <group>
+                                    <field name="connection_timeout"/>
+                                    <field name="repeat_timeout"/>
+                                    <field name="error_timeout"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page name="com" string="COM">
+                            <group>
+                                <group>
+                                    <field name="com"/>
+                                    <field name="baud_rate"/>
                                 </group>
                                 <group>
                                     <field name="connection_timeout"/>
