@@ -7,7 +7,8 @@
             <tree>
                 <field name="moxa_id"/>
                 <field name="nid"/>
-                <field name="value"/>
+                <field name="value1"/>
+                <field name="value2"/>
                 <field name="count"/>
                 <field name="error"/>
                 <field name="message"/>

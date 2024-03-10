@@ -15,13 +15,14 @@ class Moxa(models.Model):
     repeat_timeout = fields.Integer(string='Repeat Timeout', default=lambda self: 5)
     error_timeout = fields.Integer(string='ErrorTimeout', default=lambda self: 5)
 
+    is_modbus = fields.Boolean(string='Is Modbus', default=False)
     start_register = fields.Integer(string='Start address', required=True, default=lambda self: 0)
     register_offset = fields.Integer(string='Count registers', required=True, default=lambda self: 0)
     hight_byte_first = fields.Boolean(string='Hight byte first', default=True)
     hight_word_first = fields.Boolean(string='Hight word first', default=False)
     hight_dword_first = fields.Boolean(string='Hight double word first', default=False)
     slave_id = fields.Integer(string='Slave ID', required=True, default=lambda self: 0)
-    multiplexer = fields.Float(string='Result multiplexer', digits=(5, 6), default=lambda self: 1.0);
+    multiplexer = fields.Float(string='Result multiplexer', digits=(5, 6), default=lambda self: 1.0)
     modbus_type_value = fields.Selection(
         selection=[
             ('MCT_BYTE', "MCT_BYTE"),
@@ -66,3 +67,5 @@ class Moxa(models.Model):
     def _onchange_controller_id(self):
         for line in self:
             line.module = self.controller_id.name
+            if 'MODBUS' in self.controller_id.name:
+                line.is_modbus = True

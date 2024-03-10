@@ -10,46 +10,43 @@
                     <div class="oe_button_box" name="button_box"/>
                     <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
                             invisible="active == True"/>
-
                     <group>
-                        <field name="name"/>
-                        <field name="module" invisible="1"/>
-                        <field name="controller_id" can_create="False" can_write="False"/>
-                        <field name="serial_type"/>
-
+                        <group>
+                            <field name="name"/>
+                            <field name="module" invisible="1"/>
+                            <field name="controller_id" can_create="False" can_write="False"/>
+                            <field name="serial_type"/>
+                        </group>
+                        <group>
+                            <field name="connection_timeout"/>
+                            <field name="repeat_timeout"/>
+                            <field name="error_timeout"/>
+                            <field name="is_modbus" invisible="1"/>
+                        </group>
                     </group>
+
                     <notebook>
                         <page name="description" string="Description">
                             <field name="desc" options="{'resizable': false}" placeholder="Controller description..."
                                    field_id="description_0"/>
                         </page>
-                        <page name="tcp" string="TCP/IP">
+                        <page name="tcp" string="TCP/IP" invisible="serial_type != 'tcp'">
                             <group>
                                 <group>
                                     <field name="ip"/>
                                     <field name="port"/>
                                 </group>
-                                <group>
-                                    <field name="connection_timeout"/>
-                                    <field name="repeat_timeout"/>
-                                    <field name="error_timeout"/>
-                                </group>
                             </group>
                         </page>
-                        <page name="com" string="COM">
+                        <page name="com" string="COM" invisible="serial_type != 'com'">
                             <group>
                                 <group>
                                     <field name="com"/>
                                     <field name="baud_rate"/>
                                 </group>
-                                <group>
-                                    <field name="connection_timeout"/>
-                                    <field name="repeat_timeout"/>
-                                    <field name="error_timeout"/>
-                                </group>
                             </group>
                         </page>
-                        <page name="modbus" string="MODBUS">
+                        <page name="modbus" string="MODBUS" invisible="is_modbus != True">
                             <group>
                                 <group>
                                     <field name="slave_id"/>
@@ -80,6 +77,18 @@
                 <field name="controller_id"/>
                 <field name="serial_type"/>
             </tree>
+        </field>
+    </record>
+
+    <record id="view_scada_moxa_search" model="ir.ui.view">
+        <field name="name">nw.moxa.search</field>
+        <field name="model">nw.moxa</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" filter_domain="[('name', 'ilike', self)]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived" domain="[('active','=',False)]"/>
+            </search>
         </field>
     </record>
 
