@@ -11,9 +11,32 @@ class Moxa(models.Model):
     com = fields.Char(string='COM', required=True, default=lambda self: _("COM1"))
     port = fields.Integer(string='Port', required=True, default=lambda self: 0)
     module = fields.Char(string='Module', required=True)
-    connection_timeout = fields.Float(string='Connection Timeout', default=lambda self: 2.0)
-    repeat_timeout = fields.Float(string='Repeat Timeout', default=lambda self: 1.0)
-    error_timeout = fields.Float(string='ErrorTimeout', default=lambda self: 5.0)
+    connection_timeout = fields.Integer(string='Connection Timeout', default=lambda self: 2)
+    repeat_timeout = fields.Integer(string='Repeat Timeout', default=lambda self: 5)
+    error_timeout = fields.Integer(string='ErrorTimeout', default=lambda self: 5)
+
+    start_register = fields.Integer(string='Start address', required=True, default=lambda self: 0)
+    register_offset = fields.Integer(string='Count registers', required=True, default=lambda self: 0)
+    hight_byte_first = fields.Boolean(string='Hight byte first', default=True)
+    hight_word_first = fields.Boolean(string='Hight word first', default=False)
+    hight_dword_first = fields.Boolean(string='Hight double word first', default=False)
+    slave_id = fields.Integer(string='Slave ID', required=True, default=lambda self: 0)
+    multiplexer = fields.Float(string='Result multiplexer', digits=(5, 6), default=lambda self: 1.0);
+    modbus_type_value = fields.Selection(
+        selection=[
+            ('MCT_BYTE', "MCT_BYTE"),
+            ('MCT_WORD', "MCT_WORD"),
+            ('MCT_DWORD', "MCT_DWORD"),
+            ('MCT_DOUBLE', "MCT_DOUBLE"),
+            ('MCT_INT', "MCT_INT"),
+            ('MCT_INT64', "MCT_INT64"),
+            ('MCT_UINT64', "MCT_UINT64"),
+            ('MCT_BIT', "MCT_BIT"),
+            ('MCT_INT16', "MCT_INT16"),
+        ],
+        string="Register type of value", required=True,
+        copy=False, index=True,
+        default='MCT_WORD')
     baud_rate = fields.Selection(
         selection=[
             ('9600', "9600"),

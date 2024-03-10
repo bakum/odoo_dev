@@ -49,6 +49,22 @@
                                 </group>
                             </group>
                         </page>
+                        <page name="modbus" string="MODBUS">
+                            <group>
+                                <group>
+                                    <field name="slave_id"/>
+                                    <field name="start_register"/>
+                                    <field name="register_offset"/>
+                                </group>
+                                <group>
+                                    <field name="modbus_type_value"/>
+                                    <field name="hight_byte_first"/>
+                                    <field name="hight_word_first"/>
+                                    <field name="hight_dword_first"/>
+                                    <field name="multiplexer"/>
+                                </group>
+                            </group>
+                        </page>
                     </notebook>
                 </sheet>
             </form>
