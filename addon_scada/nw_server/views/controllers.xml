@@ -14,7 +14,7 @@
 
                     <group>
                         <group>
-                            <field name="name" readonly="0"/>
+                            <field name="name" readonly="name != 'New'"/>
                         </group>
                     </group>
                 </sheet>
