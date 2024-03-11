@@ -21,6 +21,7 @@
                             <field name="connection_timeout"/>
                             <field name="repeat_timeout"/>
                             <field name="error_timeout"/>
+                            <field name="multiplexer"/>
                             <field name="is_modbus" invisible="1"/>
                         </group>
                     </group>
@@ -58,7 +59,6 @@
                                     <field name="hight_byte_first"/>
                                     <field name="hight_word_first"/>
                                     <field name="hight_dword_first"/>
-                                    <field name="multiplexer"/>
                                 </group>
                             </group>
                         </page>
