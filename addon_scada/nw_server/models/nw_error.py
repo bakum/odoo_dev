@@ -10,4 +10,4 @@ class Error(models.Model):
     count = fields.Integer('Count', required=True, default=0, translate=True)
     value = fields.Float('Value', required=True, translate=True)
     error = fields.Integer(string='Error', default=0, required=True, translate=True)
-    message = fields.Text('Message', translate=True)
+    message = fields.Text('Message')
