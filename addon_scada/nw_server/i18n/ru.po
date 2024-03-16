@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-16 07:10+0000\n"
-"PO-Revision-Date: 2024-03-16 07:10+0000\n"
+"POT-Creation-Date: 2024-03-16 11:06+0000\n"
+"PO-Revision-Date: 2024-03-16 11:06+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -48,6 +48,11 @@ msgid "9600"
 msgstr ""
 
 #. module: nw_server
+#: model_terms:ir.ui.view,arch_db:nw_server.nw_config_settings_view_form
+msgid "<span class=\"o_form_label\">Last days count/////.</span>"
+msgstr ""
+
+#. module: nw_server
 #: model:ir.model.fields,field_description:nw_server.field_nw_moxa__active
 #: model:ir.model.fields,field_description:nw_server.field_nw_types_controllers__active
 msgid "Active"
@@ -84,6 +89,11 @@ msgstr ""
 #, python-format
 msgid "COM1"
 msgstr ""
+
+#. module: nw_server
+#: model:ir.model,name:nw_server.model_res_config_settings
+msgid "Config Settings"
+msgstr "Параметры конфигурации"
 
 #. module: nw_server
 #: model:ir.model.fields,field_description:nw_server.field_nw_moxa__connection_timeout
@@ -174,6 +184,12 @@ msgid "ErrorTimeout"
 msgstr ""
 
 #. module: nw_server
+#: model:ir.actions.act_window,name:nw_server.action_scada_errors_form
+#: model:ir.ui.menu,name:nw_server.menu_scada_errors
+msgid "Errors"
+msgstr "Ошибки"
+
+#. module: nw_server
 #: model:ir.model,name:nw_server.model_nw_error
 msgid "Errors records"
 msgstr ""
@@ -259,6 +275,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:nw_server.field_nw_weight__write_date
 msgid "Last Updated on"
 msgstr ""
+
+#. module: nw_server
+#: model:ir.model.fields,field_description:nw_server.field_res_config_settings__dey_count_to_clear
+#: model_terms:ir.ui.view,arch_db:nw_server.nw_config_settings_view_form
+msgid "Last days count"
+msgstr "Количество последних дней хранения информации контроллеров"
 
 #. module: nw_server
 #: model:ir.model.fields.selection,name:nw_server.selection__nw_moxa__modbus_type_value__mct_bit
@@ -348,6 +370,7 @@ msgstr "Ид. процесса"
 #. module: nw_server
 #: model:ir.module.category,name:nw_server.module_category_scada
 #: model:ir.ui.menu,name:nw_server.menu_scada_root
+#: model_terms:ir.ui.view,arch_db:nw_server.nw_config_settings_view_form
 msgid "NW Server"
 msgstr ""
 
@@ -402,7 +425,9 @@ msgid "Select Period"
 msgstr ""
 
 #. module: nw_server
+#: model:ir.actions.act_window,name:nw_server.scada_config_settings_action
 #: model:ir.ui.menu,name:nw_server.menu_scada_settings
+#: model:ir.ui.menu,name:nw_server.scada_config_settings_menu
 msgid "Settings"
 msgstr "Настройки"
 
@@ -484,3 +509,10 @@ msgstr "Записи весов"
 #: model:ir.ui.menu,name:nw_server.menu_scada_weight
 msgid "Weight values"
 msgstr "Протоколы весовых"
+
+#. module: nw_server
+#. odoo-javascript
+#: code:addons/nw_server/static/src/components/kpi_card/kpi_kard.xml:0
+#, python-format
+msgid "since last period"
+msgstr ""

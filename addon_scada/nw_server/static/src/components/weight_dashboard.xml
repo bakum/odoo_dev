@@ -23,10 +23,10 @@
                         </div>
                     </div>
                     <div class="row">
-<!--                        <KpiCard name="'Quotations'" value="10" percentage="6"/>-->
-<!--                        <KpiCard name="'Orders'" value="20" percentage="20"/>-->
-<!--                        <KpiCard name="'Revenues'" value="'30.50K'" percentage="-3"/>-->
-<!--                        <KpiCard name="'Average Order'" value="'2.5K'" percentage="-10"/>-->
+                        <KpiCard name="'Quotations'" value="10" percentage="6"/>
+                        <KpiCard name="'Orders'" value="20" percentage="20"/>
+                        <KpiCard name="'Revenues'" value="'30.50K'" percentage="-3"/>
+                        <KpiCard name="'Average Order'" value="'2.5K'" percentage="-10"/>
                     </div>
                     <div class="row">
                         <div class="col-lg-6 m-0 p-0">
@@ -37,7 +37,7 @@
                                         <span class="fa fa-arrow-right text-white"/>
                                     </div>
                                 </div>
-<!--                                <ChartRenderer type="'doughnut'" title="'Top Products Report'"/>-->
+                                <ChartRenderer type="'doughnut'" title="'Top Products Report'"/>
                             </div>
                         </div>
                         <div class="col-lg-6 m-0 p-0">
@@ -48,7 +48,7 @@
                                         <span class="fa fa-arrow-right text-white"/>
                                     </div>
                                 </div>
-<!--                                <ChartRenderer type="'pie'" title="'Top Sales People Report'"/>-->
+                                <ChartRenderer type="'pie'" title="'Top Sales People Report'"/>
                             </div>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                                         <span class="fa fa-arrow-right text-white"/>
                                     </div>
                                 </div>
-<!--                                <ChartRenderer type="'bar'" title="'Monthly Sales Report'"/>-->
+                                <ChartRenderer type="'bar'" title="'Monthly Sales Report'"/>
                             </div>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                                         <span class="fa fa-arrow-right text-white"/>
                                     </div>
                                 </div>
-<!--                                <ChartRenderer type="'line'" title="'Partner Orders Report'"/>-->
+                                <ChartRenderer type="'line'" title="'Partner Orders Report'"/>
                             </div>
                         </div>
                     </div>
