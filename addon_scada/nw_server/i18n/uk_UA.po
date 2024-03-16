@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-09 11:00+0000\n"
-"PO-Revision-Date: 2024-03-09 11:00+0000\n"
+"POT-Creation-Date: 2024-03-16 07:11+0000\n"
+"PO-Revision-Date: 2024-03-16 07:11+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,10 +16,35 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: nw_server
+#: model:ir.model.fields.selection,name:nw_server.selection__nw_moxa__baud_rate__115200
+msgid "115200"
+msgstr ""
+
+#. module: nw_server
 #. odoo-python
 #: code:addons/nw_server/models/nw_moxa.py:0
 #, python-format
 msgid "127.0.0.1"
+msgstr ""
+
+#. module: nw_server
+#: model:ir.model.fields.selection,name:nw_server.selection__nw_moxa__baud_rate__19200
+msgid "19200"
+msgstr ""
+
+#. module: nw_server
+#: model:ir.model.fields.selection,name:nw_server.selection__nw_moxa__baud_rate__28800
+msgid "28800"
+msgstr ""
+
+#. module: nw_server
+#: model:ir.model.fields.selection,name:nw_server.selection__nw_moxa__baud_rate__57600
+msgid "57600"
+msgstr ""
+
+#. module: nw_server
+#: model:ir.model.fields.selection,name:nw_server.selection__nw_moxa__baud_rate__9600
+msgid "9600"
 msgstr ""
 
 #. module: nw_server
@@ -37,12 +62,27 @@ msgstr "Адміністратор"
 #: model_terms:ir.ui.view,arch_db:nw_server.view_scada_controllers_form
 #: model_terms:ir.ui.view,arch_db:nw_server.view_scada_controllers_search
 #: model_terms:ir.ui.view,arch_db:nw_server.view_scada_moxa_form
+#: model_terms:ir.ui.view,arch_db:nw_server.view_scada_moxa_search
 msgid "Archived"
 msgstr ""
 
 #. module: nw_server
+#: model:ir.model.fields,field_description:nw_server.field_nw_moxa__baud_rate
+msgid "Baud Rate"
+msgstr ""
+
+#. module: nw_server
+#: model:ir.model.fields,field_description:nw_server.field_nw_moxa__com
 #: model:ir.model.fields.selection,name:nw_server.selection__nw_moxa__serial_type__com
+#: model_terms:ir.ui.view,arch_db:nw_server.view_scada_moxa_form
 msgid "COM"
+msgstr ""
+
+#. module: nw_server
+#. odoo-python
+#: code:addons/nw_server/models/nw_moxa.py:0
+#, python-format
+msgid "COM1"
 msgstr ""
 
 #. module: nw_server
@@ -85,6 +125,11 @@ msgstr "Типи контролерів"
 #: model:ir.model.fields,field_description:nw_server.field_nw_error__count
 #: model:ir.model.fields,field_description:nw_server.field_nw_weight__count
 msgid "Count"
+msgstr ""
+
+#. module: nw_server
+#: model:ir.model.fields,field_description:nw_server.field_nw_moxa__register_offset
+msgid "Count registers"
 msgstr ""
 
 #. module: nw_server
@@ -139,6 +184,21 @@ msgid "Helps you manage SCADA"
 msgstr ""
 
 #. module: nw_server
+#: model:ir.model.fields,field_description:nw_server.field_nw_moxa__hight_byte_first
+msgid "Hight byte first"
+msgstr ""
+
+#. module: nw_server
+#: model:ir.model.fields,field_description:nw_server.field_nw_moxa__hight_dword_first
+msgid "Hight double word first"
+msgstr ""
+
+#. module: nw_server
+#: model:ir.model.fields,field_description:nw_server.field_nw_moxa__hight_word_first
+msgid "Hight word first"
+msgstr ""
+
+#. module: nw_server
 #: model:ir.model.fields,field_description:nw_server.field_nw_error__id
 #: model:ir.model.fields,field_description:nw_server.field_nw_moxa__id
 #: model:ir.model.fields,field_description:nw_server.field_nw_types_controllers__id
@@ -150,6 +210,39 @@ msgstr ""
 #: model:ir.model.fields,field_description:nw_server.field_nw_moxa__ip
 msgid "IP"
 msgstr "Адреса"
+
+#. module: nw_server
+#: model:ir.model.fields,field_description:nw_server.field_nw_moxa__is_modbus
+msgid "Is Modbus"
+msgstr ""
+
+#. module: nw_server
+#. odoo-javascript
+#: code:addons/nw_server/static/src/components/weight_dashboard.xml:0
+#, python-format
+msgid "Last 30 Days"
+msgstr ""
+
+#. module: nw_server
+#. odoo-javascript
+#: code:addons/nw_server/static/src/components/weight_dashboard.xml:0
+#, python-format
+msgid "Last 365 Days"
+msgstr ""
+
+#. module: nw_server
+#. odoo-javascript
+#: code:addons/nw_server/static/src/components/weight_dashboard.xml:0
+#, python-format
+msgid "Last 7 Days"
+msgstr ""
+
+#. module: nw_server
+#. odoo-javascript
+#: code:addons/nw_server/static/src/components/weight_dashboard.xml:0
+#, python-format
+msgid "Last 90 Days"
+msgstr ""
 
 #. module: nw_server
 #: model:ir.model.fields,field_description:nw_server.field_nw_error__write_uid
@@ -168,7 +261,52 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: nw_server
-#: model:nw.types.controllers,name:nw_server.type_3
+#: model:ir.model.fields.selection,name:nw_server.selection__nw_moxa__modbus_type_value__mct_bit
+msgid "MCT_BIT"
+msgstr ""
+
+#. module: nw_server
+#: model:ir.model.fields.selection,name:nw_server.selection__nw_moxa__modbus_type_value__mct_byte
+msgid "MCT_BYTE"
+msgstr ""
+
+#. module: nw_server
+#: model:ir.model.fields.selection,name:nw_server.selection__nw_moxa__modbus_type_value__mct_double
+msgid "MCT_DOUBLE"
+msgstr ""
+
+#. module: nw_server
+#: model:ir.model.fields.selection,name:nw_server.selection__nw_moxa__modbus_type_value__mct_dword
+msgid "MCT_DWORD"
+msgstr ""
+
+#. module: nw_server
+#: model:ir.model.fields.selection,name:nw_server.selection__nw_moxa__modbus_type_value__mct_int
+msgid "MCT_INT"
+msgstr ""
+
+#. module: nw_server
+#: model:ir.model.fields.selection,name:nw_server.selection__nw_moxa__modbus_type_value__mct_int16
+msgid "MCT_INT16"
+msgstr ""
+
+#. module: nw_server
+#: model:ir.model.fields.selection,name:nw_server.selection__nw_moxa__modbus_type_value__mct_int64
+msgid "MCT_INT64"
+msgstr ""
+
+#. module: nw_server
+#: model:ir.model.fields.selection,name:nw_server.selection__nw_moxa__modbus_type_value__mct_uint64
+msgid "MCT_UINT64"
+msgstr ""
+
+#. module: nw_server
+#: model:ir.model.fields.selection,name:nw_server.selection__nw_moxa__modbus_type_value__mct_word
+msgid "MCT_WORD"
+msgstr ""
+
+#. module: nw_server
+#: model_terms:ir.ui.view,arch_db:nw_server.view_scada_moxa_form
 msgid "MODBUS"
 msgstr ""
 
@@ -181,6 +319,13 @@ msgstr "Повідомлення"
 #. module: nw_server
 #: model:ir.model.fields,field_description:nw_server.field_nw_moxa__module
 msgid "Module"
+msgstr ""
+
+#. module: nw_server
+#. odoo-javascript
+#: code:addons/nw_server/static/src/components/weight_dashboard.xml:0
+#, python-format
+msgid "Monthly Sales"
 msgstr ""
 
 #. module: nw_server
@@ -213,6 +358,13 @@ msgid "Name"
 msgstr "Найменування"
 
 #. module: nw_server
+#. odoo-javascript
+#: code:addons/nw_server/static/src/components/weight_dashboard.xml:0
+#, python-format
+msgid "Partner Orders"
+msgstr ""
+
+#. module: nw_server
 #: model:ir.model.fields,field_description:nw_server.field_nw_moxa__port
 msgid "Port"
 msgstr "Порт"
@@ -223,29 +375,65 @@ msgid "Posted weight"
 msgstr ""
 
 #. module: nw_server
+#: model:ir.ui.menu,name:nw_server.menu_scada_protokol
+msgid "Protokols"
+msgstr "Протоколи"
+
+#. module: nw_server
+#: model:ir.model.fields,field_description:nw_server.field_nw_moxa__modbus_type_value
+msgid "Register type of value"
+msgstr ""
+
+#. module: nw_server
 #: model:ir.model.fields,field_description:nw_server.field_nw_moxa__repeat_timeout
 msgid "Repeat Timeout"
 msgstr ""
 
 #. module: nw_server
+#: model:ir.model.fields,field_description:nw_server.field_nw_moxa__multiplexer
+msgid "Result multiplexer"
+msgstr ""
+
+#. module: nw_server
+#. odoo-javascript
+#: code:addons/nw_server/static/src/components/weight_dashboard.xml:0
+#, python-format
+msgid "Select Period"
+msgstr ""
+
+#. module: nw_server
 #: model:ir.ui.menu,name:nw_server.menu_scada_settings
-#: model_terms:ir.ui.view,arch_db:nw_server.view_scada_moxa_form
 msgid "Settings"
 msgstr "Налаштування"
 
 #. module: nw_server
+#: model:ir.model.fields,field_description:nw_server.field_nw_moxa__slave_id
+msgid "Slave ID"
+msgstr ""
+
+#. module: nw_server
+#: model:ir.model.fields,field_description:nw_server.field_nw_moxa__start_register
+msgid "Start address"
+msgstr ""
+
+#. module: nw_server
 #: model:ir.model.fields.selection,name:nw_server.selection__nw_moxa__serial_type__tcp
+#: model_terms:ir.ui.view,arch_db:nw_server.view_scada_moxa_form
 msgid "TCP/IP"
 msgstr ""
 
 #. module: nw_server
-#: model:nw.types.controllers,name:nw_server.type_1
-msgid "TVA"
+#. odoo-javascript
+#: code:addons/nw_server/static/src/components/weight_dashboard.xml:0
+#, python-format
+msgid "Top Products"
 msgstr ""
 
 #. module: nw_server
-#: model:nw.types.controllers,name:nw_server.type_2
-msgid "TVV"
+#. odoo-javascript
+#: code:addons/nw_server/static/src/components/weight_dashboard.xml:0
+#, python-format
+msgid "Top Sales People"
 msgstr ""
 
 #. module: nw_server
@@ -256,13 +444,35 @@ msgstr "Типи контролерів"
 #. module: nw_server
 #: model:res.groups,name:nw_server.group_scada_user
 msgid "User"
-msgstr ""
+msgstr "Користувач"
 
 #. module: nw_server
 #: model:ir.model.fields,field_description:nw_server.field_nw_error__value
-#: model:ir.model.fields,field_description:nw_server.field_nw_weight__value
 msgid "Value"
 msgstr "Значення"
+
+#. module: nw_server
+#: model:ir.model.fields,field_description:nw_server.field_nw_weight__value1
+msgid "Value1"
+msgstr ""
+
+#. module: nw_server
+#: model:ir.model.fields,field_description:nw_server.field_nw_weight__value2
+msgid "Value2"
+msgstr ""
+
+#. module: nw_server
+#. odoo-javascript
+#: code:addons/nw_server/static/src/components/weight_dashboard.xml:0
+#, python-format
+msgid "Weight Dashboard"
+msgstr ""
+
+#. module: nw_server
+#: model:ir.actions.client,name:nw_server.action_owl_weight_dashboard
+#: model:ir.ui.menu,name:nw_server.menu_owl_weight_dashboard
+msgid "Weight Information"
+msgstr "Інформація"
 
 #. module: nw_server
 #: model:ir.model,name:nw_server.model_nw_weight

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_scada_errors_tree" model="ir.ui.view">
+        <field name="name">nw.errors.tree</field>
+        <field name="model">nw.error</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="moxa_id"/>
+                <field name="nid"/>
+                <field name="count"/>
+                <field name="value"/>
+                <field name="error"/>
+                <field name="message"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_scada_errors_form" model="ir.actions.act_window">
+        <field name="name">Errors</field>
+        <field name="res_model">nw.error</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+            id="menu_scada_errors"
+            name="Errors"
+            parent="menu_scada_protokol"
+            action="nw_server.action_scada_errors_form"
+            groups="nw_server.group_scada_user,nw_server.group_scada_manager"
+            sequence="4"/>
+</odoo>

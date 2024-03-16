@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="nw_config_settings_view_form" model="ir.ui.view">
+            <field name="name">nw.config.settings.view.form</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="90"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="inside">
+                    <app data-string="NW Server" id="nw_server" string="NW Server" name="nw_server" groups="nw_server.group_scada_manager">
+                        <block title="NW Server" id="end_contract_setting">
+                            <setting string="Last days count">
+                                <div class="text-muted content-group mt16">
+                                    <field name="dey_count_to_clear" />
+                                </div>
+                                <span class="o_form_label">Last days count/////.</span>
+                            </setting>
+                        </block>
+                    </app>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="scada_config_settings_action" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context">{'module' : 'nw_server', 'bin_size': False}</field>
+        </record>
+
+        <menuitem id="scada_config_settings_menu" name="Settings"
+                  parent="nw_server.menu_scada_settings" sequence="0" action="scada_config_settings_action"
+                  groups="base.group_system"/>
+    </data>
+</odoo>

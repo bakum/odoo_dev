@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="action_owl_weight_dashboard" model="ir.actions.client">
+            <field name="name">Weight Information</field>
+            <field name="tag">owl.weight_dashboard</field>
+        </record>
+
+        <menuitem name="Weight Information"
+                  id="menu_owl_weight_dashboard"
+                  parent="menu_scada_root"
+                  sequence="2"
+                  groups="nw_server.group_scada_user,nw_server.group_scada_manager"
+                  action="action_owl_weight_dashboard"/>
+    </data>
+</odoo>

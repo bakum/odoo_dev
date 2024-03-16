@@ -25,7 +25,7 @@
     <menuitem
             id="menu_scada_weight"
             name="Weight values"
-            parent="menu_scada_root"
+            parent="menu_scada_protokol"
             action="nw_server.action_scada_weight_form"
             groups="nw_server.group_scada_user,nw_server.group_scada_manager"
             sequence="3"/>

@@ -15,10 +15,18 @@
         'data/type_of_controllers.xml',
         'views/menu.xml',
         'views/weight.xml',
+        'views/errors.xml',
         'views/controllers.xml',
         'views/moxa.xml',
+        'views/weight_dashboard.xml',
+        'views/nw_config_settings.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'nw_server/static/src/**/*',
+        ],
+    },
     'depends': [
-        'base',
+        'base', 'web', 'board',
     ],
 }
