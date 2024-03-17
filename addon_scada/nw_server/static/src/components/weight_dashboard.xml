@@ -10,7 +10,7 @@
                                 <div class="d-flex align-items-center justify-content-between">
                                     <h1 class="text-primary fw-bold">Weight Dashboard</h1>
                                     <div>
-                                        <select class="form-select">
+                                        <select class="form-select" t-model="state.period">
                                             <option value="0">Select Period</option>
                                             <option value="7">Last 7 Days</option>
                                             <option value="30">Last 30 Days</option>
@@ -18,15 +18,26 @@
                                             <option value="365">Last 365 Days</option>
                                         </select>
                                     </div>
+                                    <div>
+                                        <select class="form-select" t-model="state.current_controller">
+                                            <option value="0">Select Controller</option>
+                                            <t t-foreach="state.controllers" t-as="item" t-key="item.id">
+                                            <option t-att-value="item.id"><t t-esc="item.name"/></option>
+<!--                                            <option value="7">TVV</option>-->
+<!--                                            <option value="30">TVA</option>-->
+<!--                                            <option value="90">MODBUS</option>-->
+                                            </t>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <KpiCard name="'Quotations'" value="10" percentage="6"/>
-                        <KpiCard name="'Orders'" value="20" percentage="20"/>
-                        <KpiCard name="'Revenues'" value="'30.50K'" percentage="-3"/>
-                        <KpiCard name="'Average Order'" value="'2.5K'" percentage="-10"/>
+                        <KpiCard name="'Weight'" value="10" percentage="6"/>
+                        <KpiCard name="'Errors'" value="20" percentage="20"/>
+<!--                        <KpiCard name="'Revenues'" value="'30.50K'" percentage="-3"/>-->
+<!--                        <KpiCard name="'Average Order'" value="'2.5K'" percentage="-10"/>-->
                     </div>
                     <div class="row">
                         <div class="col-lg-6 m-0 p-0">
