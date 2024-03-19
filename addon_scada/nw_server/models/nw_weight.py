@@ -41,7 +41,7 @@ class Weight(models.Model):
                   """
         self.env.cr.execute(sql, [moxa_id])
         curr_weight = self.env.cr.dictfetchall()
-        print(moxa_id)
+        # print(moxa_id)
         if len(curr_weight) == 0:
             return {}
         return curr_weight[0]

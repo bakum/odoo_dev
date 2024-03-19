@@ -21,7 +21,7 @@ export class OwlWeightDashboard extends Component {
         const data = await this.orm.searchRead("nw.moxa", domain, ['id', 'name'])
 
         this.state.controllers = data
-        this.state.current_controller = data.length > 0 ? data[0].id : 0
+        // this.state.current_controller = data.length > 0 ? data[0].id : 0
         // console.log("data", data)
     }
 
@@ -86,7 +86,7 @@ export class OwlWeightDashboard extends Component {
 
     setup() {
         this.state = useState({
-            period: 60,
+            period: 0,
             current_controller: 0,
             weight_data: {},
             error_data: {},
