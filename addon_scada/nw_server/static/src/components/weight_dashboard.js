@@ -34,10 +34,15 @@ export class OwlWeightDashboard extends Component {
                 "value1": 0,
                 "value2": 0,
             }
-        if (this.state.current_controller > 0) {
+
+        if (Number(this.state.current_controller) === 0) {
+            this.state.weight_data = null_data
+            return
+        }
+        // if (Number(this.state.current_controller) > 0) {
             domain.push(['moxa_id', '=', Number(this.state.current_controller)])
             domain.push(['count', '>', 1])
-        }
+        // }
         if (this.state.period > 0) {
             domain.push(['write_date', '>', this.state.current_date])
         }
@@ -48,6 +53,7 @@ export class OwlWeightDashboard extends Component {
         const data_group = await this.orm.readGroup("nw.weight", domain, ["value1:sum", "value2:sum", "count:max"], [])
         const data_last = await this.orm.call('nw.weight','compute_current_weight',["",this.state.current_controller],{})
 
+        // this.state.weight_data = Number(this.state.current_controller) === 0 ? null_data : data.length > 0 ? data[0] : null_data
         this.state.weight_data = data.length > 0 ? data[0] : null_data
         // console.log("current_controller", this.state.current_controller)
         console.log("weight", data_last)
@@ -62,14 +68,19 @@ export class OwlWeightDashboard extends Component {
                 "count": 0,
                 "value": 0,
             }
-        if (this.state.current_controller > 0) {
-            domain.push(['moxa_id', '=', Number(this.state.current_controller)])
+       if (Number(this.state.current_controller) === 0) {
+            this.state.error_data = null_data
+            return
         }
+        // if (this.state.current_controller > 0) {
+            domain.push(['moxa_id', '=', Number(this.state.current_controller)])
+        // }
         const data = await this.orm.searchRead("nw.error", domain, ['id', 'nid', 'count', 'value'], {
             limit: 1,
             order: 'write_date desc'
         })
-        this.state.error_data = data.length > 0 ? data[0] : null_data
+        // this.state.error_data = Number(this.state.current_controller) === 0 ? null_data : data.length > 0 ? data[0] : null_data
+        this.state.error_data =  data.length > 0 ? data[0] : null_data
         // console.log("error", data)
     }
 
