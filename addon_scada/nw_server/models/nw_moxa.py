@@ -67,5 +67,10 @@ class Moxa(models.Model):
     def _onchange_controller_id(self):
         for line in self:
             line.module = self.controller_id.name
-            if 'MODBUS' in self.controller_id.name:
-                line.is_modbus = True
+            try:
+                if 'MODBUS' in self.controller_id.name:
+                    line.is_modbus = True
+                else:
+                    line.is_modbus = False
+            except:
+                line.is_modbus = False
