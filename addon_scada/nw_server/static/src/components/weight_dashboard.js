@@ -101,7 +101,7 @@ export class OwlWeightDashboard extends Component {
         this.refreshIntervalId = setInterval(async () => {
             await this.getWeight()
             await this.getErrors()
-        }, 5000)
+        }, 2000)
 
         onWillStart(async () => {
             // await loadJS("/nw_server/static/src/components/moment/moment.min.js")

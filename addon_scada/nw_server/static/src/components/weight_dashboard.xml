@@ -11,7 +11,7 @@
                                     <h1 class="text-primary fw-bold">Weight Dashboard</h1>
                                     <div>
                                         <select class="form-select" t-model="state.period" t-on-change="onChangePeriod">
-                                            <option value="0">Select Period</option>
+                                            <option value="0">Last weight</option>
                                             <option value="7">Last 7 Days</option>
                                             <option value="30">Last 30 Days</option>
                                             <option value="60">Last 60 Days</option>
