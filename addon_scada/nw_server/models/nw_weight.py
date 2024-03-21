@@ -18,13 +18,16 @@ class Weight(models.Model):
                         nm.ip,
                          nm.port,
                          nm.module,
-                         lval1 AS val1,
-                         lval2 AS val2,
+                         lval1 AS value1,
+                         lval2 AS value2,
+                         lcount AS count,
                          lnid AS nid,
                          lerror AS error,
                          lmessage AS message
                   FROM                  (
                           SELECT DISTINCT moxa_id,
+                                          LAST_VALUE(COUNT) OVER (PARTITION BY moxa_id
+                                              ORDER BY write_date RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS lcount,
                                           LAST_VALUE(VALUE1) OVER (PARTITION BY moxa_id
                                               ORDER BY write_date RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS lVal1,
                                           LAST_VALUE(VALUE2) OVER (PARTITION BY moxa_id
@@ -35,7 +38,7 @@ class Weight(models.Model):
                                               ORDER BY write_date RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS lerror,
                                           LAST_VALUE(message) OVER (PARTITION BY moxa_id
                                               ORDER BY write_date RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS lmessage
-                          FROM nw_weight) AS weight
+                          FROM nw_weight where count > 1) AS weight
                           LEFT JOIN nw_moxa nm ON nm.id = weight.moxa_id
                   WHERE nm.active = true and moxa_id = %s
                   """
