@@ -65,7 +65,7 @@ export class OwlWeightDashboard extends Component {
         this.state.monitor.is_running = await this.orm.call('nw.moxa', 'get_monitor_is_running', [], {})
         // let result = await this.actionService.doAction("nw_server.action_get_monitor_is_running", {})
         // console.log(result)
-        this.state.monitor.monitor_label = this.state.monitor.is_running ? 'Weight monitor now is running' : 'Weight monitor stopped'
+        this.state.monitor.monitor_label = this.state.monitor.is_running ? 'Weight monitor now is running' : 'Weight monitor is stopped'
     }
 
     async getErrors() {
