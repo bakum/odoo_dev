@@ -1,3 +1,6 @@
+import os
+import sys
+
 import psutil
 import subprocess
 
@@ -123,7 +126,14 @@ class Moxa(models.Model):
     def restart_monitor(self):
         # Define the service name
         service_name = "weight"
-        cmd = f'sudo -S systemctl restart {service_name}'
+        if 'linux' in sys.platform:
+            cmd = f'sudo -S systemctl restart {service_name}'
+        else:
+            try:
+                os.system(f'net restart {service_name}')
+                return True
+            except:
+                return False
 
         with subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                               text=True) as process:
@@ -143,7 +153,14 @@ class Moxa(models.Model):
     def start_monitor(self):
         # Define the service name
         service_name = "weight"
-        cmd = f'sudo -S systemctl start {service_name}'
+        if 'linux' in sys.platform:
+            cmd = f'sudo -S systemctl start {service_name}'
+        else:
+            try:
+                os.system(f'net start {service_name}')
+                return True
+            except:
+                return False
 
         with subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                               text=True) as process:
@@ -163,7 +180,14 @@ class Moxa(models.Model):
     def stop_monitor(self):
         # Define the service name
         service_name = "weight"
-        cmd = f'sudo -S systemctl stop {service_name}'
+        if 'linux' in sys.platform:
+            cmd = f'sudo -S systemctl stop {service_name}'
+        else:
+            try:
+                os.system(f'net stop {service_name}')
+                return True
+            except:
+                return False
 
         with subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                               text=True) as process:
