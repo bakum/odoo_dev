@@ -9,23 +9,25 @@
                             <div class="shadow-sm border m-2 p-4 bg-white">
                                 <div class="d-flex align-items-center justify-content-between">
                                     <h1 class="text-primary fw-bold">Weight Dashboard</h1>
+
                                     <div>
                                         <select class="form-select" t-model="state.period" t-on-change="onChangePeriod">
                                             <option value="0">Last weight</option>
                                             <option value="7">Last 7 Days</option>
                                             <option value="30">Last 30 Days</option>
                                             <option value="60">Last 60 Days</option>
-<!--                                            <option value="365">Last 365 Days</option>-->
+                                            <!--                                            <option value="365">Last 365 Days</option>-->
                                         </select>
                                     </div>
                                     <div>
-                                        <select class="form-select" t-model="state.current_controller" t-on-change="onChangeController">
+                                        <select class="form-select" t-model="state.current_controller"
+                                                t-on-change="onChangeController">
                                             <option value="0">Select Controller</option>
                                             <t t-foreach="state.controllers" t-as="item" t-key="item.id">
                                             <option t-att-value="item.id"><t t-esc="item.name"/></option>
-<!--                                            <option value="7">TVV</option>-->
-<!--                                            <option value="30">TVA</option>-->
-<!--                                            <option value="90">MODBUS</option>-->
+                                                <!--                                            <option value="7">TVV</option>-->
+                                                <!--                                            <option value="30">TVA</option>-->
+                                                <!--                                            <option value="90">MODBUS</option>-->
                                             </t>
                                         </select>
                                     </div>
@@ -36,8 +38,8 @@
                     <div class="row">
                         <KpiCard name="'Weight'" value="state.weight_data.value1" percentage="6"/>
                         <KpiCard name="'Errors'" value="state.error_data.count" percentage="20"/>
-<!--                        <KpiCard name="'Revenues'" value="'30.50K'" percentage="-3"/>-->
-<!--                        <KpiCard name="'Average Order'" value="'2.5K'" percentage="-10"/>-->
+                        <!--                        <KpiCard name="'Revenues'" value="'30.50K'" percentage="-3"/>-->
+                        <!--                        <KpiCard name="'Average Order'" value="'2.5K'" percentage="-10"/>-->
                     </div>
                     <div class="row">
                         <div class="col-lg-6 m-0 p-0">
@@ -68,6 +70,53 @@
                     <div class="row">
                         <div class="col m-0 p-0">
                             <div class="shadow-sm border m-2 p-4 bg-white">
+                                <div class="d-flex align-items-center ">
+                                    <h5 class="text-primary fw-bold p-2"><t t-esc="state.monitor.monitor_label"/></h5>
+                                    <div class="btn-group m-0 p-0" role="group">
+                                    <t t-if="state.monitor.is_running">
+                                    <button type="button" class="btn btn-primary"
+                                            t-on-click="OnStartStopClick" disabled="">
+                                        Start
+                                    </button>
+                                    </t>
+                                    <t t-if="!state.monitor.is_running">
+                                        <button type="button" class="btn btn-primary"
+                                                t-on-click="OnStartStopClick">
+                                        Start
+                                    </button>
+                                    </t>
+                                    <t t-if="state.monitor.is_running">
+                                    <button type="button" class="btn btn-primary"
+                                            t-on-click="OnStartStopClick">
+<!--                                        <t t-esc="state.monitor.monitor_label"/>-->
+                                        Restart
+                                    </button>
+                                        <button type="button" class="btn btn-danger"
+                                                t-on-click="OnStopClick">
+<!--                                        <t t-esc="state.monitor.monitor_label"/>-->
+                                            Stop
+                                    </button>
+                                    </t>
+                                    <t t-if="!state.monitor.is_running">
+                                    <button type="button" class="btn btn-primary"
+                                            t-on-click="OnStartStopClick" disabled="">
+<!--                                        <t t-esc="state.monitor.monitor_label"/>-->
+                                        Restart
+                                    </button>
+                                        <button type="button" class="btn btn-danger"
+                                                t-on-click="OnStopClick" disabled="">
+<!--                                        <t t-esc="state.monitor.monitor_label"/>-->
+                                            Stop
+                                    </button>
+                                    </t>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col m-0 p-0">
+                            <div class="shadow-sm border m-2 p-4 bg-white">
                                 <div class="d-flex align-items-center justify-content-between">
                                     <h3 class="text-primary fw-bold">Monthly Sales</h3>
                                     <div class="px-3 py-1 bg-primary cursor-pointer">
@@ -78,19 +127,19 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col m-0 p-0">
-                            <div class="shadow-sm border m-2 p-4 bg-white">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <h3 class="text-primary fw-bold">Partner Orders</h3>
-                                    <div class="px-3 py-1 bg-primary cursor-pointer">
-                                        <span class="fa fa-arrow-right text-white"/>
-                                    </div>
-                                </div>
-                                <ChartRenderer type="'line'" title="'Partner Orders Report'"/>
-                            </div>
-                        </div>
-                    </div>
+                    <!--                    <div class="row">-->
+                    <!--                        <div class="col m-0 p-0">-->
+                    <!--                            <div class="shadow-sm border m-2 p-4 bg-white">-->
+                    <!--                                <div class="d-flex align-items-center justify-content-between">-->
+                    <!--                                    <h3 class="text-primary fw-bold">Partner Orders</h3>-->
+                    <!--                                    <div class="px-3 py-1 bg-primary cursor-pointer">-->
+                    <!--                                        <span class="fa fa-arrow-right text-white"/>-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+                    <!--                                <ChartRenderer type="'line'" title="'Partner Orders Report'"/>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
                 </div>
             </div>
         </div>

@@ -22,6 +22,16 @@
         <field name="view_mode">tree,form</field>
     </record>
 
+    <record model="ir.actions.server" id="action_get_monitor_is_running">
+        <field name="name">Get Monitor IS Running</field>
+        <field name="model_id" ref="nw_server.model_nw_moxa"/>
+        <field name="binding_model_id" ref="nw_server.model_nw_moxa"/>
+        <field name="state">code</field>
+        <field name="code">
+            model.get_monitor_is_running()
+        </field>
+    </record>
+
     <menuitem
             id="menu_scada_weight"
             name="Weight values"

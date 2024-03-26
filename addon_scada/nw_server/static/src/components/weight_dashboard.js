@@ -61,6 +61,12 @@ export class OwlWeightDashboard extends Component {
         console.log("weight1", data_last)
         // console.log("domain", domain)
     }
+    async getMonitorStatus() {
+        this.state.monitor.is_running = await this.orm.call('nw.moxa', 'get_monitor_is_running', [], {})
+        // let result = await this.actionService.doAction("nw_server.action_get_monitor_is_running", {})
+        // console.log(result)
+        this.state.monitor.monitor_label = this.state.monitor.is_running ? 'Weight monitor now is running' : 'Weight monitor stopped'
+    }
 
     async getErrors() {
         let domain = [],
@@ -96,6 +102,21 @@ export class OwlWeightDashboard extends Component {
         await this.getWeight()
         await this.getErrors()
     }
+    async OnStartStopClick() {
+        // let result = await this.orm.call('nw.moxa', 'get_monitor_is_running', [], {})
+        // let result
+        if (this.state.monitor.is_running) {
+            return await this.orm.call('nw.moxa', 'restart_monitor', [], {})
+        } else {
+            return await this.orm.call('nw.moxa', 'start_monitor', [], {})
+        }
+        // console.log('test click', result)
+        // this.actionService.doAction("nw_server.action_get_monitor_is_running", {})
+        // return result
+    }
+    async OnStopClick() {
+        return await this.orm.call('nw.moxa', 'stop_monitor', [], {})
+    }
 
     setup() {
         this.state = useState({
@@ -103,6 +124,10 @@ export class OwlWeightDashboard extends Component {
             current_controller: 0,
             weight_data: {},
             error_data: {},
+            monitor: {
+                is_running: false,
+                monitor_label: 'Start monitor'
+            },
             weight: {
                 value:10,
                 percentage:6,
@@ -114,6 +139,7 @@ export class OwlWeightDashboard extends Component {
         this.refreshIntervalId = setInterval(async () => {
             await this.getWeight()
             await this.getErrors()
+            await this.getMonitorStatus()
         }, 2000)
 
         onWillStart(async () => {
@@ -122,6 +148,7 @@ export class OwlWeightDashboard extends Component {
             await this.getControllers()
             await this.getWeight()
             await this.getErrors()
+            await this.getMonitorStatus()
 
         })
 

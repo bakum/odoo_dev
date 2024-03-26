@@ -1,3 +1,6 @@
+import psutil
+import subprocess
+
 from odoo import models, fields, api, _
 
 
@@ -74,3 +77,104 @@ class Moxa(models.Model):
                     line.is_modbus = False
             except:
                 line.is_modbus = False
+
+    @api.model
+    def get_monitor_is_running(self):
+        service_name = "weight"
+        for proc in psutil.process_iter():
+            try:
+                if proc.name() == service_name:
+                    print(f"{service_name} service is running")
+                    # return {
+                    #     'type': 'ir.actions.client',
+                    #     'tag': 'display_notification',
+                    #     'params': {
+                    #         'title': _('Success!'),
+                    #         'message': _(f"{service_name} service is running"),
+                    #         'sticky': False,
+                    #     }
+                    # }
+                    return True
+            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                # return {
+                #     'type': 'ir.actions.client',
+                #     'tag': 'display_notification',
+                #     'params': {
+                #         'type': 'danger',
+                #         'title': _('Warning!'),
+                #         'message': _(f"No such process {service_name} or access denied"),
+                #         'sticky': False,
+                #     }
+                # }
+                return False
+        # return {
+        #     'type': 'ir.actions.client',
+        #     'tag': 'display_notification',
+        #     'params': {
+        #         'type': 'danger',
+        #         'title': _('Warning!'),
+        #         'message': _(f"{service_name} service is not running"),
+        #         'sticky': False,
+        #     }
+        # }
+        return False
+
+    @api.model
+    def restart_monitor(self):
+        # Define the service name
+        service_name = "weight"
+        cmd = f'sudo -S systemctl restart {service_name}'
+
+        with subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                              text=True) as process:
+            # Wait for the command to complete and collect its output
+            stdout, stderr = process.communicate()
+            # Optionally, you can check the exit code and print the output
+            if process.returncode == 0:
+                print('Command succeeded:')
+                print(stdout)
+                return True
+            else:
+                print('Command failed:')
+                print(stderr)
+                return False
+
+    @api.model
+    def start_monitor(self):
+        # Define the service name
+        service_name = "weight"
+        cmd = f'sudo -S systemctl start {service_name}'
+
+        with subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                              text=True) as process:
+            # Wait for the command to complete and collect its output
+            stdout, stderr = process.communicate()
+            # Optionally, you can check the exit code and print the output
+            if process.returncode == 0:
+                print('Command succeeded:')
+                print(stdout)
+                return True
+            else:
+                print('Command failed:')
+                print(stderr)
+                return False
+
+    @api.model
+    def stop_monitor(self):
+        # Define the service name
+        service_name = "weight"
+        cmd = f'sudo -S systemctl stop {service_name}'
+
+        with subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                              text=True) as process:
+            # Wait for the command to complete and collect its output
+            stdout, stderr = process.communicate()
+            # Optionally, you can check the exit code and print the output
+            if process.returncode == 0:
+                print('Command succeeded:')
+                print(stdout)
+                return True
+            else:
+                print('Command failed:')
+                print(stderr)
+                return False
