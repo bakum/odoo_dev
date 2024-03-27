@@ -38,7 +38,7 @@ class Weight(models.Model):
                                               ORDER BY write_date RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS lerror,
                                           LAST_VALUE(message) OVER (PARTITION BY moxa_id
                                               ORDER BY write_date RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS lmessage
-                          FROM nw_weight where count > 1) AS weight
+                          FROM nw_weight) AS weight
                           LEFT JOIN nw_moxa nm ON nm.id = weight.moxa_id
                   WHERE nm.active = true and moxa_id = %s
                   """
