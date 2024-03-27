@@ -64,7 +64,7 @@ export class OwlWeightDashboard extends Component {
     async getMonitorStatus() {
         this.state.monitor.is_running = await this.orm.call('nw.moxa', 'get_monitor_is_running', [], {})
         // let result = await this.actionService.doAction("nw_server.action_get_monitor_is_running", {})
-        // console.log(result)
+        // console.log(this.user)
         this.state.monitor.monitor_label = this.state.monitor.is_running ? 'Weight monitor now is running' : 'Weight monitor is stopped'
     }
 
@@ -126,7 +126,8 @@ export class OwlWeightDashboard extends Component {
             error_data: {},
             monitor: {
                 is_running: false,
-                monitor_label: 'Start monitor'
+                monitor_label: 'Start monitor',
+                allow: false
             },
             weight: {
                 value:10,
@@ -135,6 +136,7 @@ export class OwlWeightDashboard extends Component {
         })
         this.orm = useService("orm")
         this.actionService = useService("action")
+        this.user = useService("user")
 
         this.refreshIntervalId = setInterval(async () => {
             await this.getWeight()
@@ -149,6 +151,8 @@ export class OwlWeightDashboard extends Component {
             await this.getWeight()
             await this.getErrors()
             await this.getMonitorStatus()
+            this.state.monitor.allow = await this.user.hasGroup('nw_server.group_scada_manager')
+            // console.log(this.state.monitor.alloy)
 
         })
 

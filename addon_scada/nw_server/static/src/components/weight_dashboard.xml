@@ -72,44 +72,46 @@
                             <div class="shadow-sm border m-2 p-4 bg-white">
                                 <div class="d-flex align-items-center ">
                                     <h5 class="text-primary fw-bold p-2"><t t-esc="state.monitor.monitor_label"/></h5>
-                                    <div class="btn-group m-0 p-0" role="group">
+                                    <t t-if="state.monitor.allow">
+                                    <div class="btn-group m-0 p-0" role="group" >
                                     <t t-if="state.monitor.is_running">
                                     <button type="button" class="btn btn-primary"
                                             t-on-click="OnStartStopClick" disabled="">
                                         Start
                                     </button>
                                     </t>
-                                    <t t-if="!state.monitor.is_running">
+                                        <t t-if="!state.monitor.is_running">
                                         <button type="button" class="btn btn-primary"
                                                 t-on-click="OnStartStopClick">
                                         Start
                                     </button>
                                     </t>
-                                    <t t-if="state.monitor.is_running">
+                                        <t t-if="state.monitor.is_running">
                                     <button type="button" class="btn btn-primary"
                                             t-on-click="OnStartStopClick">
 <!--                                        <t t-esc="state.monitor.monitor_label"/>-->
                                         Restart
                                     </button>
-                                        <button type="button" class="btn btn-danger"
-                                                t-on-click="OnStopClick">
+                                            <button type="button" class="btn btn-danger"
+                                                    t-on-click="OnStopClick">
 <!--                                        <t t-esc="state.monitor.monitor_label"/>-->
-                                            Stop
+                                                Stop
                                     </button>
                                     </t>
-                                    <t t-if="!state.monitor.is_running">
+                                        <t t-if="!state.monitor.is_running">
                                     <button type="button" class="btn btn-primary"
                                             t-on-click="OnStartStopClick" disabled="">
 <!--                                        <t t-esc="state.monitor.monitor_label"/>-->
                                         Restart
                                     </button>
-                                        <button type="button" class="btn btn-danger"
-                                                t-on-click="OnStopClick" disabled="">
+                                            <button type="button" class="btn btn-danger"
+                                                    t-on-click="OnStopClick" disabled="">
 <!--                                        <t t-esc="state.monitor.monitor_label"/>-->
-                                            Stop
+                                                Stop
                                     </button>
                                     </t>
                                     </div>
+                                    </t>
                                 </div>
                             </div>
                         </div>
