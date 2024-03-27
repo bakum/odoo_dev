@@ -84,43 +84,65 @@ class Moxa(models.Model):
     @api.model
     def get_monitor_is_running(self):
         service_name = "weight"
-        for proc in psutil.process_iter():
+        if 'linux' in sys.platform:
+            cmd = f'sudo -S systemctl status {service_name}'
+        else:
             try:
-                if proc.name() == service_name:
-                    print(f"{service_name} service is running")
-                    # return {
-                    #     'type': 'ir.actions.client',
-                    #     'tag': 'display_notification',
-                    #     'params': {
-                    #         'title': _('Success!'),
-                    #         'message': _(f"{service_name} service is running"),
-                    #         'sticky': False,
-                    #     }
-                    # }
-                    return True
-            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-                # return {
-                #     'type': 'ir.actions.client',
-                #     'tag': 'display_notification',
-                #     'params': {
-                #         'type': 'danger',
-                #         'title': _('Warning!'),
-                #         'message': _(f"No such process {service_name} or access denied"),
-                #         'sticky': False,
-                #     }
-                # }
+                os.system(f'net restart {service_name}')
+                return True
+            except:
                 return False
-        # return {
-        #     'type': 'ir.actions.client',
-        #     'tag': 'display_notification',
-        #     'params': {
-        #         'type': 'danger',
-        #         'title': _('Warning!'),
-        #         'message': _(f"{service_name} service is not running"),
-        #         'sticky': False,
-        #     }
-        # }
-        return False
+
+        with subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                              text=True) as process:
+            # Wait for the command to complete and collect its output
+            stdout, stderr = process.communicate()
+            # Optionally, you can check the exit code and print the output
+            if process.returncode == 0:
+                print('Command succeeded:')
+                # print(stdout)
+                return True
+            else:
+                # print('Command failed:')
+                # print(stderr)
+                return False
+        # for proc in psutil.process_iter():
+        #     try:
+        #         if service_name in proc.name():
+        #             print(f"{service_name} service is running")
+        #             # return {
+        #             #     'type': 'ir.actions.client',
+        #             #     'tag': 'display_notification',
+        #             #     'params': {
+        #             #         'title': _('Success!'),
+        #             #         'message': _(f"{service_name} service is running"),
+        #             #         'sticky': False,
+        #             #     }
+        #             # }
+        #             return True
+        #     except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+        #         # return {
+        #         #     'type': 'ir.actions.client',
+        #         #     'tag': 'display_notification',
+        #         #     'params': {
+        #         #         'type': 'danger',
+        #         #         'title': _('Warning!'),
+        #         #         'message': _(f"No such process {service_name} or access denied"),
+        #         #         'sticky': False,
+        #         #     }
+        #         # }
+        #         return False
+        # # return {
+        # #     'type': 'ir.actions.client',
+        # #     'tag': 'display_notification',
+        # #     'params': {
+        # #         'type': 'danger',
+        # #         'title': _('Warning!'),
+        # #         'message': _(f"{service_name} service is not running"),
+        # #         'sticky': False,
+        # #     }
+        # # }
+        # return False
 
     @api.model
     def restart_monitor(self):
