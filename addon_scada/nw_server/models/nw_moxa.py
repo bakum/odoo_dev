@@ -88,8 +88,8 @@ class Moxa(models.Model):
             cmd = f'sudo -S systemctl status {service_name}'
         else:
             try:
-                os.system(f'net restart {service_name}')
-                return True
+                errcode = os.system(f'sc query {service_name}')
+                return errcode == 0
             except:
                 return False
 
@@ -152,8 +152,8 @@ class Moxa(models.Model):
             cmd = f'sudo -S systemctl restart {service_name}'
         else:
             try:
-                os.system(f'net restart {service_name}')
-                return True
+                errcode = os.system(f'net start {service_name}')
+                return errcode == 2 or errcode == 0
             except:
                 return False
 
@@ -179,8 +179,8 @@ class Moxa(models.Model):
             cmd = f'sudo -S systemctl start {service_name}'
         else:
             try:
-                os.system(f'net start {service_name}')
-                return True
+                errcode = os.system(f'net start {service_name}')
+                return errcode == 0
             except:
                 return False
 
@@ -206,8 +206,8 @@ class Moxa(models.Model):
             cmd = f'sudo -S systemctl stop {service_name}'
         else:
             try:
-                os.system(f'net stop {service_name}')
-                return True
+                errcode = os.system(f'net stop {service_name}')
+                return errcode == 0
             except:
                 return False
 

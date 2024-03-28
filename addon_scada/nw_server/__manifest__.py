@@ -20,6 +20,7 @@
         'views/moxa.xml',
         'views/weight_dashboard.xml',
         'views/nw_config_settings.xml',
+        'views/actions.xml',
     ],
     'assets': {
         'web.assets_backend': [

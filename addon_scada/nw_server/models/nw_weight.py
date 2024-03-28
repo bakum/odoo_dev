@@ -48,3 +48,31 @@ class Weight(models.Model):
         if len(curr_weight) == 0:
             return {}
         return curr_weight[0]
+
+    def _truncate_old_records_by_moxa(self, moxa_id):
+        day_count = self.env['ir.config_parameter'].sudo().get_param('nw_server.default_last_dey_count')
+        if int(day_count) <= 0:
+            return
+        sql = """
+            select * from (select *, row_number() OVER () as rnum
+                from
+                (select max(id) id, date(write_date) write_date from nw_weight
+                    where moxa_id = %s
+                group by  date(write_date)
+                order by write_date desc) as main) as supermain
+            where supermain.rnum > %s
+            limit 1
+        """
+        self.env.cr.execute(sql, [moxa_id, day_count])
+        curr_ids = self.env.cr.dictfetchall()
+        if len(curr_ids) == 0:
+            return
+        id = curr_ids[0]['id']
+        line_to_delete = self.env['nw.weight'].sudo().search(['&', ('id', '<', id), ('moxa_id.id', '=', moxa_id)])
+        for line in line_to_delete:
+            line.unlink()
+
+    def _truncate_old_records(self):
+        moxa_line = self.env['nw.moxa'].sudo().search_read([('active', '=', True)])
+        for moxa in moxa_line:
+            self._truncate_old_records_by_moxa(moxa['id'])
