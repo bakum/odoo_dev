@@ -13,7 +13,7 @@ class DictionariesController(http.Controller):
         return json.dumps({"success": True})
 
     @http.route(['/api/v2/<string:modelname>'],
-                auth='none', website=False, cors="*", csrf=False,
+                auth='bearer_api_key', website=False, cors="*", csrf=False,
                 methods=['GET', 'PUT', 'POST', 'DELETE'])
     def index(self, **kw):
         model_name = kw['modelname']
