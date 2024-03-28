@@ -6,6 +6,7 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="moxa_id"/>
+                <field name="write_date"/>
                 <field name="nid"/>
                 <field name="count"/>
                 <field name="value"/>
