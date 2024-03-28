@@ -1,7 +1,9 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 nw_server.access_nw_weight,access_nw_weight,nw_server.model_nw_weight,nw_server.group_scada_user,1,0,0,0
+nw_server.access_nw_weight_manager,access_nw_weight,nw_server.model_nw_weight,nw_server.group_scada_manager,1,0,0,1
 nw_server.access_nw_moxa,access_nw_moxa,nw_server.model_nw_moxa,nw_server.group_scada_user,1,0,0,0
 nw_server.access_nw_moxa_manager,access_nw_moxa,nw_server.model_nw_moxa,nw_server.group_scada_manager,1,1,1,1
 nw_server.access_nw_error,access_nw_error,nw_server.model_nw_error,nw_server.group_scada_user,1,0,0,0
+nw_server.access_nw_error_manager,access_nw_error,nw_server.model_nw_error,nw_server.group_scada_manager,1,0,0,1
 nw_server.access_nw_types_controllers,access_nw_types_controllers,nw_server.model_nw_types_controllers,nw_server.group_scada_user,1,0,0,0
 nw_server.access_nw_types_controllers_manager,access_nw_types_controllers,nw_server.model_nw_types_controllers,nw_server.group_scada_manager,1,1,1,1
