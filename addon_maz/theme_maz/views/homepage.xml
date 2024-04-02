@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="custom_homepage" inherit_id="website.homepage" name="Home">
+        <xpath expr="//t[@t-call='website.layout']" position="replace">
+            <t t-call="website.layout">
+                <t t-set="pageName" t-value="'homepage'"/>
+<!--                <div class="oe_structure"/>-->
+                    <div class="container body-md">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 cont_left">
+                                <t t-call="website.navbar_nav">
+                                    <t t-set="_nav_class" t-valuef="me-auto"/>
+
+                                    <!-- Menu -->
+                                    <t t-foreach="website.menu_id.child_id" t-as="submenu">
+                                        <t t-call="website.submenu">
+<!--                                            <t t-set="item_class" t-valuef="mmen"/>-->
+                                            <t t-set="link_class" t-valuef="mmen"/>
+                                        </t>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 cont_right">
+                                <div id="wrap" class="oe_structure oe_empty"/>
+                                <section class="top_cat">
+
+
+
+                                    <a href="/uk/goods/?p=54" style="background-image: url('/media/images/group/p8LCoUMK.jpg');">
+
+                                        <span class="tit">Двигун</span>
+                                        <span class="cat">МАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=89" style="background-image: url('/media/images/group/41oGyPRb.jpg');">
+
+                                        <span class="tit">Зчеплення</span>
+                                        <span class="cat">МАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=62" style="background-image: url('/media/images/group/zKtB92hI.jpg');">
+
+                                        <span class="tit">КПП</span>
+                                        <span class="cat">МАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=65" style="background-image: url('/media/images/group/ex56uIKR.jpg');">
+
+                                        <span class="tit">Міст задній</span>
+                                        <span class="cat">МАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=76" style="background-image: url('/media/images/group/rEt4jyS2.jpg');">
+
+                                        <span class="tit">Підвіска</span>
+                                        <span class="cat">МАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=66" style="background-image: url('/media/images/group/NNge3NhV.jpg');">
+
+                                        <span class="tit">Міст середній</span>
+                                        <span class="cat">МАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=73" style="background-image: url('/media/images/group/BrxEns2N.jpg');">
+
+                                        <span class="tit">Передача карданна</span>
+                                        <span class="cat">МАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=77" style="background-image: url('/media/images/group/zg9FgDaB.jpg');">
+
+                                        <span class="tit">Підшипники</span>
+                                        <span class="cat">МАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=85" style="background-image: url('/media/images/group/5h8mi7Ti.jpg');">
+
+                                        <span class="tit">Система охолодження</span>
+                                        <span class="cat">МАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=91" style="background-image: url('/media/images/group/oaL6tI41.jpg');">
+
+                                        <span class="tit">Управління рульове</span>
+                                        <span class="cat">МАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=90" style="background-image: url('/media/images/group/dfUshn0N.jpg');">
+
+                                        <span class="tit">Гальмівна система</span>
+                                        <span class="cat">МАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=86" style="background-image: url('/media/images/group/KV3inHoK.jpg');">
+
+                                        <span class="tit">Система живлення</span>
+                                        <span class="cat">МАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=60" style="background-image: url('/media/images/group/6SFKpPDx.jpg');">
+
+                                        <span class="tit">Колеса і ступиці</span>
+                                        <span class="cat">МАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=93" style="background-image: url('/media/images/group/zgBe7lxG.jpg');">
+
+                                        <span class="tit">Електрообладнання</span>
+                                        <span class="cat">МАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=59" style="background-image: url('/media/images/group/F332jDK0.jpg');">
+
+                                        <span class="tit">Кабіна</span>
+                                        <span class="cat">МАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=84" style="background-image: url('/media/images/group/dRpIrAai.jpg');">
+
+                                        <span class="tit">Система випуску газу</span>
+                                        <span class="cat">МАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=92" style="background-image: url('/media/images/group/0MPZmMyK.jpg');">
+
+                                        <span class="tit">Пристрій сідельно-зчіпний</span>
+                                        <span class="cat">МАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=81" style="background-image: url('/media/images/group/zV7fpOc7.jpg');">
+
+                                        <span class="tit">Рама</span>
+                                        <span class="cat">МАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=71" style="background-image: url('/media/images/group/mfg1I8Ga.jpg');">
+
+                                        <span class="tit">Вісь передня</span>
+                                        <span class="cat">МАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=78" style="background-image: url('/media/images/group/HsJp8t2C.jpg');">
+
+                                        <span class="tit">Спідометри, панелі приладів, ...</span>
+                                        <span class="cat">МАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=75" style="background-image: url('/media/images/group/BmParEsc.jpg');">
+
+                                        <span class="tit">Платформа</span>
+                                        <span class="cat">МАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=64" style="background-image: url('/media/images/group/jeGH9aAu.jpg');">
+
+                                        <span class="tit">Механізм підйому платформи</span>
+                                        <span class="cat">МАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=83" style="background-image: url('/media/images/group/NzzAUGyG.jpg');">
+
+                                        <span class="tit">Сидіння водія</span>
+                                        <span class="cat">МАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=79" style="background-image: url('/media/images/group/K9ORldfv.jpg');">
+
+                                        <span class="tit">Приналежності кабіни</span>
+                                        <span class="cat">МАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=56" style="background-image: url('/media/images/group/ioIstLXp.jpg');">
+
+                                        <span class="tit">Резино-технічні вироби</span>
+                                        <span class="cat">МАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=80" style="background-image: url('/media/images/group/FmIOKpFT.jpg');">
+
+                                        <span class="tit">Р/комплект</span>
+                                        <span class="cat">МАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=61" style="background-image: url('/media/images/group/JMZzdidG.jpg');">
+
+                                        <span class="tit">Метизи</span>
+                                        <span class="cat">МАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=74" style="background-image: url('/media/images/group/G9itt09Y.jpg');">
+
+                                        <span class="tit">КАМАЗ</span>
+                                        <span class="cat">КАМАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=69" style="background-image: url('/media/images/group/xLAj4xDs.jpg');">
+
+                                        <span class="tit">Тосол, масло, герметики ...</span>
+                                        <span class="cat">МАЗ</span></a>
+
+
+
+                                    <a href="/uk/goods/?p=97" style="background-image: url('/static/img/no.jpg');">
+
+                                        <span class="tit">KRAZ</span>
+                                        <span class="cat">KRAZ</span></a>
+
+                                    <div class="clear"></div>
+                                    <br/>
+                                    <p></p>
+                                </section>
+                                <div class="oe_structure"/>
+                            </div>
+                        </div>
+                    </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>

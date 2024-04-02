@@ -2,9 +2,9 @@
 <odoo>
     <template id="custom_header" inherit_id="website.layout" name="Custom Header">
         <xpath expr="//header" position="replace">
-            <header id="top" data-name="Header" class="o_header_standard o_top_fixed_element">
-<!--                <t t-call="website.navbar">-->
-                    <t t-set="_navbar_classes" t-valuef="d-none d-lg-block shadow-sm"/>
+            <header id="top" data-name="Header">
+                <t t-call="website.navbar">
+<!--                    <t t-set="_navbar_classes" t-valuef="d-none d-lg-block shadow-sm"/>-->
                     <div class="header_line1">
 <!--                        <div class="container h100pro">-->
                         <div id="o_main_nav" class="container h100pro">
@@ -97,8 +97,34 @@
                             </div>
                         </div>
                     </div>
-<!--                </t>-->
+                </t>
+                <div class="header_line2">
+                    <div class="container h100pro">
+                        <div class="row bgwhite">
+                            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 hidden-xs header_raz">
+                                <span><p data-block-key="anh8v">Розділи</p></span>
+                            </div>
+                            <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 header_search">
+                                <table cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td class="ttb10">
+                                            <t t-call="website.placeholder_header_search_box">
+<!--                                                <t t-set="_layout" t-valuef="modal"/>-->
+                                                <t t-set="_input_classes" t-valuef="border p-2"/>
+<!--                                                <t t-set="_submit_classes" t-valuef="border border-start-0 px-4 bg-o-color-4"/>-->
+<!--                                                <t t-set="_button_classes" t-valuef="o_navlink_background text-reset"/>-->
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </header>
+<!--            <t t-call="website.template_header_mobile">-->
+<!--                <t t-set="_txt_elt_content" t-valuef="phone_mail"/>-->
+<!--            </t>-->
         </xpath>
     </template>
 </odoo>

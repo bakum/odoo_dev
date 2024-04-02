@@ -8,7 +8,16 @@
     'data': [
         'views/templates.xml',
         'data/images.xml',
-        'views/header.xml'
+        'views/header.xml',
+        # 'views/website_template.xml',
+        'views/homepage.xml',
+        'views/contactus.xml',
+        'views/aboutus.xml',
+        'views/payment_and_delivery.xml',
+        'views/products.xml',
+        'views/product.xml',
+        'views/snippets/categories.xml',
+        'views/snippets/snippets.xml',
     ],
     'assets': {
         'web.assets_frontend': [

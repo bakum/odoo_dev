@@ -12,6 +12,13 @@
 //  display: inline-block;
 //}
 
+#top > nav {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
 textarea:focus, input:focus{
   outline: none;
 }
@@ -158,9 +165,9 @@ a {
 .ttb11 {
   width: 100px;
 }
-.ttb10 {
-  padding-right: 10px;
-}
+//.ttb10 {
+//  padding-right: 10px;
+//}
 .inputsearch{
   background: #fff;
   margin: 0 -10px 0 10px;
@@ -511,6 +518,13 @@ a {
     list-style-type: none;
   }
 }
+.ttb10 {
+  li{
+    list-style-type: none;
+  }
+  padding-right: 10px;
+  padding-left: 10px;
+}
 
 .ttb9 .t {
   color: #fff;
@@ -548,6 +562,7 @@ a {
   border-bottom: 1px solid #eeeeee;
   border-right: 1px solid #eeeeee;
   text-decoration: none;
+  //line-height: 50px;
 }
 .body-lg .mmen {
   line-height: 50px;
@@ -561,6 +576,15 @@ a {
 .body-xs .mmen {
   line-height: 50px;
 }
+
+.cont_left .mmen {
+  line-height: 50px;
+}
+.cont_left .mmen span {
+  font-size: 16px;
+  margin: 0 0 0 18px;
+}
+
 .mmen span {
   color: #777777;
   text-transform: uppercase;
@@ -688,10 +712,10 @@ a {
   width: 100%;
 }
 .body-lg .top_cat {
-  margin: 0px 0 50px 0px;
+  margin: 0px 0 50px 120px;
 }
 .body-md .top_cat {
-  margin: 0px 0 50px 0px;
+  margin: 0px 0 50px 120px;
 }
 .body-sm  .top_cat {
   margin: 0px 0 30px 0px;

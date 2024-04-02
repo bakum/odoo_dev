@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="custom_website_template" inherit_id="website.layout" name="Custom Maz Layout">
+        <xpath expr="//main" position="replace">
+            /html/body/div[2]/main/div[1]
+            //*[@id="wrapwrap"]/main/div[1]
+
+            <main>
+                <div class="container body-md">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 cont_left">
+                            <t t-call="website.navbar_nav">
+                                <t t-set="_nav_class" t-valuef="me-auto"/>
+
+                                <!-- Menu -->
+                                <t t-foreach="website.menu_id.child_id" t-as="submenu">
+                                    <t t-call="website.submenu">
+                                        <!--                                            <t t-set="item_class" t-valuef="mmen"/>-->
+                                        <t t-set="link_class" t-valuef="mmen"/>
+                                    </t>
+                                </t>
+                            </t>
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 cont_right">
+                            <div id="wrap"/>
+                            <!--                                <div id="wrap">-->
+                            <!--                                </div>-->
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </xpath>
+    </template>
+</odoo>

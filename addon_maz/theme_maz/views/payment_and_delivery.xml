@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="view_payment_and_delivery" name="Payment and Delivery">
+        <t t-set="additional_title" t-valuef="Payment"/>
+        <t t-call="website.layout">
+            <div class="container body-md">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 cont_left">
+                        <t t-call="website.navbar_nav">
+                            <t t-set="_nav_class" t-valuef="me-auto"/>
+
+                            <!-- Menu -->
+                            <t t-foreach="website.menu_id.child_id" t-as="submenu">
+                                <t t-call="website.submenu">
+                                    <t t-set="link_class" t-valuef="mmen"/>
+                                </t>
+                            </t>
+                        </t>
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 cont_right">
+                        <div id="wrap">
+                            <div class="oe_structure">
+                                <div class="page_title">
+                                    Payment and delivery
+                                </div>
+                            </div>
+                            <div class="oe_structure"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <record id="page_payment_and_delivery" model="theme.website.page">
+        <field name="view_id" ref="view_payment_and_delivery"/>
+        <field name="is_published" eval="True"/>
+        <field name="url">/payment_and_delivery</field>
+    </record>
+</odoo>
