@@ -3,33 +3,32 @@
     <template id="categories_tile" name="List of categories">
         <section class="top_cat categories-visible">
             <!--            <div class="top_cat">-->
+            <!--            <t t-nocache="The number of products is dynamic, this rendering cannot be cached.">-->
+            <t t-set="product_documents"
+               t-value="request.env['product.public.category'].search([('active', '=', True)])"/>
+<!--            <t t-cache="product_documents">-->
+                <t t-foreach="product_documents" t-as="category">
+                    <!--                <t t-set="cat_img" t-value="image_data_uri(category.image_1920)"/>-->
+                    <t t-if="category.image_1920">
+                        <a t-att-href="'/shop/category/' + slug(category)" t-nocache="No cache"
+                           t-attf-style="background-image: url({{image_data_uri(category.image_1920)}});">
+                            <span class="tit" t-field="category.name" t-nocache="No cache"/>
+                            <span class="cat" t-field="category.brand" t-nocache="No cache"/>
+                        </a>
+                    </t>
+                    <t t-else="">
+                        <a t-att-href="'/shop/category/' + slug(category)">
+                            <span class="tit" t-field="category.name" t-nocache="No cache"/>
+                            <span class="cat" t-field="category.brand" t-nocache="No cache"/>
+                        </a>
+                    </t>
+                </t>
+                <!--            </t>-->
 
-            <t t-set="product_documents" t-value="request.env['product.public.category'].search([])"/>
-            <t t-foreach="product_documents"  t-as="category">
-<!--                <t t-set="cat_img" t-value="image_data_uri(category.image_1920)"/>-->
-                <a t-att-href="'/shop/category/' + slug(category)" t-nocache="Img">
-<!--                    t-att-style="'background-image: url(cat_img)'">-->
-                    <img t-if="category.image_1920"
-
-                         t-att-src="image_data_uri(category.image_1920)"
-
-                         width="200" height="auto"/>
-<!--                t-att-style="'background-image: url(image_data_uri(category.image_1920))'">-->
-<!--                    t-att-style="'background-image: url(\'/media/images/group/p8LCoUMK.jpg\')'">    -->
-<!--                    <img t-attf-src="data:image/*;base64,{{category.image_1920}}"-->
-<!--                         t-options="{'widget': 'image', 'preview_image': image_type, 'itemprop': 'image', 'class': 'h-100 w-100 position-absolute'}"/>-->
-<!--                    <img t-attf-src="data:image/*;base64,{{category.image_1920}}"-->
-<!--                            t-att-alt="category.name"-->
-<!--                    />-->
-<!--                <a href="#" style="background-image: url('/media/images/group/p8LCoUMK.jpg');">-->
-                    <span class="tit" t-field="category.name" t-nocache="Name"/>
-                    <span class="cat" t-nocache="Name">VFP</span>
-                </a>
-            </t>
-
-            <div class="clear"></div>
-            <br/>
-            <p></p>
+                <div class="clear"></div>
+                <br/>
+                <p></p>
+<!--            </t>-->
             <!--            </div>-->
         </section>
     </template>
