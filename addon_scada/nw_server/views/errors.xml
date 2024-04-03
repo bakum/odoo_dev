@@ -4,7 +4,7 @@
         <field name="name">nw.errors.tree</field>
         <field name="model">nw.error</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree default_order='write_date desc'>
                 <field name="moxa_id"/>
                 <field name="write_date"/>
                 <field name="nid"/>
@@ -13,6 +13,22 @@
                 <field name="error"/>
                 <field name="message"/>
             </tree>
+        </field>
+    </record>
+
+    <record id="view_scada_errors_search" model="ir.ui.view">
+        <field name="name">nw.error.search</field>
+        <field name="model">nw.error</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="moxa_id"/>
+                <group expand="0" string="Group By">
+                    <filter string="Moxa" name="moxa_id" context="{'group_by': 'moxa_id'}"/>
+                </group>
+                <group expand="0" string="Group By">
+                    <filter string="Thread" name="nid" context="{'group_by': 'nid'}"/>
+                </group>
+            </search>
         </field>
     </record>
 

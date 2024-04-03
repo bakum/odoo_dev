@@ -4,6 +4,7 @@ from odoo import models, fields, api, _
 class Error(models.Model):
     _name = 'nw.error'
     _description = 'Errors records'
+    _order = 'write_date desc'
 
     moxa_id = fields.Many2one('nw.moxa', string='Moxa', required=True)
     nid = fields.Char('NID', required=True)
