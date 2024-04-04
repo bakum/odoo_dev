@@ -10,9 +10,15 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None):
             if len(ext_id) > 0:
                 for line in ext_id:
                     id = line.res_id
-                    moves = http.request.env[modelname].sudo().search_read([('id', '=', id)], limit=1)
+                    if http.request.httprequest.method == 'GET':
+                        moves = http.request.env[modelname].sudo().search_read([('id', '=', id)], limit=1)
+                    else:
+                        moves = http.request.env[modelname].sudo().search([('id', '=', id)], limit=1)
             else:
-                moves = http.request.env[modelname].sudo().search_read([('guid', '=', guid)], limit=1)
+                if http.request.httprequest.method == 'GET':
+                    moves = http.request.env[modelname].sudo().search_read([('guid', '=', guid)], limit=1)
+                else:
+                    moves = http.request.env[modelname].sudo().search([('guid', '=', guid)], limit=1)
         else:
             moves = http.request.env[modelname].sudo().search_read(kw)
     except Exception:
@@ -29,9 +35,19 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None):
         if (len(kw) != 0 or guid) and len(moves) > 0:
             written = moves[0].write(search_criterias)
             mod = {"success": written}
+            for model in moves:
+                new_dict = model.read(list(set(http.request.env[modelname]._fields)))
+                mod['result'] = new_dict
+                # print(new_dict)
             return mod
         else:
             written = http.request.env[modelname].sudo().create(search_criterias)
+            mod = {"success": False}
+            for model in written:
+                new_dict = model.read(list(set(http.request.env[modelname]._fields)))
+                mod['result'] = new_dict
+                mod['success'] = True
+                # print(new_dict)
             if id_ext:
                 found = http.request.env['ir.model.data'].sudo().search_read([('name', '=', id_ext)], limit=1)
                 if len(found) == 0:
@@ -42,13 +58,19 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None):
                         'res_id': written.id
                     })
 
-            return written
+            return mod
     elif http.request.httprequest.method == 'PUT':
+        mod = {"success": False}
         if (len(moves) > 0) and guid:
             written = moves[0].write(search_criterias)
-        else:
-            written = False
-        return {"success": written}
+            for model in moves:
+                new_dict = model.read(list(set(http.request.env[modelname]._fields)))
+                mod['result'] = new_dict
+                mod['success'] = written
+                # print(new_dict)
+        # else:
+        #     written = False
+        return mod
     elif http.request.httprequest.method == 'DELETE':
         if (len(moves) > 0) and guid:
             deleted = moves[0].unlink()

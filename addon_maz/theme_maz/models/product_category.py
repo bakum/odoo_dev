@@ -17,4 +17,4 @@ class ProductPublicCategory(models.Model):
     _inherit = 'product.public.category'
     guid = fields.Char(string='Guid 1C:Enterprise')
     brand = fields.Char(string='Brand')
-    active = fields.Boolean(default=True)
+    is_published = fields.Boolean(default=False)

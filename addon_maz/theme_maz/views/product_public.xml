@@ -33,15 +33,16 @@
             <field name="inherit_id" ref="website_sale.product_public_category_form_view"/>
             <field name="arch" type="xml">
                 <data>
-                    <xpath expr="//sheet" position="inside">
-                        <field name="active" invisible="1"/>
-                        <div class="oe_button_box" name="button_box"/>
-                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
-                                invisible="active == True"/>
-                    </xpath>
+<!--                    <xpath expr="//sheet" position="inside">-->
+<!--                        <field name="active" invisible="1"/>-->
+<!--                        <div class="oe_button_box" name="button_box"/>-->
+<!--                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger"-->
+<!--                                invisible="active == True"/>-->
+<!--                    </xpath>-->
                     <xpath expr="//field[@name='sequence']" position="after">
                         <field name="guid" readonly="1"/>
                         <field name="brand"/>
+                        <field name="is_published"/>
                     </xpath>
                 </data>
             </field>
@@ -51,6 +52,7 @@
             <field name="name">product.public.category.tree.inherit.maz</field>
             <field name="model">product.public.category</field>
             <field name="inherit_id" ref="website_sale.product_public_category_tree_view"/>
+<!--            <field name="context">{'search_default_filter_published':1}</field>-->
             <field name="arch" type="xml">
                 <data>
                     <xpath expr="//field[@name='display_name']" position="after">
@@ -67,7 +69,8 @@
                 <search>
                     <field name="name" filter_domain="[('name', 'ilike', self)]"/>
                     <separator/>
-                    <filter name="filter_archived" string="Archived" domain="[('active','=',False)]"/>
+                    <filter name="filter_published" string="Published" domain="[('is_published','=',True)]"/>
+                    <filter name="filter_unpublished" string="Unpublished" domain="[('is_published','=',False)]"/>
                 </search>
             </field>
         </record>
