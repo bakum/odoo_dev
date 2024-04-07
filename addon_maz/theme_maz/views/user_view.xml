@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="view_users_maz_form_inherit" model="ir.ui.view">
+            <field name="name">user.form.inherit.maz</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <notebook colspan="4" position="inside">
+                        <page string="Divisions" name="divisions">
+                            <group name="calendar_accounts">
+                                <field string="Allowed Division" name="division_id" widget="many2one" options="{'no_open': True, 'no_quick_create': True}"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </data>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+theme_maz.access_maz_divisions,access_maz_divisions,theme_maz.model_maz_divisions,base.group_user,1,0,0,0
+theme_maz.access_maz_divisions_group_public,access_maz_divisions,theme_maz.model_maz_divisions,base.group_public,1,0,0,0
+theme_maz.access_maz_divisions_group_portal,access_maz_divisions,theme_maz.model_maz_divisions,base.group_portal,1,0,0,0
+theme_maz.access_maz_divisions_editor,access_maz_divisions,theme_maz.model_maz_divisions,website.group_website_restricted_editor,1,1,0,0
+theme_maz.access_maz_divisions_designer,access_maz_divisions,theme_maz.model_maz_divisions,website.group_website_designer,1,1,1,0

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <record id="view_maz_divisions_form" model="ir.ui.view">
+        <field name="name">maz.divisions.form</field>
+        <field name="model">maz.divisions</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="active" invisible="1"/>
+                    <div class="oe_button_box" name="button_box"/>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
+                            invisible="active == True"/>
+                    <group>
+                         <field name="name"/>
+                         <field name="email"/>
+                        <field name="guid" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+     </record>
+
+    <record id="view_maz_divisions_tree" model="ir.ui.view">
+        <field name="name">maz.divisions.tree</field>
+        <field name="model">maz.divisions</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="email"/>
+                <field name="guid"/>
+            </tree>
+        </field>
+    </record>
+
+     <record id="view_maz_divisions_search" model="ir.ui.view">
+        <field name="name">maz.divisions.search</field>
+        <field name="model">maz.divisions</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" filter_domain="[('name', 'ilike', self)]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived" domain="[('active','=',False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_maz_divisions_form" model="ir.actions.act_window">
+        <field name="name">Divisions</field>
+        <field name="res_model">maz.divisions</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+     <menuitem id="menu_maz_divisions" parent="website_sale.menu_ecommerce"
+            name="Divisions"
+               sequence="3">
+         <menuitem id="menu_maz_divisions_div"
+                name="Divisions"
+                action="action_maz_divisions_form"
+                sequence="1"/>
+
+     </menuitem>
+</odoo>

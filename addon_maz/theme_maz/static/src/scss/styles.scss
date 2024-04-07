@@ -138,9 +138,14 @@ a {
 }
 .header_raz {
   height: 100%;
-  background: #616d74;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
+  //background: #616d74;
+  //border-top-left-radius: 6px;
+  //border-top-right-radius: 6px;
+  li {
+    display: inline-block;
+    padding-top: 7px;
+    padding-left: 10px;
+  }
 }
 .header_raz span{
   color: #fff;
@@ -510,7 +515,7 @@ a {
   li {
     list-style-type: none;
     padding-top: 40px;
-    width: 70px;
+    width: 200px;
   }
 }
 .ttb5.ttb9 {

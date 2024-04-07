@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="view_partner_maz_form_inherit" model="ir.ui.view">
+            <field name="name">partner.form.inherit.maz</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='vat']" position="after">
+                        <field string="Allowed Division" name="division_id" widget="many2one" options="{'no_open': True, 'no_quick_create': True}"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+    </data>
+</odoo>

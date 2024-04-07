@@ -2,3 +2,5 @@ from . import website
 from . import pricelist
 from . import product_category
 from . import irhttp
+from . import divisions
+from . import res_partner

@@ -67,18 +67,21 @@
                                         </div>
                                         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12 header_cart"
                                              style="height: 150px;">
-                                            <table cellspacing="0" cellpadding="0" style="height: 150px;">
+                                            <table cellspacing="0" cellpadding="0" style="height: 200px;">
                                                 <tbody>
                                                     <tr>
                                                         <td width="22%" rowspan="2" class="ttb3">
-
-                                                            <t t-call="website_sale.header_cart_link">
-                                                                <t t-set="_icon" t-value="False"/>
-                                                                <t t-set="_link_class"
-                                                                   t-value="'top_cart_bt btn position-relative rounded-circle p-1 text-reset'"/>
-                                                                <t t-set="_badge_class"
-                                                                   t-value="'position-absolute top-0 end-0 mt-n1 me-n1 rounded-pill'"/>
+                                                            <t t-call="website.placeholder_header_social_links">
+<!--                                                                <t t-set="_div_class" t-valuef="mt-3 border-top pt-2 o_border_contrast"/>-->
+<!--                                                                <t t-set="_div_class" t-valuef="d-flex align-items-center h-100 border-start px-2 o_border_contrast"/>-->
                                                             </t>
+<!--                                                            <t t-call="website_sale.header_cart_link">-->
+<!--                                                                <t t-set="_icon" t-value="False"/>-->
+<!--                                                                <t t-set="_link_class"-->
+<!--                                                                   t-value="'top_cart_bt btn position-relative rounded-circle p-1 text-reset'"/>-->
+<!--                                                                <t t-set="_badge_class"-->
+<!--                                                                   t-value="'position-absolute top-0 end-0 mt-n1 me-n1 rounded-pill'"/>-->
+<!--                                                            </t>-->
                                                             <!--                                                        <div class="top_cart1">У кошику:</div>-->
                                                             <!--                                                        <span id="cart_in_text">-->
                                                             <!--                                                            <div class="top_cart2">пусто</div>-->
@@ -87,6 +90,11 @@
                                                             <!--                                                        <a href="/uk/cart/cart-detail/" class="top_cart_bt">-->
                                                             <!--                                                            <span>Кошик</span>-->
                                                             <!--                                                        </a>-->
+<!--                                                            <t t-call="website_sale_wishlist.header_wishlist_link">-->
+<!--                                                                 <t t-set="_icon" t-value="True"/>-->
+<!--                                                                <t t-set="_link_class" t-value="'o_navlink_background btn position-relative rounded-circle p-1 text-center text-reset'"/>-->
+<!--                                                                <t t-set="_badge_class" t-value="'position-absolute top-0 end-0 mt-n1 me-n1 rounded-pill'"/>-->
+<!--                                                            </t>-->
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -102,7 +110,19 @@
                     <div class="container h100pro">
                         <div class="row bgwhite">
                             <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 hidden-xs header_raz">
-                                <span><p data-block-key="anh8v">Розділи</p></span>
+<!--                                <span><p data-block-key="anh8v">Розділи</p></span>-->
+                                 <t t-call="website_sale.header_cart_link">
+                                     <t t-set="_icon" t-value="True"/>
+                                     <t t-set="_link_class"
+                                        t-value="'o_navlink_background btn position-relative rounded-circle p-1 text-reset'"/>
+                                     <t t-set="_badge_class"
+                                        t-value="'position-absolute top-0 end-0 mt-n1 me-n1 rounded-pill'"/>
+                                 </t>
+                                <t t-call="website_sale_wishlist.header_wishlist_link">
+                                    <t t-set="_icon" t-value="True"/>
+                                    <t t-set="_link_class" t-value="'o_navlink_background btn position-relative rounded-circle p-1 text-center text-reset'"/>
+                                    <t t-set="_badge_class" t-value="'position-absolute top-0 end-0 mt-n1 me-n1 rounded-pill'"/>
+                                </t>
                             </div>
                             <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 header_search">
                                 <table cellspacing="0" cellpadding="0">
