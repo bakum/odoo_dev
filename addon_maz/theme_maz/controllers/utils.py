@@ -3,7 +3,7 @@ import json
 from odoo import http
 
 
-def apply_update_from_request(kw, search_criterias, modelname, guid=None):
+def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=None):
     try:
         if guid:
             ext_id = http.request.env['ir.model.data'].sudo().search([('name', '=', guid)], limit=1)
@@ -36,6 +36,7 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None):
             written = moves[0].write(search_criterias)
             mod = {"success": written}
             for model in moves:
+                translate_field(model, trans)
                 new_dict = model.read(list(set(http.request.env[modelname]._fields)))
                 mod['result'] = new_dict
                 # print(new_dict)
@@ -44,6 +45,7 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None):
             written = http.request.env[modelname].sudo().create(search_criterias)
             mod = {"success": False}
             for model in written:
+                translate_field(model, trans)
                 new_dict = model.read(list(set(http.request.env[modelname]._fields)))
                 mod['result'] = new_dict
                 mod['success'] = True
@@ -64,6 +66,7 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None):
         if (len(moves) > 0) and guid:
             written = moves[0].write(search_criterias)
             for model in moves:
+                translate_field(model, trans)
                 new_dict = model.read(list(set(http.request.env[modelname]._fields)))
                 mod['result'] = new_dict
                 mod['success'] = written
@@ -77,6 +80,39 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None):
         else:
             deleted = False
         return {"success": deleted}
+
+
+def translate_field(rec, trans):
+    for fld in rec._fields:
+        field = rec._fields[fld]
+        if field.column_type is None:
+            continue
+        if not (field.column_type[0] == 'jsonb'):
+            continue
+        # if field.compute:
+        #     continue
+        # if not isinstance(rec[fld], str):
+        #     continue
+        # try:
+        #     translations = field._get_stored_translations(rec)
+        #     if isinstance(translations, dict):
+        #         for key in translations:
+        #             pass
+        # except:
+        #     pass
+        if not fld in trans:
+            continue
+        trans_fiels = trans[fld]
+        translations = field._get_stored_translations(rec)
+        if isinstance(translations, dict):
+            for key in trans_fiels:
+                # if key in trans_fiels:
+                tr = trans_fiels[key]
+                translations[key] = tr
+                rec.env.cache.update_raw(
+                    rec, field, [translations], dirty=True
+                )
+                rec.modified([fld])
 
 
 def parse_data_from_request(kw=None):
@@ -112,3 +148,19 @@ def get_search_criterias(kw):
             new_key = 'date'
         search_criterias.append((new_key, operator, arg))
     return search_criterias
+
+
+def get_trans_from_request(kw):
+    trans = {}
+    keys_for_delete = []
+    for key in kw:
+        if 'lang' in key:
+            arr = key.split('_')
+            trans[arr[0]] = kw[key]
+            keys_for_delete.append(key)
+            # del kw[key]
+
+    for i in keys_for_delete:
+        del kw[i]
+
+    return trans

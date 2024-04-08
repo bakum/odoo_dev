@@ -2,7 +2,7 @@ import json
 
 from odoo import http
 from odoo.tools import date_utils
-from .utils import parse_data_from_request, apply_update_from_request
+from .utils import parse_data_from_request, apply_update_from_request, get_trans_from_request
 
 
 class DictionariesController(http.Controller):
@@ -21,7 +21,8 @@ class DictionariesController(http.Controller):
         model_name = kw['modelname']
         del kw['modelname']
         data_for_edit, sk = parse_data_from_request(kw)
-        result_dict = apply_update_from_request(sk, data_for_edit, model_name, guid)
+        data_for_translate = get_trans_from_request(data_for_edit)
+        result_dict = apply_update_from_request(sk, data_for_edit, model_name, guid, data_for_translate)
         # result = http.request.env[model_name].sudo().search_read(sk)
 
         if type(result_dict) is dict:
