@@ -28,6 +28,7 @@
     'assets': {
         'web.assets_frontend': [
             'theme_maz/static/src/scss/styles.scss',
+            # 'theme_maz/static/src/js/main.js',
         ],
         'web._assets_primary_variables': [
             "theme_maz/static/src/scss/primary_variables.scss",
