@@ -1,0 +1,491 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* theme_maz
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-09 13:47+0000\n"
+"PO-Revision-Date: 2024-04-09 17:23+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"X-Generator: Poedit 3.4.2\n"
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_products
+msgid "\" category."
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_product
+msgid "%s review"
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_product
+msgid "%s reviews"
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_products
+msgid "'. Showing results for '"
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_contactus
+msgid ""
+"<i class=\"fa fa-1x fa-fw fa-envelope me-2\"/>\n"
+"                                                        <span>dp@maz-ua.com</span>"
+msgstr ""
+"<i class=\"fa fa-1x fa-fw fa-envelope me-2\"/>\n"
+"                                                        <span>dp@maz-ua.com</span>"
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.header_text_element
+msgid ""
+"<i class=\"fa fa-1x fa-fw fa-phone me-1\"/>\n"
+"                            <span class=\"o_force_ltr\">\n"
+"                                <small>+1 (650) 555-0111</small>\n"
+"                            </span>"
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.header_text_element
+msgid "<i class=\"fa fa-1x fa-fw fa-phone me-1\"/>͏"
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_contactus
+msgid ""
+"<i class=\"fa fa-map-marker fa-fw me-2\"/>\n"
+"                                                        <span class=\"o_force_ltr\">вул. Висоцького, 4,<br/>Україна, м. Дніпро</span>"
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_contactus
+msgid ""
+"<i class=\"fa fa-phone fa-fw me-2\"/>\n"
+"                                                        <span class=\"o_force_ltr\">+38 (050) 48-47-180</span>"
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_product
+msgid ""
+"<i class=\"fa fa-shopping-cart me-2\"/>\n"
+"                                                                Add to cart"
+msgstr ""
+"<i class=\"fa fa-shopping-cart me-2\"/>\n"
+"                                                                Добавить в корзину"
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.header_text_element
+msgid ""
+"<small>\n"
+"                                <i class=\"fa fa-1x fa-fw fa-envelope me-1\"/>\n"
+"                                info@yourcompany.example.com\n"
+"                            </small>"
+msgstr ""
+"<small>\n"
+"                                <i class=\"fa fa-1x fa-fw fa-envelope me-1\"/>\n"
+"                                info@yourcompany.example.com\n"
+"                            </small>"
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.header_text_element
+msgid "<span class=\"o_force_ltr\">+1 (650) 555-0111</span>"
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_contactus
+msgid ""
+"<span class=\"s_website_form_label_content\">\n"
+"                                                                                Email To\n"
+"                                                                            </span>"
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_contactus
+msgid ""
+"<span class=\"s_website_form_label_content\">\n"
+"                                                                                Ім'я\n"
+"                                                                            </span>\n"
+"                                                                            <span class=\"s_website_form_mark\">*</span>"
+msgstr ""
+"<span class=\"s_website_form_label_content\">\n"
+"                                                                                Имя\n"
+"                                                                            </span>\n"
+"                                                                            <span class=\"s_website_form_mark\">*</span>"
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_contactus
+msgid ""
+"<span class=\"s_website_form_label_content\">\n"
+"                                                                                Електронна пошта\n"
+"                                                                            </span>\n"
+"                                                                            <span class=\"s_website_form_mark\">*</span>"
+msgstr ""
+"<span class=\"s_website_form_label_content\">\n"
+"                                                                                Электронная почта\n"
+"                                                                            </span>\n"
+"                                                                            <span class=\"s_website_form_mark\">*</span>"
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_contactus
+msgid ""
+"<span class=\"s_website_form_label_content\">\n"
+"                                                                                Компанія\n"
+"                                                                            </span>"
+msgstr ""
+"<span class=\"s_website_form_label_content\">\n"
+"                                                                                Компания\n"
+"                                                                            </span>"
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_contactus
+msgid ""
+"<span class=\"s_website_form_label_content\">\n"
+"                                                                                Номер телефону\n"
+"                                                                            </span>"
+msgstr ""
+"<span class=\"s_website_form_label_content\">\n"
+"                                                                                Номер телефона\n"
+"                                                                            </span>"
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_contactus
+msgid ""
+"<span class=\"s_website_form_label_content\">\n"
+"                                                                                Питання\n"
+"                                                                            </span>\n"
+"                                                                            <span class=\"s_website_form_mark\">*</span>"
+msgstr ""
+"<span class=\"s_website_form_label_content\">\n"
+"                                                                                Вопрос\n"
+"                                                                            </span>\n"
+"                                                                            <span class=\"s_website_form_mark\">*</span>"
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_contactus
+msgid ""
+"<span class=\"s_website_form_label_content\">\n"
+"                                                                                Тема\n"
+"                                                                            </span>\n"
+"                                                                            <span class=\"s_website_form_mark\">*</span>"
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_products
+msgid "<span class=\"visually-hidden\">filters active</span>"
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_product
+msgid "<u class=\"h5\">Documents</u>"
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_product
+msgid "A detailed, formatted description to promote your product on this page. Use '/' to discover more features."
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_product
+msgid "A short description that will also appear on documents."
+msgstr ""
+
+#. module: theme_maz
+#: model:ir.model.fields,field_description:theme_maz.field_maz_divisions__active
+msgid "Active"
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_product
+msgid "All Products"
+msgstr "Товары"
+
+#. module: theme_maz
+#: model_terms:ir.ui.view,arch_db:theme_maz.view_partner_maz_form_inherit
+msgid "Allowed Division"
+msgstr "Подразделение"
+
+#. module: theme_maz
+#: model_terms:ir.ui.view,arch_db:theme_maz.view_maz_divisions_form model_terms:ir.ui.view,arch_db:theme_maz.view_maz_divisions_search
+msgid "Archived"
+msgstr ""
+
+#. module: theme_maz
+#: model:ir.model.fields,field_description:theme_maz.field_product_public_category__brand
+msgid "Brand"
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_products
+msgid "Click <i>'New'</i> in the top-right corner to create your first product."
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.categories_options
+msgid "Company Name"
+msgstr "Название компании"
+
+#. module: theme_maz
+#: model:ir.model,name:theme_maz.model_res_partner
+msgid "Contact"
+msgstr "Контакты"
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_product
+msgid "Contact Us"
+msgstr ""
+
+#. module: theme_maz
+#: model:ir.model.fields,field_description:theme_maz.field_maz_divisions__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: theme_maz
+#: model:ir.model.fields,field_description:theme_maz.field_maz_divisions__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_product
+msgid "DROP BUILDING BLOCKS HERE TO MAKE THEM AVAILABLE ACROSS ALL PRODUCTS"
+msgstr ""
+
+#. module: theme_maz
+#: model:ir.model.fields,field_description:theme_maz.field_maz_divisions__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: theme_maz
+#: model:ir.model.fields,field_description:theme_maz.field_res_partner__division_id
+#: model:ir.model.fields,field_description:theme_maz.field_res_users__division_id
+msgid "Division"
+msgstr "Подразделение"
+
+#. module: theme_maz
+#: model:ir.actions.act_window,name:theme_maz.action_maz_divisions_form model:ir.model,name:theme_maz.model_maz_divisions
+#: model:ir.ui.menu,name:theme_maz.menu_maz_divisions model:ir.ui.menu,name:theme_maz.menu_maz_divisions_div
+msgid "Divisions"
+msgstr "Подразделения"
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_products
+msgid "Drag building blocks here to customize the header for \""
+msgstr ""
+
+#. module: theme_maz
+#: model:ir.model.fields,field_description:theme_maz.field_maz_divisions__email
+msgid "Email"
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_products
+msgid "Grid"
+msgstr ""
+
+#. module: theme_maz
+#: model:ir.model.fields,field_description:theme_maz.field_maz_divisions__guid
+#: model:ir.model.fields,field_description:theme_maz.field_product_category__guid
+#: model:ir.model.fields,field_description:theme_maz.field_product_pricelist__guid
+#: model:ir.model.fields,field_description:theme_maz.field_product_product__guid
+#: model:ir.model.fields,field_description:theme_maz.field_product_public_category__guid
+#: model:ir.model.fields,field_description:theme_maz.field_product_template__guid
+msgid "Guid 1C:Enterprise"
+msgstr ""
+
+#. module: theme_maz
+#: model:ir.model,name:theme_maz.model_ir_http
+msgid "HTTP Routing"
+msgstr "Маршрутизация HTTP"
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.categories_options
+msgid "Hidden"
+msgstr ""
+
+#. module: theme_maz
+#: model:ir.model.fields,field_description:theme_maz.field_maz_divisions__id
+msgid "ID"
+msgstr ""
+
+#. module: theme_maz
+#: model:ir.model.fields,field_description:theme_maz.field_product_public_category__is_published
+msgid "Is Published"
+msgstr ""
+
+#. module: theme_maz
+#: model:ir.model.fields,field_description:theme_maz.field_maz_divisions__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: theme_maz
+#: model:ir.model.fields,field_description:theme_maz.field_maz_divisions__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: theme_maz
+#: model:ir.model.fields,field_description:theme_maz.field_maz_divisions__name
+msgid "Name"
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_products
+msgid "No product defined"
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_products
+msgid "No product defined in category \""
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_products
+msgid "No results"
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_products
+msgid "No results for \""
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_products
+msgid "No results found for '"
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.view_payment_and_delivery
+msgid "Payment and delivery"
+msgstr ""
+
+#. module: theme_maz
+#: model:ir.model,name:theme_maz.model_product_pricelist
+msgid "Pricelist"
+msgstr "Прайс-лист"
+
+#. module: theme_maz
+#: model:ir.model,name:theme_maz.model_product_template model_terms:theme.ir.ui.view,arch:theme_maz.custom_products
+msgid "Product"
+msgstr "Товар"
+
+#. module: theme_maz
+#: model:ir.model,name:theme_maz.model_product_category
+msgid "Product Category"
+msgstr "Категория товара"
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_product
+msgid "Product Name"
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:ir.ui.view,arch_db:theme_maz.view_product_public_search
+msgid "Published"
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_products
+msgid "Shop"
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:ir.ui.view,arch_db:theme_maz.view_pricelist_maz_form_inherit
+msgid "Synchronization"
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_product
+msgid "This combination does not exist."
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_product
+msgid "This product has no valid combination."
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_product
+msgid "This product is no longer available."
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:ir.ui.view,arch_db:theme_maz.view_product_public_search
+msgid "Unpublished"
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.categories_options
+msgid "Visible"
+msgstr ""
+
+#. module: theme_maz
+#: model:ir.model,name:theme_maz.model_website
+msgid "Website"
+msgstr "Сайт"
+
+#. module: theme_maz
+#: model:ir.model,name:theme_maz.model_product_public_category
+msgid "Website Product Category"
+msgstr "Веб-сайт Категория продукта"
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_products
+msgid "in category \""
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_snippets
+msgid "property, agents"
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.header_text_element
+msgid ""
+"Інтернет магазин 050-484-71-80,\n"
+"                                Полтава 095-234-21-14,<br/> Запоріжжя 050-361-90-78, Кривий\n"
+"                                Ріг 050-580-48-46"
+msgstr ""
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_contactus
+msgid "Дніпропетровський автоцентр МАЗ"
+msgstr "Днепропетровский автоцентр МАЗ"
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_contactus
+msgid ""
+"Зв’яжіться з нами щодо будь-яких питань, пов’язаних із нашою компанією чи послугами.\n"
+"                                                    <br/>\n"
+"                                                   Ми зробимо все можливе, щоб відповісти вам якнайшвидше."
+msgstr ""
+"Свяжитесь с нами по любым вопросам, связанным с нашей компанией или услугами.\n"
+"                                                    <br/>\n"
+"                                                   Мы сделаем все возможное, чтобы ответить вам как можно скорее."
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_snippets
+msgid "Категорії товарів (МАЗ)"
+msgstr "Категории товаров (МАЗ)"
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_contactus
+msgid "Надіслати"
+msgstr "Отправить"
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_aboutus
+msgid "Про компанію"
+msgstr "О компании"
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.header_text_element
+msgid "Ціни на запчастини МАЗ"
+msgstr "Цены на запчасти МАЗ"
