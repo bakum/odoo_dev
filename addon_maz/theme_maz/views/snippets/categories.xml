@@ -42,14 +42,18 @@
 
                         <t t-if="category.image_512">
                             <div class="col-lg-3 s_col_no_bgcolor pt16 pb16">
-                                <div class="card text-bg-white h-100">
+                                <div class="card text-bg-white">
                                     <a t-att-href="'/shop/category/' + slug(category)">
+                                        <h5 class="card-header o_default_snippet_text" t-field="category.name"/>
                                     <img class="card-img-top" t-att-src="image_data_uri(category.image_512)"
-                                         alt=""/>
+                                         alt="" style="width: auto; height: 165px;"/>
 
-                                        <div class="card-body">
-                                            <h5 class="card-title" t-field="category.name"/>
+<!--                                        <div class="card-body">-->
+<!--                                            <p class="card-text" t-field="category.brand"/>-->
+<!--                                        </div>-->
+                                        <div class="card-footer">
                                             <p class="card-text" t-field="category.brand"/>
+<!--                                            <a href="/contactus" class="btn btn-primary o_default_snippet_text">Замовити зараз</a>-->
                                         </div>
                                     </a>
                                 </div>
@@ -59,12 +63,18 @@
                            <div class="col-lg-3 s_col_no_bgcolor pt16 pb16">
                                 <div class="card text-bg-white h-100">
                                     <a t-att-href="'/shop/category/' + slug(category)">
+                                        <h5 class="card-header o_default_snippet_text" t-field="category.name"/>
 <!--                                    <img class="card-img-top" t-att-src="image_data_uri(category.image_512)"-->
 <!--                                         alt=""/>-->
 
-                                        <div class="card-body">
-                                            <h5 class="card-title" t-field="category.name"/>
+<!--                                        <div class="card-body">-->
+<!--                                            <h5 class="card-title" t-field="category.name"/>-->
+<!--                                            <p class="card-text" t-field="category.brand"/>-->
+<!--                                        </div>-->
+
+                                         <div class="card-footer">
                                             <p class="card-text" t-field="category.brand"/>
+<!--                                            <a href="/contactus" class="btn btn-primary o_default_snippet_text">Замовити зараз</a>-->
                                         </div>
                                     </a>
                                 </div>
