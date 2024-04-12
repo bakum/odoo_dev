@@ -10,6 +10,8 @@
         'views/divisions.xml',
         'views/partner_view.xml',
         # 'views/templates.xml',
+        'views/header_text_element.xml',
+        'views/footer.xml',
         'data/images.xml',
         # 'views/header.xml',
         # 'views/website_template.xml',
