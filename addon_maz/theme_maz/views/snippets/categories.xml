@@ -32,56 +32,50 @@
     <!--            &lt;!&ndash;            </div>&ndash;&gt;-->
     <!--        </section>-->
     <!--    </template>-->
-    <template id="categories_tile" name="List of categories">
-        <section class="s_category_columns categories-visible">
-            <div class="container">
-                <div class="row d-flex align-items-stretch">
-                    <t t-set="product_documents"
-                       t-value="request.env['product.public.category'].search([('is_published', '=', True)])"/>
-                    <t t-foreach="product_documents" t-as="category">
+<!--    <template id="categories_tile" name="List of categories">-->
+<!--        <section class="s_category_columns categories-visible categories_tile">-->
+<!--            <div class="container">-->
+<!--                <div class="row d-flex align-items-stretch" id="categories-row">-->
+<!--                    <t t-set="product_documents"-->
+<!--                       t-value="request.env['product.public.category'].search([('is_published', '=', True)])"/>-->
+<!--                    <t t-foreach="product_documents" t-as="category">-->
 
-                        <t t-if="category.image_512">
-                            <div class="col-lg-3 s_col_no_bgcolor pt16 pb16">
-                                <div class="card text-bg-white">
-                                    <a t-att-href="'/shop/category/' + slug(category)">
-                                        <h5 class="card-header o_default_snippet_text" t-field="category.name"/>
-                                    <img class="card-img-top" t-att-src="image_data_uri(category.image_512)"
-                                         alt="" style="width: auto; height: 165px;"/>
-
-<!--                                        <div class="card-body">-->
-<!--                                            <p class="card-text" t-field="category.brand"/>-->
-<!--                                        </div>-->
-                                        <div class="card-footer">
-                                            <p class="card-text" t-field="category.brand"/>
-<!--                                            <a href="/contactus" class="btn btn-primary o_default_snippet_text">Замовити зараз</a>-->
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </t>
-                        <t t-else="">
-                           <div class="col-lg-3 s_col_no_bgcolor pt16 pb16">
-                                <div class="card text-bg-white h-100">
-                                    <a t-att-href="'/shop/category/' + slug(category)">
-                                        <h5 class="card-header o_default_snippet_text" t-field="category.name"/>
+<!--                        <t t-if="category.image_512">-->
+<!--                            <div class="col-lg-3 s_col_no_bgcolor pt16 pb16">-->
+<!--                                <div class="card text-bg-white">-->
+<!--                                    <a t-att-href="'/shop/category/' + slug(category)">-->
+<!--                                        <h5 class="card-header o_default_snippet_text" t-field="category.name"/>-->
 <!--                                    <img class="card-img-top" t-att-src="image_data_uri(category.image_512)"-->
-<!--                                         alt=""/>-->
-
-<!--                                        <div class="card-body">-->
-<!--                                            <h5 class="card-title" t-field="category.name"/>-->
+<!--                                         alt="" style="width: auto; height: 165px;"/>-->
+<!--                                        <div class="card-footer">-->
 <!--                                            <p class="card-text" t-field="category.brand"/>-->
 <!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </t>-->
+<!--                        <t t-else="">-->
+<!--                           <div class="col-lg-3 s_col_no_bgcolor pt16 pb16">-->
+<!--                                <div class="card text-bg-white h-100">-->
+<!--                                    <a t-att-href="'/shop/category/' + slug(category)">-->
+<!--                                        <h5 class="card-header o_default_snippet_text" t-field="category.name"/>-->
+<!--                                         <div class="card-footer">-->
+<!--                                            <p class="card-text" t-field="category.brand"/>-->
+<!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </t>-->
 
-                                         <div class="card-footer">
-                                            <p class="card-text" t-field="category.brand"/>
-<!--                                            <a href="/contactus" class="btn btn-primary o_default_snippet_text">Замовити зараз</a>-->
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </t>
-
-                    </t>
+<!--                    </t>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </section>-->
+<!--    </template>-->
+    <template id="categories_tile" name="List of categories">
+        <section class="s_category_columns categories-visible categories_tile">
+            <div class="container">
+                <div class="row d-flex align-items-stretch" id="categories-row">
                 </div>
             </div>
         </section>

@@ -15,11 +15,11 @@
 
     <template id="categories_options" inherit_id="website.snippet_options" name="Maz Catalogies Options">
     <xpath expr="//div[@data-js='Box']" position="after">
-        <div data-selector=".top_cat">
-            <we-select string="Company Name">
-                <we-button data-select-class="categories-visible">Visible</we-button>
-                <we-button data-select-class="categories-hidden">Hidden</we-button>
-            </we-select>
+        <div data-selector=".categories_tile" data-js="MazCategoriesOptions" data-drop-in=".o_mega_menu nav">
+<!--            <we-select string="Company Name">-->
+<!--                <we-button data-select-class="categories-visible">Visible</we-button>-->
+<!--                <we-button data-select-class="categories-hidden">Hidden</we-button>-->
+<!--            </we-select>-->
         </div>
     </xpath>
     </template>

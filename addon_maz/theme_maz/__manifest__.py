@@ -4,7 +4,7 @@
     'category': 'Theme',
     'sequence': 10,
     'version': '1.0',
-    'depends': ['website', 'website_sale'],
+    'depends': ['website_sale'],
     'data': [
         'security/ir.model.access.csv',
         'views/divisions.xml',
@@ -30,6 +30,8 @@
     'assets': {
         'web.assets_frontend': [
             'theme_maz/static/src/scss/styles.scss',
+            'theme_maz/static/src/js/categories.js',
+            # 'theme_maz/static/src/js/categories_options.js',
             # 'theme_maz/static/src/js/main.js',
         ],
         'web._assets_primary_variables': [
