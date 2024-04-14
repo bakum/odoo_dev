@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <template id="custom_snippets" inherit_id="website.snippets" name="Custom Snippets">
-        <xpath expr="//div[@id='snippet_structure']" position="inside">
-            <div id="snippet_structure" class="o_panel">
-                <div class="o_panel_header">Категорії товарів (МАЗ)</div>
-                <div class="o_panel_body">
+        <xpath expr="//div[@id='snippet_effect']//t[@t-snippet][last()]"
+               position="after">
+<!--            <div id="snippet_structure" class="o_panel">-->
+<!--                <div class="o_panel_header">Категорії товарів (МАЗ)</div>-->
+<!--                <div class="o_panel_body">-->
                     <t t-snippet="theme_maz.categories_tile" t-thumbnail="/theme_maz/static/src/img/snippets/categories.svg">
                         <keywords>property, agents</keywords>
                     </t>
-                </div>
-            </div>
+<!--                </div>-->
+<!--            </div>-->
         </xpath>
     </template>
 

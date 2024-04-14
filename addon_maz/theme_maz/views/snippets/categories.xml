@@ -73,7 +73,7 @@
 <!--        </section>-->
 <!--    </template>-->
     <template id="categories_tile" name="List of categories">
-        <section class="s_category_columns categories-visible categories_tile">
+        <section class="s_category_columns categories_tile top_cat">
             <div class="container">
                 <div class="row d-flex align-items-stretch" id="categories-row">
                 </div>
