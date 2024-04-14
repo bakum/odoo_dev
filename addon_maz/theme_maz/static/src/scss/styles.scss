@@ -12,6 +12,10 @@
 //  display: inline-block;
 //}
 
+.city-hidden .town{
+  display:none;
+}
+
 #top > nav {
   padding-top: 0px;
   padding-bottom: 0px;
@@ -2467,10 +2471,9 @@ a {
   color: #1e70c3;
 }
 
-
 /* -------------- */
 
-.index div.contact {
+.index.city-visible div.contact {
   margin: 10px 0 5px 0;
   background: url(../img/contact.jpg) no-repeat 0px 0px;
   padding: 15px 0 0 0;

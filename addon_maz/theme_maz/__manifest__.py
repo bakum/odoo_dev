@@ -23,6 +23,7 @@
         # 'views/products.xml',
         # 'views/product.xml',
         'views/snippets/categories.xml',
+        'views/snippets/contacts.xml',
         'views/snippets/snippets.xml',
         'views/pricelist_view.xml',
         'views/product_public.xml',
