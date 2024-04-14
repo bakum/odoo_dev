@@ -7,16 +7,19 @@
                 <div><p class="town">Дніпро</p></div>
                 <div class="cont">
                     <div class="row d-flex align-items-stretch">
-                        <div class="half4 col-lg-4 s_col_no_bgcolor">
+                        <div class="half4 col-lg-2 s_col_no_bgcolor">
                             <p class="red">Магазин МАЗ Лівий берег</p>
                             <p align="center"><a href="tel:+38 (050) 48-47-180" style="color:black;">+38 (050) 48-47-180</a></p>
                         </div>
-                        <div class="half4 col-lg-4 s_col_no_bgcolor">
+                        <div class="half4 col-lg-2 s_col_no_bgcolor">
                             <p><a href="mailto:dp@maz-ua.com" style="color:black;">dp@maz-ua.com</a></p>
                         </div>
-                        <div class="half4 half4_br col-lg-4 s_col_no_bgcolor">
+                        <div class="half4 half4_br col-lg-3 s_col_no_bgcolor">
                             <p><span class="or">Україна, м. Дніпро</span><br/>вул. Висоцького, 4</p>
                             <div style="margin:-10px 0 0 0!important;color:#616d74;">Директор Дячков Андрій Сергійович</div>
+                        </div>
+                        <div class="col-lg-5 s_col_no_bgcolor">
+                             <div class="oe_structure oe_empty"/>
                         </div>
                     </div>
                 </div>
