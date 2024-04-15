@@ -8,6 +8,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/divisions.xml',
+        'views/discount.xml',
         'views/partner_view.xml',
         # 'views/templates.xml',
         'views/header_text_element.xml',

@@ -8,3 +8,8 @@ class MazCategories(http.Controller):
         category = http.request.env['product.public.category'].search_read([('is_published', '=', True)])
         # cities = http.request.env['yh.cities'].search_read([], ['country_id', 'state_id', 'image'])
         return category
+
+    @http.route('/discount', auth="public", type="json", methods=['POST'])
+    def get_discount(self):
+        disc = http.request.env['maz.discount'].search_read([], order='use_from desc', limit=1)
+        return disc

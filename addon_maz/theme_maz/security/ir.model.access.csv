@@ -4,3 +4,8 @@ theme_maz.access_maz_divisions_group_public,access_maz_divisions,theme_maz.model
 theme_maz.access_maz_divisions_group_portal,access_maz_divisions,theme_maz.model_maz_divisions,base.group_portal,1,0,0,0
 theme_maz.access_maz_divisions_editor,access_maz_divisions,theme_maz.model_maz_divisions,website.group_website_restricted_editor,1,1,0,0
 theme_maz.access_maz_divisions_designer,access_maz_divisions,theme_maz.model_maz_divisions,website.group_website_designer,1,1,1,0
+
+theme_maz.access_maz_discount_designer,access_maz_discount,theme_maz.model_maz_discount,website.group_website_designer,1,1,1,1
+theme_maz.access_maz_discount_editor,access_maz_discount,theme_maz.model_maz_discount,website.group_website_restricted_editor,1,1,0,0
+theme_maz.access_maz_discount,access_maz_discount,theme_maz.model_maz_discount,base.group_user,1,0,0,0
+theme_maz.access_maz_discount_group_public,access_maz_discount,theme_maz.model_maz_discount,base.group_public,1,0,0,0
