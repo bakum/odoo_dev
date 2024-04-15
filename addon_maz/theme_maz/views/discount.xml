@@ -7,8 +7,8 @@
             <form>
                 <sheet>
                     <group>
-                         <field name="discount"/>
-                         <field name="use_from"/>
+                        <field name="use_from"/>
+                        <field name="discount"/>
                     </group>
                 </sheet>
             </form>
