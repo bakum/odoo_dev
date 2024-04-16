@@ -142,7 +142,7 @@ export class OwlWeightDashboard extends Component {
             await this.getWeight()
             await this.getErrors()
             await this.getMonitorStatus()
-        }, 2000)
+        }, 5000)
 
         onWillStart(async () => {
             // await loadJS("/nw_server/static/src/components/moment/moment.min.js")
