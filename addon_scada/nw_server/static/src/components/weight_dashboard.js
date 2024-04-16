@@ -46,18 +46,18 @@ export class OwlWeightDashboard extends Component {
         if (this.state.period > 0) {
             domain.push(['write_date', '>', this.state.current_date])
         }
-        const data = await this.orm.searchRead("nw.weight", domain, ['id', 'nid', 'count', 'value1', 'value2'], {
-            limit: 1,
-            order: 'write_date desc'
-        })
-        const data_group = await this.orm.readGroup("nw.weight", domain, ["value1:sum", "value2:sum", "count:max"], [])
+        // const data = await this.orm.searchRead("nw.weight", domain, ['id', 'nid', 'count', 'value1', 'value2'], {
+        //     limit: 1,
+        //     order: 'write_date desc'
+        // })
+        // const data_group = await this.orm.readGroup("nw.weight", domain, ["value1:sum", "value2:sum", "count:max"], [])
         const data_last = await this.orm.call('nw.weight','compute_current_weight',["",this.state.current_controller],{})
 
         // this.state.weight_data = Number(this.state.current_controller) === 0 ? null_data : data.length > 0 ? data[0] : null_data
         // this.state.weight_data = data.length > 0 ? data[0] : null_data
         this.state.weight_data = Object.keys(data_last).length !== 0 ? data_last : null_data
         // console.log("current_controller", this.state.current_controller)
-        console.log("weight", data)
+        // console.log("weight", data)
         console.log("weight1", data_last)
         // console.log("domain", domain)
     }
