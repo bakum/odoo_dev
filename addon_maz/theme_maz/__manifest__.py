@@ -10,6 +10,7 @@
         'views/divisions.xml',
         'views/discount.xml',
         'views/partner_view.xml',
+        'views/delivery.xml',
         # 'views/templates.xml',
         'views/header_text_element.xml',
         'views/footer.xml',

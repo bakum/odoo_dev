@@ -5,3 +5,4 @@ from . import irhttp
 from . import divisions
 from . import res_partner
 from . import discount
+from . import delivery
