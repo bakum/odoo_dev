@@ -29,7 +29,7 @@ class NovaPoshtaConfig(models.Model):
                 _logger.info("<Nova Poshta API> Error "
                              "response: {}".format(response))
 
-    @api.model_create_multi
+    # @api.model_create_multi
     def connect(self, model_name, called_method, method_properties=None):
         """
         Connect to the Nova Poshta API 2.0 by JSON format
@@ -56,7 +56,7 @@ class NovaPoshtaConfig(models.Model):
             response_dict = json.loads(json_str)
             return response_dict
 
-    @api.model_create_multi
+    # @api.model_create_multi
     def get_cities(self):
         """
         Get list of cities where :
@@ -114,7 +114,7 @@ class NovaPoshtaConfig(models.Model):
                 else:
                     city_obj.create(vals)
 
-    @api.model_create_multi
+    # @api.model_create_multi
     def get_settlements(self):
         """
         Get list of settlements where :
@@ -170,7 +170,7 @@ class NovaPoshtaConfig(models.Model):
                     else:
                         settlement_obj.create(vals)
 
-    @api.model_create_multi
+    # @api.model_create_multi
     def get_warehouses(self):
         """
         Get list of cities where :
@@ -221,7 +221,7 @@ class NovaPoshtaConfig(models.Model):
                 else:
                     warehouse_obj.create(vals)
 
-    @api.model_create_multi
+    # @api.model_create_multi
     def get_areas(self):
         """
         Get list of areas of Ukraine:
@@ -248,8 +248,8 @@ class NovaPoshtaConfig(models.Model):
                 else:
                     area_obj.create(vals)
 
-    @api.model_create_multi
-    def action_sync_catalogs(self):
+    # @api.model_create_multi
+    def action_sync_catalogs(self, hj=None):
         """ Synchronization of Nova Poshta catalogs."""
         self.ensure_one()
         _logger.debug(">>> Start of Nova Poshta catalog sync "
