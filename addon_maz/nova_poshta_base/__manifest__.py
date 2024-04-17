@@ -15,13 +15,13 @@
     'data': [
         'security/ir.model.access.csv',
         'data/data.xml',
-        'views/np_menu_views.xml',
         'views/np_config_views.xml',
         'views/np_area_views.xml',
         'views/np_warehouse_views.xml',
         'views/np_settlement_views.xml',
         'views/np_city_views.xml',
         'views/res_partner_views.xml',
+        'views/np_menu_views.xml',
     ],
     # 'external_dependencies': {
     #     'python': [
