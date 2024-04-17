@@ -3,127 +3,210 @@
     <template id="custom_portal_my_home" inherit_id="portal.portal_my_home" name="My Portal">
         <xpath expr="//t[@t-call='portal.portal_layout']" position="replace">
             <t t-call="portal.portal_layout">
-                <t t-set="my_details" t-value="False"/>
-                <div class="container body-md">
-                    <div class="row">
-                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 cont_left">
-                            <t t-call="website.navbar_nav">
-                                <t t-set="_nav_class" t-valuef="me-auto"/>
-
-                                <!-- Menu -->
-                                <t t-foreach="website.menu_id.child_id" t-as="submenu">
-                                    <t t-call="website.submenu">
-                                        <!--                                            <t t-set="item_class" t-valuef="mmen"/>-->
-                                        <t t-set="link_class" t-valuef="mmen"/>
-                                    </t>
-                                </t>
+                <t t-set="my_details" t-value="True"/>
+                <div class="o_portal_my_home">
+                    <div class="oe_structure" id="oe_structure_portal_my_home_1"/>
+                    <div class="o_portal_docs row g-2">
+                        <div class="o_portal_doc_spinner spinner-border text-o-color-2 align-self-center mt-5"/>
+                        <div t-if="portal_alert_category_enable" class="o_portal_category row g-2 mt-3"
+                             id="portal_alert_category"/>
+                        <div t-if="portal_client_category_enable" class="o_portal_category row g-2 mt-3"
+                             id="portal_client_category"/>
+                        <div t-if="portal_service_category_enable" class="o_portal_category row g-2 mt-3"
+                             id="portal_service_category"/>
+                        <div t-if="portal_vendor_category_enable" class="o_portal_category row g-2 mt-3"
+                             id="portal_vendor_category"/>
+                        <div class="o_portal_category row g-2 mt-3" id="portal_common_category">
+                            <t t-call="portal.portal_docs_entry">
+                                <t t-set="icon" t-value="'/portal/static/src/img/portal-addresses.svg'"/>
+                                <t t-set="title">Моя адреса</t>
+<!--                                <t t-set="text">Add, remove or modify your addresses</t>-->
+                                <t t-set="url" t-value="'/my/account'"/>
+                                <t t-set="config_card" t-value="True"/>
                             </t>
-                        </div>
-                        <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 cont_right">
-                            <!--                             <t t-set="my_details" t-value="True"/>-->
-                            <div class="page_title">
-                                My account
-                            </div>
-                            <div class="o_portal_my_home">
-                                <div class="oe_structure" id="oe_structure_portal_my_home_1"/>
-                                <div class="o_portal_docs row g-2">
-                                    <div class="o_portal_doc_spinner spinner-border text-o-color-2 align-self-center mt-5"/>
-                                    <div t-if="portal_alert_category_enable" class="o_portal_category row g-2 mt-3"
-                                         id="portal_alert_category"/>
-                                    <div t-if="portal_client_category_enable" class="o_portal_category row g-2 mt-3"
-                                         id="portal_client_category"/>
-                                    <div t-if="portal_service_category_enable" class="o_portal_category row g-2 mt-3"
-                                         id="portal_service_category"/>
-                                    <div t-if="portal_vendor_category_enable" class="o_portal_category row g-2 mt-3"
-                                         id="portal_vendor_category"/>
-                                    <div class="o_portal_category row g-2 mt-3" id="portal_common_category">
-                                        <t t-call="portal.portal_docs_entry">
-                                            <t t-set="icon" t-value="'/portal/static/src/img/portal-addresses.svg'"/>
-                                            <t t-set="title">Addresses</t>
-                                            <t t-set="text">Add, remove or modify your addresses</t>
-                                            <t t-set="url" t-value="'/my/account'"/>
-                                            <t t-set="config_card" t-value="True"/>
-                                        </t>
-                                        <t t-call="portal.portal_docs_entry">
-                                            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
-                                            <t t-set="title">Connection &amp; Security</t>
-                                            <t t-set="text">Configure your connection parameters</t>
-                                            <t t-set="url" t-value="'/my/security'"/>
-                                            <t t-set="config_card" t-value="True"/>
-                                        </t>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="oe_structure" id="oe_structure_portal_my_home_2"/>
+                            <t t-call="portal.portal_docs_entry">
+                                <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+                                <t t-set="title">Налаштування безпеки</t>
+<!--                                <t t-set="text">Configure your connection parameters</t>-->
+                                <t t-set="url" t-value="'/my/security'"/>
+                                <t t-set="config_card" t-value="True"/>
+                            </t>
                         </div>
                     </div>
                 </div>
+                <div class="oe_structure" id="oe_structure_portal_my_home_2"/>
             </t>
         </xpath>
     </template>
+    <!--    <template id="custom_portal_my_home" inherit_id="portal.portal_my_home" name="My Portal">-->
+    <!--        <xpath expr="//t[@t-call='portal.portal_layout']" position="replace">-->
+    <!--            <t t-call="portal.portal_layout">-->
+    <!--                <t t-set="my_details" t-value="False"/>-->
+    <!--                <div class="container body-md">-->
+    <!--                    <div class="row">-->
+    <!--                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 cont_left">-->
+    <!--                            <t t-call="website.navbar_nav">-->
+    <!--                                <t t-set="_nav_class" t-valuef="me-auto"/>-->
+
+    <!--                                &lt;!&ndash; Menu &ndash;&gt;-->
+    <!--                                <t t-foreach="website.menu_id.child_id" t-as="submenu">-->
+    <!--                                    <t t-call="website.submenu">-->
+    <!--                                        &lt;!&ndash;                                            <t t-set="item_class" t-valuef="mmen"/>&ndash;&gt;-->
+    <!--                                        <t t-set="link_class" t-valuef="mmen"/>-->
+    <!--                                    </t>-->
+    <!--                                </t>-->
+    <!--                            </t>-->
+    <!--                        </div>-->
+    <!--                        <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 cont_right">-->
+    <!--                            &lt;!&ndash;                             <t t-set="my_details" t-value="True"/>&ndash;&gt;-->
+    <!--                            <div class="page_title">-->
+    <!--                                My account-->
+    <!--                            </div>-->
+    <!--                            <div class="o_portal_my_home">-->
+    <!--                                <div class="oe_structure" id="oe_structure_portal_my_home_1"/>-->
+    <!--                                <div class="o_portal_docs row g-2">-->
+    <!--                                    <div class="o_portal_doc_spinner spinner-border text-o-color-2 align-self-center mt-5"/>-->
+    <!--                                    <div t-if="portal_alert_category_enable" class="o_portal_category row g-2 mt-3"-->
+    <!--                                         id="portal_alert_category"/>-->
+    <!--                                    <div t-if="portal_client_category_enable" class="o_portal_category row g-2 mt-3"-->
+    <!--                                         id="portal_client_category"/>-->
+    <!--                                    <div t-if="portal_service_category_enable" class="o_portal_category row g-2 mt-3"-->
+    <!--                                         id="portal_service_category"/>-->
+    <!--                                    <div t-if="portal_vendor_category_enable" class="o_portal_category row g-2 mt-3"-->
+    <!--                                         id="portal_vendor_category"/>-->
+    <!--                                    <div class="o_portal_category row g-2 mt-3" id="portal_common_category">-->
+    <!--                                        <t t-call="portal.portal_docs_entry">-->
+    <!--                                            <t t-set="icon" t-value="'/portal/static/src/img/portal-addresses.svg'"/>-->
+    <!--                                            <t t-set="title">Addresses</t>-->
+    <!--                                            <t t-set="text">Add, remove or modify your addresses</t>-->
+    <!--                                            <t t-set="url" t-value="'/my/account'"/>-->
+    <!--                                            <t t-set="config_card" t-value="True"/>-->
+    <!--                                        </t>-->
+    <!--                                        <t t-call="portal.portal_docs_entry">-->
+    <!--                                            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>-->
+    <!--                                            <t t-set="title">Connection &amp; Security</t>-->
+    <!--                                            <t t-set="text">Configure your connection parameters</t>-->
+    <!--                                            <t t-set="url" t-value="'/my/security'"/>-->
+    <!--                                            <t t-set="config_card" t-value="True"/>-->
+    <!--                                        </t>-->
+    <!--                                    </div>-->
+    <!--                                </div>-->
+    <!--                            </div>-->
+    <!--                            <div class="oe_structure" id="oe_structure_portal_my_home_2"/>-->
+    <!--                        </div>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </t>-->
+    <!--        </xpath>-->
+    <!--    </template>-->
 
     <template id="custom_portal_my_details" inherit_id="portal.portal_my_details">
         <xpath expr="//t[@t-call='portal.portal_layout']" position="replace">
             <t t-call="portal.portal_layout">
-                <div class="container body-md">
-                    <div class="row">
-                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 cont_left">
-                            <t t-call="website.navbar_nav">
-                                <t t-set="_nav_class" t-valuef="me-auto"/>
-
-                                <!-- Menu -->
-                                <t t-foreach="website.menu_id.child_id" t-as="submenu">
-                                    <t t-call="website.submenu">
-                                        <!--                                            <t t-set="item_class" t-valuef="mmen"/>-->
-                                        <t t-set="link_class" t-valuef="mmen"/>
-                                    </t>
-                                </t>
-                            </t>
-                        </div>
-                        <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 cont_right">
-                            <t t-set="additional_title">Contact Details</t>
-                            <form action="/my/account" method="post">
-                                <div class="row o_portal_details">
-                                    <div class="col-lg-8">
-                                        <div class="row">
-                                            <t t-call="portal.portal_my_details_fields"/>
-                                            <div t-attf-class="mb-3 #{error.get('division_id') and 'o_has_error' or ''} col-xl-6">
-                                                <label class="col-form-label" for="division_id">Division</label>
-                                                <select name="division_id"
-                                                        t-attf-class="form-select #{error.get('division_id') and 'is-invalid' or ''}">
-<!--                                                        t-att-disabled="None if partner_can_edit_vat else '1'">-->
-                                                    <option value="">Division..</option>
-                                                    <t t-foreach="divisions or []" t-as="division">
-                                                        <option t-att-value="division.id"
-                                                                t-att-selected="division.id == int(division_id) if division_id else division.id == partner.division_id.id">
-                                                            <t t-esc="division.name"/>
-                                                        </option>
-                                                    </t>
-                                                </select>
-                                                <small t-if="not partner_can_edit_vat"
-                                                       class="form-text text-muted d-block d-xl-none">Changing the
-                                                    country is not allowed once document(s) have been issued for your
-                                                    account. Please contact us directly for this operation.
-                                                </small>
-                                            </div>
-                                            <input type="hidden" name="redirect" t-att-value="redirect"/>
-                                        </div>
-                                        <div class="clearfix text-end mb-5">
-                                            <a href="/my/" class="btn btn-secondary me-2">
-                                                Discard
-                                            </a>
-                                            <button type="submit" class="btn btn-primary float-end">
-                                                Save
-                                            </button>
-                                        </div>
-                                    </div>
+                <t t-set="additional_title">Contact Details</t>
+                <form action="/my/account" method="post">
+                    <div class="row o_portal_details">
+                        <div class="col-lg-8">
+                            <div class="row">
+                                <t t-call="portal.portal_my_details_fields"/>
+                                <div t-attf-class="mb-3 #{error.get('division_id') and 'o_has_error' or ''} col-xl-6">
+                                    <label class="col-form-label" for="division_id">Обслуговуючий підрозділ</label>
+                                    <select name="division_id"
+                                            t-attf-class="form-select #{error.get('division_id') and 'is-invalid' or ''}">
+                                        <!--                                                        t-att-disabled="None if partner_can_edit_vat else '1'">-->
+                                        <option value="">Division..</option>
+                                        <t t-foreach="divisions or []" t-as="division">
+                                            <option t-att-value="division.id"
+                                                    t-att-selected="division.id == int(division_id) if division_id else division.id == partner.division_id.id">
+                                                <t t-esc="division.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                    <small t-if="not partner_can_edit_vat"
+                                           class="form-text text-muted d-block d-xl-none">Changing the
+                                        country is not allowed once document(s) have been issued for your
+                                        account. Please contact us directly for this operation.
+                                    </small>
                                 </div>
-                            </form>
+                                <input type="hidden" name="redirect" t-att-value="redirect"/>
+                            </div>
+                            <div class="clearfix text-end mb-5">
+                                <a href="/my/" class="btn btn-secondary me-2">
+                                    Discard
+                                </a>
+                                <button type="submit" class="btn btn-primary float-end">
+                                    Save
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </t>
         </xpath>
     </template>
+
+<!--    <template id="custom_portal_my_details" inherit_id="portal.portal_my_details">-->
+<!--        <xpath expr="//t[@t-call='portal.portal_layout']" position="replace">-->
+<!--            <t t-call="portal.portal_layout">-->
+<!--                <div class="container body-md">-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 cont_left">-->
+<!--                            <t t-call="website.navbar_nav">-->
+<!--                                <t t-set="_nav_class" t-valuef="me-auto"/>-->
+
+<!--                                &lt;!&ndash; Menu &ndash;&gt;-->
+<!--                                <t t-foreach="website.menu_id.child_id" t-as="submenu">-->
+<!--                                    <t t-call="website.submenu">-->
+<!--                                        &lt;!&ndash;                                            <t t-set="item_class" t-valuef="mmen"/>&ndash;&gt;-->
+<!--                                        <t t-set="link_class" t-valuef="mmen"/>-->
+<!--                                    </t>-->
+<!--                                </t>-->
+<!--                            </t>-->
+<!--                        </div>-->
+<!--                        <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 cont_right">-->
+<!--                            <t t-set="additional_title">Contact Details</t>-->
+<!--                            <form action="/my/account" method="post">-->
+<!--                                <div class="row o_portal_details">-->
+<!--                                    <div class="col-lg-8">-->
+<!--                                        <div class="row">-->
+<!--                                            <t t-call="portal.portal_my_details_fields"/>-->
+<!--                                            <div t-attf-class="mb-3 #{error.get('division_id') and 'o_has_error' or ''} col-xl-6">-->
+<!--                                                <label class="col-form-label" for="division_id">Division</label>-->
+<!--                                                <select name="division_id"-->
+<!--                                                        t-attf-class="form-select #{error.get('division_id') and 'is-invalid' or ''}">-->
+<!--                                                    &lt;!&ndash;                                                        t-att-disabled="None if partner_can_edit_vat else '1'">&ndash;&gt;-->
+<!--                                                    <option value="">Division..</option>-->
+<!--                                                    <t t-foreach="divisions or []" t-as="division">-->
+<!--                                                        <option t-att-value="division.id"-->
+<!--                                                                t-att-selected="division.id == int(division_id) if division_id else division.id == partner.division_id.id">-->
+<!--                                                            <t t-esc="division.name"/>-->
+<!--                                                        </option>-->
+<!--                                                    </t>-->
+<!--                                                </select>-->
+<!--                                                <small t-if="not partner_can_edit_vat"-->
+<!--                                                       class="form-text text-muted d-block d-xl-none">Changing the-->
+<!--                                                    country is not allowed once document(s) have been issued for your-->
+<!--                                                    account. Please contact us directly for this operation.-->
+<!--                                                </small>-->
+<!--                                            </div>-->
+<!--                                            <input type="hidden" name="redirect" t-att-value="redirect"/>-->
+<!--                                        </div>-->
+<!--                                        <div class="clearfix text-end mb-5">-->
+<!--                                            <a href="/my/" class="btn btn-secondary me-2">-->
+<!--                                                Discard-->
+<!--                                            </a>-->
+<!--                                            <button type="submit" class="btn btn-primary float-end">-->
+<!--                                                Save-->
+<!--                                            </button>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </form>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </t>-->
+<!--        </xpath>-->
+<!--    </template>-->
 
 </odoo>

@@ -1,15 +1,15 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* website_sale
 # 	* theme_maz
 # 	* website
+# 	* website_sale
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-17 06:40+0000\n"
-"PO-Revision-Date: 2024-04-17 06:40+0000\n"
+"POT-Creation-Date: 2024-04-17 07:50+0000\n"
+"PO-Revision-Date: 2024-04-17 07:50+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1120,6 +1120,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_sale.address
 msgid "<option value=\"\">Country...</option>"
 msgstr "<option value=\"\">Країна...</option>"
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_portal_my_details
+msgid "<option value=\"\">Division..</option>"
+msgstr "<option value=\"\">Підрозділ..</option>"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.address
@@ -2424,6 +2429,11 @@ msgstr "Додати до кошика"
 msgid "Add to menu"
 msgstr "Додати в меню"
 
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_portal_my_home
+msgid "Add, remove or modify your addresses"
+msgstr ""
+
 #. module: website
 #. odoo-javascript
 #: code:addons/website/static/src/js/editor/snippets.options.js:0
@@ -2444,6 +2454,11 @@ msgstr "Адреса"
 #: model:ir.model.fields,field_description:website_sale.field_res_config_settings__module_website_sale_autocomplete
 msgid "Address Autocomplete"
 msgstr "Автозаповнення адреси"
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_portal_my_home
+msgid "Addresses"
+msgstr ""
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.new_page_template_landing_s_showcase
@@ -3797,6 +3812,14 @@ msgstr ""
 "Зміна назви компанії забороняється, як тільки документи видаються для вашого"
 " облікового запису. Зв'яжіться з нами щодо цієї операції."
 
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_portal_my_details
+msgid ""
+"Changing the\n"
+"                                        country is not allowed once document(s) have been issued for your\n"
+"                                        account. Please contact us directly for this operation."
+msgstr ""
+
 #. module: website
 #. odoo-javascript
 #: code:addons/website/static/src/js/editor/snippets.options.js:0
@@ -4345,6 +4368,11 @@ msgstr "Конфігуратор виконано"
 msgid "Configure Form"
 msgstr "Налаштувати форму"
 
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_portal_my_home
+msgid "Configure your connection parameters"
+msgstr ""
+
 #. module: website
 #. odoo-javascript
 #: code:addons/website/static/src/components/website_loader/website_loader.js:0
@@ -4404,6 +4432,11 @@ msgstr "Зв'яжіться з нами"
 msgid "Connected"
 msgstr "З'єднано"
 
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_portal_my_home
+msgid "Connection &amp; Security"
+msgstr ""
+
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_process_steps_options
 msgid "Connector"
@@ -4426,6 +4459,11 @@ msgstr "Консалтинг"
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
 msgid "Contact"
 msgstr "Контакт"
+
+#. module: theme_maz
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_portal_my_details
+msgid "Contact Details"
+msgstr ""
 
 #. modules: website, website_sale
 #. odoo-python
@@ -4563,7 +4601,7 @@ msgstr "Продовдити читати <i class=\"fa fa-long-arrow-right alig
 #: code:addons/website_sale/models/website.py:0
 #, python-format
 msgid "Continue shopping"
-msgstr "Продовжити покупки"
+msgstr ""
 
 #. module: website
 #: model:ir.model.fields,field_description:website.field_ir_ui_view__controller_page_ids
@@ -5404,12 +5442,13 @@ msgstr "Зникнення"
 msgid "Disappears"
 msgstr "Зникає"
 
-#. modules: website, website_sale
+#. modules: theme_maz, website, website_sale
 #. odoo-javascript
 #: code:addons/website/static/src/components/edit_head_body_dialog/edit_head_body_dialog.xml:0
 #: code:addons/website/static/src/xml/website.editor.xml:0
 #: code:addons/website/static/src/xml/website.editor.xml:0
 #: code:addons/website_sale/static/src/xml/website_sale_reorder_modal.xml:0
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_portal_my_details
 #, python-format
 msgid "Discard"
 msgstr "Відмінити"
@@ -5625,6 +5664,7 @@ msgstr ""
 #. module: theme_maz
 #: model:ir.model.fields,field_description:theme_maz.field_res_partner__division_id
 #: model:ir.model.fields,field_description:theme_maz.field_res_users__division_id
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_portal_my_details
 msgid "Division"
 msgstr "Підрозділ"
 
@@ -8534,7 +8574,7 @@ msgstr "Елемент"
 #: code:addons/website_sale/static/src/js/website_sale_utils.js:0
 #, python-format
 msgid "Item(s) added to your cart"
-msgstr "Товар(и) додано до кошика"
+msgstr "Товар(и) доданий(і) до кошику"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippets
@@ -12614,7 +12654,7 @@ msgstr "Супутник"
 msgid "Saturation"
 msgstr "Насичення"
 
-#. module: website
+#. modules: theme_maz, website
 #. odoo-javascript
 #: code:addons/website/static/src/components/dialog/edit_menu.js:0
 #: code:addons/website/static/src/components/dialog/seo.js:0
@@ -12624,6 +12664,7 @@ msgstr "Насичення"
 #: code:addons/website/static/src/xml/website.editor.xml:0
 #: code:addons/website/static/src/xml/website.editor.xml:0
 #: model_terms:ir.ui.view,arch_db:website.view_edit_robots
+#: model_terms:theme.ir.ui.view,arch:theme_maz.custom_portal_my_details
 #, python-format
 msgid "Save"
 msgstr "Зберегти"

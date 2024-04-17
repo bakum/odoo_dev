@@ -17,7 +17,7 @@
         'data/images.xml',
         # 'views/header.xml',
         # 'views/website_template.xml',
-        # 'views/portal_my_home.xml',
+        'views/portal_my_home.xml',
         # 'views/homepage.xml',
         # 'views/contactus.xml',
         # 'views/aboutus.xml',
