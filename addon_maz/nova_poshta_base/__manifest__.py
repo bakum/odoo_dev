@@ -9,6 +9,7 @@
         Integration with the Nova Poshta delivery service.
     """,
     'depends': [
+        'stock_delivery',
         'product',
         'delivery',
     ],
