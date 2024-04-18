@@ -251,7 +251,7 @@ class NovaPoshtaConfig(models.Model):
     # @api.model_create_multi
     def action_sync_catalogs(self, hj=None):
         """ Synchronization of Nova Poshta catalogs."""
-        self.ensure_one()
+        # self.ensure_one()
         _logger.debug(">>> Start of Nova Poshta catalog sync "
                       "for account ID: {}.".format(self.id))
         self.get_areas()
