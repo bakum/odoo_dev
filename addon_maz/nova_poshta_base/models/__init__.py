@@ -4,3 +4,5 @@ from . import np_warehouse
 from . import np_settlement
 from . import np_config
 from . import res_partner
+from . import sale_order
+from . import delivery_carrier

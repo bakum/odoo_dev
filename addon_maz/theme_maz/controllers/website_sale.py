@@ -5,11 +5,12 @@ from werkzeug.exceptions import NotFound
 from odoo.addons.http_routing.models.ir_http import slug
 from odoo.addons.website.controllers.main import QueryURL
 from odoo.addons.website.models.ir_http import sitemap_qs2dom
-from odoo import http, fields, tools
+from odoo import http, fields, tools, _
 from odoo.addons.website_sale.controllers.main import WebsiteSale, TableCompute
 from odoo.http import request
 from odoo.osv import expression
 from odoo.tools import lazy
+from odoo.addons.sale.controllers import portal as sale_portal
 
 
 class MazWebsiteSale(WebsiteSale):
@@ -168,7 +169,7 @@ class MazWebsiteSale(WebsiteSale):
         else:
             all_tags = ProductTag
 
-        categs_domain = [('parent_id', '=', False),('is_published', '=', True)] + website_domain
+        categs_domain = [('parent_id', '=', False), ('is_published', '=', True)] + website_domain
         if search:
             search_categories = Category.search(
                 [('product_tmpl_ids', 'in', search_product.ids)] + website_domain
@@ -244,3 +245,42 @@ class MazWebsiteSale(WebsiteSale):
             values['main_object'] = category
         values.update(self._get_additional_shop_values(values))
         return request.render("website_sale.products", values)
+
+    def _get_shop_payment_values(self, order, **kwargs):
+        checkout_page_values = {
+            'website_sale_order': order,
+            'errors': self._get_shop_payment_errors(order),
+            'partner': order.partner_invoice_id,
+            'order': order,
+            'submit_button_label': _("Confirm Now"),
+            'payment_action_id': request.env.ref('payment.action_payment_provider').id,
+            'action_activate_stripe_id': request.env.ref(
+                'website_payment.action_activate_stripe'
+            ).id,
+        }
+        payment_form_values = {
+            **sale_portal.CustomerPortal._get_payment_values(
+                self, order, website_id=request.website.id
+            ),
+            'display_submit_button': False,  # The submit button is re-added outside the form.
+            'transaction_route': f'/shop/payment/transaction/{order.id}',
+            'landing_route': '/shop/payment/validate',
+            'sale_order_id': order.id,  # Allow Stripe to check if tokenization is required.
+        }
+        values = {**checkout_page_values, **payment_form_values}
+        if request.website.enabled_delivery:
+            has_storable_products = any(
+                line.product_id.type in ['consu', 'product'] for line in order.order_line
+            )
+            if has_storable_products:
+                if order.carrier_id and not order.delivery_rating_success:
+                    order._remove_delivery_line()
+                    order._check_carrier_quotation()
+                values['deliveries'] = order._get_delivery_methods().sudo()
+
+            values['delivery_has_storable'] = has_storable_products
+            values['delivery_action_id'] = request.env.ref(
+                'delivery.action_delivery_carrier_form'
+            ).id
+
+        return values
