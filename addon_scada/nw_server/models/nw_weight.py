@@ -9,8 +9,11 @@ class Weight(models.Model):
     moxa_id = fields.Many2one('nw.moxa', string='Moxa', required=True)
     nid = fields.Char('NID', required=True)
     count = fields.Integer('Count', required=True, default=0)
-    value1 = fields.Float('Value1', required=True)
-    value2 = fields.Float('Value2', required=True, default=0)
+    value1 = fields.Float('Total value', required=True)
+    value2 = fields.Float('Platform #1', required=True, default=0)
+    value3 = fields.Float('Platform #2', required=True, default=0)
+    value4 = fields.Float('Platform #3', required=True, default=0)
+    value5 = fields.Float('Platform #4', required=True, default=0)
     error = fields.Integer(string='Error', default=0, required=True)
     message = fields.Text(string='Message')
 

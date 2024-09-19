@@ -10,6 +10,9 @@
                 <field name="nid"/>
                 <field name="value1"/>
                 <field name="value2"/>
+                <field name="value3"/>
+                <field name="value4"/>
+                <field name="value5"/>
                 <field name="count"/>
                 <field name="error"/>
                 <field name="message"/>
