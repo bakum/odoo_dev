@@ -13,6 +13,8 @@
                 <field name="value3"/>
                 <field name="value4"/>
                 <field name="value5"/>
+                <field name="cross_platform_shift"/>
+                <field name="cross_rail_shift"/>
                 <field name="count"/>
                 <field name="error"/>
                 <field name="message"/>

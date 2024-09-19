@@ -14,6 +14,8 @@ class Weight(models.Model):
     value3 = fields.Float('Platform #2', required=True, default=0)
     value4 = fields.Float('Platform #3', required=True, default=0)
     value5 = fields.Float('Platform #4', required=True, default=0)
+    cross_platform_shift= fields.Float('Cross-platform shift', required=True, default=0)
+    cross_rail_shift= fields.Integer('Cross-rail shift', required=True, default=0)
     error = fields.Integer(string='Error', default=0, required=True)
     message = fields.Text(string='Message')
 
