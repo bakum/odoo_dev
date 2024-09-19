@@ -6,3 +6,4 @@ from . import divisions
 from . import res_partner
 from . import discount
 from . import delivery
+from . import sale_order

@@ -29,6 +29,7 @@
         'views/snippets/snippets.xml',
         'views/pricelist_view.xml',
         'views/product_public.xml',
+        'views/delivery_templates.xml',
     ],
     'assets': {
         'web.assets_frontend': [
