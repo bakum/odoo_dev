@@ -20,8 +20,10 @@ class Moxa(models.Model):
     connection_timeout = fields.Integer(string='Connection Timeout', default=lambda self: 2)
     repeat_timeout = fields.Integer(string='Repeat Timeout', default=lambda self: 5)
     error_timeout = fields.Integer(string='ErrorTimeout', default=lambda self: 5)
+    platform_count = fields.Integer(string='Platforms count', default=lambda self: 1)
 
     is_modbus = fields.Boolean(string='Is Modbus', default=False)
+    is_tvv = fields.Boolean(string='Is TVV', default=False)
     start_register = fields.Integer(string='Start address', required=True, default=lambda self: 0)
     register_offset = fields.Integer(string='Count registers', required=True, default=lambda self: 0)
     hight_byte_first = fields.Boolean(string='Hight byte first', default=True)
@@ -80,6 +82,14 @@ class Moxa(models.Model):
                     line.is_modbus = False
             except:
                 line.is_modbus = False
+
+            try:
+                if 'TVV' in self.controller_id.name:
+                    line.is_tvv = True
+                else:
+                    line.is_tvv = False
+            except:
+                line.is_tvv = False
 
     @api.model
     def get_monitor_is_running(self):

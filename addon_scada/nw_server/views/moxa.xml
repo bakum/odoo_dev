@@ -7,6 +7,7 @@
             <form>
                 <sheet>
                     <field name="active" invisible="1"/>
+                    <field name="is_tvv" invisible="1"/>
                     <div class="oe_button_box" name="button_box"/>
                     <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
                             invisible="active == True"/>
@@ -16,6 +17,7 @@
                             <field name="module" invisible="1"/>
                             <field name="controller_id" can_create="False" can_write="False"/>
                             <field name="serial_type"/>
+                            <field name="platform_count" invisible="is_tvv != True"/>
                         </group>
                         <group>
                             <field name="connection_timeout"/>
@@ -23,6 +25,7 @@
                             <field name="error_timeout"/>
                             <field name="multiplexer"/>
                             <field name="is_modbus" invisible="1"/>
+
                         </group>
                     </group>
 
