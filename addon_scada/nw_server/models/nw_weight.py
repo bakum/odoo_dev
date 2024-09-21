@@ -18,6 +18,7 @@ class Weight(models.Model):
     cross_rail_shift= fields.Integer('Cross-rail shift', required=False, default=0)
     error = fields.Integer(string='Error', default=0, required=True)
     message = fields.Text(string='Message')
+    is_stable = fields.Boolean(string='Weight is stable', default=False)
 
     def compute_current_weight(self, moxa_id=0):
         sql = """SELECT moxa_id, nm.name,

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-19 15:34+0000\n"
-"PO-Revision-Date: 2024-09-19 15:34+0000\n"
+"POT-Creation-Date: 2024-09-21 07:10+0000\n"
+"PO-Revision-Date: 2024-09-21 07:10+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -558,6 +558,11 @@ msgstr ""
 #: model:ir.ui.menu,name:nw_server.menu_owl_weight_dashboard
 msgid "Weight Information"
 msgstr "Інформація"
+
+#. module: nw_server
+#: model:ir.model.fields,field_description:nw_server.field_nw_weight__is_stable
+msgid "Weight is stable"
+msgstr "Ваги стабилизовано"
 
 #. module: nw_server
 #: model:ir.model,name:nw_server.model_nw_weight
