@@ -16,6 +16,8 @@
                 <field name="is_stable"/>
                 <field name="cross_platform_shift" optional="hide"/>
                 <field name="cross_rail_shift" optional="hide"/>
+                <field name="crc" optional="hide"/>
+                <field name="answer_crc" optional="hide"/>
                 <field name="count"/>
                 <field name="error"/>
                 <field name="message"/>

@@ -19,6 +19,8 @@ class Weight(models.Model):
     error = fields.Integer(string='Error', default=0, required=True)
     message = fields.Text(string='Message')
     is_stable = fields.Boolean(string='Weight is stable', default=False)
+    crc = fields.Integer(string='CRC', default=0, required=False)
+    answer_crc = fields.Integer(string='Received CRC', default=0, required=False)
 
     def compute_current_weight(self, moxa_id=0):
         sql = """SELECT moxa_id, nm.name,
