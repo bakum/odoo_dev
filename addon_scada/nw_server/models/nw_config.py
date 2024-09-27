@@ -9,5 +9,4 @@ class NwConfigSettings(models.TransientModel):
                                         config_parameter='nw_server.default_last_dey_count', )
 
     for_stable_data = fields.Boolean(string='Stable data only',
-                                        default=True,
                                         config_parameter='nw_server.default_for_stable_data', )
