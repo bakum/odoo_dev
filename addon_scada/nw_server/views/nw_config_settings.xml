@@ -14,7 +14,13 @@
                                 <div class="text-muted content-group mt16">
                                     <field name="dey_count_to_clear" />
                                 </div>
-                                <span class="o_form_label">Last days count/////.</span>
+<!--                                <span class="o_form_label">Last days count/////.</span>-->
+                            </setting>
+                            <setting string="Store stable data only">
+                                <div class="text-muted content-group mt16">
+                                    <field name="for_stable_data" />
+                                </div>
+<!--                                <span class="o_form_label">Store stable data only/////.</span>-->
                             </setting>
                         </block>
                     </app>

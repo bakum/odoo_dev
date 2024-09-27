@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-22 14:52+0000\n"
-"PO-Revision-Date: 2024-09-22 14:52+0000\n"
+"POT-Creation-Date: 2024-09-27 18:22+0000\n"
+"PO-Revision-Date: 2024-09-27 18:22+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -45,11 +45,6 @@ msgstr ""
 #. module: nw_server
 #: model:ir.model.fields.selection,name:nw_server.selection__nw_moxa__baud_rate__9600
 msgid "9600"
-msgstr ""
-
-#. module: nw_server
-#: model_terms:ir.ui.view,arch_db:nw_server.nw_config_settings_view_form
-msgid "<span class=\"o_form_label\">Last days count/////.</span>"
 msgstr ""
 
 #. module: nw_server
@@ -493,6 +488,11 @@ msgid "Slave ID"
 msgstr ""
 
 #. module: nw_server
+#: model:ir.model.fields,field_description:nw_server.field_res_config_settings__for_stable_data
+msgid "Stable data only"
+msgstr "Тільки стабільні дані"
+
+#. module: nw_server
 #. odoo-javascript
 #: code:addons/nw_server/static/src/components/weight_dashboard.xml:0
 #: code:addons/nw_server/static/src/components/weight_dashboard.xml:0
@@ -503,7 +503,12 @@ msgstr ""
 #. module: nw_server
 #: model:ir.model.fields,field_description:nw_server.field_nw_moxa__start_register
 msgid "Start address"
-msgstr ""
+msgstr "Початкова адреса"
+
+#. module: nw_server
+#: model_terms:ir.ui.view,arch_db:nw_server.nw_config_settings_view_form
+msgid "Store stable data only"
+msgstr "Зберігати тільки стабілізовані показники"
 
 #. module: nw_server
 #: model:ir.model.fields.selection,name:nw_server.selection__nw_moxa__serial_type__tcp
