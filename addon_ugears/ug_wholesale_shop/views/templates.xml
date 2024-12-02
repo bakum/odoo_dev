@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="distrib_header_cart_link" inherit_id="website_sale.header_cart_link" name="Header Cart Link">
+        <xpath expr="//t[@t-set='show_cart']" position="after">
+            <t t-set="show_cart" t-value="request.website.is_public_user() == False" />
+        </xpath>
+    </template>
+</odoo>
