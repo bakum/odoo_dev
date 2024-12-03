@@ -18,32 +18,32 @@ msgstr ""
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
 msgid "&amp; Shipping"
-msgstr ""
+msgstr "&amp; Доставка"
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
 msgid "<b>Shipping: </b>"
-msgstr ""
+msgstr "<b>Доставка: </b>"
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
 msgid "<i class=\"fa fa-check\"/> Confirm"
-msgstr ""
+msgstr "<i class=\"fa fa-check\"/> Підтвердити"
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
 msgid "<span>Confirmed</span>"
-msgstr ""
+msgstr "<span>Підтверджено</span>"
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
 msgid "<span>Order</span>"
-msgstr ""
+msgstr "<span>Замовлення</span>"
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
 msgid "Billing"
-msgstr ""
+msgstr "Оплата"
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
@@ -53,14 +53,14 @@ msgstr "Підтвердити"
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_product_public_category__guid
 msgid "Guid 1C:Enterprise"
-msgstr ""
+msgstr "УІД 1С:Підприємство"
 
 #. module: ug_wholesale_shop
 #. odoo-python
 #: code:addons/ug_wholesale_shop/controllers/main.py:0
 #, python-format
 msgid "Invalid image"
-msgstr ""
+msgstr "Невірне зображення"
 
 #. module: ug_wholesale_shop
 #: model:ir.ui.menu,name:ug_wholesale_shop.menu_distrib_orders
@@ -77,7 +77,7 @@ msgstr "Товар не знайдено"
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
 msgid "Shop - Confirmed"
-msgstr ""
+msgstr "Оптові закупівлі - Підтверджено"
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation

@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_order_distrib_user,ug_base_distrib.order.distrib_user,sale.model_sale_order,ug_base_distrib.group_distrib_user,1,1,1,0
+access_sale_order_distrib_manager,ug_base_distrib.order.distrib_manager,sale.model_sale_order,ug_base_distrib.group_distrib_manager,1,1,1,1
+
+access_sale_order_line_distrib_user,ug_base_distrib.order.line accountant,sale.model_sale_order_line,ug_base_distrib.group_distrib_user,1,1,1,0
+access_sale_order_line_distrib_manager,ug_base_distrib.order.line,sale.model_sale_order_line,ug_base_distrib.group_distrib_manager,1,1,1,1

@@ -35,7 +35,7 @@ class WebsiteWholeSale(WebsiteSale):
     ], type='http', auth="user", website=True, sitemap=sitemap_shop)
     def shop(self, page=0, category=None, search='', min_price=0.0, max_price=0.0, ppg=False, **post):
 
-        if not request.env.user.has_group('ug_base_distrib.group_distrib_manager'):
+        if not request.env.user.has_group('ug_base_distrib.group_distrib_user'):
             raise AccessError("You do not have access rights to view this page.")
 
         add_qty = int(post.get('add_qty', 1))
@@ -228,7 +228,7 @@ class WebsiteWholeSale(WebsiteSale):
 
     @http.route(['/shop/<model("product.template"):product>'], type='http', auth="user", website=True, sitemap=True)
     def product(self, product, category='', search='', **kwargs):
-        if not request.env.user.has_group('ug_base_distrib.group_distrib_manager'):
+        if not request.env.user.has_group('ug_base_distrib.group_distrib_user'):
             raise AccessError("You do not have access rights to view this page.")
         return request.render("website_sale.product", self._prepare_product_values(product, category, search, **kwargs))
 
@@ -236,7 +236,7 @@ class WebsiteWholeSale(WebsiteSale):
                 sitemap=False)
     def old_product(self, product, category='', search='', **kwargs):
         # Compatibility pre-v14
-        if not request.env.user.has_group('ug_base_distrib.group_distrib_manager'):
+        if not request.env.user.has_group('ug_base_distrib.group_distrib_user'):
             raise AccessError("You do not have access rights to view this page.")
         return request.redirect(_build_url_w_params("/shop/%s" % slug(product), request.params), code=301)
 
@@ -247,7 +247,7 @@ class WebsiteWholeSale(WebsiteSale):
         links all of them to product.
         :raises NotFound : If the user is not allowed to access Attachment model
         """
-        if not request.env.user.has_group('ug_base_distrib.group_distrib_manager'):
+        if not request.env.user.has_group('ug_base_distrib.group_distrib_user'):
             raise AccessError("You do not have access rights to view this page.")
         if not request.env.user.has_group('website.group_website_restricted_editor'):
             raise NotFound()
@@ -413,7 +413,7 @@ class WebsiteWholeSale(WebsiteSale):
 
     @http.route(['/shop/cart'], type='http', auth="user", website=True, sitemap=False)
     def cart(self, access_token=None, revive='', **post):
-        if not request.env.user.has_group('ug_base_distrib.group_distrib_manager'):
+        if not request.env.user.has_group('ug_base_distrib.group_distrib_user'):
             raise AccessError("You do not have access rights to view this page.")
         """
         Main cart management + abandoned cart revival

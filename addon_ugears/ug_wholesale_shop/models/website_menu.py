@@ -12,5 +12,5 @@ class WebsiteMenu(models.Model):
            if not menu.is_visible:
                return
            if "shop" in menu.url and not self.env.user.user_has_groups(
-                   'ug_base_distrib.group_distrib_manager'):
+                   'ug_base_distrib.group_distrib_user'):
                menu.is_visible = False

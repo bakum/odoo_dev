@@ -65,6 +65,8 @@ class Website(models.Model):
         pricelist_id = False
 
         partner_sudo = self.env.user.distrib_id.partner_id
+        if len(partner_sudo) == 0:
+            partner_sudo = self.env.user.partner_id
 
         # cart creation was requested
         if not sale_order_sudo:
