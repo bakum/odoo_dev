@@ -15,6 +15,7 @@
     'data': [
         'views/templates.xml',
         'views/product_public.xml',
+        'views/actions.xml',
         'views/menu.xml',
         'security/wholesale_security.xml',
         'security/ir.model.access.csv',
