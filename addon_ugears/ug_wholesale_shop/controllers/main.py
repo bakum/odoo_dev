@@ -607,4 +607,5 @@ class WebsiteWholeSale(WebsiteSale):
         if sale_order_id:
             order = request.env['sale.order'].sudo().browse(sale_order_id)
             order.with_context(send_email=True).action_confirm()
-            return request.redirect(order.get_portal_url())
+            # return request.redirect(order.get_portal_url())
+            return request.redirect('/shop/cart')

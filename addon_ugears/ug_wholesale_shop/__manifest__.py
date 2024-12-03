@@ -15,5 +15,7 @@
     'data': [
         'views/templates.xml',
         'views/product_public.xml',
+        'views/menu.xml',
+        'security/wholesale_security.xml',
     ]
 }

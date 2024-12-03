@@ -6,14 +6,54 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-01 11:27+0000\n"
-"PO-Revision-Date: 2024-12-01 11:27+0000\n"
+"POT-Creation-Date: 2024-12-03 08:22+0000\n"
+"PO-Revision-Date: 2024-12-03 08:22+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
+msgid "&amp; Shipping"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
+msgid "<b>Shipping: </b>"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
+msgid "<i class=\"fa fa-check\"/> Confirm"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
+msgid "<span>Confirmed</span>"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
+msgid "<span>Order</span>"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
+msgid "Billing"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
+msgid "Confirm"
+msgstr "Підтвердити"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_product_public_category__guid
+msgid "Guid 1C:Enterprise"
+msgstr ""
 
 #. module: ug_wholesale_shop
 #. odoo-python
@@ -23,11 +63,46 @@ msgid "Invalid image"
 msgstr ""
 
 #. module: ug_wholesale_shop
+#: model:ir.ui.menu,name:ug_wholesale_shop.menu_distrib_orders
+msgid "Orders"
+msgstr "Замовлення"
+
+#. module: ug_wholesale_shop
 #. odoo-python
 #: code:addons/ug_wholesale_shop/controllers/main.py:0
 #, python-format
 msgid "Product not found"
 msgstr "Товар не знайдено"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
+msgid "Shop - Confirmed"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
+msgid "Thank you for your order."
+msgstr "Дякуємо за Ваше замовлення"
+
+#. module: ug_wholesale_shop
+#: model:ir.model,name:ug_wholesale_shop.model_website
+msgid "Website"
+msgstr "Веб-сайт"
+
+#. module: ug_wholesale_shop
+#: model:ir.model,name:ug_wholesale_shop.model_website_menu
+msgid "Website Menu"
+msgstr "Меню сайту"
+
+#. module: ug_wholesale_shop
+#: model:ir.model,name:ug_wholesale_shop.model_product_public_category
+msgid "Website Product Category"
+msgstr "Категорія товару на сайті"
+
+#. module: ug_wholesale_shop
+#: model:ir.ui.menu,name:ug_wholesale_shop.menu_distrib_orders_items
+msgid "Wholesale orders"
+msgstr "Оптові замовлення"
 
 #. module: ug_wholesale_shop
 #. odoo-python

@@ -26,7 +26,7 @@ class Website(models.Model):
         if sale_order_id:
             sale_order_sudo = SaleOrder.browse(sale_order_id).exists()
         elif self.env.user and not self.env.user._is_public():
-            sale_order_sudo = self.env.user.partner_id.last_website_so_id
+            sale_order_sudo = self.env.user.distrib_id.partner_id.last_website_so_id
             if sale_order_sudo:
                 available_pricelists = self.get_pricelist_available()
                 if sale_order_sudo.pricelist_id not in available_pricelists:
@@ -39,7 +39,7 @@ class Website(models.Model):
                     fpos = sale_order_sudo.env['account.fiscal.position'].with_company(
                         sale_order_sudo.company_id
                     )._get_fiscal_position(
-                        sale_order_sudo.partner_id,
+                        sale_order_sudo.distrib_id.partner_id,
                         delivery=sale_order_sudo.partner_shipping_id
                     )
                     if fpos.id != sale_order_sudo.fiscal_position_id.id:
@@ -64,7 +64,7 @@ class Website(models.Model):
         # Only set when neeeded
         pricelist_id = False
 
-        partner_sudo = self.env.user.partner_id
+        partner_sudo = self.env.user.distrib_id.partner_id
 
         # cart creation was requested
         if not sale_order_sudo:
