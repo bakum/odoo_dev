@@ -499,17 +499,17 @@ class WebsiteWholeSale(WebsiteSale):
         if redirection:
             return redirection
 
-        # if order.partner_id.id == request.website.user_id.sudo().partner_id.id:
-        #     return request.redirect('/shop/address')
-        #
-        # redirection = self.checkout_check_address(order)
-        # if redirection:
-        #     return redirection
+        if order.partner_id.id == request.website.user_id.sudo().partner_id.id:
+            return request.redirect('/shop/address')
+
+        redirection = self.checkout_check_address(order)
+        if redirection:
+            return redirection
 
         values = self.checkout_values(**post)
 
-        # if post.get('express'):
-        #     return request.redirect('/shop/confirm_order')
+        if post.get('express'):
+            return request.redirect('/shop/confirm_order')
 
         values.update({'website_sale_order': order})
 
@@ -522,9 +522,9 @@ class WebsiteWholeSale(WebsiteSale):
     def confirm_order(self, **post):
         order = request.website.sale_get_order()
 
-        # redirection = self.checkout_redirection(order) or self.checkout_check_address(order)
-        # if redirection:
-        #     return redirection
+        redirection = self.checkout_redirection(order) or self.checkout_check_address(order)
+        if redirection:
+            return redirection
 
         order.order_line._compute_tax_id()
         self._update_so_external_taxes(order)
@@ -534,4 +534,77 @@ class WebsiteWholeSale(WebsiteSale):
         if extra_step.active:
             return request.redirect("/shop/extra_info")
 
-        return request.redirect("/shop/payment")
+        # return request.redirect("/shop/payment")
+        return request.redirect("/shop/payment/validate")
+
+    @http.route('/shop/payment/validate', type='http', auth="user", website=True, sitemap=False)
+    def shop_payment_validate(self, sale_order_id=None, **post):
+        """ Method that should be called by the server when receiving an update
+        for a transaction. State at this point :
+
+         - UDPATE ME
+        """
+        if sale_order_id is None:
+            order = request.website.sale_get_order()
+            if not order and 'sale_last_order_id' in request.session:
+                # Retrieve the last known order from the session if the session key `sale_order_id`
+                # was prematurely cleared. This is done to prevent the user from updating their cart
+                # after payment in case they don't return from payment through this route.
+                last_order_id = request.session['sale_last_order_id']
+                order = request.env['sale.order'].sudo().browse(last_order_id).exists()
+        else:
+            order = request.env['sale.order'].sudo().browse(sale_order_id)
+            assert order.id == request.session.get('sale_last_order_id')
+
+        errors = self._get_shop_payment_errors(order)
+        if errors:
+            first_error = errors[0]  # only display first error
+            error_msg = f"{first_error[0]}\n{first_error[1]}"
+            raise ValidationError(error_msg)
+
+        # tx = order.get_portal_last_transaction() if order else order.env['payment.transaction']
+
+        # if not order or (order.amount_total and not tx):
+        #     return request.redirect('/shop')
+        if not order:
+            return request.redirect('/shop')
+
+        # if order and not order.amount_total and not tx:
+        #     order.with_context(send_email=True).action_confirm()
+        #     return request.redirect(order.get_portal_url())
+        if order and not order.amount_total:
+            order.with_context(send_email=True).action_confirm()
+            return request.redirect(order.get_portal_url())
+
+        # clean context and session, then redirect to the confirmation page
+        request.website.sale_reset()
+        # if tx and tx.state == 'draft':
+        #     return request.redirect('/shop')
+
+        # PaymentPostProcessing.remove_transactions(tx)
+        return request.redirect('/shop/confirmation')
+
+    @http.route(['/shop/confirmation'], type='http', auth="user", website=True, sitemap=False)
+    def shop_payment_confirmation(self, **post):
+        """ End of checkout process controller. Confirmation is basically seing
+        the status of a sale.order. State at this point :
+
+         - should not have any context / session info: clean them
+         - take a sale.order id, because we request a sale.order and are not
+           session dependant anymore
+        """
+        sale_order_id = request.session.get('sale_last_order_id')
+        if sale_order_id:
+            order = request.env['sale.order'].sudo().browse(sale_order_id)
+            values = self._prepare_shop_payment_confirmation_values(order)
+            return request.render("ug_wholesale_shop.confirmation", values)
+        else:
+            return request.redirect('/shop')
+
+    @http.route('/shop/confirm', type='http', auth="user", website=True, sitemap=False)
+    def order_confirmation(self, **post):
+        sale_order_id = request.session.get('sale_last_order_id')
+        if sale_order_id:
+            order = request.env['sale.order'].sudo().browse(sale_order_id)
+            order.with_context(send_email=True).action_confirm()
+            return request.redirect(order.get_portal_url())

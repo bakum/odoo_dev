@@ -5,4 +5,78 @@
             <t t-set="show_cart" t-value="request.website.is_public_user() == False" />
         </xpath>
     </template>
+
+    <template id="confirmation">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Shop - Confirmed</t>
+            <div id="wrap">
+                <div class="container oe_website_sale py-2">
+                    <h1><span>Order</span> <em t-field="order.name" /> <t t-if="order.state == 'sale'"><span>Confirmed</span></t></h1>
+
+                    <div class="row">
+                        <div class="col-12 col-xl">
+                            <div class="oe_cart">
+<!--                                <t t-set="payment_tx_id" t-value="order.get_portal_last_transaction()"/>-->
+<!--                                <t t-if="payment_tx_id.state == 'done'">-->
+<!--                                    <div class="thanks_msg">-->
+<!--                                        <h2>Thank you for your order.-->
+<!--                                            <a role="button" class="btn btn-primary d-none d-md-inline-block" href="/shop/print" target="_blank" aria-label="Print" title="Print"><i class="fa fa-print"></i> Print</a>-->
+<!--                                        </h2>-->
+<!--                                    </div>-->
+<!--                                </t>-->
+<!--                                <t t-if="request.env['res.users']._get_signup_invitation_scope() == 'b2c' and request.website.is_public_user()">-->
+<!--                                    <p class="alert alert-info mt-3" role="status">-->
+<!--                                        <a role="button" t-att-href='order.partner_id.signup_prepare() and order.partner_id.with_context(relative_url=True).signup_url' class='btn btn-primary'>Sign Up</a>-->
+<!--                                         to follow your order.-->
+<!--                                    </p>-->
+<!--                                </t>-->
+<!--                                <div class="oe_structure clearfix mt-3" id="oe_structure_website_sale_confirmation_1"/>-->
+<!--                                <h3 class="text-start mt-3">-->
+<!--                                    <strong>Payment Information:</strong>-->
+<!--                                </h3>-->
+<!--                                <t t-set="payment_tx_id" t-value="order.get_portal_last_transaction()"/>-->
+<!--                                <table class="table">-->
+<!--                                    <tbody>-->
+<!--                                        <tr>-->
+<!--                                            <td colspan="2">-->
+<!--                                                <t t-esc="payment_tx_id.provider_id.display_as or payment_tx_id.provider_id.name" />-->
+<!--                                            </td>-->
+<!--                                            <td class="text-end" width="100">-->
+<!--                                                <strong>Total:</strong>-->
+<!--                                            </td>-->
+<!--                                            <td class="text-end" width="100">-->
+<!--                                                <strong t-field="payment_tx_id.amount" t-options="{'widget': 'monetary', 'display_currency': order.pricelist_id.currency_id}" />-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                    </tbody>-->
+<!--                                </table>-->
+<!--                                <t t-call="website_sale.payment_confirmation_status"/>-->
+                                <div class="card mt-3">
+                                  <div class="card-body">
+                                    <t t-set="same_shipping" t-value="bool(order.partner_shipping_id==order.partner_invoice_id or only_services)" />
+                                    <div><b>Billing <t t-if="same_shipping and not only_services"> &amp; Shipping</t>: </b><span t-esc='order.partner_invoice_id' t-options="dict(widget='contact', fields=['address'], no_marker=True, separator=', ')" class="address-inline"/></div>
+                                    <div t-if="not same_shipping and not only_services" groups="account.group_delivery_invoice_address"><b>Shipping: </b><span t-esc='order.partner_shipping_id' t-options="dict(widget='contact', fields=['address'], no_marker=True, separator=', ')"  class="address-inline"/></div>
+                                  </div>
+                                </div>
+                                <div class="thanks_msg">
+                                        <h5>Thank you for your order.
+                                            <a role="button" class="btn btn-primary d-none d-md-inline-block" href="/shop/confirm" aria-label="Confirm" title="Confirm"><i class="fa fa-check"></i> Confirm</a>
+                                        </h5>
+                                    </div>
+                                <div class="oe_structure mt-3" id="oe_structure_website_sale_confirmation_2"/>
+                            </div>
+                        </div>
+                        <div class="col-12 col-xl-auto">
+                            <t t-set="website_sale_order" t-value="order"/>
+                            <t t-call="website_sale.cart_summary">
+                                <t t-set="hide_promotions" t-value="1"/>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+                <div class="oe_structure" id="oe_structure_website_sale_confirmation_3"/>
+            </div>
+            <input t-if='website.plausible_shared_key' type='hidden' class='js_plausible_push' data-event-name='Shop' t-attf-data-event-params='{"CTA": "Order Confirmed", "amount": "#{"%3s-%3s" % (max(0, round(order.amount_total/100)*100 - 50), round(order.amount_total/100)*100 + 50)}"}' />
+        </t>
+    </template>
 </odoo>
