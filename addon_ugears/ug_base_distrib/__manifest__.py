@@ -30,7 +30,15 @@
         'views/type_of_marketings.xml',
         'views/res_config_settings_views.xml',
         'views/distrib_expenses.xml',
+        'views/sales_dashboard.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'ug_base_distrib/static/src/components/**/*.js',
+            'ug_base_distrib/static/src/components/**/*.xml',
+            'ug_base_distrib/static/src/components/**/*.scss',
+        ],
+    },
     'depends': [
         'base',
         'product',

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-25 08:59+0000\n"
-"PO-Revision-Date: 2023-10-25 08:59+0000\n"
+"POT-Creation-Date: 2024-12-04 09:20+0000\n"
+"PO-Revision-Date: 2024-12-04 09:20+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -412,6 +412,13 @@ msgid "Distribution Management"
 msgstr "Керування дистриб'юторами"
 
 #. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/sales_dashboard.xml:0
+#, python-format
+msgid "Distribution Sales Dashboard"
+msgstr "Інформаційна панель продажів"
+
+#. module: ug_base_distrib
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_root
 msgid "Distributions"
 msgstr "Дистрибуція"
@@ -670,7 +677,7 @@ msgstr ""
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_marketing_expenses__message_has_error
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_marketing_expenses__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Якщо позначено, у деяких повідомленнях є помилка доставки."
 
 #. module: ug_base_distrib
 #. odoo-python
@@ -797,6 +804,34 @@ msgstr "Червень"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__name
 msgid "Label"
 msgstr "Мітка"
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/sales_dashboard.xml:0
+#, python-format
+msgid "Last 30 Days"
+msgstr "Останні 30 днів"
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/sales_dashboard.xml:0
+#, python-format
+msgid "Last 365 Days"
+msgstr "Останні 365 днів"
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/sales_dashboard.xml:0
+#, python-format
+msgid "Last 7 Days"
+msgstr "Останні 7 днів"
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/sales_dashboard.xml:0
+#, python-format
+msgid "Last 90 Days"
+msgstr "Останні 90 днів"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__last_count_date
@@ -926,6 +961,13 @@ msgid "Month"
 msgstr "Місяць"
 
 #. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/sales_dashboard.xml:0
+#, python-format
+msgid "Monthly Sales"
+msgstr "Місячні продажі"
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_product_product__move_ids
 msgid "Move"
 msgstr "Рухи"
@@ -978,12 +1020,6 @@ msgstr "Назва"
 #, python-format
 msgid "New"
 msgstr "Новий"
-
-#. module: ug_base_distrib
-#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__activity_calendar_event_id
-#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__activity_calendar_event_id
-msgid "Next Activity Calendar Event"
-msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__activity_date_deadline
@@ -1045,7 +1081,7 @@ msgstr ""
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors__message_needaction_counter
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors_move__message_needaction_counter
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_marketing_expenses__message_needaction_counter
-msgid "Number of messages which requires an action"
+msgid "Number of messages requiring action"
 msgstr ""
 
 #. module: ug_base_distrib
@@ -1095,6 +1131,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__partner_id
 msgid "Partner"
 msgstr "Контакт"
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/sales_dashboard.xml:0
+#, python-format
+msgid "Partner Orders"
+msgstr "Замовлення партнерів"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__phone
@@ -1153,7 +1196,7 @@ msgstr "Товар"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__product_category_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__product_categ_id
 msgid "Product Category"
-msgstr "Категорія продуктів"
+msgstr "Категорія товару"
 
 #. module: ug_base_distrib
 #. odoo-python
@@ -1297,6 +1340,11 @@ msgid "Sales Channels"
 msgstr "Канали продажу"
 
 #. module: ug_base_distrib
+#: model:ir.actions.client,name:ug_base_distrib.action_owl_sales_dashboard
+msgid "Sales Dashboard"
+msgstr "Інформаційна панель продажів дістріб'юторів"
+
+#. module: ug_base_distrib
 #: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_sales_channels_form
 msgid "Sales channels"
 msgstr "Канали продажу"
@@ -1311,6 +1359,13 @@ msgstr ""
 #: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses_line__display_type__line_section
 msgid "Section"
 msgstr "Секція"
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/sales_dashboard.xml:0
+#, python-format
+msgid "Select Period"
+msgstr "Оберіть період"
 
 #. module: ug_base_distrib
 #. odoo-python
@@ -1423,6 +1478,20 @@ msgid "This is the owner of the quant"
 msgstr ""
 
 #. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/sales_dashboard.xml:0
+#, python-format
+msgid "Top Products"
+msgstr "Топ товарів"
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/sales_dashboard.xml:0
+#, python-format
+msgid "Top Sales People"
+msgstr "Найкращі продавці"
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__price_total
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__expense_total
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__total
@@ -1532,14 +1601,14 @@ msgstr "WWW"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__website_message_ids
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Повідомлення веб-сайту"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors__website_message_ids
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors_move__website_message_ids
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_marketing_expenses__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Історія спілкування сайту"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__year
@@ -1597,6 +1666,13 @@ msgstr ""
 #, python-format
 msgid "inventory quantity is not set."
 msgstr "Кількість запасів не встановлена."
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/kpi_card/kpi_card.xml:0
+#, python-format
+msgid "since last period"
+msgstr "з минулого періоду"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__website
