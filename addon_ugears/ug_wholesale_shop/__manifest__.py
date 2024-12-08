@@ -19,5 +19,7 @@
         'views/menu.xml',
         'security/wholesale_security.xml',
         'security/ir.model.access.csv',
+        'data/packages_sizes_data.xml',
+        'views/packages_sizes.xml',
     ]
 }

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="pallet_1" model="distrib.packages.sizes">
+            <field name="name">800х1200х1800</field>
+            <field name="ref">800х1200х1800</field>
+            <field name="active">True</field>
+            <field name="width">800</field>
+            <field name="height">1200</field>
+            <field name="depth">1800</field>
+            <field name="type_of">pallet</field>
+            <field name="cartoon_weight">0.0</field>
+        </record>
+        <record id="box_1" model="distrib.packages.sizes">
+            <field name="name">241х196х251</field>
+            <field name="ref">241х196х251</field>
+            <field name="active">True</field>
+            <field name="width">241</field>
+            <field name="height">196</field>
+            <field name="depth">251</field>
+            <field name="type_of">box</field>
+            <field name="cartoon_weight">186.0</field>
+        </record>
+        <record id="box_2" model="distrib.packages.sizes">
+            <field name="name">386х196х156</field>
+            <field name="ref">386х196х156</field>
+            <field name="active">True</field>
+            <field name="width">386</field>
+            <field name="height">196</field>
+            <field name="depth">156</field>
+            <field name="type_of">box</field>
+            <field name="cartoon_weight">190.0</field>
+        </record>
+        <record id="box_3" model="distrib.packages.sizes">
+            <field name="name">386х196х196</field>
+            <field name="ref">386х196х196</field>
+            <field name="active">True</field>
+            <field name="width">386</field>
+            <field name="height">196</field>
+            <field name="depth">196</field>
+            <field name="type_of">box</field>
+            <field name="cartoon_weight">190.0</field>
+        </record>
+        <record id="box_4" model="distrib.packages.sizes">
+            <field name="name">386х227х196</field>
+            <field name="ref">386х227х196</field>
+            <field name="active">True</field>
+            <field name="width">386</field>
+            <field name="height">227</field>
+            <field name="depth">196</field>
+            <field name="type_of">box</field>
+            <field name="cartoon_weight">190.0</field>
+        </record>
+        <record id="box_5" model="distrib.packages.sizes">
+            <field name="name">388х193х271</field>
+            <field name="ref">388х193х271</field>
+            <field name="active">True</field>
+            <field name="width">388</field>
+            <field name="height">193</field>
+            <field name="depth">271</field>
+            <field name="type_of">box</field>
+            <field name="cartoon_weight">190.0</field>
+        </record>
+        <record id="box_6" model="distrib.packages.sizes">
+            <field name="name">391х286х286</field>
+            <field name="ref">391х286х286</field>
+            <field name="active">True</field>
+            <field name="width">391</field>
+            <field name="height">286</field>
+            <field name="depth">286</field>
+            <field name="type_of">box</field>
+            <field name="cartoon_weight">190.0</field>
+        </record>
+        <record id="box_7" model="distrib.packages.sizes">
+            <field name="name">394х193х226</field>
+            <field name="ref">394х193х226</field>
+            <field name="active">True</field>
+            <field name="width">394</field>
+            <field name="height">193</field>
+            <field name="depth">266</field>
+            <field name="type_of">box</field>
+            <field name="cartoon_weight">186.0</field>
+        </record>
+    </data>
+</odoo>

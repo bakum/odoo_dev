@@ -13,5 +13,29 @@
                 </data>
             </field>
         </record>
+
+        <record id="view_product_package_form_inherit" model="ir.ui.view">
+            <field name="name">product.public.package.form.inherit.distrib.fields</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//page[@name='invoicing']" position="after">
+                        <page name="package" string="Packages" groups="ug_base_distrib.group_distrib_user">
+                            <group>
+                                <group>
+                                    <field name="weight"/>
+                                    <field name="qty_in_cartoon"/>
+                                </group>
+                                <group>
+                                    <field name="cartoon_id" widget="many2one" options="{'no_create': True, 'no_open': True}"/>
+                                    <field name="cartoon_weight_with_model"/>
+                                </group>
+                            </group>
+                        </page>
+                    </xpath>
+                </data>
+            </field>
+        </record>
     </data>
 </odoo>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_distributors_package_form" model="ir.ui.view">
+        <field name="name">distrib.package.form</field>
+        <field name="model">distrib.packages.sizes</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box"/>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+<!--                    <field name="ref" readonly="1"/>-->
+                    <div class="oe_title mb24">
+                        <field name="active" invisible="1"/>
+                        <h1>
+                            <field id="company" class="text-break" readonly="1" name="ref" default_focus="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                         <group id="header_left_group">
+                             <field name="width"/>
+                             <field name="height"/>
+                             <field name="depth"/>
+                        </group>
+                        <group id="header_right_group">
+                            <field name="type_of" force_save="1"/>
+                            <field name="cartoon_weight"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_distributors_package_tree" model="ir.ui.view">
+        <field name="name">distrib.package.tree</field>
+        <field name="model">distrib.packages.sizes</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="ref"/>
+                <field name="type_of"/>
+                <field name="cartoon_weight"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_distributors_package_search" model="ir.ui.view">
+        <field name="name">distrib.package.search</field>
+        <field name="model">distrib.packages.sizes</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" filter_domain="['|', ('name', 'ilike', self), ('ref', 'ilike', self)]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived" domain="[('active','=',False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_distrib_package" model="ir.actions.act_window">
+        <field name="name">Packages</field>
+        <field name="res_model">distrib.packages.sizes</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_distrib_packages" name="Packages and pallets" parent="ug_base_distrib.menu_distrib_settings" sequence="3"/>
+    <menuitem
+            id="menu_distrib_packages_pallets"
+            name="Packages"
+            parent="menu_distrib_packages"
+            action="action_distrib_package"
+            groups="ug_base_distrib.group_distrib_manager,ug_base_distrib.group_distrib_user"
+            sequence="13"/>
+</odoo>
