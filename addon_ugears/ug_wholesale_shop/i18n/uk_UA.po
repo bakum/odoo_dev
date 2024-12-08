@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-03 14:25+0000\n"
-"PO-Revision-Date: 2024-12-03 14:25+0000\n"
+"POT-Creation-Date: 2024-12-08 21:28+0000\n"
+"PO-Revision-Date: 2024-12-08 21:28+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -41,9 +41,38 @@ msgid "<span>Order</span>"
 msgstr "<span>Замовлення</span>"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__active
+msgid "Active"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.view_distributors_package_form
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.view_distributors_package_search
+msgid "Archived"
+msgstr ""
+
+#. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
 msgid "Billing"
 msgstr "Оплата"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_product_product__cartoon_id
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_product_template__cartoon_id
+#: model:ir.model.fields.selection,name:ug_wholesale_shop.selection__distrib_packages_sizes__type_of__box
+msgid "Cartoon"
+msgstr "Коробка"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__cartoon_weight
+msgid "Cartoon Weight, gram"
+msgstr "Вага коробки, г"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_product_product__cartoon_weight_with_model
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_product_template__cartoon_weight_with_model
+msgid "Cartoon weight with model, gram"
+msgstr "Вага коробки з моделлю, г"
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
@@ -51,9 +80,39 @@ msgid "Confirm"
 msgstr "Підтвердити"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__depth
+msgid "Depth, mm"
+msgstr "Висота, мм"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_product_public_category__guid
 msgid "Guid 1C:Enterprise"
 msgstr "УІД 1С:Підприємство"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__height
+msgid "Height, mm"
+msgstr "Довжина, мм"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__id
+msgid "ID"
+msgstr ""
 
 #. module: ug_wholesale_shop
 #. odoo-python
@@ -63,9 +122,68 @@ msgid "Invalid image"
 msgstr "Невірне зображення"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__name
+msgid "Name"
+msgstr "Найменування"
+
+#. module: ug_wholesale_shop
+#. odoo-python
+#: code:addons/ug_wholesale_shop/models/packages_sizes.py:0
+#, python-format
+msgid "New"
+msgstr "Новий"
+
+#. module: ug_wholesale_shop
 #: model:ir.ui.menu,name:ug_wholesale_shop.menu_distrib_orders
 msgid "Orders"
 msgstr "Замовлення"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields.selection,name:ug_wholesale_shop.selection__distrib_packages_sizes__type_of__package
+msgid "Package"
+msgstr "Упаковка"
+
+#. module: ug_wholesale_shop
+#: model:ir.actions.act_window,name:ug_wholesale_shop.action_distrib_package
+#: model:ir.ui.menu,name:ug_wholesale_shop.menu_distrib_packages_pallets
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.view_product_package_form_inherit
+msgid "Packages"
+msgstr "Пакування"
+
+#. module: ug_wholesale_shop
+#: model:ir.model,name:ug_wholesale_shop.model_distrib_packages_sizes
+msgid "Packages Sizes"
+msgstr "Розміри пакування"
+
+#. module: ug_wholesale_shop
+#: model:ir.ui.menu,name:ug_wholesale_shop.menu_distrib_packages
+msgid "Packages and pallets"
+msgstr "Пакування та палети"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields.selection,name:ug_wholesale_shop.selection__distrib_packages_sizes__type_of__pallet
+msgid "Pallet"
+msgstr "Палета"
+
+#. module: ug_wholesale_shop
+#: model:ir.model,name:ug_wholesale_shop.model_product_template
+msgid "Product"
+msgstr "Товар"
 
 #. module: ug_wholesale_shop
 #. odoo-python
@@ -73,6 +191,17 @@ msgstr "Замовлення"
 #, python-format
 msgid "Product not found"
 msgstr "Товар не знайдено"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_product_product__qty_in_cartoon
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_product_template__qty_in_cartoon
+msgid "Quantity in cartoon"
+msgstr "Одиниць в коробці"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__ref
+msgid "Ref"
+msgstr "Посилання"
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
@@ -83,6 +212,11 @@ msgstr "Оптові закупівлі - Підтверджено"
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
 msgid "Thank you for your order."
 msgstr "Дякуємо за Ваше замовлення"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__type_of
+msgid "Type of package"
+msgstr "Тип пакування"
 
 #. module: ug_wholesale_shop
 #: model:ir.model,name:ug_wholesale_shop.model_website
@@ -100,6 +234,11 @@ msgid "Website Product Category"
 msgstr "Категорія товару на сайті"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_product_template__weight
+msgid "Weight model, gram"
+msgstr "Вага моделі, г"
+
+#. module: ug_wholesale_shop
 #: model:ir.ui.menu,name:ug_wholesale_shop.menu_distrib_orders_items
 msgid "Wholesale orders"
 msgstr "Оптові замовлення"
@@ -109,6 +248,11 @@ msgstr "Оптові замовлення"
 #: model:ir.ui.menu,name:ug_wholesale_shop.menu_distrib_shop
 msgid "Wholesale shop"
 msgstr "Оптовий магазин"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__width
+msgid "Width, mm"
+msgstr "Ширина, мм"
 
 #. module: ug_wholesale_shop
 #. odoo-python
