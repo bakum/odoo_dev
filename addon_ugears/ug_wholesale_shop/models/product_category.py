@@ -6,7 +6,7 @@ class Product(models.Model):
 
     weight = fields.Float('Weight model, gram', digits=(16, 1))
     qty_in_cartoon = fields.Integer('Quantity in cartoon', default=0)
-    cartoon_id = fields.Many2one('distrib.packages.sizes', 'Cartoon', required=True)
+    cartoon_id = fields.Many2one('distrib.packages.sizes', 'Cartoon')
     cartoon_weight_with_model = fields.Float('Cartoon weight with model, gram', store=True,
                                              compute='_compute_cartoon_weight_with_model')
 
