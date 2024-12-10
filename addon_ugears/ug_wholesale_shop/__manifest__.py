@@ -21,5 +21,12 @@
         'security/ir.model.access.csv',
         'data/packages_sizes_data.xml',
         'views/packages_sizes.xml',
-    ]
+    ],
+'assets': {
+        'web.assets_frontend': [
+            # 'sale/static/src/js/variant_mixin.js',
+            # 'website_sale/static/src/js/variant_mixin.js',
+            'ug_wholesale_shop/static/src/js/variant_mixin.js',
+        ]
+    }
 }
