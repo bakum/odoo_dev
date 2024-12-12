@@ -1,3 +1,7 @@
+from itertools import product
+
+from requests.packages import package
+
 from odoo import models, _
 from odoo.exceptions import UserError
 from odoo.http import request
@@ -31,14 +35,32 @@ class SaleOrder(models.Model):
         except ValueError:
             add_qty = 1
 
+        if add_qty and not product.qty_in_cartoon == 0:
+            package = add_qty // product.qty_in_cartoon
+            package_float = add_qty / product.qty_in_cartoon
+            if package_float > package:
+                package += 1
+            add_qty = package * product.qty_in_cartoon
+        else:
+            add_qty = 0
+
         try:
             if set_qty:
                 set_qty = int(set_qty)
         except ValueError:
             set_qty = 0
 
+        if set_qty:
+            package = set_qty//product.qty_in_cartoon
+            package_float = set_qty / product.qty_in_cartoon
+            if package_float > package:
+                package += 1
+            set_qty = package * product.qty_in_cartoon
+
         quantity = 0
         if set_qty:
+            quantity = set_qty
+        elif set_qty == 0:
             quantity = set_qty
         elif add_qty is not None:
             if order_line:

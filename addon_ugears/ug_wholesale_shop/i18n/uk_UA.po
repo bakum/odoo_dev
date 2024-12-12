@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-08 21:28+0000\n"
-"PO-Revision-Date: 2024-12-08 21:28+0000\n"
+"POT-Creation-Date: 2024-12-12 09:18+0000\n"
+"PO-Revision-Date: 2024-12-12 09:18+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,19 +16,34 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: ug_wholesale_shop
+#. odoo-python
+#: code:addons/ug_wholesale_shop/models/product_category.py:0
+#: code:addons/ug_wholesale_shop/models/product_category.py:0
+#, python-format
+msgid " gram"
+msgstr " г"
+
+#. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
 msgid "&amp; Shipping"
 msgstr "&amp; Доставка"
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
-msgid "<b>Shipping: </b>"
+msgid "<b>Shipping:</b>"
 msgstr "<b>Доставка: </b>"
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
-msgid "<i class=\"fa fa-check\"/> Confirm"
+msgid ""
+"<i class=\"fa fa-check\"/>\n"
+"                                            Confirm"
 msgstr "<i class=\"fa fa-check\"/> Підтвердити"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.distrib_cart_lines
+msgid "<span>Boxes</span>"
+msgstr "<span>Коробок</span>"
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
@@ -55,6 +70,18 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
 msgid "Billing"
 msgstr "Оплата"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.distrib_product_package
+msgid "Box size, mm"
+msgstr "Розмір коробки, мм"
+
+#. module: ug_wholesale_shop
+#. odoo-python
+#: code:addons/ug_wholesale_shop/models/product_category.py:0
+#, python-format
+msgid "Brutto weight "
+msgstr "Вага брутто "
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_product_product__cartoon_id
@@ -122,6 +149,13 @@ msgid "Invalid image"
 msgstr "Невірне зображення"
 
 #. module: ug_wholesale_shop
+#. odoo-python
+#: code:addons/ug_wholesale_shop/models/sale_order.py:0
+#, python-format
+msgid "It is forbidden to modify a sales order which is not in draft status."
+msgstr ""
+
+#. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes____last_update
 msgid "Last Modified on"
 msgstr ""
@@ -140,6 +174,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__name
 msgid "Name"
 msgstr "Найменування"
+
+#. module: ug_wholesale_shop
+#. odoo-python
+#: code:addons/ug_wholesale_shop/models/product_category.py:0
+#, python-format
+msgid "Netto weight "
+msgstr "Вага нетто "
 
 #. module: ug_wholesale_shop
 #. odoo-python
@@ -176,6 +217,11 @@ msgid "Packages and pallets"
 msgstr "Пакування та палети"
 
 #. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.distrib_product_package
+msgid "Packaging information"
+msgstr "Інформація про пакування"
+
+#. module: ug_wholesale_shop
 #: model:ir.model.fields.selection,name:ug_wholesale_shop.selection__distrib_packages_sizes__type_of__pallet
 msgid "Pallet"
 msgstr "Палета"
@@ -204,6 +250,11 @@ msgid "Ref"
 msgstr "Посилання"
 
 #. module: ug_wholesale_shop
+#: model:ir.model,name:ug_wholesale_shop.model_sale_order
+msgid "Sales Order"
+msgstr "Замовлення на продаж"
+
+#. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
 msgid "Shop - Confirmed"
 msgstr "Оптові закупівлі - Підтверджено"
@@ -212,6 +263,22 @@ msgstr "Оптові закупівлі - Підтверджено"
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
 msgid "Thank you for your order."
 msgstr "Дякуємо за Ваше замовлення"
+
+#. module: ug_wholesale_shop
+#. odoo-python
+#: code:addons/ug_wholesale_shop/models/sale_order.py:0
+#, python-format
+msgid "The given product does not exist therefore it cannot be added to cart."
+msgstr ""
+
+#. module: ug_wholesale_shop
+#. odoo-python
+#: code:addons/ug_wholesale_shop/models/sale_order.py:0
+#, python-format
+msgid ""
+"The given product does not have a price therefore it cannot be added to "
+"cart."
+msgstr ""
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__type_of
@@ -260,6 +327,11 @@ msgstr "Ширина, мм"
 #, python-format
 msgid "You can't use a video as the product's main image."
 msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.distrib_product_package
+msgid "pcs per box"
+msgstr "шт. в коробці"
 
 #. module: website_sale
 #: model:website.menu,name:website_sale.menu_shop

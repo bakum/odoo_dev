@@ -1,4 +1,4 @@
-from odoo import models, fields, tools, api
+from odoo import models, fields, tools, api, _
 from odoo.addons.http_routing.models.ir_http import slug, unslug
 
 
@@ -90,6 +90,13 @@ class Product(models.Model):
             'icon': 'fa-shopping-cart',
         }
 
+    @api.model
+    def _get_package_detail(self):
+        return _('Netto weight ') + str(self.weight) + _(' gram')
+
+    @api.model
+    def _get_package_detail_with_cartoon(self):
+        return _('Brutto weight ') + str(self.cartoon_weight_with_model) + _(' gram')
 
 class ProductPublicCategory(models.Model):
     _inherit = 'product.public.category'
