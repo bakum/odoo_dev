@@ -1,12 +1,18 @@
 import logging
 
-from odoo import models, SUPERUSER_ID
+from odoo import models, SUPERUSER_ID, fields
 from odoo.http import request
 
 _logger = logging.getLogger(__name__)
 
+
 class Website(models.Model):
     _inherit = 'website'
+
+    palette_id = fields.Many2one(
+        'distrib.packages.sizes',
+        compute='_compute_palette_id',
+        string='Default Palette')
 
     def sale_get_order(self, force_create=False, update_pricelist=False):
         """ Return the current sales order after mofications specified by params.
@@ -50,7 +56,7 @@ class Website(models.Model):
         # Ignore the current order if a payment has been initiated. We don't want to retrieve the
         # cart and allow the user to update it when the payment is about to confirm it.
         if sale_order_sudo and sale_order_sudo.get_portal_last_transaction().state in (
-            'pending', 'authorized', 'done'
+                'pending', 'authorized', 'done'
         ):
             sale_order_sudo = None
 
@@ -162,6 +168,38 @@ class Website(models.Model):
 
         return values
 
+    def get_palettes_available(self):
+        self.ensure_one()
+        domain = [('type_of', '=', 'pallet')]
+
+        return self.env['distrib.packages.sizes'].search(domain)
+
+    def get_current_palette(self):
+        ProductPalette = self.env['distrib.packages.sizes']
+        palette = ProductPalette
+
+        if request and request.session.get('website_sale_current_palette'):
+            palette = ProductPalette.browse(request.session['website_sale_current_palette']).exists().sudo()
+            if not palette:
+                request.session.pop('website_sale_current_palette')
+                palette = ProductPalette
+
+        if not palette:
+            distrib_sudo = self.env.user.distrib_id
+            palette = distrib_sudo.pallet_id
+
+            available_palettes = self.get_palettes_available()
+            if not palette:
+                palette = available_palettes[0]
+
+                if not palette:
+                    _logger.error(
+                        'Failed to find palette for distributor "%s" (id %s)',
+                        distrib_sudo.name, distrib_sudo.id,
+                    )
+
+        return palette
+
     def get_current_pricelist(self):
         """
         :returns: The current pricelist record
@@ -176,7 +214,8 @@ class Website(models.Model):
             #  - Either, he entered a coupon code
             pricelist = ProductPricelist.browse(request.session['website_sale_current_pl']).exists().sudo()
             country_code = self._get_geoip_country_code()
-            if not pricelist or not pricelist._is_available_on_website(self) or not pricelist._is_available_in_country(country_code):
+            if not pricelist or not pricelist._is_available_on_website(self) or not pricelist._is_available_in_country(
+                    country_code):
                 request.session.pop('website_sale_current_pl')
                 pricelist = ProductPricelist
 
@@ -211,3 +250,7 @@ class Website(models.Model):
                     partner_sudo.name, partner_sudo.id,
                 )
         return pricelist
+
+    def _compute_palette_id(self):
+        for website in self:
+            website.palette_id = website.get_current_palette()

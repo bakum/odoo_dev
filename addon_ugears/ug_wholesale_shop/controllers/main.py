@@ -84,6 +84,8 @@ class WebsiteWholeSale(WebsiteSale):
 
         now = datetime.timestamp(datetime.now())
         pricelist_distrib = request.env.user.distrib_id.pricelist_id
+        palette_distrib = request.env.user.distrib_id.pallet_id
+
         if pricelist_distrib:
             pricelist = pricelist_distrib
         else:
@@ -94,7 +96,19 @@ class WebsiteWholeSale(WebsiteSale):
             request.session['website_sale_pricelist_time'] = now
             request.session['website_sale_current_pl'] = pricelist.id
 
+        if palette_distrib:
+            palette = palette_distrib
+        else:
+            palette = request.env['distrib.packages.sizes'].browse(request.session.get('website_sale_current_palette'))
+
+        if not palette or request.session.get('website_sale_palette_time',
+                                              0) < now - 60 * 60:  # test: 1 hour in session
+            palette = website.get_current_palette()
+            request.session['website_sale_palette_time'] = now
+            request.session['website_sale_current_palette'] = palette.id
+
         request.update_context(pricelist=pricelist.id, partner=request.env.user.distrib_id.partner_id)
+        request.update_context(palette=palette.id)
 
         filter_by_price_enabled = website.is_view_active('website_sale.filter_products_price')
         if filter_by_price_enabled:
@@ -201,6 +215,7 @@ class WebsiteWholeSale(WebsiteSale):
             'attrib_set': attrib_set,
             'pager': pager,
             'pricelist': pricelist,
+            'palette': palette,
             'add_qty': add_qty,
             'products': products,
             'search_product': search_product,
@@ -493,69 +508,78 @@ class WebsiteWholeSale(WebsiteSale):
         if not all(order.partner_shipping_id.read(shipping_fields_required)[0].values()):
             return request.redirect('/shop/address?partner_id=%d' % order.partner_shipping_id.id)
 
-    # @http.route(['/shop/cart/update_json'], type='json', auth="user", methods=['POST'], website=True, csrf=False)
-    # def cart_update_json(
-    #         self, product_id, line_id=None, add_qty=None, set_qty=None, display=True,
-    #         product_custom_attribute_values=None, no_variant_attribute_values=None, **kw
-    # ):
-    #     """
-    #     This route is called :
-    #         - When changing quantity from the cart.
-    #         - When adding a product from the wishlist.
-    #         - When adding a product to cart on the same page (without redirection).
-    #     """
-    #     order = request.website.sale_get_order(force_create=True)
-    #     if order.state != 'draft':
-    #         request.website.sale_reset()
-    #         if kw.get('force_create'):
-    #             order = request.website.sale_get_order(force_create=True)
-    #         else:
-    #             return {}
-    #
-    #     if product_custom_attribute_values:
-    #         product_custom_attribute_values = json_scriptsafe.loads(product_custom_attribute_values)
-    #
-    #     if no_variant_attribute_values:
-    #         no_variant_attribute_values = json_scriptsafe.loads(no_variant_attribute_values)
-    #
-    #     values = order._cart_update(
-    #         product_id=product_id,
-    #         line_id=line_id,
-    #         add_qty=add_qty,
-    #         set_qty=set_qty,
-    #         product_custom_attribute_values=product_custom_attribute_values,
-    #         no_variant_attribute_values=no_variant_attribute_values,
-    #         **kw
-    #     )
-    #
-    #     request.session['website_sale_cart_quantity'] = order.cart_quantity
-    #
-    #     if not order.cart_quantity:
-    #         request.website.sale_reset()
-    #         return values
-    #
-    #     values['cart_quantity'] = order.cart_quantity
-    #     values['minor_amount'] = payment_utils.to_minor_currency_units(
-    #         order.amount_total, order.currency_id
-    #     ),
-    #     values['amount'] = order.amount_total
-    #
-    #     if not display:
-    #         return values
-    #
-    #     values['website_sale.cart_lines'] = request.env['ir.ui.view']._render_template(
-    #         "website_sale.cart_lines", {
-    #             'website_sale_order': order,
-    #             'date': fields.Date.today(),
-    #             'suggested_products': order._cart_accessories()
-    #         }
-    #     )
-    #     values['website_sale.short_cart_summary'] = request.env['ir.ui.view']._render_template(
-    #         "website_sale.short_cart_summary", {
-    #             'website_sale_order': order,
-    #         }
-    #     )
-    #     return values
+    @http.route(['/shop/cart/update_json'], type='json', auth="user", methods=['POST'], website=True, csrf=False)
+    def cart_update_json(
+            self, product_id, line_id=None, add_qty=None, set_qty=None, display=True,
+            product_custom_attribute_values=None, no_variant_attribute_values=None, palette_id=None, **kw
+    ):
+        """
+        This route is called :
+            - When changing quantity from the cart.
+            - When adding a product from the wishlist.
+            - When adding a product to cart on the same page (without redirection).
+        """
+        order = request.website.sale_get_order(force_create=True)
+        if order.state != 'draft':
+            request.website.sale_reset()
+            if kw.get('force_create'):
+                order = request.website.sale_get_order(force_create=True)
+            else:
+                return {}
+
+        if product_custom_attribute_values:
+            product_custom_attribute_values = json_scriptsafe.loads(product_custom_attribute_values)
+
+        if no_variant_attribute_values:
+            no_variant_attribute_values = json_scriptsafe.loads(no_variant_attribute_values)
+
+        values = order._cart_update(
+            product_id=product_id,
+            line_id=line_id,
+            add_qty=add_qty,
+            set_qty=set_qty,
+            product_custom_attribute_values=product_custom_attribute_values,
+            no_variant_attribute_values=no_variant_attribute_values,
+            **kw
+        )
+
+        request.session['website_sale_cart_quantity'] = order.cart_quantity
+
+        if not order.cart_quantity:
+            request.website.sale_reset()
+            return values
+
+        values['cart_quantity'] = order.cart_quantity
+        values['minor_amount'] = payment_utils.to_minor_currency_units(
+            order.amount_total, order.currency_id
+        ),
+        values['amount'] = order.amount_total
+
+        if not display:
+            return values
+
+        packing_list = order._get_package_from_order()
+        if palette_id is not None:
+            packing_calc = order._calculate_package_list(packing_list,palette_id)
+
+        values['website_sale.cart_lines'] = request.env['ir.ui.view']._render_template(
+            "website_sale.cart_lines", {
+                'website_sale_order': order,
+                'date': fields.Date.today(),
+                'suggested_products': order._cart_accessories()
+            }
+        )
+        values['website_sale.short_cart_summary'] = request.env['ir.ui.view']._render_template(
+            "website_sale.short_cart_summary", {
+                'website_sale_order': order,
+            }
+        )
+        values['ug_wholesale_shop.packing_list_lines'] = request.env['ir.ui.view']._render_template(
+            "ug_wholesale_shop.packing_list_lines", {
+                'packing_list': packing_list,
+            }
+        )
+        return values
 
     @http.route(['/shop/checkout'], type='http', auth="public", website=True, sitemap=False)
     def checkout(self, **post):
@@ -573,9 +597,13 @@ class WebsiteWholeSale(WebsiteSale):
             return redirection
 
         values = self.checkout_values(**post)
+        packing_list = order._get_package_from_order()
 
         if post.get('express'):
-            return request.redirect('/shop/confirm_order')
+            values.update({'website_sale_order': order})
+            values.update({'packing_list': packing_list})
+            return request.render("ug_wholesale_shop.packing_list", values)
+            # return request.redirect('/shop/confirm_order')
 
         values.update({'website_sale_order': order})
 
@@ -675,3 +703,16 @@ class WebsiteWholeSale(WebsiteSale):
             order.with_context(send_email=True).action_confirm()
             # return request.redirect(order.get_portal_url())
             return request.redirect('/shop/cart')
+
+    @http.route(['/shop/change_palette/<model("distrib.packages.sizes"):palette>'], type='http', auth="user",
+                website=True, sitemap=False)
+    def palette_change(self, palette, **post):
+        # website = request.env['website'].get_current_website()
+        redirect_url = request.httprequest.referrer
+        # if redirect_url:
+        #     decoded_url = url_parse(redirect_url)
+        #     args = url_decode(decoded_url.query)
+        request.session['website_sale_current_palette'] = palette.id
+        # request.website.sale_get_order(update_pricelist=True)
+
+        return request.redirect(redirect_url or '/shop')

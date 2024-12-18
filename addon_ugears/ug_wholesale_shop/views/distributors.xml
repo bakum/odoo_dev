@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="view_form_inherit_distributors" model="ir.ui.view">
+            <field name="name">distributors.form.inherit.distrib</field>
+            <field name="model">distrib.distributors</field>
+            <field name="inherit_id" ref="ug_base_distrib.view_distributors_distrib_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//page[@name='distrib_additional']/group" position="inside">
+                        <group>
+                            <field name="pallet_id" options="{'no_open': True, 'no_quick_create': True}"
+                                   domain="[('type_of', '=', 'pallet')]"/>
+                        </group>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+    </data>
+</odoo>

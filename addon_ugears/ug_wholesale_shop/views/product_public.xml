@@ -28,7 +28,8 @@
                                     <field name="qty_in_cartoon"/>
                                 </group>
                                 <group>
-                                    <field name="cartoon_id" widget="many2one" options="{'no_create': True, 'no_open': True}"/>
+                                    <field name="cartoon_id" widget="many2one" options="{'no_create': True, 'no_open': True}"
+                                            domain="[('type_of', '=', 'box')]"/>
                                     <field name="cartoon_weight_with_model"/>
                                 </group>
                             </group>

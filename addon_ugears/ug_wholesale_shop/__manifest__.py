@@ -21,12 +21,19 @@
         'security/ir.model.access.csv',
         'data/packages_sizes_data.xml',
         'views/packages_sizes.xml',
+        'views/distributors.xml',
     ],
-'assets': {
+    'assets': {
         'web.assets_frontend': [
-            # 'sale/static/src/js/variant_mixin.js',
-            # 'website_sale/static/src/js/variant_mixin.js',
+            'ug_wholesale_shop/static/src/js/website_sale_override.js',
+            # ('replace', 'website_sale/static/src/js/website_sale.js', 'ug_wholesale_shop/static/src/js/website_sale.js'),
+            ('replace', 'website_sale/static/src/js/website_sale_utils.js', 'ug_wholesale_shop/static/src/js/website_sale_utils.js'),
             'ug_wholesale_shop/static/src/js/variant_mixin.js',
+            # 'ug_wholesale_shop/static/src/js/website_sale_override.js',
+            'ug_wholesale_shop/static/src/js/wholesale_calculator.js',
         ]
-    }
+    },
+    "external_dependencies": {
+        "python": ["rectpack"]
+    },
 }
