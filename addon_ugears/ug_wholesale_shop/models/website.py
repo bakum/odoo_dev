@@ -45,7 +45,7 @@ class Website(models.Model):
                     fpos = sale_order_sudo.env['account.fiscal.position'].with_company(
                         sale_order_sudo.company_id
                     )._get_fiscal_position(
-                        sale_order_sudo.distrib_id.partner_id,
+                        sale_order_sudo.partner_id,
                         delivery=sale_order_sudo.partner_shipping_id
                     )
                     if fpos.id != sale_order_sudo.fiscal_position_id.id:
