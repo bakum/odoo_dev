@@ -331,118 +331,6 @@
             </td>
         </xpath>
     </template>
-    <!--    <template id="distrib_cart_lines" inherit_id="website_sale.cart_lines" name="Shopping Cart Lines">-->
-    <!--        <xpath expr="//tbody" position="replace">-->
-    <!--            <tbody>-->
-    <!--                <t t-foreach="website_sale_order.website_order_line" t-as="line">-->
-    <!--                    <tr t-att-class="'optional_product info' if line.linked_line_id else None">-->
-    <!--                        <td t-if="not line.product_id" colspan="2" class='td-img'/>-->
-    <!--                        <t t-else="">-->
-    <!--                            <td align="center" class='td-img'>-->
-    <!--                                <span t-if="line._is_not_sellable_line() and line.product_id.image_128">-->
-    <!--                                    <img t-att-src="image_data_uri(line.product_id.image_128)"-->
-    <!--                                         class="img o_image_64_max rounded"-->
-    <!--                                         t-att-alt="line.name_short"/>-->
-    <!--                                </span>-->
-    <!--                                <span t-else=""-->
-    <!--                                      t-field="line.product_id.image_128"-->
-    <!--                                      t-options="{'widget': 'image', 'qweb_img_responsive': False, 'class': 'rounded o_image_64_max'}"-->
-    <!--                                />-->
-    <!--                            </td>-->
-    <!--                            <td class='td-product_name'>-->
-    <!--                                <div>-->
-    <!--                                    <t t-call="website_sale.cart_line_product_link">-->
-    <!--                                        <strong t-field="line.name_short"/>-->
-    <!--                                    </t>-->
-    <!--                                </div>-->
-    <!--                                <t t-call="website_sale.cart_line_description_following_lines">-->
-    <!--                                    <t t-set="div_class" t-value="'d-none d-md-block'"/>-->
-    <!--                                </t>-->
-    <!--                            </td>-->
-    <!--                        </t>-->
-    <!--                        <td class="text-center td-qty">-->
-    <!--                            <div class="css_quantity input-group mx-auto justify-content-center">-->
-    <!--                                <t t-if="not line._is_not_sellable_line()">-->
-    <!--                                    <t t-if="show_qty">-->
-    <!--                                        <a t-attf-href="#"-->
-    <!--                                           class="btn btn-link js_add_cart_json d-none d-md-inline-block"-->
-    <!--                                           aria-label="Remove one" title="Remove one">-->
-    <!--                                            <i class="fa fa-minus"></i>-->
-    <!--                                        </a>-->
-    <!--                                        <input type="text" class="js_quantity form-control quantity"-->
-    <!--                                               t-att-data-line-id="line.id"-->
-    <!--                                               t-att-data-qty-in-cartoon="line.product_id.qty_in_cartoon"-->
-    <!--                                               t-att-data-product-id="line.product_id.id"-->
-    <!--                                               t-att-value="int(line.product_uom_qty) == line.product_uom_qty and int(line.product_uom_qty) or line.product_uom_qty"/>-->
-    <!--                                        <t t-if="line._get_shop_warning(clear=False)">-->
-    <!--                                            <a t-attf-href="#" class="btn btn-link">-->
-    <!--                                                <i class='fa fa-warning text-warning'-->
-    <!--                                                   t-att-title="line._get_shop_warning()" role="img"-->
-    <!--                                                   aria-label="Warning"/>-->
-    <!--                                            </a>-->
-    <!--                                        </t>-->
-    <!--                                        <a t-else='' t-attf-href="#"-->
-    <!--                                           class="btn btn-link float_left js_add_cart_json d-none d-md-inline-block"-->
-    <!--                                           aria-label="Add one" title="Add one">-->
-    <!--                                            <i class="fa fa-plus"></i>-->
-    <!--                                        </a>-->
-    <!--                                    </t>-->
-    <!--                                    <t t-else="">-->
-    <!--                                        <input type="hidden" class="js_quantity form-control quantity"-->
-    <!--                                               t-att-data-line-id="line.id"-->
-    <!--                                               t-att-data-qty-in-cartoon="line.product_id.qty_in_cartoon"-->
-    <!--                                               t-att-data-product-id="line.product_id.id"-->
-    <!--                                               t-att-value="int(line.product_uom_qty) == line.product_uom_qty and int(line.product_uom_qty) or line.product_uom_qty"/>-->
-    <!--                                    </t>-->
-    <!--                                </t>-->
-    <!--                                <t t-else="">-->
-    <!--                                    <span class="text-muted w-100" t-esc="int(line.product_uom_qty)"/>-->
-    <!--                                    <input type="hidden" class="js_quantity form-control quantity"-->
-    <!--                                           t-att-data-line-id="line.id" t-att-data-product-id="line.product_id.id"-->
-    <!--                                           t-att-value="line.product_uom_qty"/>-->
-    <!--                                </t>-->
-    <!--                            </div>-->
-    <!--                        </td>-->
-    <!--                        <td class="text-center td-price" name="price">-->
-    <!--                            <t t-set="combination"-->
-    <!--                               t-value="line.product_id.product_template_attribute_value_ids + line.product_no_variant_attribute_value_ids"/>-->
-    <!--                            <t t-set="combination_info"-->
-    <!--                               t-value="line.product_id.product_tmpl_id._get_combination_info(combination, pricelist=website_sale_order.pricelist_id, add_qty=line.product_uom_qty)"/>-->
-
-    <!--                            <t groups="account.group_show_line_subtotals_tax_excluded">-->
-    <!--                                <span t-field="line.price_reduce_taxexcl" style="white-space: nowrap;"-->
-    <!--                                      t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}"/>-->
-    <!--                            </t>-->
-    <!--                            <t groups="account.group_show_line_subtotals_tax_included">-->
-    <!--                                <span t-field="line.price_reduce_taxinc" style="white-space: nowrap;"-->
-    <!--                                      t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}"/>-->
-    <!--                            </t>-->
-    <!--                            <t t-if="line.discount">-->
-    <!--                                <del t-attf-class="#{'text-danger mr8'}" style="white-space: nowrap;"-->
-    <!--                                     t-esc="combination_info['list_price']"-->
-    <!--                                     t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}"/>-->
-    <!--                            </t>-->
-    <!--                            <small t-if="not line._is_not_sellable_line() and line.product_id.base_unit_price"-->
-    <!--                                   class="cart_product_base_unit_price d-block text-muted"-->
-    <!--                                   groups="website_sale.group_show_uom_price">-->
-    <!--                                <t t-call='website_sale.base_unit_price'>-->
-    <!--                                    <t t-set='product' t-value='line.product_id'/>-->
-    <!--                                </t>-->
-    <!--                            </small>-->
-    <!--                        </td>-->
-    <!--                        <td class="td-action">-->
-    <!--                            <a href='#' aria-label="Remove from cart" title="Remove from cart"-->
-    <!--                               class='js_delete_product no-decoration'>-->
-    <!--                                <small>-->
-    <!--                                    <i class='fa fa-trash-o'></i>-->
-    <!--                                </small>-->
-    <!--                            </a>-->
-    <!--                        </td>-->
-    <!--                    </tr>-->
-    <!--                </t>-->
-    <!--            </tbody>-->
-    <!--        </xpath>-->
-    <!--    </template>-->
 
     <template id="distrib_product" inherit_id="website_sale.product_quantity" name="Product">
         <xpath expr='//input[hasclass("quantity")]' position="attributes">
@@ -453,6 +341,26 @@
 
     <template id="distrib_product_package" inherit_id="website_sale.product" name="Product">
         <xpath expr='//div[@id="product_attributes_simple"]' position="before">
+            <div class="product_barcode">
+                <table t-attf-class="table table-sm text-muted {{'' if product.default_code or product.barcode else 'd-none'}}">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Barcode</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span t-field="product.default_code"/>
+                            </td>
+                            <td>
+                                <span t-field="product.barcode"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <div id="o_product_packages">
                 <t t-set="package_box" t-value="product.cartoon_id"/>
                 <t t-set="package_detail" t-value="product._get_package_detail()"/>
@@ -481,6 +389,20 @@
                     </tbody>
                 </table>
             </div>
+        </xpath>
+    </template>
+
+    <template id="product_barcode" name="Barcode on Product">
+        <div class="product_barcode">
+            <small class="badge bg-success" t-esc="product.default_code"/><br/>
+            <small class="badge bg-secondary rounded-pill" t-esc="product.barcode"/>
+        </div>
+    </template>
+
+    <template id="distrib_product_barcode" inherit_id="website_sale.products_item" name="Products Item">
+        <xpath expr='//div[hasclass("product_price")]' position="after">
+            <t t-call="ug_wholesale_shop.product_barcode">
+            </t>
         </xpath>
     </template>
 </odoo>

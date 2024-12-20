@@ -214,6 +214,7 @@ class SaleOrder(models.Model):
 
     def _fill_size_variants_and_pallet_limits(self, package_data, palette):
         for line in package_data:
+            line['depth'] = line['box'].depth
             line['pallet11'] = palette.width//line['box'].width
             line['pallet22'] = palette.height // line['box'].height
             line['boxes_on_layer'] = line['pallet11'] * line['pallet22']
@@ -227,6 +228,21 @@ class SaleOrder(models.Model):
             line['max_layers'] = palette.depth//line['box'].depth
         return package_data
 
+    def _refill_by_depth(self, package_data):
+        value = {}
+        values = []
+        for line in package_data:
+            depth = line['depth']
+            pack_found = value.get(depth) or 0
+            if not pack_found:
+                value[depth] = []
+            value[depth].append(line)
+
+        for key, value in value.items():
+            values.append(value)
+        return values
+
+
     def _pack_to_layers(self, package_data, palette, rect_count=1, bin_count=1):
         layer_count = 0
         bins = []
@@ -236,7 +252,11 @@ class SaleOrder(models.Model):
         for line in package_data:
             layer_count = layer_count + (0 if line['max_boxes_on_layer'] == 0 else line['quantity']/line['max_boxes_on_layer'])
             for x in range(line['quantity']):
-                rectangles.append((line['box'].width, line['box'].height))
+                package = {'rectangles': (line['box'].width, line['box'].height),
+                           'max_boxes_on_layer': line['max_boxes_on_layer'],
+                           'min_boxes_on_layer': line['min_boxes_on_layer']}
+                rectangles.append(package)
+                # rectangles.append((line['box'].width, line['box'].height))
 
         layer_count = math.ceil(layer_count)
         for x in range(layer_count):
@@ -246,7 +266,7 @@ class SaleOrder(models.Model):
         # Add the rectangles to packing queue
         # rect_count = 1
         for r in rectangles:
-            packer.add_rect(*r, rid=f'box_{rect_count}')
+            packer.add_rect(*r['rectangles'], rid=f'box_{rect_count}_{r["max_boxes_on_layer"]}_{r["min_boxes_on_layer"]}')
             rect_count += 1
 
         for b in bins:
@@ -278,13 +298,23 @@ class SaleOrder(models.Model):
         # w = rect.width
         # h = rect.height
         # bin_count = 1
+        layers = []
         for abin in packer:
+            layer = {}
             abin.bid = f'layer_{bin_count}'
+            layer['bid'] = abin.bid
             print(abin.bid)  # Bin id if it has one
+            layer['layers'] = []
             for rect in abin:
                 print(rect)
+                layer['layers'].append(rect)
             bin_count += 1
-        return packer.rect_list()
+            layers.append(layer)
+
+        for layer in layers:
+            layer['max_boxes_on_layer'] = int(layer['layers'][0].rid.split('_')[2])
+            layer['min_boxes_on_layer'] = int(layer['layers'][0].rid.split('_')[3])
+        return layers
 
 
     def _calculate_package_list(self, package_data, palette_id):
@@ -292,6 +322,18 @@ class SaleOrder(models.Model):
         domain = [('id', '=', palette_id)]
         palette = PackagesSizes.search(domain)[:1]
         package_data = self._fill_size_variants_and_pallet_limits(package_data, palette)
-        layers = self._pack_to_layers(package_data, palette)
+        package_data_by_depth = self._refill_by_depth(package_data)
+        layers_by_depth = []
+        for depth in package_data_by_depth:
+            layers = self._pack_to_layers(depth, palette)
+            for layer in layers:
+                if layer['min_boxes_on_layer'] <= len(layer['layers']) <= layer['max_boxes_on_layer']:
+                    layer['full'] = True
+                    layer['fill'] = 100
+                else:
+                    layer['full'] = False
+                    layer['fill'] = (100 * len(layer['layers']))//layer['max_boxes_on_layer']
+            layers_by_depth.append(layers)
+
 
         return package_data

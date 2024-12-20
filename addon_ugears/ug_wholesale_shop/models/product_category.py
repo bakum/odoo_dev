@@ -57,7 +57,7 @@ class Product(models.Model):
                     ids = [value[1]]
             if attrib:
                 domains.append([('attribute_line_ids.value_ids', 'in', ids)])
-        search_fields = ['name', 'default_code', 'product_variant_ids.default_code']
+        search_fields = ['name', 'default_code', 'product_variant_ids.default_code', 'barcode']
         fetch_fields = ['id', 'name', 'website_url']
         mapping = {
             'name': {'name': 'name', 'type': 'text', 'match': True},
