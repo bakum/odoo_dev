@@ -112,6 +112,7 @@ function updateCartNavBar(data) {
     $(".js_cart_lines").first().before(data['website_sale.cart_lines']).end().remove();
     $(".js_cart_summary").replaceWith(data['website_sale.short_cart_summary']);
     $(".js_packing_list").replaceWith(data['ug_wholesale_shop.packing_list_lines']);
+    $(".js_palettes_list").replaceWith(data['ug_wholesale_shop.palettes_list_lines']);
 }
 
 /**

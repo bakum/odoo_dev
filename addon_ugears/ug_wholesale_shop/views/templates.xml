@@ -8,20 +8,21 @@
 
     <template id="palette_list" name="PaletteLists Dropdown">
         <div t-attf-class="o_palette_list_dropdown dropdown #{_classes if hasPalettesDropdown else 'd-none'}">
-            <t t-set="curr_pl" t-value="website.palette_id" />
+            <t t-set="curr_pl" t-value="website.palette_id"/>
             <small class="d-none d-lg-inline text-muted" id="palette-data"
                    t-att-data-pl_id="curr_pl.id"
                    t-att-data-pl_width="curr_pl.width"
                    t-att-data-pl_height="curr_pl.height"
                    t-att-data-pl_depth="curr_pl.depth"
-            >Palette</small>
+            >Palette
+            </small>
             <a role="button" href="#" t-attf-class="dropdown-toggle btn btn-{{navClass}}" data-bs-toggle="dropdown">
-                <t t-esc="curr_pl and curr_pl.name or ' - '" />
+                <t t-esc="curr_pl and curr_pl.name or ' - '"/>
             </a>
             <div class="dropdown-menu" role="menu">
                 <t t-foreach="website_sale_palettes" t-as="pl">
                     <a role="menuitem" t-att-href="'/shop/change_palette/%s' % pl.id" class="dropdown-item">
-                        <span class="switcher_palette" t-att-data-pl_id="pl.id" t-esc="pl.name" />
+                        <span class="switcher_palette" t-att-data-pl_id="pl.id" t-esc="pl.name"/>
                     </a>
                 </t>
             </div>
@@ -40,9 +41,11 @@
                                     t-attf-aria-controls="collapse{{package['id']}}">
                                 <div class="container">
                                     <div class="row justify-content-start">
-                                        <div class="col-3">
-<!--                                            <span>Box -</span>-->
-                                            <h5><span class="badge bg-secondary" t-out="package['name']"/></h5>
+                                        <div class="col-6">
+                                            <!--                                            <span>Box -</span>-->
+                                            <h5>
+                                                <span class="badge bg-secondary" t-out="package['name']"/>
+                                            </h5>
                                         </div>
                                         <div class="col-6">
                                             <span>Packages pcs. -</span>
@@ -70,10 +73,10 @@
                                             <th class="td-img"></th>
                                             <th></th>
                                             <th class="text-center td-qty">
-<!--                                                <span>Quantity</span>-->
+                                                <!--                                                <span>Quantity</span>-->
                                             </th>
                                             <th class="text-center td-packaging">
-<!--                                                <span>Boxes</span>-->
+                                                <!--                                                <span>Boxes</span>-->
                                             </th>
                                         </tr>
                                     </thead>
@@ -164,13 +167,176 @@
         </div>
     </template>
 
+    <template id="palettes_list_lines" name="Calculated Palettes">
+        <div class="card js_palettes_list mb16">
+            <div class="palettes_body p-4">
+                <h4 class="d-none d-xl-block">Packing Info</h4>
+                <hr class="d-none d-xl-block"/>
+                <div t-if="palettes_list and palettes_list['palettes'] and len(palettes_list['palettes'])&gt;0"
+                     class="accordion"
+                     id="accordionPalettes">
+                    <t t-foreach="palettes_list['palettes']" t-as="palette">
+                        <div class="accordion-item border-secondary">
+                            <h4 class="accordion-header" id="headingPaletteOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        t-attf-data-bs-target="#collapse{{palette['id']}}" aria-expanded="true"
+                                        t-attf-aria-controls="collapse{{palette['id']}}">
+                                    <div class="container">
+                                        <t t-set="id" t-value="palette['id']//1000"/>
+                                        <div class="row justify-content-start">
+                                            <div class="col-3">
+                                                <h5>
+                                                    <i class="fa fa-hashtag" aria-hidden="true"></i>
+                                                    <span t-attf-class="badge {{'bg-danger' if palette['fill'] &lt;50 else 'bg-warning' if palette['fill'] &lt;90 else 'bg-success'}}"
+                                                          t-esc="id" aria-hidden="true"/>
+                                                </h5>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="progress" style="height: 30px;">
+                                                    <div t-attf-class="progress-bar {{'bg-danger' if palette['fill'] &lt;50 else 'bg-warning' if palette['fill'] &lt;90 else 'bg-success'}}"
+                                                         role="progressbar" t-attf-style="width: {{palette['fill']}}%;"
+                                                         t-attf-aria-valuenow="{{palette['fill']}}"
+                                                         aria-valuemin="0" aria-valuemax="100"
+                                                         t-esc="palette['fill_str']"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </button>
+                            </h4>
+                            <div t-attf-id="collapse{{palette['id']}}" class="accordion-collapse collapse"
+                                 aria-labelledby="headingPaletteOne"
+                                 data-bs-parent="#accordionPalettes">
+                                <div class="accordion-body">
+                                    <div class="card d-flex flex-column bd-highlight mb-5">
+                                        <t t-set="total_height" t-value="'Height of filled pallet: ' + str(palette['summ_width']) + ' mm'"/>
+                                        <t t-set="difference" t-value="'Difference: ' + str(palette['difference']) + ' mm'"/>
+                                        <t t-set="layouts_count" t-value="'Layouts: ' + str(len(palette['palette']))"/>
+                                        <div class="p-2 bd-highlight text-black-50" t-esc="total_height"/>
+                                        <div class="p-2 bd-highlight" t-esc="difference"/>
+                                        <div class="p-2 bd-highlight" t-esc="layouts_count"/>
+                                    </div>
+                                    <table class="table  table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">
+                                                    <!--                                    <span>Boxes</span>-->
+                                                </th>
+                                                <th class="text-center">
+                                                    <span>Boxes</span>
+                                                </th>
+                                                <th class="text-center">
+
+                                                </th>
+                                                <th class="text-center">
+                                                    <span>Max. pcs</span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="palette['palette']" t-as="sel_layer">
+                                                <tr>
+                                                    <td class="text-center">
+                                                        <span class="badge bg-secondary" t-esc="sel_layer['box'].name"/>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span class="text-muted w-100" t-esc="len(sel_layer['layers'])"/>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span class="text-muted w-100"
+                                                              t-esc="sel_layer['max_boxes_on_layer']"/>
+                                                    </td>
+                                                    <td>
+                                                        <div class="progress" style="height: 20px;">
+                                                            <t t-set="fill_percent1"
+                                                               t-value="str(sel_layer['fill']) + '%'"/>
+                                                            <div t-attf-class="progress-bar {{'bg-danger' if sel_layer['fill'] &lt;50 else 'bg-warning' if sel_layer['fill'] &lt;90 else ''}}"
+                                                                 role="progressbar"
+                                                                 t-attf-style="width: {{sel_layer['fill']}}%;"
+                                                                 t-attf-aria-valuenow="{{sel_layer['fill']}}"
+                                                                 aria-valuemin="0" aria-valuemax="100"
+                                                                 t-esc="fill_percent1"/>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+                <t t-if="palettes_list and palettes_list['unselected_layers'] and len(palettes_list['unselected_layers'])&gt;0">
+                    <h4 class="d-none d-xl-block">Extra boxes</h4>
+                    <hr class="d-none d-xl-block"/>
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+<!--                                    <span>Boxes</span>-->
+                                </th>
+                                <th class="text-center">
+                                    <span>Boxes</span>
+                                </th>
+                                <th class="text-center">
+
+                                </th>
+                                <th class="text-center">
+                                    <span>Max. pcs</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="palettes_list['unselected_layers']" t-as="un_layer">
+                                <tr>
+                                    <td class="text-center">
+                                        <span class="badge bg-secondary" t-esc="un_layer['box'].name"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="text-muted w-100" t-esc="len(un_layer['layers'])"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="text-muted w-100" t-esc="un_layer['max_boxes_on_layer']"/>
+                                    </td>
+                                    <td>
+                                        <div class="progress" style="height: 20px;">
+                                            <t t-set="fill_percent" t-value="str(un_layer['fill']) + '%'"/>
+                                            <div t-attf-class="progress-bar {{'bg-danger' if un_layer['fill'] &lt;50 else 'bg-warning' if un_layer['fill'] &lt;90 else ''}}"
+                                                 role="progressbar" t-attf-style="width: {{un_layer['fill']}}%;"
+                                                 t-attf-aria-valuenow="{{un_layer['fill']}}"
+                                                 aria-valuemin="0" aria-valuemax="100"
+                                                 t-esc="fill_percent"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+                <t t-set="redirect_url"
+                       t-value="'/web/login?redirect=/shop/confirm_order' if redirect_to_sign_in else '/shop/confirm_order'"/>
+                <div class="d-flex justify-content-end mt32">
+                    <div class="d-flex flex-column">
+                        <a class="btn btn-secondary float-end d-none d-xl-inline-block" role="button"
+                           t-attf-href="{{redirect_url}}">
+                            <span>Confirm order</span>
+                            <span class="fa fa-file-text"/>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
     <template id="packing_list" name="Packing List">
         <t t-call="website.layout">
             <t t-set="navClass" t-valuef="light"/>
-            <t t-set="website_sale_palettes" t-value="website.get_palettes_available()" />
+            <t t-set="website_sale_palettes" t-value="website.get_palettes_available()"/>
             <t t-set="hasPalettesDropdown" t-value="website_sale_palettes and len(website_sale_palettes)&gt;1"/>
             <div id="wrap">
-                <div class="container oe_website_sale oe_wholesale_calculator py-2">
+                <div class="oe_structure" id="oe_structure_ug_wholesale_shop_cart_3"/>
+                <div class="container oe_website_sale oe_wholesale_calculator py-4">
                     <h3>
                         <span>Packing List</span>
                     </h3>
@@ -180,29 +346,35 @@
                         </t>
                     </div>
                     <div class="row mb16">
-                        <div class="col-12 col-xl oe_cart">
+                        <div class="col-7 oe_cart">
                             <t t-call="ug_wholesale_shop.packing_list_lines"/>
                         </div>
-                        <div class="col-12 col-xl-auto">
-                            <t t-call="website_sale.short_cart_summary">
+                        <div class="col-5">
+                            <t t-call="ug_wholesale_shop.palettes_list_lines">
                             </t>
+<!--                            <t t-call="website_sale.short_cart_summary">-->
+<!--                            </t>-->
                         </div>
+                        <!--                        <div class="col-12 col-xl-auto">-->
+                        <!--                            <t t-call="website_sale.short_cart_summary">-->
+                        <!--                            </t>-->
+                        <!--                        </div>-->
                     </div>
-                    <t t-set="redirect_url"
-                       t-value="'/web/login?redirect=/shop/confirm_order' if redirect_to_sign_in else '/shop/confirm_order'"/>
-                    <div class="d-flex justify-content-between">
+<!--                    <t t-set="redirect_url"-->
+<!--                       t-value="'/web/login?redirect=/shop/confirm_order' if redirect_to_sign_in else '/shop/confirm_order'"/>-->
+                    <div class="d-flex justify-content-start">
                         <div>
-                            <a role="button" href="/shop" class="btn btn-secondary mb32">
-                                <span class="fa fa-chevron-left"/>
-                                <span>Continue
-                                    <span class="d-none d-md-inline">Shopping</span>
+                            <a role="button" href="/shop/cart" class="btn btn-secondary mb32">
+                                <span class="fa fa-shopping-cart"/>
+                                <span>
+                                    <span class="d-none d-md-inline">Back to cart</span>
                                 </span>
                             </a>
                         </div>
-                        <div class="d-flex flex-column">
-                            <a class="btn btn-primary float-end" role="button" t-attf-href="{{redirect_url}}">
-                                <span>Confirm order</span>
-                                <span class="fa fa-chevron-right"/>
+                        <div class="d-flex flex-column ml16">
+                            <a class="btn btn-primary float-end" role="button" href="/shop">
+                                <span>Shopping</span>
+                                <span class="fa fa-shopping-bag"/>
                             </a>
                         </div>
                     </div>
@@ -352,9 +524,11 @@
                     <tbody>
                         <tr>
                             <td>
+                                <i class="fa fa-hashtag" aria-hidden="true"></i>
                                 <span t-field="product.default_code"/>
                             </td>
                             <td>
+                                <i class="fa fa-barcode" aria-hidden="true"></i>
                                 <span t-field="product.barcode"/>
                             </td>
                         </tr>
@@ -394,13 +568,20 @@
 
     <template id="product_barcode" name="Barcode on Product">
         <div class="product_barcode">
-            <small class="badge bg-success" t-esc="product.default_code"/><br/>
-            <small class="badge bg-secondary rounded-pill" t-esc="product.barcode"/>
+            <t t-if="product.default_code">
+                <i class="fa fa-hashtag" aria-hidden="true"></i>
+                <small class="badge bg-success" t-esc="product.default_code"/>
+                <br/>
+            </t>
+            <t t-if="product.barcode">
+                <i class="fa fa-barcode" aria-hidden="true"></i>
+                <small class="badge bg-secondary rounded-pill" t-esc="product.barcode"/>
+            </t>
         </div>
     </template>
 
     <template id="distrib_product_barcode" inherit_id="website_sale.products_item" name="Products Item">
-        <xpath expr='//div[hasclass("product_price")]' position="after">
+        <xpath expr='//div[hasclass("product_price")]' position="before">
             <t t-call="ug_wholesale_shop.product_barcode">
             </t>
         </xpath>

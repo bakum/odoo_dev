@@ -190,7 +190,7 @@ class SaleOrder(models.Model):
         value = {}
         values = []
         for line in self.order_line:
-            pack_quantity = int(line.product_uom_qty/line.product_id.qty_in_cartoon)
+            pack_quantity = int(line.product_uom_qty / line.product_id.qty_in_cartoon)
             cartoon = line.cartoon_id
             pack_found = value.get(cartoon.id) or 0
             if not pack_found:
@@ -215,7 +215,7 @@ class SaleOrder(models.Model):
     def _fill_size_variants_and_pallet_limits(self, package_data, palette):
         for line in package_data:
             line['depth'] = line['box'].depth
-            line['pallet11'] = palette.width//line['box'].width
+            line['pallet11'] = palette.width // line['box'].width
             line['pallet22'] = palette.height // line['box'].height
             line['boxes_on_layer'] = line['pallet11'] * line['pallet22']
 
@@ -225,7 +225,7 @@ class SaleOrder(models.Model):
 
             line['max_boxes_on_layer'] = max(line['boxes_on_layer'], line['boxes_on_layer2'])
             line['min_boxes_on_layer'] = min(line['boxes_on_layer'], line['boxes_on_layer2'])
-            line['max_layers'] = palette.depth//line['box'].depth
+            line['max_layers'] = palette.depth // line['box'].depth
         return package_data
 
     def _refill_by_depth(self, package_data):
@@ -242,19 +242,20 @@ class SaleOrder(models.Model):
             values.append(value)
         return values
 
-
     def _pack_to_layers(self, package_data, palette, rect_count=1, bin_count=1):
         layer_count = 0
         bins = []
         palettes_size = (palette.width, palette.height)
         # palettes_size = (palette.height, palette.width)
-        rectangles  = []
+        rectangles = []
         for line in package_data:
-            layer_count = layer_count + (0 if line['max_boxes_on_layer'] == 0 else line['quantity']/line['max_boxes_on_layer'])
+            layer_count = layer_count + (
+                0 if line['max_boxes_on_layer'] == 0 else line['quantity'] / line['max_boxes_on_layer'])
             for x in range(line['quantity']):
                 package = {'rectangles': (line['box'].width, line['box'].height),
                            'max_boxes_on_layer': line['max_boxes_on_layer'],
-                           'min_boxes_on_layer': line['min_boxes_on_layer']}
+                           'min_boxes_on_layer': line['min_boxes_on_layer'],
+                           'depth': line['depth'], 'box_id': line['box'].id}
                 rectangles.append(package)
                 # rectangles.append((line['box'].width, line['box'].height))
 
@@ -266,7 +267,8 @@ class SaleOrder(models.Model):
         # Add the rectangles to packing queue
         # rect_count = 1
         for r in rectangles:
-            packer.add_rect(*r['rectangles'], rid=f'box_{rect_count}_{r["max_boxes_on_layer"]}_{r["min_boxes_on_layer"]}')
+            packer.add_rect(*r['rectangles'],
+                            rid=f'box_{rect_count}_{r["max_boxes_on_layer"]}_{r["min_boxes_on_layer"]}_{r["depth"]}_{r["box_id"]}')
             rect_count += 1
 
         for b in bins:
@@ -311,11 +313,59 @@ class SaleOrder(models.Model):
             bin_count += 1
             layers.append(layer)
 
+        PackagesSizes = self.env['distrib.packages.sizes']
         for layer in layers:
             layer['max_boxes_on_layer'] = int(layer['layers'][0].rid.split('_')[2])
             layer['min_boxes_on_layer'] = int(layer['layers'][0].rid.split('_')[3])
+            layer['depth'] = int(layer['layers'][0].rid.split('_')[4])
+            box_id = layer['layers'][0].rid.split('_')[5]
+            domain = [('id', '=', box_id)]
+            box = PackagesSizes.search(domain)[:1]
+            layer['box'] = box
         return layers
 
+    def _fill_palettes(self, package_data, palette):
+        max_depth = palette.depth
+        palettes = []
+        palette = []
+        unselected = []
+        # selected = []
+        current_depth = 0
+        for sublist in package_data:
+            for item in sublist:
+                if not item['full']:
+                    unselected.append(item)
+                    continue
+                current_depth = current_depth + item['depth']
+                if current_depth < max_depth:
+                    palette.append(item)
+                    # selected.append(item)
+                else:
+                    palettes.append(palette)
+                    palette = []
+                    palette.append(item)
+                    current_depth = item['depth']
+            pass
+
+        if len(palette) > 0:
+            palettes.append(palette)
+
+        all_palettes = []
+        id = 1000
+        for palette in palettes:
+            all_weidth = sum([item['depth'] for item in palette])
+            fill = (100 * all_weidth) // max_depth
+            difference = max_depth - all_weidth
+            info = {'id': id, 'fill': fill,
+                    # 'fill_str': str(fill) + '% ' +  str(all_weidth) + 'mm',
+                    'fill_str': str(fill) + '%',
+                    'summ_width': all_weidth,
+                    'difference': difference, 'palette': palette}
+            id += 1000
+            all_palettes.append(info)
+
+        values = {'unselected_layers': unselected, 'palettes': all_palettes}
+        return values
 
     def _calculate_package_list(self, package_data, palette_id):
         PackagesSizes = self.env['distrib.packages.sizes']
@@ -327,13 +377,16 @@ class SaleOrder(models.Model):
         for depth in package_data_by_depth:
             layers = self._pack_to_layers(depth, palette)
             for layer in layers:
-                if layer['min_boxes_on_layer'] <= len(layer['layers']) <= layer['max_boxes_on_layer']:
+                if layer['min_boxes_on_layer'] <= len(layer['layers']) <= layer['max_boxes_on_layer'] or len(
+                        layer['layers']) > layer['max_boxes_on_layer']:
+                    # if len(layer['layers']) >= layer['max_boxes_on_layer']:
                     layer['full'] = True
                     layer['fill'] = 100
                 else:
                     layer['full'] = False
-                    layer['fill'] = (100 * len(layer['layers']))//layer['max_boxes_on_layer']
+                    layer['fill'] = (100 * len(layer['layers'])) // layer['max_boxes_on_layer']
             layers_by_depth.append(layers)
 
+        palettes = self._fill_palettes(layers_by_depth, palette)
 
-        return package_data
+        return palettes

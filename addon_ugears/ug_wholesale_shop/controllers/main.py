@@ -559,6 +559,7 @@ class WebsiteWholeSale(WebsiteSale):
             return values
 
         packing_list = order._get_package_from_order()
+        packing_calc = None
         if palette_id is not None:
             packing_calc = order._calculate_package_list(packing_list,palette_id)
 
@@ -579,6 +580,12 @@ class WebsiteWholeSale(WebsiteSale):
                 'packing_list': packing_list,
             }
         )
+        if packing_calc is not None:
+            values['ug_wholesale_shop.palettes_list_lines'] = request.env['ir.ui.view']._render_template(
+                "ug_wholesale_shop.palettes_list_lines", {
+                    'palettes_list': packing_calc,
+                }
+            )
         return values
 
     @http.route(['/shop/checkout'], type='http', auth="public", website=True, sitemap=False)
@@ -598,10 +605,16 @@ class WebsiteWholeSale(WebsiteSale):
 
         values = self.checkout_values(**post)
         packing_list = order._get_package_from_order()
+        palette_id = request.session['website_sale_current_palette']
+        packing_calc = None
+        if palette_id is not None:
+            packing_calc = order._calculate_package_list(packing_list,palette_id)
 
         if post.get('express'):
             values.update({'website_sale_order': order})
             values.update({'packing_list': packing_list})
+            if packing_calc is not None:
+                values.update({'palettes_list': packing_calc})
             return request.render("ug_wholesale_shop.packing_list", values)
             # return request.redirect('/shop/confirm_order')
 
