@@ -22,6 +22,7 @@
         'data/packages_sizes_data.xml',
         'views/packages_sizes.xml',
         'views/distributors.xml',
+        'views/import_order.xml',
     ],
     'assets': {
         'web.assets_frontend': [
@@ -31,7 +32,12 @@
             'ug_wholesale_shop/static/src/js/variant_mixin.js',
             # 'ug_wholesale_shop/static/src/js/website_sale_override.js',
             'ug_wholesale_shop/static/src/js/wholesale_calculator.js',
-        ]
+        ],
+        'web.assets_backend': [
+            'ug_wholesale_shop/static/src/views/import_order_controller.js',
+            'ug_wholesale_shop/static/src/views/import_order_view.js',
+            'ug_wholesale_shop/static/src/views/import_order_button.xml',
+        ],
     },
     "external_dependencies": {
         "python": ["rectpack"]

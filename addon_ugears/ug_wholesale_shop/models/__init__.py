@@ -6,3 +6,4 @@ from . import packages_sizes
 from . import sale_order
 from . import sale_order_line
 from . import distributors
+from . import import_order

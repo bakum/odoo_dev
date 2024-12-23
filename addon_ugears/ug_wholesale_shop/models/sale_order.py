@@ -305,10 +305,10 @@ class SaleOrder(models.Model):
             layer = {}
             abin.bid = f'layer_{bin_count}'
             layer['bid'] = abin.bid
-            print(abin.bid)  # Bin id if it has one
+            # print(abin.bid)  # Bin id if it has one
             layer['layers'] = []
             for rect in abin:
-                print(rect)
+                # print(rect)
                 layer['layers'].append(rect)
             bin_count += 1
             layers.append(layer)
@@ -352,19 +352,22 @@ class SaleOrder(models.Model):
 
         all_palettes = []
         id = 1000
+        all_boxes = 0
         for palette in palettes:
             all_weidth = sum([item['depth'] for item in palette])
             fill = (100 * all_weidth) // max_depth
             difference = max_depth - all_weidth
+            boxes = sum([len(item['layers']) for item in palette])
             info = {'id': id, 'fill': fill,
                     # 'fill_str': str(fill) + '% ' +  str(all_weidth) + 'mm',
                     'fill_str': str(fill) + '%',
                     'summ_width': all_weidth,
-                    'difference': difference, 'palette': palette}
+                    'difference': difference, 'palette': palette, 'boxes': boxes}
             id += 1000
+            all_boxes += boxes
             all_palettes.append(info)
-
-        values = {'unselected_layers': unselected, 'palettes': all_palettes}
+        all_boxes += sum([len(item['layers']) for item in unselected])
+        values = {'unselected_layers': unselected, 'palettes': all_palettes, 'all_boxes': all_boxes}
         return values
 
     def _calculate_package_list(self, package_data, palette_id):

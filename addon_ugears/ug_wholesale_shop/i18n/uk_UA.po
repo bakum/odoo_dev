@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-12 09:18+0000\n"
-"PO-Revision-Date: 2024-12-12 09:18+0000\n"
+"POT-Creation-Date: 2024-12-23 09:39+0000\n"
+"PO-Revision-Date: 2024-12-23 09:39+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -41,9 +41,37 @@ msgid ""
 msgstr "<i class=\"fa fa-check\"/> Підтвердити"
 
 #. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.packing_list
+msgid ""
+"<span class=\"fa fa-shopping-cart\"/>\n"
+"                                <span>\n"
+"                                    <span class=\"d-none d-md-inline\">Back to cart</span>\n"
+"                                </span>"
+msgstr ""
+"<span class=\"fa fa-shopping-cart\"/>\n"
+"                                <span>\n"
+"                                    <span class=\"d-none d-md-inline\">Назад до кошика</span>\n"
+"                                </span>"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.packing_list_lines
+msgid "<span>Boxes pcs. -</span>"
+msgstr "<span>Коробок шт. -</span>"
+
+#. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.distrib_cart_lines
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.palettes_list_lines
 msgid "<span>Boxes</span>"
 msgstr "<span>Коробок</span>"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.palettes_list_lines
+msgid ""
+"<span>Confirm order</span>\n"
+"                            <span class=\"fa fa-file-text\"/>"
+msgstr ""
+"<span>Підтвердити замовлення</span>\n"
+"                            <span class=\"fa fa-file-text\"/>"
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
@@ -51,9 +79,28 @@ msgid "<span>Confirmed</span>"
 msgstr "<span>Підтверджено</span>"
 
 #. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.palettes_list_lines
+msgid "<span>Max. pcs</span>"
+msgstr "<span>Max. pcs</span>"
+
+#. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
 msgid "<span>Order</span>"
 msgstr "<span>Замовлення</span>"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.packing_list
+msgid "<span>Packing List</span>"
+msgstr "<span>Лист про пакування</span>"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.packing_list
+msgid ""
+"<span>Shopping</span>\n"
+"                                <span class=\"fa fa-shopping-bag\"/>"
+msgstr ""
+"<span>Продовжити покупки</span>\n"
+"                                <span class=\"fa fa-shopping-bag\"/>"
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__active
@@ -61,10 +108,20 @@ msgid "Active"
 msgstr ""
 
 #. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.packing_list_lines
+msgid "Add one"
+msgstr "Додайте один"
+
+#. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.view_distributors_package_form
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.view_distributors_package_search
 msgid "Archived"
 msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.distrib_product_package
+msgid "Barcode"
+msgstr "Штрих-код"
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
@@ -84,11 +141,17 @@ msgid "Brutto weight "
 msgstr "Вага брутто "
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__cartoon_id
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_product_product__cartoon_id
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_product_template__cartoon_id
 #: model:ir.model.fields.selection,name:ug_wholesale_shop.selection__distrib_packages_sizes__type_of__box
 msgid "Cartoon"
 msgstr "Коробка"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order_line__cartoon_id
+msgid "Cartoon ID"
+msgstr ""
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__cartoon_weight
@@ -102,18 +165,49 @@ msgid "Cartoon weight with model, gram"
 msgstr "Вага коробки з моделлю, г"
 
 #. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.distrib_product_package
+msgid "Code"
+msgstr "Артикул"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__company_id
+msgid "Company"
+msgstr "Компанія"
+
+#. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
 msgid "Confirm"
 msgstr "Підтвердити"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__create_uid
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__create_uid
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__create_date
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__create_date
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__create_date
 msgid "Created on"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,help:ug_wholesale_shop.field_distrib_order_package_line__date
+msgid ""
+"Creation date of draft/sent orders,\n"
+"Confirmation date of confirmed orders."
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__order_partner_id
+msgid "Customer"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_website__palette_id
+msgid "Default Palette"
 msgstr ""
 
 #. module: ug_wholesale_shop
@@ -122,9 +216,36 @@ msgid "Depth, mm"
 msgstr "Висота, мм"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__name
+msgid "Description"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__display_name
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__display_name
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__display_name
 msgid "Display Name"
 msgstr ""
+
+#. module: ug_wholesale_shop
+#: model:ir.model,name:ug_wholesale_shop.model_distrib_distributors
+msgid "Distributors records"
+msgstr "Дистриб'ютори"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__xls_filename
+msgid "Excel Filename"
+msgstr "Ім'я файлу Excel"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__xls_file
+msgid "Excel file"
+msgstr "Файл Excel"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.palettes_list_lines
+msgid "Extra boxes"
+msgstr "Додаткові коробки"
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_product_public_category__guid
@@ -137,9 +258,29 @@ msgid "Height, mm"
 msgstr "Довжина, мм"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__id
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__id
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__id
 msgid "ID"
 msgstr ""
+
+#. module: ug_wholesale_shop
+#. odoo-javascript
+#: code:addons/ug_wholesale_shop/static/src/views/import_order_button.xml:0
+#, python-format
+msgid "Import an order"
+msgstr "Імпорт замовлення"
+
+#. module: ug_wholesale_shop
+#: model:ir.actions.act_window,name:ug_wholesale_shop.action_import_order
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.ug_import_order_from_xls_view
+msgid "Import order"
+msgstr "Імпорт замовлення"
+
+#. module: ug_wholesale_shop
+#: model:ir.model,name:ug_wholesale_shop.model_ug_wholesale_import_order
+msgid "Import order from xls"
+msgstr "Імпорт замовлення з xls"
 
 #. module: ug_wholesale_shop
 #. odoo-python
@@ -153,22 +294,38 @@ msgstr "Невірне зображення"
 #: code:addons/ug_wholesale_shop/models/sale_order.py:0
 #, python-format
 msgid "It is forbidden to modify a sales order which is not in draft status."
-msgstr ""
+msgstr "Забороняється змінювати замовлення клієнта, яке не є чернеткою."
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line____last_update
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes____last_update
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order____last_update
 msgid "Last Modified on"
 msgstr ""
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__write_uid
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__write_uid
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__write_date
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__write_date
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__write_date
 msgid "Last Updated on"
 msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.ug_import_order_from_xls_view
+msgid "Load order"
+msgstr "Завантажити замовлення"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.constraint,message:ug_wholesale_shop.constraint_distrib_order_package_line_package_check
+msgid "Minimum 1 package allow"
+msgstr "Допускається мінімум 1 упаковка"
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__name
@@ -190,6 +347,21 @@ msgid "New"
 msgstr "Новий"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__date
+msgid "Order Data"
+msgstr "Дата замовлення"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__order_id
+msgid "Order Reference"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__state
+msgid "Order Status"
+msgstr "Статус"
+
+#. module: ug_wholesale_shop
 #: model:ir.ui.menu,name:ug_wholesale_shop.menu_distrib_orders
 msgid "Orders"
 msgstr "Замовлення"
@@ -207,6 +379,11 @@ msgid "Packages"
 msgstr "Пакування"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order__package_line
+msgid "Packages Lines"
+msgstr ""
+
+#. module: ug_wholesale_shop
 #: model:ir.model,name:ug_wholesale_shop.model_distrib_packages_sizes
 msgid "Packages Sizes"
 msgstr "Розміри пакування"
@@ -217,11 +394,29 @@ msgid "Packages and pallets"
 msgstr "Пакування та палети"
 
 #. module: ug_wholesale_shop
+#: model:ir.model,name:ug_wholesale_shop.model_distrib_order_package_line
+msgid "Packages orders record lines"
+msgstr ""
+
+#. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.distrib_product_package
 msgid "Packaging information"
 msgstr "Інформація про пакування"
 
 #. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.palettes_list_lines
+msgid "Packing Info -"
+msgstr "Інформація про пакування -"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.palette_list
+msgid "Palette"
+msgstr "Палета"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_distributors__pallet_id
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__pallet_id
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order__pallet_id
 #: model:ir.model.fields.selection,name:ug_wholesale_shop.selection__distrib_packages_sizes__type_of__pallet
 msgid "Pallet"
 msgstr "Палета"
@@ -239,6 +434,11 @@ msgid "Product not found"
 msgstr "Товар не знайдено"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__package_qty
+msgid "Quantity"
+msgstr "Кількість"
+
+#. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_product_product__qty_in_cartoon
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_product_template__qty_in_cartoon
 msgid "Quantity in cartoon"
@@ -250,9 +450,29 @@ msgid "Ref"
 msgstr "Посилання"
 
 #. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.packing_list_lines
+msgid "Remove one"
+msgstr ""
+
+#. module: ug_wholesale_shop
 #: model:ir.model,name:ug_wholesale_shop.model_sale_order
 msgid "Sales Order"
 msgstr "Замовлення на продаж"
+
+#. module: ug_wholesale_shop
+#: model:ir.model,name:ug_wholesale_shop.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Рядок замовлення"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__salesman_id
+msgid "Salesperson"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__sequence
+msgid "Sequence"
+msgstr ""
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
@@ -268,8 +488,17 @@ msgstr "Дякуємо за Ваше замовлення"
 #. odoo-python
 #: code:addons/ug_wholesale_shop/models/sale_order.py:0
 #, python-format
-msgid "The given product does not exist therefore it cannot be added to cart."
+msgid ""
+"The given combination does not exist therefore it cannot be added to cart."
 msgstr ""
+"Даної комбінації не існує, тому її неможливо додати до кошика."
+
+#. module: ug_wholesale_shop
+#. odoo-python
+#: code:addons/ug_wholesale_shop/models/sale_order.py:0
+#, python-format
+msgid "The given product does not exist therefore it cannot be added to cart."
+msgstr "Даного товару не існує, тому його неможливо додати в кошик."
 
 #. module: ug_wholesale_shop
 #. odoo-python
@@ -279,11 +508,18 @@ msgid ""
 "The given product does not have a price therefore it cannot be added to "
 "cart."
 msgstr ""
+"Даний товар не має ціни, тому його не можна додати до "
+"кошику."
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__type_of
 msgid "Type of package"
 msgstr "Тип пакування"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.packing_list_lines
+msgid "Warning"
+msgstr "Увага"
 
 #. module: ug_wholesale_shop
 #: model:ir.model,name:ug_wholesale_shop.model_website
@@ -332,6 +568,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.distrib_product_package
 msgid "pcs per box"
 msgstr "шт. в коробці"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.palettes_list_lines
+msgid "pcs."
+msgstr "шт."
 
 #. module: website_sale
 #: model:website.menu,name:website_sale.menu_shop
