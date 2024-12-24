@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-23 09:39+0000\n"
-"PO-Revision-Date: 2024-12-23 09:39+0000\n"
+"POT-Creation-Date: 2024-12-24 11:07+0000\n"
+"PO-Revision-Date: 2024-12-24 11:07+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -81,7 +81,7 @@ msgstr "<span>Підтверджено</span>"
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.palettes_list_lines
 msgid "<span>Max. pcs</span>"
-msgstr "<span>Max. pcs</span>"
+msgstr "<span>Макс. шт</span>"
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
@@ -119,6 +119,7 @@ msgid "Archived"
 msgstr ""
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list__barcode
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.distrib_product_package
 msgid "Barcode"
 msgstr "Штрих-код"
@@ -183,6 +184,7 @@ msgstr "Підтвердити"
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__create_uid
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__create_uid
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__create_uid
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list__create_uid
 msgid "Created by"
 msgstr ""
 
@@ -190,6 +192,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__create_date
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__create_date
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__create_date
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list__create_date
 msgid "Created on"
 msgstr ""
 
@@ -217,13 +220,15 @@ msgstr "Висота, мм"
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__name
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list__description
 msgid "Description"
-msgstr ""
+msgstr "Примітка"
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__display_name
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__display_name
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__display_name
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -261,8 +266,16 @@ msgstr "Довжина, мм"
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__id
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__id
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__id
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list__id
 msgid "ID"
-msgstr ""
+msgstr "Ид"
+
+#. module: ug_wholesale_shop
+#. odoo-python
+#: code:addons/ug_wholesale_shop/models/sale_order.py:0
+#, python-format
+msgid "Import Template for Distribution Order"
+msgstr "Шаблон імпорту замовлення дистриб'ютора"
 
 #. module: ug_wholesale_shop
 #. odoo-javascript
@@ -300,6 +313,7 @@ msgstr "Забороняється змінювати замовлення кл�
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line____last_update
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes____last_update
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order____last_update
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list____last_update
 msgid "Last Modified on"
 msgstr ""
 
@@ -307,6 +321,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__write_uid
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__write_uid
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__write_uid
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list__write_uid
 msgid "Last Updated by"
 msgstr ""
 
@@ -314,13 +329,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__write_date
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__write_date
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__write_date
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list__write_date
 msgid "Last Updated on"
 msgstr ""
-
-#. module: ug_wholesale_shop
-#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.ug_import_order_from_xls_view
-msgid "Load order"
-msgstr "Завантажити замовлення"
 
 #. module: ug_wholesale_shop
 #: model:ir.model.constraint,message:ug_wholesale_shop.constraint_distrib_order_package_line_package_check
@@ -329,6 +340,8 @@ msgstr "Допускається мінімум 1 упаковка"
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__name
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__name
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list__name
 msgid "Name"
 msgstr "Найменування"
 
@@ -345,6 +358,13 @@ msgstr "Вага нетто "
 #, python-format
 msgid "New"
 msgstr "Новий"
+
+#. module: ug_wholesale_shop
+#. odoo-python
+#: code:addons/ug_wholesale_shop/models/import_order.py:0
+#, python-format
+msgid "Nothing to load"
+msgstr "Даних для завантаження немає"
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__date
@@ -422,9 +442,22 @@ msgid "Pallet"
 msgstr "Палета"
 
 #. module: ug_wholesale_shop
+#. odoo-python
+#: code:addons/ug_wholesale_shop/models/import_order.py:0
+#, python-format
+msgid "Please load the xlsx file"
+msgstr "Завантажте файл xlsx"
+
+#. module: ug_wholesale_shop
 #: model:ir.model,name:ug_wholesale_shop.model_product_template
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list__product_id
 msgid "Product"
 msgstr "Товар"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list__product_template_id
+msgid "Product Template"
+msgstr ""
 
 #. module: ug_wholesale_shop
 #. odoo-python
@@ -434,7 +467,20 @@ msgid "Product not found"
 msgstr "Товар не знайдено"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__products_ids
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.ug_import_order_from_xls_view
+msgid "Products"
+msgstr "Товари"
+
+#. module: ug_wholesale_shop
+#: model:ir.model,name:ug_wholesale_shop.model_ug_wholesale_import_order_list
+msgid "Products list"
+msgstr "Перелік товарів"
+
+#. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__package_qty
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list__qtt
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list__qtt_by_box
 msgid "Quantity"
 msgstr "Кількість"
 
@@ -480,6 +526,13 @@ msgid "Shop - Confirmed"
 msgstr "Оптові закупівлі - Підтверджено"
 
 #. module: ug_wholesale_shop
+#. odoo-python
+#: code:addons/ug_wholesale_shop/models/import_order.py:0
+#, python-format
+msgid "Successfully loaded"
+msgstr "Успішно завантажено"
+
+#. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
 msgid "Thank you for your order."
 msgstr "Дякуємо за Ваше замовлення"
@@ -490,8 +543,7 @@ msgstr "Дякуємо за Ваше замовлення"
 #, python-format
 msgid ""
 "The given combination does not exist therefore it cannot be added to cart."
-msgstr ""
-"Даної комбінації не існує, тому її неможливо додати до кошика."
+msgstr "Даної комбінації не існує, тому її неможливо додати до кошика."
 
 #. module: ug_wholesale_shop
 #. odoo-python
@@ -507,9 +559,7 @@ msgstr "Даного товару не існує, тому його немож�
 msgid ""
 "The given product does not have a price therefore it cannot be added to "
 "cart."
-msgstr ""
-"Даний товар не має ціни, тому його не можна додати до "
-"кошику."
+msgstr "Даний товар не має ціни, тому його не можна додати до кошику."
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__type_of
@@ -556,6 +606,18 @@ msgstr "Оптовий магазин"
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__width
 msgid "Width, mm"
 msgstr "Ширина, мм"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list__wizard_id
+msgid "Wizard"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#. odoo-python
+#: code:addons/ug_wholesale_shop/models/import_order.py:0
+#, python-format
+msgid "Wrong format of file"
+msgstr "Невірний формат файлу"
 
 #. module: ug_wholesale_shop
 #. odoo-python
