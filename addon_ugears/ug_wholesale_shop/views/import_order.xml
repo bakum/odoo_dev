@@ -19,12 +19,13 @@
                         <notebook>
                             <page string="Products">
                                 <field name="products_ids">
-                                    <tree create="true" editable="top">
-                                        <field name="name" readonly="1"/>
+                                    <tree create="false" editable="top">
+<!--                                        <field name="name" readonly="1"/>-->
                                         <field name="barcode" readonly="1"/>
                                         <field name="description" readonly="1"/>
-                                        <field name="product_id"/>
+                                        <field name="product_id" attrs="{'readonly': [('product_id', '!=', False)]}"/>
                                         <field name="qtt"/>
+                                        <field name="qtt_by_box"/>
                                     </tree>
                                 </field>
                             </page>

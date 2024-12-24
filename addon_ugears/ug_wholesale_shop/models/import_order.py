@@ -113,7 +113,7 @@ class UgImportOrderList(models.TransientModel):
         domain=[('sale_ok', '=', True)])
     name = fields.Char('Name', readonly=True)
     qtt = fields.Float('Quantity', digits=(12, 1))
-    qtt_by_box = fields.Float('Quantity', compute='_compute_product_by_box', store=True)
+    qtt_by_box = fields.Float('Quantity by boxes', compute='_compute_product_by_box', store=True)
     barcode = fields.Char('Barcode')
     description = fields.Char('Description')
 
