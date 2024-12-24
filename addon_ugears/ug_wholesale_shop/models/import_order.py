@@ -58,13 +58,14 @@ class UgImportOrder(models.TransientModel):
         self.products_ids.unlink()
         for sheet in book.sheets():
             try:
-                for row in range(sheet.nrows):
-                    if row >= 1:
-                        row_values = sheet.row_values(row)
-                        vals = self._get_product_dict(row_values)
-                        if vals['qtt'] == 0:
-                            continue
-                        products.append((0, 0, vals))
+                if sheet.name == 'Distr Order':
+                    for row in range(sheet.nrows):
+                        if row >= 1:
+                            row_values = sheet.row_values(row)
+                            vals = self._get_product_dict(row_values)
+                            if not vals['qtt'] or vals['qtt'] == 0:
+                                continue
+                            products.append((0, 0, vals))
             except IndexError:
                 pass
         try:
