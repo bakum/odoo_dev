@@ -383,6 +383,11 @@ class SaleOrder(models.Model):
         all_palettes = palettes['palettes']
         choice = 1
         for item in unselected_layers:
+            try:
+                if item['choice']:
+                    continue
+            except KeyError:
+                pass
             width = item['depth']
             for item_palette in all_palettes:
                 try:
@@ -397,7 +402,11 @@ class SaleOrder(models.Model):
                     choice += 1
                 else:
                     item_palette['choice'] = 0
-                    item['choice'] = 0
+                    try:
+                        if not item['choice']:
+                            item['choice'] = 0
+                    except KeyError:
+                        item['choice'] = 0
 
         for i in range(choice):
             if i == 0:
@@ -405,9 +414,7 @@ class SaleOrder(models.Model):
             try:
                 found_unselected = next(filter(lambda x: x['choice'] == i, unselected_layers))
                 found_palette = next(filter(lambda y: y['choice'] == i, all_palettes))
-                # pass
-                # del found_unselected['choice']
-                # del found_palette['choice']
+
                 found_palette['palette'].append(found_unselected)
                 found_palette['summ_width'] = sum([item['depth'] for item in found_palette['palette']])
                 found_palette['difference'] = palette.depth - found_palette['summ_width']
