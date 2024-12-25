@@ -419,6 +419,8 @@ class SaleOrder(models.Model):
                 unselected_layers.remove(found_unselected)
             except KeyError:
                 pass
+            except StopIteration:
+                pass
         palettes['unselected_layers'] = unselected_layers
         return palettes
 
