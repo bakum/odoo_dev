@@ -35,7 +35,7 @@
             <div t-if="packing_list and len(packing_list) > 0" class="accordion accordion-flush"
                  id="accordionExample">
                 <t t-foreach="packing_list" t-as="package">
-                    <div class="accordion-item">
+                    <div class="accordion-item border border-outline-secondary">
                         <h4 class="accordion-header" id="headingOne">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                     t-attf-data-bs-target="#collapse{{package['id']}}" aria-expanded="true"
@@ -180,7 +180,7 @@
                      class="accordion"
                      id="accordionPalettes">
                     <t t-foreach="palettes_list['palettes']" t-as="palette">
-                        <div class="accordion-item border-secondary">
+                        <div class="accordion-item border border-outline-secondary">
                             <h4 class="accordion-header" id="headingPaletteOne">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                         t-attf-data-bs-target="#collapse{{palette['id']}}" aria-expanded="true"
@@ -324,7 +324,7 @@
                        t-value="'/web/login?redirect=/shop/confirm_order' if redirect_to_sign_in else '/shop/confirm_order'"/>
                 <div class="d-flex justify-content-end mt32">
                     <div class="d-flex flex-column">
-                        <a class="btn btn-secondary float-end d-none d-xl-inline-block" role="button"
+                        <a class="btn btn-outline-secondary float-end d-none d-xl-inline-block" role="button"
                            t-attf-href="{{redirect_url}}">
                             <span>Confirm order</span>
                             <span class="fa fa-file-text"/>

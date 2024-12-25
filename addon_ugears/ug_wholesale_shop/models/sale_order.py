@@ -378,6 +378,50 @@ class SaleOrder(models.Model):
         values = {'unselected_layers': unselected, 'palettes': all_palettes, 'all_boxes': all_boxes}
         return values
 
+    def _add_extra_layers_to_last_palette(self, palettes, palette):
+        unselected_layers = sorted(palettes['unselected_layers'], key=lambda d: d['fill'], reverse=True)
+        all_palettes = palettes['palettes']
+        choice = 1
+        for item in unselected_layers:
+            width = item['depth']
+            for item_palette in all_palettes:
+                try:
+                    if item_palette['choice']:
+                        continue
+                except KeyError:
+                    pass
+                max_width = item_palette['difference']
+                if width <= max_width:
+                    item_palette['choice'] = choice
+                    item['choice'] = choice
+                    choice += 1
+                else:
+                    item_palette['choice'] = 0
+                    item['choice'] = 0
+
+        for i in range(choice):
+            if i == 0:
+                continue
+            try:
+                found_unselected = next(filter(lambda x: x['choice'] == i, unselected_layers))
+                found_palette = next(filter(lambda y: y['choice'] == i, all_palettes))
+                # pass
+                # del found_unselected['choice']
+                # del found_palette['choice']
+                found_palette['palette'].append(found_unselected)
+                found_palette['summ_width'] = sum([item['depth'] for item in found_palette['palette']])
+                found_palette['difference'] = palette.depth - found_palette['summ_width']
+                found_palette['fill'] = (100 * found_palette['summ_width']) // palette.depth
+                found_palette['fill_str'] = str(found_palette['fill']) + '%'
+                boxes = len(found_unselected['layers'])
+                found_palette['boxes'] += boxes
+
+                unselected_layers.remove(found_unselected)
+            except KeyError:
+                pass
+        palettes['unselected_layers'] = unselected_layers
+        return palettes
+
     def _calculate_package_list(self, package_data, palette_id):
         PackagesSizes = self.env['distrib.packages.sizes']
         domain = [('id', '=', palette_id)]
@@ -399,5 +443,6 @@ class SaleOrder(models.Model):
             layers_by_depth.append(layers)
 
         palettes = self._fill_palettes(layers_by_depth, palette)
+        palettes = self._add_extra_layers_to_last_palette(palettes, palette)
 
         return palettes

@@ -23,7 +23,7 @@
 <!--                                        <field name="name" readonly="1"/>-->
                                         <field name="barcode" readonly="1"/>
                                         <field name="description" readonly="1"/>
-                                        <field name="product_id" attrs="{'readonly': [('product_id', '!=', False)]}"/>
+                                        <field name="product_id" widget="many2one" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('product_id', '!=', False)]}"/>
                                         <field name="qtt"/>
                                         <field name="qtt_by_box"/>
                                     </tree>
