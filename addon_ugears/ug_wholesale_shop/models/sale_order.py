@@ -1,4 +1,5 @@
 import math
+from datetime import datetime
 
 from odoo import models, _, fields, api
 from odoo.exceptions import UserError
@@ -21,6 +22,28 @@ class SaleOrder(models.Model):
         string="Packages Lines",
         states=LOCKED_FIELD_STATES,
         copy=True, auto_join=True)
+
+    def action_calculate_sale_order(self):
+        self.ensure_one()
+        url = '/shop/calculator?order=%s' % (
+            self.id
+        )
+        action =  {
+            'type': 'ir.actions.act_url',
+            'target': 'self',
+            'url': url,
+        }
+        # last_order_id = request.session.get('order_for_calculate', 0)
+        # request.session['order_for_calculate'] = self.id
+        if self.pallet_id:
+            request.session['website_sale_current_palette'] = self.pallet_id.id
+        else:
+            now = datetime.timestamp(datetime.now())
+            website = request.env['website'].get_current_website()
+            palette = website.get_current_palette()
+            request.session['website_sale_palette_time'] = now
+            request.session['website_sale_current_palette'] = palette.id
+        return action
 
     @api.model
     def get_import_templates(self):

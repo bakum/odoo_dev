@@ -99,7 +99,9 @@ class WebsiteWholeSale(WebsiteSale):
         if palette_distrib:
             palette = palette_distrib
         else:
-            palette = request.env['distrib.packages.sizes'].browse(request.session.get('website_sale_current_palette'))
+            palette = website.get_current_palette()
+
+        request.session['website_sale_current_palette'] = palette.id
 
         if not palette or request.session.get('website_sale_palette_time',
                                               0) < now - 60 * 60:  # test: 1 hour in session
@@ -588,7 +590,34 @@ class WebsiteWholeSale(WebsiteSale):
             )
         return values
 
-    @http.route(['/shop/checkout'], type='http', auth="public", website=True, sitemap=False)
+    @http.route(['/shop/calculator'], type='http', auth="user", website=True, sitemap=False)
+    def calculator(self, **post):
+        if post.get('order'):
+            order_id = int(post['order'])
+            order = request.env['sale.order'].browse(order_id)
+
+            values = {
+                'order': order,
+                'shippings': [],
+                'only_services': order and order.only_services or False
+            }
+            packing_list = order._get_package_from_order()
+            palette_id = order.pallet_id.id
+            # packing_calc = None
+            if palette_id:
+                packing_calc = order._calculate_package_list(packing_list, palette_id)
+            else:
+                palette_id = request.session.get('website_sale_current_palette')
+                packing_calc = order._calculate_package_list(packing_list, palette_id)
+            values.update({'website_sale_order': order})
+            values.update({'packing_list': packing_list})
+            values.update({'not_card_mode': True})
+            if packing_calc is not None:
+                values.update({'palettes_list': packing_calc})
+            return request.render("ug_wholesale_shop.packing_list", values)
+        return 'ok'
+
+    @http.route(['/shop/checkout'], type='http', auth="user", website=True, sitemap=False)
     def checkout(self, **post):
         order = request.website.sale_get_order()
 
@@ -605,7 +634,7 @@ class WebsiteWholeSale(WebsiteSale):
 
         values = self.checkout_values(**post)
         packing_list = order._get_package_from_order()
-        palette_id = request.session['website_sale_current_palette']
+        palette_id = request.session.get('website_sale_current_palette')
         packing_calc = None
         if palette_id is not None:
             packing_calc = order._calculate_package_list(packing_list,palette_id)
@@ -684,7 +713,7 @@ class WebsiteWholeSale(WebsiteSale):
             return request.redirect(order.get_portal_url())
 
         # clean context and session, then redirect to the confirmation page
-        request.website.sale_reset()
+        # request.website.sale_reset()
         # if tx and tx.state == 'draft':
         #     return request.redirect('/shop')
 
@@ -710,12 +739,22 @@ class WebsiteWholeSale(WebsiteSale):
 
     @http.route('/shop/confirm', type='http', auth="user", website=True, sitemap=False)
     def order_confirmation(self, **post):
-        sale_order_id = request.session.get('sale_last_order_id')
+        if post.get('order'):
+            sale_order_id = int(post.get('order'))
+        else:
+            sale_order_id = request.session.get('sale_last_order_id')
+        # sale_order_id = request.session.get('order_for_calculate') or request.session.get('sale_last_order_id')
         if sale_order_id:
+            request.website.sale_reset()
+            # request.session.pop('order_for_calculate', None)
+
             order = request.env['sale.order'].sudo().browse(sale_order_id)
+            order.update({'pallet_id': request.session.get('website_sale_current_palette')})
+
+            request.session.pop('website_sale_current_palette', None)
             order.with_context(send_email=True).action_confirm()
             # return request.redirect(order.get_portal_url())
-            return request.redirect('/shop/cart')
+            return request.redirect('/shop')
 
     @http.route(['/shop/change_palette/<model("distrib.packages.sizes"):palette>'], type='http', auth="user",
                 website=True, sitemap=False)

@@ -23,6 +23,7 @@
         'views/packages_sizes.xml',
         'views/distributors.xml',
         'views/import_order.xml',
+        'views/sales_order.xml',
     ],
     'assets': {
         'web.assets_frontend': [

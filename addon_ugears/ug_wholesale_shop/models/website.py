@@ -190,7 +190,7 @@ class Website(models.Model):
 
             available_palettes = self.get_palettes_available()
             if not palette:
-                palette = available_palettes[0]
+                palette = available_palettes[:1]
 
                 if not palette:
                     _logger.error(

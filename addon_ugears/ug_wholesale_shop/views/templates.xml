@@ -111,8 +111,9 @@
                                                     </td>
                                                 </t>
                                                 <td class="text-center td-qty">
+                                                    <t t-set="order_is_draft" t-value="true if not website_sale_order else website_sale_order.state in ['draft']"/>
                                                     <div class="css_quantity input-group mx-auto justify-content-center">
-                                                        <t t-if="not line._is_not_sellable_line()">
+                                                        <t t-if="not line._is_not_sellable_line() and order_is_draft">
 
                                                             <a t-attf-href="#"
                                                                class="btn btn-link js_add_cart_json d-none d-md-inline-block"
@@ -274,7 +275,7 @@
                     </t>
                 </div>
                 <t t-if="palettes_list and palettes_list['unselected_layers'] and len(palettes_list['unselected_layers'])&gt;0">
-                    <h4 class="d-none d-xl-block">Extra boxes</h4>
+                    <h4 class="d-none d-xl-block mt8">Extra boxes</h4>
                     <hr class="d-none d-xl-block"/>
                     <table class="table table-striped table-sm">
                         <thead>
@@ -320,16 +321,21 @@
                         </tbody>
                     </table>
                 </t>
-                <t t-set="redirect_url"
+                <t t-set="redirect_url1"
                        t-value="'/web/login?redirect=/shop/confirm_order' if redirect_to_sign_in else '/shop/confirm_order'"/>
+                <t t-set="redirect_url" t-value="'/shop/confirm?order=' + str(website_sale_order.id) if not_card_mode else redirect_url1"/>
                 <div class="d-flex justify-content-end mt32">
-                    <div class="d-flex flex-column">
-                        <a class="btn btn-outline-secondary float-end d-none d-xl-inline-block" role="button"
-                           t-attf-href="{{redirect_url}}">
-                            <span>Confirm order</span>
-                            <span class="fa fa-file-text"/>
-                        </a>
-                    </div>
+                    <t t-set="order_is_draft" t-value="true if not website_sale_order else website_sale_order.state in ['draft']"/>
+                    <t t-set="not_card_mode" t-value="false if not_card_mode else not_card_mode"/>
+                    <t t-if="order_is_draft and not not_card_mode">
+                        <div class="d-flex flex-column">
+                            <a class="btn btn-outline-secondary float-end d-none d-xl-inline-block" role="button"
+                               t-attf-href="{{redirect_url}}">
+                                <span>Confirm order</span>
+                                <span class="fa fa-file-text"/>
+                            </a>
+                        </div>
+                    </t>
                 </div>
             </div>
         </div>
@@ -369,14 +375,17 @@
 <!--                    <t t-set="redirect_url"-->
 <!--                       t-value="'/web/login?redirect=/shop/confirm_order' if redirect_to_sign_in else '/shop/confirm_order'"/>-->
                     <div class="d-flex justify-content-start">
-                        <div>
-                            <a role="button" href="/shop/cart" class="btn btn-secondary mb32">
-                                <span class="fa fa-shopping-cart"/>
-                                <span>
-                                    <span class="d-none d-md-inline">Back to cart</span>
-                                </span>
-                            </a>
-                        </div>
+                        <t t-set="order_is_draft" t-value="true if not website_sale_order else website_sale_order.state in ['draft']"/>
+                        <t t-if="order_is_draft" >
+                            <div>
+                                <a role="button" href="/shop/cart" class="btn btn-secondary mb32">
+                                    <span class="fa fa-shopping-cart"/>
+                                    <span>
+                                        <span class="d-none d-md-inline">Back to cart</span>
+                                    </span>
+                                </a>
+                            </div>
+                        </t>
                         <div class="d-flex flex-column ml16">
                             <a class="btn btn-primary float-end" role="button" href="/shop">
                                 <span>Shopping</span>
