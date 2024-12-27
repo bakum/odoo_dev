@@ -34,7 +34,7 @@ class SaleOrder(models.Model):
             'url': url,
         }
         # last_order_id = request.session.get('order_for_calculate', 0)
-        # request.session['order_for_calculate'] = self.id
+        request.session['order_for_calculate'] = self.id
         if self.pallet_id:
             request.session['website_sale_current_palette'] = self.pallet_id.id
         else:

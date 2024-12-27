@@ -9,8 +9,10 @@
     <template id="palette_list" name="PaletteLists Dropdown">
         <div t-attf-class="o_palette_list_dropdown dropdown #{_classes if hasPalettesDropdown else 'd-none'}">
             <t t-set="curr_pl" t-value="website.palette_id"/>
+            <t t-set="ordr_id" t-value="'0' if not not_card_mode else '0' if not website_sale_order else str(website_sale_order.id)"/>
             <small class="d-none d-lg-inline text-muted" id="palette-data"
                    t-att-data-pl_id="curr_pl.id"
+                   t-att-data-order_id="ordr_id"
                    t-att-data-pl_width="curr_pl.width"
                    t-att-data-pl_height="curr_pl.height"
                    t-att-data-pl_depth="curr_pl.depth"

@@ -97,18 +97,19 @@ function animateClone($cart, $elem, offsetTop, offsetLeft) {
  * @param {Object} data
  */
 function updateCartNavBar(data) {
-    $(".my_cart_quantity")
-        .parents('li.o_wsale_my_cart').removeClass('d-none').end()
-        .addClass('o_mycart_zoom_animation').delay(300)
-        .queue(function () {
-            $(this)
-                .toggleClass('fa fa-warning', !data.cart_quantity)
-                .attr('title', data.warning)
-                .text(data.cart_quantity || '')
-                .removeClass('o_mycart_zoom_animation')
-                .dequeue();
-        });
-
+    if (!data.order_id) {
+        $(".my_cart_quantity")
+            .parents('li.o_wsale_my_cart').removeClass('d-none').end()
+            .addClass('o_mycart_zoom_animation').delay(300)
+            .queue(function () {
+                $(this)
+                    .toggleClass('fa fa-warning', !data.cart_quantity)
+                    .attr('title', data.warning)
+                    .text(data.cart_quantity || '')
+                    .removeClass('o_mycart_zoom_animation')
+                    .dequeue();
+            });
+    }
     $(".js_cart_lines").first().before(data['website_sale.cart_lines']).end().remove();
     $(".js_cart_summary").replaceWith(data['website_sale.short_cart_summary']);
     $(".js_packing_list").replaceWith(data['ug_wholesale_shop.packing_list_lines']);

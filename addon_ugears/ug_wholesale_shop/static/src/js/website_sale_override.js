@@ -20,6 +20,7 @@ odoo.define('ug_wholesale_shop.website_sale_override', function (require) {
             $input.data('update_change', true);
             var $palette = $('#palette-data');
             var palette_id = parseInt($palette.data('pl_id') || 0)
+            var order_id = parseInt($palette.data('order_id') || 0)
 
             var params = {
                 route: "/shop/cart/update_json",
@@ -30,6 +31,7 @@ odoo.define('ug_wholesale_shop.website_sale_override', function (require) {
                 },
             }
             if (palette_id > 0 ) params.params.palette_id = palette_id
+            if (order_id > 0 ) params.params.order_id = order_id
 
             this._rpc(params).then(function (data) {
                 $input.data('update_change', false);
@@ -41,17 +43,23 @@ odoo.define('ug_wholesale_shop.website_sale_override', function (require) {
                     $input.trigger('change');
                     return;
                 }
-                sessionStorage.setItem('website_sale_cart_quantity', data.cart_quantity);
-                if (!data.cart_quantity) {
+                if (order_id === 0) {
+                    sessionStorage.setItem('website_sale_cart_quantity', data.cart_quantity);
+                }
+                if (!data.cart_quantity && order_id === 0) {
                     return window.location = '/shop/cart';
                 }
                 $input.val(data.quantity);
                 $('.js_quantity[data-line-id=' + line_id + ']').val(data.quantity).text(data.quantity);
+                // data = {data, ...order_id}
+                data.order_id = order_id
 
                 wSaleUtils.updateCartNavBar(data);
                 wSaleUtils.showWarning(data.warning);
                 // Propagating the change to the express checkout forms
-                core.bus.trigger('cart_amount_changed', data.amount, data.minor_amount);
+                if (order_id === 0) {
+                    core.bus.trigger('cart_amount_changed', data.amount, data.minor_amount);
+                }
             });
         },
     })
