@@ -7,7 +7,7 @@ class PackagesSizes(models.Model):
 
     active = fields.Boolean(default=True)
     ref = fields.Char(string="Ref", copy=False, readonly=True, default=lambda self: _("New"))
-    name = fields.Char(string='Name', required=False)
+    name = fields.Char(string='Name', copy=False, required=False)
     width = fields.Integer('Width, mm', required=True)
     height = fields.Integer('Height, mm', required=True)
     depth = fields.Integer('Depth, mm', required=True)
@@ -19,7 +19,7 @@ class PackagesSizes(models.Model):
             ('pallet', "Pallet"),
         ],
         string="Type of package",
-        copy=False, default='box')
+        copy=True, default='box')
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -36,7 +36,9 @@ class PackagesSizes(models.Model):
             result.append((sizes.id, name))
         return result
 
-    # @api.onchange('type_of')
-    # def _onchange_type(self):
-    #     for line in self:
+    @api.onchange('width','height','depth')
+    def _onchange_type(self):
+        for vals in self:
+            vals.name = str(vals['width']) + 'x' + str(vals['height']) + 'x' + str(vals['depth'])
+            vals.ref = str(vals['width']) + 'x' + str(vals['height']) + 'x' + str(vals['depth'])
 

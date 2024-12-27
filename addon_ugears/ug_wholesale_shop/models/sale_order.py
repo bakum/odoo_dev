@@ -23,12 +23,20 @@ class SaleOrder(models.Model):
         states=LOCKED_FIELD_STATES,
         copy=True, auto_join=True)
 
+    @api.model
+    def fields_view_get(self, view_id=None, view_type='form', toolbar=False, submenu=False):
+        menu_id = self._context.get('menu_id', False)
+        action = self._context.get('action', False)
+        res = super(SaleOrder, self).fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar,
+                                                     submenu=submenu)
+        return res
+
     def action_calculate_sale_order(self):
         self.ensure_one()
         url = '/shop/calculator?order=%s' % (
             self.id
         )
-        action =  {
+        action = {
             'type': 'ir.actions.act_url',
             'target': 'self',
             'url': url,
@@ -290,7 +298,7 @@ class SaleOrder(models.Model):
                 rectangles.append(package)
                 # rectangles.append((line['box'].width, line['box'].height))
 
-        layer_count = math.ceil(layer_count)
+        layer_count = math.ceil(layer_count) + 1
         for x in range(layer_count):
             bins.append(palettes_size)
 
