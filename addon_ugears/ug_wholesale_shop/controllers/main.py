@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from werkzeug.exceptions import NotFound
+from werkzeug.urls import url_parse, url_decode, url_encode
 
 from odoo.addons.website_sale.controllers.main import WebsiteSale, TableCompute
 from odoo import fields, http, tools, _
@@ -88,6 +89,7 @@ class WebsiteWholeSale(WebsiteSale):
 
         if pricelist_distrib:
             pricelist = pricelist_distrib
+            request.session['website_sale_current_pl'] = pricelist.id
         else:
             pricelist = request.env['product.pricelist'].browse(request.session.get('website_sale_current_pl'))
         if not pricelist or request.session.get('website_sale_pricelist_time',
@@ -580,7 +582,7 @@ class WebsiteWholeSale(WebsiteSale):
         packing_list = order._get_package_from_order()
         packing_calc = None
         if palette_id is not None:
-            packing_calc = order._calculate_package_list(packing_list,palette_id)
+            packing_calc = order._calculate_package_list(packing_list, palette_id)
 
         values['website_sale.cart_lines'] = request.env['ir.ui.view']._render_template(
             "website_sale.cart_lines", {
@@ -658,7 +660,7 @@ class WebsiteWholeSale(WebsiteSale):
         palette_id = request.session.get('website_sale_current_palette')
         packing_calc = None
         if palette_id is not None:
-            packing_calc = order._calculate_package_list(packing_list,palette_id)
+            packing_calc = order._calculate_package_list(packing_list, palette_id)
 
         if post.get('express'):
             values.update({'website_sale_order': order})
@@ -788,4 +790,44 @@ class WebsiteWholeSale(WebsiteSale):
         request.session['website_sale_current_palette'] = palette.id
         # request.website.sale_get_order(update_pricelist=True)
 
+        return request.redirect(redirect_url or '/shop')
+
+    @http.route(['/shop/change_pricelist/<model("product.pricelist"):pricelist>'], type='http', auth="public",
+                website=True, sitemap=False)
+    def pricelist_change(self, pricelist, **post):
+        website = request.env['website'].get_current_website()
+        pricelist_distrib = request.env.user.distrib_id.pricelist_id
+        if pricelist_distrib:
+            pricelist = pricelist_distrib
+        redirect_url = request.httprequest.referrer
+        if (pricelist.selectable or pricelist == request.env.user.distrib_id.partner_id.property_product_pricelist) \
+                and website.is_pricelist_available(pricelist.id):
+            if redirect_url and request.website.is_view_active('website_sale.filter_products_price'):
+                decoded_url = url_parse(redirect_url)
+                args = url_decode(decoded_url.query)
+                min_price = args.get('min_price')
+                max_price = args.get('max_price')
+                if min_price or max_price:
+                    previous_price_list = request.website.get_current_pricelist()
+                    try:
+                        min_price = float(min_price)
+                        args['min_price'] = min_price and str(
+                            previous_price_list.currency_id._convert(min_price, pricelist.currency_id,
+                                                                     request.website.company_id, fields.Date.today(),
+                                                                     round=False)
+                        )
+                    except (ValueError, TypeError):
+                        pass
+                    try:
+                        max_price = float(max_price)
+                        args['max_price'] = max_price and str(
+                            previous_price_list.currency_id._convert(max_price, pricelist.currency_id,
+                                                                     request.website.company_id, fields.Date.today(),
+                                                                     round=False)
+                        )
+                    except (ValueError, TypeError):
+                        pass
+                    redirect_url = decoded_url.replace(query=url_encode(args)).to_url()
+            request.session['website_sale_current_pl'] = pricelist.id
+            request.website.sale_get_order(update_pricelist=True)
         return request.redirect(redirect_url or '/shop')

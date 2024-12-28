@@ -35,8 +35,8 @@
             <t t-set="backend_url" t-value="'/web#model=sale.order&amp;id=%s&amp;view_type=form' % (website_sale_order.id)"/>
             <div class="container">
                 <div class="text-center">
-                    This is a preview of the customer portal.
-                    <a t-att-href="backend_url"><i class="fa fa-arrow-right me-1"/>Back to edit mode
+                    This is a packaging calculator.
+                    <a t-att-href="backend_url"><i class="fa fa-arrow-right me-1"/>Back to order
                     </a>
                 </div>
             </div>
