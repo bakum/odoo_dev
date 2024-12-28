@@ -311,6 +311,8 @@ class Website(models.Model):
                     and pl._is_available_in_country(country_code)
             )
             pricelists |= partner_pricelist
+            if pricelist_distrib:
+                pricelists |= pricelist_distrib
 
         # This method is cached, must not return records! See also #8795
         # sudo is needed to ensure no records rules are applied during the sorted call,
