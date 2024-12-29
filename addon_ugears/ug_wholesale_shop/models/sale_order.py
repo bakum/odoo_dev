@@ -239,6 +239,7 @@ class SaleOrder(models.Model):
                 pack_found['name'] = cartoon.name
                 pack_found['quantity'] = pack_quantity
                 pack_found['lines'] = []
+                pack_found['product_id'] =line.product_id.id
                 value[cartoon.id] = pack_found
             else:
                 pack_found['quantity'] = pack_found['quantity'] + pack_quantity
@@ -290,12 +291,22 @@ class SaleOrder(models.Model):
         for line in package_data:
             layer_count = layer_count + (
                 0 if line['max_boxes_on_layer'] == 0 else line['quantity'] / line['max_boxes_on_layer'])
-            for x in range(line['quantity']):
-                package = {'rectangles': (line['box'].width, line['box'].height),
-                           'max_boxes_on_layer': line['max_boxes_on_layer'],
-                           'min_boxes_on_layer': line['min_boxes_on_layer'],
-                           'depth': line['depth'], 'box_id': line['box'].id}
-                rectangles.append(package)
+            # for x in range(line['quantity']):
+            #     package = {'rectangles': (line['box'].width, line['box'].height),
+            #                'max_boxes_on_layer': line['max_boxes_on_layer'],
+            #                'min_boxes_on_layer': line['min_boxes_on_layer'],
+            #                'depth': line['depth'], 'box_id': line['box'].id, 'product_id': line['product_id']}
+            #     rectangles.append(package)
+            for y in line['lines']:
+                product_uom_qty = y.product_uom_qty
+                product_id = y.product_id
+                qtt = 0 if product_id.qty_in_cartoon == 0 else int(product_uom_qty // product_id.qty_in_cartoon)
+                for z in range(qtt):
+                    package = {'rectangles': (product_id.cartoon_id.width, product_id.cartoon_id.height),
+                               'max_boxes_on_layer': line['max_boxes_on_layer'],
+                               'min_boxes_on_layer': line['min_boxes_on_layer'],
+                               'depth': line['depth'], 'box_id': product_id.cartoon_id.id, 'product_id': product_id.id}
+                    rectangles.append(package)
                 # rectangles.append((line['box'].width, line['box'].height))
 
         layer_count = math.ceil(layer_count) + 1
@@ -307,7 +318,7 @@ class SaleOrder(models.Model):
         # rect_count = 1
         for r in rectangles:
             packer.add_rect(*r['rectangles'],
-                            rid=f'box_{rect_count}_{r["max_boxes_on_layer"]}_{r["min_boxes_on_layer"]}_{r["depth"]}_{r["box_id"]}')
+                            rid=f'box_{rect_count}_{r["max_boxes_on_layer"]}_{r["min_boxes_on_layer"]}_{r["depth"]}_{r["box_id"]}_{r["product_id"]}')
             rect_count += 1
 
         for b in bins:
@@ -353,6 +364,7 @@ class SaleOrder(models.Model):
             layers.append(layer)
 
         PackagesSizes = self.env['distrib.packages.sizes']
+        Product = self.env['product.template']
         for layer in layers:
             layer['max_boxes_on_layer'] = int(layer['layers'][0].rid.split('_')[2])
             layer['min_boxes_on_layer'] = int(layer['layers'][0].rid.split('_')[3])
@@ -361,6 +373,18 @@ class SaleOrder(models.Model):
             domain = [('id', '=', box_id)]
             box = PackagesSizes.search(domain)[:1]
             layer['box'] = box
+            # all_weidth = sum([item['depth'] for item in palette])
+            all_products_cnt = 0
+            all_weights_cnt = 0
+            for x in layer['layers']:
+                product_id = int(x.rid.split('_')[6])
+                dm = [('id', '=', product_id)]
+                product = Product.search(dm)[:1]
+                if product:
+                    all_products_cnt += product.qty_in_cartoon
+                    all_weights_cnt += product.cartoon_weight_with_model
+            layer['product_cnt'] = all_products_cnt
+            layer['product_weight'] = all_weights_cnt
         return layers
 
     def _fill_palettes(self, package_data, palette):
@@ -397,15 +421,19 @@ class SaleOrder(models.Model):
             fill = (100 * all_weidth) // max_depth
             difference = max_depth - all_weidth
             boxes = sum([len(item['layers']) for item in palette])
+            product_cnt = sum([item['product_cnt'] for item in palette])
+            product_weight = sum([item['product_weight'] for item in palette])
             info = {'id': id, 'fill': fill,
                     # 'fill_str': str(fill) + '% ' +  str(all_weidth) + 'mm',
                     'fill_str': str(fill) + '%',
                     'summ_width': all_weidth,
-                    'difference': difference, 'palette': palette, 'boxes': boxes}
+                    'difference': difference, 'palette': palette, 'boxes': boxes,
+                    'product_cnt': product_cnt, 'product_weight': product_weight}
             id += 1000
             all_boxes += boxes
             all_palettes.append(info)
         all_boxes += sum([len(item['layers']) for item in unselected])
+
         values = {'unselected_layers': unselected, 'palettes': all_palettes, 'all_boxes': all_boxes}
         return values
 
@@ -452,7 +480,9 @@ class SaleOrder(models.Model):
                 found_palette['fill'] = (100 * found_palette['summ_width']) // palette.depth
                 found_palette['fill_str'] = str(found_palette['fill']) + '%'
                 boxes = len(found_unselected['layers'])
+                # product_cnt = sum([item['product_cnt'] for item in found_palette['palette']])
                 found_palette['boxes'] += boxes
+                # found_palette['product_cnt'] += product_cnt
 
                 unselected_layers.remove(found_unselected)
             except KeyError:
@@ -460,6 +490,10 @@ class SaleOrder(models.Model):
             except StopIteration:
                 pass
         palettes['unselected_layers'] = unselected_layers
+
+        for x in palettes['palettes']:
+            x['product_cnt'] = sum([item['product_cnt'] for item in x['palette']])
+            x['product_weight'] = sum([item['product_weight'] for item in x['palette']])
         return palettes
 
     def _calculate_package_list(self, package_data, palette_id):
@@ -482,7 +516,22 @@ class SaleOrder(models.Model):
                     layer['fill'] = (100 * len(layer['layers'])) // layer['max_boxes_on_layer']
             layers_by_depth.append(layers)
 
-        palettes = self._fill_palettes(layers_by_depth, palette)
-        palettes = self._add_extra_layers_to_last_palette(palettes, palette)
+        # product_cnt_before = 0
+        # product_weight_before = 0
+        # for x in layers_by_depth:
+        #     product_cnt_before += sum([item['product_cnt'] for item in x])
+        #     product_weight_before += sum([item['product_weight'] for item in x])
+        palettes1 = self._fill_palettes(layers_by_depth, palette)
 
+        palettes = self._add_extra_layers_to_last_palette(palettes1, palette)
+
+        product_cnt = sum([item['product_cnt'] for item in palettes['unselected_layers']])
+        product_weight = sum([item['product_weight'] for item in palettes['unselected_layers']])
+        product_cnt += sum([item['product_cnt'] for item in palettes['palettes']])
+        product_weight += sum([item['product_weight'] for item in palettes['palettes']])
+        # for x in palettes['palettes']:
+        #     product_cnt += x['product_cnt']
+
+        palettes['all_products'] = product_cnt
+        palettes['all_weight'] = product_weight
         return palettes
