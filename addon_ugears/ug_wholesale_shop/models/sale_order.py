@@ -494,6 +494,17 @@ class SaleOrder(models.Model):
         for x in palettes['palettes']:
             x['product_cnt'] = sum([item['product_cnt'] for item in x['palette']])
             x['product_weight'] = sum([item['product_weight'] for item in x['palette']])
+            x['self_height'] = palette.self_height
+            x['cartoon_weight'] = palette.cartoon_weight
+
+        product_cnt = sum([item['product_cnt'] for item in palettes['unselected_layers']])
+        product_weight = sum([item['product_weight'] for item in palettes['unselected_layers']])
+        product_cnt += sum([item['product_cnt'] for item in palettes['palettes']])
+        product_weight += sum([item['product_weight'] for item in palettes['palettes']])
+
+        palettes['all_products'] = product_cnt
+        palettes['all_weight'] = product_weight
+
         return palettes
 
     def _calculate_package_list(self, package_data, palette_id):
@@ -525,13 +536,13 @@ class SaleOrder(models.Model):
 
         palettes = self._add_extra_layers_to_last_palette(palettes1, palette)
 
-        product_cnt = sum([item['product_cnt'] for item in palettes['unselected_layers']])
-        product_weight = sum([item['product_weight'] for item in palettes['unselected_layers']])
-        product_cnt += sum([item['product_cnt'] for item in palettes['palettes']])
-        product_weight += sum([item['product_weight'] for item in palettes['palettes']])
+        # product_cnt = sum([item['product_cnt'] for item in palettes['unselected_layers']])
+        # product_weight = sum([item['product_weight'] for item in palettes['unselected_layers']])
+        # product_cnt += sum([item['product_cnt'] for item in palettes['palettes']])
+        # product_weight += sum([item['product_weight'] for item in palettes['palettes']])
         # for x in palettes['palettes']:
         #     product_cnt += x['product_cnt']
 
-        palettes['all_products'] = product_cnt
-        palettes['all_weight'] = product_weight
+        # palettes['all_products'] = product_cnt
+        # palettes['all_weight'] = product_weight
         return palettes

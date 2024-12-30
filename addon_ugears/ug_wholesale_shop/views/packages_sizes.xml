@@ -24,7 +24,7 @@
                         </group>
                         <group id="header_right_group">
                             <field name="type_of" force_save="1"/>
-                            <field name="cartoon_weight"/>
+                            <field name="cartoon_weight" force_save="1"/>
                             <field name="self_height" attrs="{'invisible': [('type_of', '!=', 'pallet')]}"/>
                         </group>
                     </group>

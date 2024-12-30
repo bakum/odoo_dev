@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
+    <data noupdate="1">
         <record id="pallet_1" model="distrib.packages.sizes">
             <field name="name">800х1200х1800</field>
             <field name="ref">800х1200х1800</field>
@@ -9,7 +9,7 @@
             <field name="height">1200</field>
             <field name="depth">1800</field>
             <field name="type_of">pallet</field>
-            <field name="cartoon_weight">0.0</field>
+            <field name="cartoon_weight">15000.0</field>
         </record>
         <record id="box_1" model="distrib.packages.sizes">
             <field name="name">241х196х251</field>

@@ -189,8 +189,10 @@
             <div class="oe_structure" id="oe_structure_ug_wholesale_shop_cart_5"/>
             <div class="palettes_body p-4">
                 <t t-set="all_boxes" t-value="0 if not palettes_list or not palettes_list['all_boxes'] else palettes_list['all_boxes']"/>
+                <t t-set="all_products" t-value="0 if not palettes_list or not palettes_list['all_products'] else palettes_list['all_products']"/>
+                <t t-set="all_str" t-value="'%s/%s' % (all_boxes, all_products)"/>
 
-                <h4 class="d-none d-xl-block">Packing Info - <span class="text-info border border-info rounded" t-out="all_boxes"/> pcs.</h4>
+                <h5 class="d-none d-xl-block">Packing Info - <span class="text-info border border-info rounded" t-out="all_str"/> pcs.</h5>
                 <hr class="d-none d-xl-block"/>
                 <div t-if="palettes_list and palettes_list['palettes'] and len(palettes_list['palettes'])&gt;0"
                      class="accordion"
@@ -232,13 +234,23 @@
                                 <div class="accordion-body">
                                     <div class="card d-flex flex-column bd-highlight mb-5 border border-info rounded">
                                         <t t-set="total_height" t-value="'Height of filled pallet: ' + str(palette['summ_width']) + ' mm'"/>
+                                        <t t-set="self_height" t-value="'Self-height of pallet: ' + str(palette['self_height']) + ' mm'"/>
+                                        <t t-set="total_from_ground" t-value="'Total height: %s mm' % ((palette['summ_width'] + palette['self_height']))"/>
                                         <t t-set="difference" t-value="'Difference: ' + str(palette['difference']) + ' mm'"/>
                                         <t t-set="layouts_count" t-value="'Layouts: ' + str(len(palette['palette']))"/>
                                         <t t-set="boxes" t-value="'Boxes: ' + str(palette['boxes']) + ' pcs.'"/>
-                                        <div class="p-2 bd-highlight text-black-50" t-esc="total_height"/>
-                                        <div class="p-2 bd-highlight" t-esc="difference"/>
-                                        <div class="p-2 bd-highlight" t-esc="layouts_count"/>
-                                        <div class="p-2 bd-highlight" t-esc="boxes"/>
+                                        <t t-set="elements" t-value="'Elements: %s' % (str(palette['product_cnt']))"/>
+                                        <t t-set="weight" t-value="'Weight: %s kg' %  (str(palette['product_weight']//1000))"/>
+                                        <t t-set="brutto_weight" t-value="'Brutto: %s kg' %  (str(palette['product_weight']//1000 + palette['cartoon_weight']//1000))"/>
+                                        <div class="px-2 bd-highlight text-success" t-esc="total_from_ground"/>
+                                        <div class="px-2 bd-highlight text-success" t-esc="brutto_weight"/>
+                                        <div class="px-2 bd-highlight text-black-50" t-esc="total_height"/>
+                                        <div class="px-2 bd-highlight text-black-50" t-esc="self_height"/>
+                                        <div class="px-2 bd-highlight" t-esc="difference"/>
+                                        <div class="px-2 bd-highlight" t-esc="layouts_count"/>
+                                        <div class="px-2 bd-highlight" t-esc="boxes"/>
+                                        <div class="px-2 bd-highlight" t-esc="elements"/>
+                                        <div class="px-2 bd-highlight" t-esc="weight"/>
                                     </div>
                                     <table class="table  table-sm">
                                         <thead>
