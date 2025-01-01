@@ -18,6 +18,7 @@ class UgImportOrder(models.TransientModel):
     xls_file = fields.Binary(string='Excel file', required=True)
     xls_filename = fields.Char(string='Excel Filename')
     products_ids = fields.One2many('ug.wholesale.import.order.list', 'wizard_id')
+    distrib_id = fields.Many2one('distrib.distributors', 'Distributor', required=True)
 
     def write(self, vals):
         result = super(UgImportOrder, self).write(vals)
