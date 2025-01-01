@@ -9,7 +9,8 @@
     <template id="palette_list" name="PaletteLists Dropdown">
         <div t-attf-class="o_palette_list_dropdown dropdown #{_classes if hasPalettesDropdown else 'd-none'}">
             <t t-set="curr_pl" t-value="website.palette_id"/>
-            <t t-set="ordr_id" t-value="'0' if not not_card_mode else '0' if not website_sale_order else str(website_sale_order.id)"/>
+            <t t-set="ordr_id"
+               t-value="'0' if not not_card_mode else '0' if not website_sale_order else str(website_sale_order.id)"/>
             <small class="d-none d-lg-inline text-muted" id="palette-data"
                    t-att-data-pl_id="curr_pl.id"
                    t-att-data-order_id="ordr_id"
@@ -30,17 +31,21 @@
             </div>
         </div>
         <t t-if="not_card_mode">
-        <div class="alert alert-info alert-dismissible rounded-0 fade show d-print-none css_editable_mode_hidden">
-<!--            <t t-set="backend_url" t-value="'/web#model=sale.order&amp;id=' + str(website_sale_order.id) + '&amp;view_type=form'"/>-->
-            <t t-set="backend_url" t-value="'/web#model=sale.order&amp;id=%s&amp;view_type=form&amp;action=%s' % (website_sale_order.id, 'ug_wholesale_shop.action_orders_wholesale_shop')"/>
-            <div class="container">
-                <div class="text-center">
-                    This is a packaging calculator.
-                    <a t-att-href="backend_url"
-                       t-attf-class="fa fa-arrow-right me-1" aria-hidden="true" t-out="'Order %s' % (website_sale_order.name)"/>
+            <div class="alert alert-info alert-dismissible rounded-0 fade show d-print-none css_editable_mode_hidden">
+                <!--            <t t-set="backend_url" t-value="'/web#model=sale.order&amp;id=' + str(website_sale_order.id) + '&amp;view_type=form'"/>-->
+                <t t-set="backend_url"
+                   t-value="'/web#model=sale.order&amp;id=%s&amp;view_type=form&amp;action=%s' % (website_sale_order.id, 'ug_wholesale_shop.action_orders_wholesale_shop')"/>
+                <div class="container">
+                    <div class="text-center">
+                        This is a packaging calculator.
+                        <a t-att-href="backend_url"
+                           t-attf-class="fa fa-arrow-right me-1" aria-hidden="true">
+                            <span>Order#</span>
+                            <em t-field="website_sale_order.name"></em>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
         </t>
     </template>
 
@@ -126,7 +131,8 @@
                                                     </td>
                                                 </t>
                                                 <td class="text-center td-qty">
-                                                    <t t-set="order_is_draft" t-value="true if not website_sale_order else website_sale_order.state in ['draft']"/>
+                                                    <t t-set="order_is_draft"
+                                                       t-value="true if not website_sale_order else website_sale_order.state in ['draft']"/>
                                                     <div class="css_quantity input-group mx-auto justify-content-center">
                                                         <t t-if="not line._is_not_sellable_line() and order_is_draft">
 
@@ -188,11 +194,16 @@
         <div class="card js_palettes_list mb16">
             <div class="oe_structure" id="oe_structure_ug_wholesale_shop_cart_5"/>
             <div class="palettes_body p-4">
-                <t t-set="all_boxes" t-value="0 if not palettes_list or not palettes_list['all_boxes'] else palettes_list['all_boxes']"/>
-                <t t-set="all_products" t-value="0 if not palettes_list or not palettes_list['all_products'] else palettes_list['all_products']"/>
+                <t t-set="all_boxes"
+                   t-value="0 if not palettes_list or not palettes_list['all_boxes'] else palettes_list['all_boxes']"/>
+                <t t-set="all_products"
+                   t-value="0 if not palettes_list or not palettes_list['all_products'] else palettes_list['all_products']"/>
                 <t t-set="all_str" t-value="'%s/(%s)' % (all_boxes, all_products)"/>
 
-                <h5 class="d-none d-xl-block">Packing Info - <span class="text-info border border-info rounded" t-out="all_str"/> pcs.</h5>
+                <h5 class="d-none d-xl-block">Packing Info -
+                    <span class="text-info border border-info rounded" t-out="all_str"/>
+                    pcs.
+                </h5>
                 <hr class="d-none d-xl-block"/>
                 <div t-if="palettes_list and palettes_list['palettes'] and len(palettes_list['palettes'])&gt;0"
                      class="accordion"
@@ -233,15 +244,21 @@
                                  data-bs-parent="#accordionPalettes">
                                 <div class="accordion-body">
                                     <div class="card d-flex flex-column bd-highlight mb-5 border border-info rounded">
-                                        <t t-set="total_height" t-value="'Height of filled pallet: ' + str(palette['summ_width']) + ' mm'"/>
-                                        <t t-set="self_height" t-value="'Self-height of pallet: ' + str(palette['self_height']) + ' mm'"/>
-                                        <t t-set="total_from_ground" t-value="'Total height: %s mm' % ((palette['summ_width'] + palette['self_height']))"/>
-                                        <t t-set="difference" t-value="'Difference: ' + str(palette['difference']) + ' mm'"/>
+                                        <t t-set="total_height"
+                                           t-value="'Height of filled pallet: ' + str(palette['summ_width']) + ' mm'"/>
+                                        <t t-set="self_height"
+                                           t-value="'Self-height of pallet: ' + str(palette['self_height']) + ' mm'"/>
+                                        <t t-set="total_from_ground"
+                                           t-value="'Total height: %s mm' % ((palette['summ_width'] + palette['self_height']))"/>
+                                        <t t-set="difference"
+                                           t-value="'Difference: ' + str(palette['difference']) + ' mm'"/>
                                         <t t-set="layouts_count" t-value="'Layouts: ' + str(len(palette['palette']))"/>
                                         <t t-set="boxes" t-value="'Boxes: ' + str(palette['boxes']) + ' pcs.'"/>
                                         <t t-set="elements" t-value="'Elements: %s' % (str(palette['product_cnt']))"/>
-                                        <t t-set="weight" t-value="'Weight: %s kg' %  (str(palette['product_weight']//1000))"/>
-                                        <t t-set="brutto_weight" t-value="'Brutto: %s kg' %  (str(palette['product_weight']//1000 + palette['cartoon_weight']//1000))"/>
+                                        <t t-set="weight"
+                                           t-value="'Weight: %s kg' %  (str(palette['product_weight']//1000))"/>
+                                        <t t-set="brutto_weight"
+                                           t-value="'Brutto: %s kg' %  (str(palette['product_weight']//1000 + palette['cartoon_weight']//1000))"/>
                                         <div class="px-2 bd-highlight text-success" t-esc="total_from_ground"/>
                                         <div class="px-2 bd-highlight text-success" t-esc="brutto_weight"/>
                                         <div class="px-2 bd-highlight text-black-50" t-esc="total_height"/>
@@ -271,14 +288,17 @@
                                         </thead>
                                         <tbody>
                                             <t t-foreach="palette['palette']" t-as="sel_layer">
-                                                <t t-set="sel_depth" t-value="'layer %s mm' % (sel_layer['box'].depth)"/>
-                                                <t t-set="sel_val" t-value="'%s/(%s)' % (len(sel_layer['layers']), sel_layer['product_cnt'])"/>
+                                                <t t-set="sel_depth"
+                                                   t-value="'layer %s mm' % (sel_layer['box'].depth)"/>
+                                                <t t-set="sel_val"
+                                                   t-value="'%s/(%s)' % (len(sel_layer['layers']), sel_layer['product_cnt'])"/>
                                                 <tr>
                                                     <td class="text-center">
                                                         <span class="badge bg-secondary" t-esc="sel_depth"/>
                                                     </td>
                                                     <td class="text-center">
-                                                        <span class="text-muted w-100 border border-success rounded" t-esc="sel_val"/>
+                                                        <span class="text-muted w-100 border border-success rounded"
+                                                              t-esc="sel_val"/>
                                                     </td>
                                                     <td class="text-center">
                                                         <span class="text-muted w-100"
@@ -312,7 +332,7 @@
                         <thead>
                             <tr>
                                 <th class="text-center">
-<!--                                    <span>Boxes</span>-->
+                                    <!--                                    <span>Boxes</span>-->
                                 </th>
                                 <th class="text-center">
                                     <span>Boxes</span>
@@ -328,7 +348,8 @@
                         <tbody>
                             <t t-foreach="palettes_list['unselected_layers']" t-as="un_layer">
                                 <t t-set="un_depth" t-value="'layer %s mm' % (un_layer['box'].depth)"/>
-                                <t t-set="un_val" t-value="'%s/(%s)' % (len(un_layer['layers']), un_layer['product_cnt'])"/>
+                                <t t-set="un_val"
+                                   t-value="'%s/(%s)' % (len(un_layer['layers']), un_layer['product_cnt'])"/>
                                 <tr>
                                     <td class="text-center">
                                         <span class="badge bg-secondary" t-esc="un_depth"/>
@@ -355,10 +376,12 @@
                     </table>
                 </t>
                 <t t-set="redirect_url1"
-                       t-value="'/web/login?redirect=/shop/confirm_order' if redirect_to_sign_in else '/shop/confirm_order'"/>
-                <t t-set="redirect_url" t-value="'/shop/confirmation?order=' + str(website_sale_order.id) if not_card_mode else redirect_url1"/>
+                   t-value="'/web/login?redirect=/shop/confirm_order' if redirect_to_sign_in else '/shop/confirm_order'"/>
+                <t t-set="redirect_url"
+                   t-value="'/shop/confirmation?order=' + str(website_sale_order.id) if not_card_mode else redirect_url1"/>
                 <div class="d-flex justify-content-end mt32">
-                    <t t-set="order_is_draft" t-value="true if not website_sale_order else website_sale_order.state in ['draft']"/>
+                    <t t-set="order_is_draft"
+                       t-value="true if not website_sale_order else website_sale_order.state in ['draft']"/>
                     <t t-set="not_card_mode" t-value="false if not_card_mode else not_card_mode"/>
                     <t t-if="order_is_draft and not not_card_mode">
                         <div class="d-flex flex-column">
@@ -372,7 +395,7 @@
                 </div>
             </div>
         </div>
-<!--        <t t-call="ug_wholesale_shop.palettes_list_total"/>-->
+        <!--        <t t-call="ug_wholesale_shop.palettes_list_total"/>-->
     </template>
 
     <template id="palettes_list_total" name="Calculated Palettes Total">
@@ -404,15 +427,16 @@
                                 <tr>
                                     <td class="text-center">
                                         <h5>
-                                            <span t-attf-class="badge {{'bg-danger' if palette['fill'] &lt;50 else 'bg-warning' if palette['fill'] &lt;90 else 'bg-success'}}" t-esc="id"/>
+                                            <span t-attf-class="badge {{'bg-danger' if palette['fill'] &lt;50 else 'bg-warning' if palette['fill'] &lt;90 else 'bg-success'}}"
+                                                  t-esc="id"/>
                                         </h5>
                                     </td>
                                     <td class="text-center">
                                         <span class="text-muted w-100" t-esc="palette['boxes']"/>
                                     </td>
                                     <td class="text-center">
-<!--                                        <span class="text-muted w-100"-->
-<!--                                              t-esc="int(palette['product_weight']//1000 + palette['cartoon_weight']//1000)"/>-->
+                                        <!--                                        <span class="text-muted w-100"-->
+                                        <!--                                              t-esc="int(palette['product_weight']//1000 + palette['cartoon_weight']//1000)"/>-->
                                         <span class="text-muted w-100"
                                               t-esc="int(palette['product_weight']/1000)"/>
                                     </td>
@@ -432,7 +456,7 @@
                         <thead>
                             <tr>
                                 <th class="text-center">
-<!--                                    <span>PLT</span>-->
+                                    <!--                                    <span>PLT</span>-->
                                 </th>
                                 <th class="text-center">
                                     <span>boxes</span>
@@ -441,7 +465,7 @@
                                     <span>kg</span>
                                 </th>
                                 <th class="text-center">
-<!--                                    <span>cm</span>-->
+                                    <!--                                    <span>cm</span>-->
                                 </th>
                             </tr>
                         </thead>
@@ -451,7 +475,9 @@
                                 <t t-set="un_val" t-value="'%s' % (len(un_layer['layers']))"/>
                                 <tr>
                                     <td class="text-center">
-                                        <h5><span class="badge bg-secondary" t-esc="un_depth"/></h5>
+                                        <h5>
+                                            <span class="badge bg-secondary" t-esc="un_depth"/>
+                                        </h5>
                                     </td>
                                     <td class="text-center">
                                         <span class="text-muted w-100" t-esc="un_val"/>
@@ -471,12 +497,18 @@
                     <table class="table mb-0">
                         <tbody>
                             <tr>
-                                <td class="text-center border-0"> <strong>Total:</strong></td>
+                                <td class="text-center border-0">
+                                    <strong>Total:</strong>
+                                </td>
                                 <td class="text-xl-center border-0">
-                                    <strong><span t-out="all_boxes"/></strong>
+                                    <strong>
+                                        <span t-out="all_boxes"/>
+                                    </strong>
                                 </td>
                                 <td class="text-xl-start border-0">
-                                    <strong><span t-out="all_weight"/></strong>
+                                    <strong>
+                                        <span t-out="all_weight"/>
+                                    </strong>
                                 </td>
                                 <td class="border-0"/>
                             </tr>
@@ -509,20 +541,21 @@
                         </div>
                         <div class="col-5">
                             <t t-call="ug_wholesale_shop.palettes_list_lines"/>
-<!--                            <t t-call="ug_wholesale_shop.palettes_list_total"/>-->
-<!--                            <t t-call="website_sale.short_cart_summary">-->
-<!--                            </t>-->
+                            <!--                            <t t-call="ug_wholesale_shop.palettes_list_total"/>-->
+                            <!--                            <t t-call="website_sale.short_cart_summary">-->
+                            <!--                            </t>-->
                         </div>
                         <!--                        <div class="col-12 col-xl-auto">-->
                         <!--                            <t t-call="website_sale.short_cart_summary">-->
                         <!--                            </t>-->
                         <!--                        </div>-->
                     </div>
-<!--                    <t t-set="redirect_url"-->
-<!--                       t-value="'/web/login?redirect=/shop/confirm_order' if redirect_to_sign_in else '/shop/confirm_order'"/>-->
+                    <!--                    <t t-set="redirect_url"-->
+                    <!--                       t-value="'/web/login?redirect=/shop/confirm_order' if redirect_to_sign_in else '/shop/confirm_order'"/>-->
                     <div class="d-flex justify-content-start">
-                        <t t-set="order_is_draft" t-value="true if not website_sale_order else website_sale_order.state in ['draft']"/>
-                        <t t-if="order_is_draft" >
+                        <t t-set="order_is_draft"
+                           t-value="true if not website_sale_order else website_sale_order.state in ['draft']"/>
+                        <t t-if="order_is_draft">
                             <div>
                                 <a role="button" href="/shop/cart" class="btn btn-secondary mb32">
                                     <span class="fa fa-shopping-cart"/>
@@ -572,12 +605,14 @@
                             </div>
                             <div class="d-flex flex-row">
                                 <t t-if="not not_card_mode">
-                                    <a class="btn btn-outline-secondary float-start mr16" role="button" href="/shop/cart">
+                                    <a class="btn btn-outline-secondary float-start mr16" role="button"
+                                       href="/shop/cart">
                                         <i class="fa fa-shopping-cart"/>
                                         Back to cart
                                     </a>
                                 </t>
-                                <t t-set="redirect_url" t-value="'/shop/calculator?order=' + str(order.id) if not_card_mode else '/shop/calculator'"/>
+                                <t t-set="redirect_url"
+                                   t-value="'/shop/calculator?order=' + str(order.id) if not_card_mode else '/shop/calculator'"/>
                                 <a class="btn btn-outline-primary float-start" role="button" t-att-href="redirect_url">
                                     <i class="fa fa-chevron-circle-left"/>
                                     Back to packing list
