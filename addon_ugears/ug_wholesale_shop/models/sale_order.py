@@ -546,3 +546,11 @@ class SaleOrder(models.Model):
         # palettes['all_products'] = product_cnt
         # palettes['all_weight'] = product_weight
         return palettes
+
+    def _get_packing_list(self):
+        self.ensure_one()
+        package_data = self._get_package_from_order()
+        palette_id = self.pallet_id.id
+        if palette_id:
+            return self._calculate_package_list(package_data, palette_id)
+        return {'unselected_layers': [], 'palettes': []}

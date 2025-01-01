@@ -5,4 +5,18 @@
         <field name="url">/shop</field>
         <field name="target">self</field>
     </record>
+
+    <record id="action_orders_wholesale_shop" model="ir.actions.act_window">
+            <field name="name">Orders</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_mode">tree,form,kanban,activity</field>
+            <field name="domain">[]</field>
+            <field name="context">{'show_sale': True, 'search_default_from_website': 1}</field>
+            <field name="search_view_id" ref="website_sale.view_sales_order_filter_ecommerce"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_empty_folder">
+                    There is no confirmed order from the website
+                </p>
+            </field>
+        </record>
 </odoo>

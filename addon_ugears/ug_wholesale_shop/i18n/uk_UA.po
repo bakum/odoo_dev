@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-28 17:12+0000\n"
-"PO-Revision-Date: 2024-12-28 17:12+0000\n"
+"POT-Creation-Date: 2025-01-01 12:12+0000\n"
+"PO-Revision-Date: 2025-01-01 12:12+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -24,16 +24,6 @@ msgid " gram"
 msgstr " г"
 
 #. module: ug_wholesale_shop
-#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
-msgid "&amp; Shipping"
-msgstr "&amp; Доставка"
-
-#. module: ug_wholesale_shop
-#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
-msgid "<b>Shipping:</b>"
-msgstr "<b>Доставка: </b>"
-
-#. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.palette_list
 msgid "<i class=\"fa fa-arrow-right me-1\"/>Back to order"
 msgstr "<i class=\"fa fa-arrow-right me-1\"/>До замовлення"
@@ -42,8 +32,26 @@ msgstr "<i class=\"fa fa-arrow-right me-1\"/>До замовлення"
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
 msgid ""
 "<i class=\"fa fa-check\"/>\n"
-"                                            Confirm"
+"                                    Confirm"
 msgstr "<i class=\"fa fa-check\"/> Підтвердити"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
+msgid ""
+"<i class=\"fa fa-chevron-circle-left\"/>\n"
+"                                    Back to packing list"
+msgstr ""
+"<i class=\"fa fa-chevron-circle-left\"/>\n"
+"                                    До листа про пакування"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
+msgid ""
+"<i class=\"fa fa-shopping-cart\"/>\n"
+"                                        Back to cart"
+msgstr ""
+"<i class=\"fa fa-shopping-cart\"/>\n"
+"                                        До кошика"
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.packing_list
@@ -103,6 +111,11 @@ msgid "<span>Order</span>"
 msgstr "<span>Замовлення</span>"
 
 #. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.palettes_list_total
+msgid "<span>PLT</span>"
+msgstr ""
+
+#. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.packing_list
 msgid "<span>Packing List</span>"
 msgstr "<span>Лист про пакування</span>"
@@ -115,6 +128,26 @@ msgid ""
 msgstr ""
 "<span>Продовжити покупки</span>\n"
 "                                <span class=\"fa fa-shopping-bag\"/>"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.palettes_list_total
+msgid "<span>boxes</span>"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.palettes_list_total
+msgid "<span>cm</span>"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.palettes_list_total
+msgid "<span>kg</span>"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.palettes_list_total
+msgid "<strong>Total:</strong>"
+msgstr "<strong>Всього:</strong>"
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__active
@@ -137,11 +170,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.distrib_product_package
 msgid "Barcode"
 msgstr "Штрих-код"
-
-#. module: ug_wholesale_shop
-#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
-msgid "Billing"
-msgstr "Оплата"
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.distrib_product_package
@@ -263,6 +291,7 @@ msgstr "Файл Excel"
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.palettes_list_lines
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.palettes_list_total
 msgid "Extra boxes"
 msgstr "Додаткові коробки"
 
@@ -396,6 +425,7 @@ msgid "Order Status"
 msgstr "Статус"
 
 #. module: ug_wholesale_shop
+#: model:ir.actions.act_window,name:ug_wholesale_shop.action_orders_wholesale_shop
 #: model:ir.ui.menu,name:ug_wholesale_shop.menu_distrib_orders
 msgid "Orders"
 msgstr "Замовлення"
@@ -451,6 +481,11 @@ msgstr "Палета"
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.palettes_list_lines
 msgid "Palettes"
 msgstr "Палети"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.palettes_list_total
+msgid "Palettes Total"
+msgstr "Загалом палети"
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_distributors__pallet_id
@@ -590,6 +625,11 @@ msgid ""
 msgstr "Даний товар не має ціни, тому його не можна додати до кошику."
 
 #. module: ug_wholesale_shop
+#: model_terms:ir.actions.act_window,help:ug_wholesale_shop.action_orders_wholesale_shop
+msgid "There is no confirmed order from the website"
+msgstr "На сайті немає підтвердженого замовлення"
+
+#. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.palette_list
 msgid "This is a packaging calculator."
 msgstr "Це калькулятор пакування."
@@ -667,7 +707,7 @@ msgstr "шт. в коробці"
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.palettes_list_lines
 msgid "pcs."
-msgstr "pcs."
+msgstr ""
 
 #. module: website_sale
 #: model:website.menu,name:website_sale.menu_shop
