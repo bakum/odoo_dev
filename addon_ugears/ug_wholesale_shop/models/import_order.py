@@ -121,7 +121,7 @@ class UgImportOrderList(models.TransientModel):
     barcode = fields.Char('Barcode')
     description = fields.Char('Description')
 
-    @api.depends('qtt','product_id')
+    @api.depends('qtt', 'product_id')
     def _compute_product_by_box(self):
         for line in self:
             package = 0 if line.product_id.qty_in_cartoon == 0 else line.qtt // line.product_id.qty_in_cartoon
