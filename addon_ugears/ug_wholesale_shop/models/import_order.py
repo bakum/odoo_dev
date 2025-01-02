@@ -14,11 +14,14 @@ class UgImportOrder(models.TransientModel):
     def _default_name(self):
         return _('Please load the xlsx file')
 
+    def _default_distrib(self):
+        return self.env.user.distrib_id
+
     name = fields.Char('Name', default=_default_name)
     xls_file = fields.Binary(string='Excel file', required=True)
     xls_filename = fields.Char(string='Excel Filename')
     products_ids = fields.One2many('ug.wholesale.import.order.list', 'wizard_id')
-    distrib_id = fields.Many2one('distrib.distributors', 'Distributor', required=True)
+    distrib_id = fields.Many2one('distrib.distributors', 'Distributor', required=True, default=_default_distrib)
 
     def write(self, vals):
         result = super(UgImportOrder, self).write(vals)
