@@ -23,15 +23,40 @@ class UgImportOrder(models.TransientModel):
     products_ids = fields.One2many('ug.wholesale.import.order.list', 'wizard_id')
     distrib_id = fields.Many2one('distrib.distributors', 'Distributor', required=True, default=_default_distrib)
 
+    def _prepare_order_value(self):
+        values = {
+            'company_id': self.env.company.id,
+
+            # 'fiscal_position_id': fiscal_position_id,
+            'partner_id': self.distrib_id.partner_id.id,
+            'partner_invoice_id': self.distrib_id.partner_id.id,
+            # 'partner_shipping_id': addr['delivery'],
+
+            'pricelist_id': self.distrib_id.pricelist_id,
+            # 'payment_term_id': self.sale_get_payment_term(partner_sudo),
+
+            'team_id': self.distrib_id.partner_id.parent_id.team_id.id or self.distrib_id.partner_id.team_id.id,
+            'user_id': self.env.user.id,
+            # 'website_id': self.id,
+        }
+        return values
+
     def write(self, vals):
         result = super(UgImportOrder, self).write(vals)
 
+        # SaleOrder = self.env['sale.order'].sudo()
+        # so_data = self._prepare_order_value()
+        # sale_order_sudo = SaleOrder.with_user(self.env.user).create(so_data)
+        #
+        # for line in self.products_ids:
+        #     pass
+
         return result
 
-    @api.onchange('xls_filename')
-    def _onchange_type(self):
-        if self.xls_filename:
-            self.load_order_from_xls()
+    # @api.onchange('xls_filename')
+    # def _onchange_type(self):
+    #     if self.xls_filename:
+    #         self.load_order_from_xls()
 
     def _get_product_dict(self, data_array):
         ProductRec = self.env['product.product']
@@ -43,7 +68,7 @@ class UgImportOrder(models.TransientModel):
         domain = [('barcode', '=', barcode)]
         product = ProductRec.search(domain)[:1]
         if product:
-            return {'product_id': product, 'description': data_array[1], 'qtt': data_array[2], 'barcode': barcode,
+            return {'product_id': product.id, 'description': data_array[1], 'qtt': data_array[2], 'barcode': barcode,
                     'name': data_array[1]}
         return {'product_id': ProductRec, 'description': data_array[1], 'qtt': data_array[2], 'barcode': barcode,
                 'name': data_array[1]}
@@ -59,7 +84,7 @@ class UgImportOrder(models.TransientModel):
             raise UserError('Only excel files are supported.')
 
         products = []
-        self.products_ids.unlink()
+        # self.products_ids.unlink()
         for sheet in book.sheets():
             try:
                 if sheet.name == 'Distr Order':
@@ -80,16 +105,25 @@ class UgImportOrder(models.TransientModel):
                 self.name = _("Successfully loaded")
         except ValueError:
             self.name = _("Wrong format of file")
-        # return {
-        #     'name': _('Imported order'),
-        #     'type': 'ir.actions.act_window',
-        #     'res_model': 'sale.order',
-        #     'view_mode': 'tree,kanban,activity',
-        #     'domain': [('website_id', '!=', False)],
-        #     'context': {
-        #         'active_ids': self._context.get('active_ids'),
-        #     },
-        # }
+        return {
+            'name': _('Import order'),
+            'res_model': 'ug.wholesale.import.order',
+            'view_mode': 'form',
+            'res_id': self.id,
+            'context': {
+                'default_name': self.name,
+                'default_xls_file': self.xls_file,
+                'default_xls_filename': self.xls_filename,
+                'default_distrib_id': self.distrib_id,
+                'default_products_ids': self.products_ids,
+                # 'active_ids': self._context.get('active_ids'),
+            },
+            'target': 'new',
+            'type': 'ir.actions.act_window',
+        }
+
+    def save_order(self):
+        pass
 
 
 class UgImportOrderList(models.TransientModel):
@@ -97,13 +131,10 @@ class UgImportOrderList(models.TransientModel):
     _description = "Products list"
     _order = 'name'
 
-    wizard_id = fields.Many2one('ug.wholesale.import.order')
+    wizard_id = fields.Many2one('ug.wholesale.import.order',ondelete='cascade')
     product_id = fields.Many2one(
         comodel_name='product.product',
-        string="Product",
-        change_default=True, ondelete='restrict', index='btree_not_null',
-        required=True,
-        domain="[('sale_ok', '=', True)]")
+        string="Product")
 
     product_template_id = fields.Many2one(
         string="Product Template",
@@ -114,7 +145,7 @@ class UgImportOrderList(models.TransientModel):
         # previously related='product_id.product_tmpl_id'
         # not anymore since the field must be considered editable for product configurator logic
         # without modifying the related product_id when updated.
-        domain=[('sale_ok', '=', True)])
+    )
     name = fields.Char('Name', readonly=True)
     qtt = fields.Float('Quantity', digits=(12, 1))
     qtt_by_box = fields.Float('Quantity by boxes', compute='_compute_product_by_box', store=True)
