@@ -63,8 +63,10 @@
                                 <div class="container">
                                     <div class="row justify-content-start">
                                         <div class="col-6">
-                                            <!--                                            <span>Box -</span>-->
-                                            <h5>
+                                            <h5 t-if="not package['id']">
+                                                <span class="badge bg-danger" >Product packaging is not configured</span>
+                                            </h5>
+                                            <h5 t-else="">
                                                 <span class="badge bg-secondary" t-out="package['name']"/>
                                             </h5>
                                         </div>
@@ -172,8 +174,10 @@
                                                         </t>
                                                     </div>
                                                 </td>
+<!--                                                <t t-set="package_qtt"-->
+<!--                                                   t-value="int((int(line.product_uom_qty) == line.product_uom_qty and int(line.product_uom_qty) or line.product_uom_qty)//int(line.product_id.qty_in_cartoon))"/>-->
                                                 <t t-set="package_qtt"
-                                                   t-value="int((int(line.product_uom_qty) == line.product_uom_qty and int(line.product_uom_qty) or line.product_uom_qty)//int(line.product_id.qty_in_cartoon))"/>
+                                                   t-value="0 if int(line.product_id.qty_in_cartoon) == 0 else int(line.product_uom_qty//line.product_id.qty_in_cartoon)"/>
                                                 <td class="text-center td-packaging">
                                                     <span class="badge bg-primary" id="package_qtt"
                                                           t-out="package_qtt"/>

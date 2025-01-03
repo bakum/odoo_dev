@@ -229,7 +229,7 @@ class SaleOrder(models.Model):
         value = {}
         values = []
         for line in self.order_line:
-            pack_quantity = int(line.product_uom_qty / line.product_id.qty_in_cartoon)
+            pack_quantity = 0 if line.product_id.qty_in_cartoon == 0 else int(line.product_uom_qty / line.product_id.qty_in_cartoon)
             cartoon = line.cartoon_id
             pack_found = value.get(cartoon.id) or 0
             if not pack_found:
@@ -255,17 +255,17 @@ class SaleOrder(models.Model):
     def _fill_size_variants_and_pallet_limits(self, package_data, palette):
         for line in package_data:
             line['depth'] = line['box'].depth
-            line['pallet11'] = palette.width // line['box'].width
-            line['pallet22'] = palette.height // line['box'].height
+            line['pallet11'] = 0 if line['box'].width == 0 else palette.width // line['box'].width
+            line['pallet22'] = 0 if line['box'].height == 0 else  palette.height // line['box'].height
             line['boxes_on_layer'] = line['pallet11'] * line['pallet22']
 
-            line['pallet21'] = palette.height // line['box'].width
-            line['pallet12'] = palette.width // line['box'].height
+            line['pallet21'] = 0 if line['box'].width == 0 else palette.height // line['box'].width
+            line['pallet12'] = 0 if line['box'].height == 0 else palette.width // line['box'].height
             line['boxes_on_layer2'] = line['pallet21'] * line['pallet12']
 
             line['max_boxes_on_layer'] = max(line['boxes_on_layer'], line['boxes_on_layer2'])
             line['min_boxes_on_layer'] = min(line['boxes_on_layer'], line['boxes_on_layer2'])
-            line['max_layers'] = palette.depth // line['box'].depth
+            line['max_layers'] = 0 if line['box'].depth == 0 else palette.depth // line['box'].depth
         return package_data
 
     def _refill_by_depth(self, package_data):
@@ -339,7 +339,7 @@ class SaleOrder(models.Model):
         # width, height = abin.width, abin.height
 
         # Number of rectangles packed into first bin
-        nrect = len(packer[0])
+        # nrect = len(packer[0])
 
         # Second bin first rectangle
         # rect = packer[0][0]

@@ -22,6 +22,11 @@ class UgImportOrder(models.TransientModel):
     xls_filename = fields.Char(string='Excel Filename')
     products_ids = fields.One2many('ug.wholesale.import.order.list', 'wizard_id')
     distrib_id = fields.Many2one('distrib.distributors', 'Distributor', required=True, default=_default_distrib)
+    len_products = fields.Integer(compute='get_len_products')
+
+    @api.depends('products_ids')
+    def get_len_products(self):
+        self.len_products = len(self.products_ids)
 
     def _prepare_order_value(self):
         values = {
@@ -32,7 +37,7 @@ class UgImportOrder(models.TransientModel):
             'partner_invoice_id': self.distrib_id.partner_id.id,
             # 'partner_shipping_id': addr['delivery'],
 
-            'pricelist_id': self.distrib_id.pricelist_id,
+            'pricelist_id': self.distrib_id.pricelist_id.id,
             # 'payment_term_id': self.sale_get_payment_term(partner_sudo),
 
             'team_id': self.distrib_id.partner_id.parent_id.team_id.id or self.distrib_id.partner_id.team_id.id,
@@ -84,7 +89,7 @@ class UgImportOrder(models.TransientModel):
             raise UserError('Only excel files are supported.')
 
         products = []
-        # self.products_ids.unlink()
+        self.products_ids.unlink()
         for sheet in book.sheets():
             try:
                 if sheet.name == 'Distr Order':
@@ -123,7 +128,25 @@ class UgImportOrder(models.TransientModel):
         }
 
     def save_order(self):
+
+        SaleOrder = self.env['sale.order'].sudo()
+        so_data = self._prepare_order_value()
+        sale_order_sudo = SaleOrder.with_user(self.env.user).create(so_data)
+        products = []
+        for line in self.products_ids:
+            product = {
+                'product_id': line.product_id.id,
+                'name': line.product_id.display_name,
+                'product_uom_qty': line.qtt
+            }
+
+            products.append((0,0,product))
+
+        sale_order_sudo.order_line = products
         pass
+
+    # def cancel_order(self):
+    #     pass
 
 
 class UgImportOrderList(models.TransientModel):
