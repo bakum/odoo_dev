@@ -1,38 +1,26 @@
-# Copyright 2021 ACSONE SA/NV
-# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html)
-
 import json
-from typing import Any
 
-from pydantic.utils import GetterDict
-
-from odoo import fields, models, http
+from odoo import http
 
 
-def parse_external_id(data_dict):
-    code = None
-    for key in data_dict:
-        if key == 'id':
-            code = data_dict[key]
-        ext_id = http.request.env['ir.model.data'].sudo().search([('name', '=', data_dict[key])], limit=1)
-        if len(ext_id) > 0:
-            data_dict[key] = ext_id[0].res_id
-
-    return data_dict, code
-
-
-def apply_update_from_request(kw, search_criterias, modelname, guid=None):
+def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=None):
     try:
         if guid:
             ext_id = http.request.env['ir.model.data'].sudo().search([('name', '=', guid)], limit=1)
             if len(ext_id) > 0:
                 for line in ext_id:
                     id = line.res_id
-                    moves = http.request.env[modelname].sudo().search([('id', '=', id)], limit=1)
+                    if http.request.httprequest.method == 'GET':
+                        moves = http.request.env[modelname].sudo().search_read([('id', '=', id)], limit=1)
+                    else:
+                        moves = http.request.env[modelname].sudo().search([('id', '=', id)], limit=1)
             else:
-                moves = http.request.env[modelname].sudo().search([('guid', '=', guid)], limit=1)
+                if http.request.httprequest.method == 'GET':
+                    moves = http.request.env[modelname].sudo().search_read([('guid', '=', guid)], limit=1)
+                else:
+                    moves = http.request.env[modelname].sudo().search([('guid', '=', guid)], limit=1)
         else:
-            moves = http.request.env[modelname].sudo().search(kw)
+            moves = http.request.env[modelname].sudo().search_read(kw)
     except Exception:
         raise http.BadRequest("Bad request")
 
@@ -47,11 +35,23 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None):
         if (len(kw) != 0 or guid) and len(moves) > 0:
             written = moves[0].write(search_criterias)
             mod = {"success": written}
+            for model in moves:
+                translate_field(model, trans)
+                new_dict = model.read(list(set(http.request.env[modelname]._fields)))
+                mod['result'] = new_dict
+                # print(new_dict)
             return mod
         else:
             written = http.request.env[modelname].sudo().create(search_criterias)
+            mod = {"success": False}
+            for model in written:
+                translate_field(model, trans)
+                new_dict = model.read(list(set(http.request.env[modelname]._fields)))
+                mod['result'] = new_dict
+                mod['success'] = True
+                # print(new_dict)
             if id_ext:
-                found = http.request.env['ir.model.data'].sudo().search([('name', '=', id_ext)], limit=1)
+                found = http.request.env['ir.model.data'].sudo().search_read([('name', '=', id_ext)], limit=1)
                 if len(found) == 0:
                     http.request.env['ir.model.data'].sudo().create({
                         'name': id_ext,
@@ -60,13 +60,20 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None):
                         'res_id': written.id
                     })
 
-            return written
+            return mod
     elif http.request.httprequest.method == 'PUT':
+        mod = {"success": False}
         if (len(moves) > 0) and guid:
             written = moves[0].write(search_criterias)
-        else:
-            written = False
-        return {"success": written}
+            for model in moves:
+                translate_field(model, trans)
+                new_dict = model.read(list(set(http.request.env[modelname]._fields)))
+                mod['result'] = new_dict
+                mod['success'] = written
+                # print(new_dict)
+        # else:
+        #     written = False
+        return mod
     elif http.request.httprequest.method == 'DELETE':
         if (len(moves) > 0) and guid:
             deleted = moves[0].unlink()
@@ -75,48 +82,37 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None):
         return {"success": deleted}
 
 
-def batch_update_from(data, modelname):
-    res = []
-    if type(data) != list:
-        dict_1 = data
-        data = [dict_1]
-    for line in data:
-        ln, code = parse_external_id(line)
-        moves = dict()
-
-        if 'id' in ln:
-            moves = http.request.env[modelname].sudo().search([('id', '=', ln['id'])], limit=1)
-            del ln['id']
-        if 'guid' in ln:
-            if len(moves) == 0:
-                moves = http.request.env[modelname].sudo().search([('guid', '=', ln['guid'])], limit=1)
-
-        if moves and len(moves) > 0:
-            written = moves[0].write(ln)
-            res.append({
-                'guid': moves[0].guid,
-                'name': moves[0].name,
-                'operation': 'update',
-                'success': written
-            })
-        else:
-            written = http.request.env[modelname].sudo().create(ln)
-            if code:
-                found = http.request.env['ir.model.data'].sudo().search([('name', '=', code)], limit=1)
-                if len(found) == 0:
-                    http.request.env['ir.model.data'].sudo().create({
-                        'name': code,
-                        'model': modelname,
-                        'module': '__import__',
-                        'res_id': written.id
-                    })
-            res.append({
-                'guid': written.guid,
-                'name': written.name,
-                'operation': 'create',
-                'success': True
-            })
-    return res
+def translate_field(rec, trans):
+    for fld in rec._fields:
+        field = rec._fields[fld]
+        if field.column_type is None:
+            continue
+        if not (field.column_type[0] == 'jsonb'):
+            continue
+        # if field.compute:
+        #     continue
+        # if not isinstance(rec[fld], str):
+        #     continue
+        # try:
+        #     translations = field._get_stored_translations(rec)
+        #     if isinstance(translations, dict):
+        #         for key in translations:
+        #             pass
+        # except:
+        #     pass
+        if not fld in trans:
+            continue
+        trans_fiels = trans[fld]
+        translations = field._get_stored_translations(rec)
+        if isinstance(translations, dict):
+            for key in trans_fiels:
+                # if key in trans_fiels:
+                tr = trans_fiels[key]
+                translations[key] = tr
+                rec.env.cache.update_raw(
+                    rec, field, [translations], dirty=True
+                )
+                rec.modified([fld])
 
 
 def parse_data_from_request(kw=None):
@@ -154,63 +150,17 @@ def get_search_criterias(kw):
     return search_criterias
 
 
-class GenericOdooGetter(GetterDict):
-    """A generic GetterDict for Odoo models
+def get_trans_from_request(kw):
+    trans = {}
+    keys_for_delete = []
+    for key in kw:
+        if 'lang' in key:
+            arr = key.split('_')
+            trans[arr[0]] = kw[key]
+            keys_for_delete.append(key)
+            # del kw[key]
 
-    The getter take care of casting one2many and many2many
-    field values to python list to allow the from_orm method from
-    pydantic class to work on odoo models. This getter is to specify
-    into the pydantic config.
+    for i in keys_for_delete:
+        del kw[i]
 
-    Usage:
-
-     .. code-block:: python
-
-        import pydantic
-        from odoo.addons.pydantic import models, utils
-
-        class Group(models.BaseModel):
-            name: str
-
-            class Config:
-                orm_mode = True
-                getter_dict = utils.GenericOdooGetter
-
-        class UserInfo(models.BaseModel):
-            name: str
-            groups: List[Group] = pydantic.Field(alias="groups_id")
-
-            class Config:
-                orm_mode = True
-                getter_dict = utils.GenericOdooGetter
-
-        user = self.env.user
-        user_info = UserInfo.from_orm(user)
-
-    To avoid having to repeat the specific configuration required for the
-    `from_orm` method into each pydantic model, "odoo_orm_mode" can be used
-     as parent via the `_inherit` attribute
-
-    """
-
-    def get(self, key: Any, default: Any = None) -> Any:
-        res = getattr(self._obj, key, default)
-        if isinstance(self._obj, models.BaseModel) and key in self._obj._fields:
-            field = self._obj._fields[key]
-            if res is False and field.type != "boolean":
-                return None
-            if field.type == "date":
-                if not res:
-                    return None
-                return str(res)
-            if field.type == "datetime":
-                if not res:
-                    return None
-                # Get the timestamp converted to the client's timezone.
-                # This call also add the tzinfo into the datetime object
-                return str(fields.Datetime.context_timestamp(self._obj, res))
-            if field.type == "many2one" and not res:
-                return None
-            if field.type in ["one2many", "many2many"]:
-                return list(res)
-        return res
+    return trans
