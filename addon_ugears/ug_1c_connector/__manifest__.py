@@ -11,7 +11,7 @@
         'product',
         'ug_base_distrib',
     ],
-    "external_dependencies": {
-        "python": ["pydantic"]
-    },
+    # "external_dependencies": {
+    #     "python": ["pydantic"]
+    # },
 }
