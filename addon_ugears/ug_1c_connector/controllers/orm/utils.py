@@ -2,8 +2,21 @@ import json
 
 from odoo import http
 
+def get_id_from_ext_id(ext_id):
+    ext = http.request.env['ir.model.data'].sudo().search([('name', '=', ext_id)], limit=1)
+    id = False
+    if len(ext) > 0:
+        for line in ext:
+            id = line.res_id
+    return ext_id if not id else id
 
 def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=None):
+    for key, value in search_criterias.items():
+        if 'id' in key:
+            if key == 'guid' or key == 'id':
+                continue
+            new_value = get_id_from_ext_id(value)
+            search_criterias[key] = new_value
     try:
         if guid:
             ext_id = http.request.env['ir.model.data'].sudo().search([('name', '=', guid)], limit=1)
@@ -40,6 +53,15 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=
                 new_dict = model.read(list(set(http.request.env[modelname]._fields)))
                 mod['result'] = new_dict
                 # print(new_dict)
+            if id_ext:
+                found = http.request.env['ir.model.data'].sudo().search_read([('name', '=', id_ext)], limit=1)
+                if len(found) == 0:
+                    http.request.env['ir.model.data'].sudo().create({
+                        'name': id_ext,
+                        'model': modelname,
+                        'module': '__import__',
+                        'res_id': written.id
+                    })
             return mod
         else:
             written = http.request.env[modelname].sudo().create(search_criterias)
@@ -71,6 +93,15 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=
                 mod['result'] = new_dict
                 mod['success'] = written
                 # print(new_dict)
+            if id_ext:
+                found = http.request.env['ir.model.data'].sudo().search_read([('name', '=', id_ext)], limit=1)
+                if len(found) == 0:
+                    http.request.env['ir.model.data'].sudo().create({
+                        'name': id_ext,
+                        'model': modelname,
+                        'module': '__import__',
+                        'res_id': written.id
+                    })
         # else:
         #     written = False
         return mod
