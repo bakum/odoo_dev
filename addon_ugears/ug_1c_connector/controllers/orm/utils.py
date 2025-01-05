@@ -42,75 +42,78 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=
         id_ext = search_criterias.get('id')
         del search_criterias['id']
 
-    if http.request.httprequest.method == 'GET':
-        return moves
-    elif http.request.httprequest.method == 'POST':
-        if (len(kw) != 0 or guid) and len(moves) > 0:
-            written = moves[0].write(search_criterias)
-            mod = {"success": written}
-            for model in moves:
-                translate_field(model, trans)
-                new_dict = model.read(list(set(http.request.env[modelname]._fields)))
-                mod['result'] = new_dict
-                # print(new_dict)
-            if id_ext:
-                found = http.request.env['ir.model.data'].sudo().search_read([('name', '=', id_ext)], limit=1)
-                if len(found) == 0:
-                    http.request.env['ir.model.data'].sudo().create({
-                        'name': id_ext,
-                        'model': modelname,
-                        'module': '__import__',
-                        'res_id': written.id
-                    })
-            return mod
-        else:
-            written = http.request.env[modelname].sudo().create(search_criterias)
-            mod = {"success": False}
-            for model in written:
-                translate_field(model, trans)
-                new_dict = model.read(list(set(http.request.env[modelname]._fields)))
-                mod['result'] = new_dict
-                mod['success'] = True
-                # print(new_dict)
-            if id_ext:
-                found = http.request.env['ir.model.data'].sudo().search_read([('name', '=', id_ext)], limit=1)
-                if len(found) == 0:
-                    http.request.env['ir.model.data'].sudo().create({
-                        'name': id_ext,
-                        'model': modelname,
-                        'module': '__import__',
-                        'res_id': written.id
-                    })
+    try:
+        if http.request.httprequest.method == 'GET':
+            return moves
+        elif http.request.httprequest.method == 'POST':
+            if (len(kw) != 0 or guid) and len(moves) > 0:
+                written = moves[0].write(search_criterias)
+                mod = {"success": written}
+                for model in moves:
+                    translate_field(model, trans)
+                    new_dict = model.read(list(set(http.request.env[modelname]._fields)))
+                    mod['result'] = new_dict
+                    # print(new_dict)
+                if id_ext:
+                    found = http.request.env['ir.model.data'].sudo().search_read([('name', '=', id_ext)], limit=1)
+                    if len(found) == 0:
+                        http.request.env['ir.model.data'].sudo().create({
+                            'name': id_ext,
+                            'model': modelname,
+                            'module': '__import__',
+                            'res_id': moves[0].id
+                        })
+                return mod
+            else:
+                written = http.request.env[modelname].sudo().create(search_criterias)
+                mod = {"success": False}
+                for model in written:
+                    translate_field(model, trans)
+                    new_dict = model.read(list(set(http.request.env[modelname]._fields)))
+                    mod['result'] = new_dict
+                    mod['success'] = True
+                    # print(new_dict)
+                if id_ext:
+                    found = http.request.env['ir.model.data'].sudo().search_read([('name', '=', id_ext)], limit=1)
+                    if len(found) == 0:
+                        http.request.env['ir.model.data'].sudo().create({
+                            'name': id_ext,
+                            'model': modelname,
+                            'module': '__import__',
+                            'res_id': written.id
+                        })
 
+                return mod
+        elif http.request.httprequest.method == 'PUT':
+            mod = {"success": False}
+            if (len(moves) > 0) and guid:
+                written = moves[0].write(search_criterias)
+                for model in moves:
+                    translate_field(model, trans)
+                    new_dict = model.read(list(set(http.request.env[modelname]._fields)))
+                    mod['result'] = new_dict
+                    mod['success'] = written
+                    # print(new_dict)
+                if id_ext:
+                    found = http.request.env['ir.model.data'].sudo().search_read([('name', '=', id_ext)], limit=1)
+                    if len(found) == 0:
+                        http.request.env['ir.model.data'].sudo().create({
+                            'name': id_ext,
+                            'model': modelname,
+                            'module': '__import__',
+                            'res_id': moves[0].id
+                        })
+            # else:
+            #     written = False
             return mod
-    elif http.request.httprequest.method == 'PUT':
-        mod = {"success": False}
-        if (len(moves) > 0) and guid:
-            written = moves[0].write(search_criterias)
-            for model in moves:
-                translate_field(model, trans)
-                new_dict = model.read(list(set(http.request.env[modelname]._fields)))
-                mod['result'] = new_dict
-                mod['success'] = written
-                # print(new_dict)
-            if id_ext:
-                found = http.request.env['ir.model.data'].sudo().search_read([('name', '=', id_ext)], limit=1)
-                if len(found) == 0:
-                    http.request.env['ir.model.data'].sudo().create({
-                        'name': id_ext,
-                        'model': modelname,
-                        'module': '__import__',
-                        'res_id': written.id
-                    })
-        # else:
-        #     written = False
-        return mod
-    elif http.request.httprequest.method == 'DELETE':
-        if (len(moves) > 0) and guid:
-            deleted = moves[0].unlink()
-        else:
-            deleted = False
-        return {"success": deleted}
+        elif http.request.httprequest.method == 'DELETE':
+            if (len(moves) > 0) and guid:
+                deleted = moves[0].unlink()
+            else:
+                deleted = False
+            return {"success": deleted}
+    except Exception:
+        return {"success": False}
 
 
 def translate_field(rec, trans):

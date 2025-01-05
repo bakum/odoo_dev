@@ -13,6 +13,7 @@ class PackagesSizes(models.Model):
     depth = fields.Integer('Depth, mm', required=True)
     cartoon_weight = fields.Float('Cartoon Weight, gram', digits=(16, 1), default=0.0)
     self_height = fields.Float('Self-height, mm', digits=(16, 1), default=0.0)
+    guid = fields.Char(string='Guid 1C:Enterprise')
     type_of = fields.Selection(
         selection=[
             ('package', "Package"),
