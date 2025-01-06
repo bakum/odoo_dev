@@ -1,6 +1,8 @@
 import json
+import warnings
 
 from odoo import http
+
 
 def get_id_from_ext_id(ext_id):
     ext = http.request.env['ir.model.data'].sudo().search([('name', '=', ext_id)], limit=1)
@@ -10,10 +12,24 @@ def get_id_from_ext_id(ext_id):
             id = line.res_id
     return ext_id if not id else id
 
-def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=None):
+
+def get_recordset_from_ext_id(ext_id):
+    ext = http.request.env['ir.model.data'].sudo().search([('name', '=', ext_id)], limit=1)
+    id = None
+    mn = None
+    if len(ext) > 0:
+        for line in ext:
+            id = line.res_id
+            mn = line.model
+    if id:
+        return http.request.env[mn].sudo().search([('id', '=', id)])
+    return ext_id
+
+
+def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=None, ids=None):
     for key, value in search_criterias.items():
         if 'id' in key:
-            if key == 'guid' or key == 'id':
+            if key == 'guid' or key == 'id' or 'ids' in key:
                 continue
             new_value = get_id_from_ext_id(value)
             search_criterias[key] = new_value
@@ -51,6 +67,7 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=
                 mod = {"success": written}
                 for model in moves:
                     translate_field(model, trans)
+                    update_ids(model, ids)
                     new_dict = model.read(list(set(http.request.env[modelname]._fields)))
                     mod['result'] = new_dict
                     # print(new_dict)
@@ -69,6 +86,7 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=
                 mod = {"success": False}
                 for model in written:
                     translate_field(model, trans)
+                    update_ids(model, ids)
                     new_dict = model.read(list(set(http.request.env[modelname]._fields)))
                     mod['result'] = new_dict
                     mod['success'] = True
@@ -90,6 +108,7 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=
                 written = moves[0].write(search_criterias)
                 for model in moves:
                     translate_field(model, trans)
+                    update_ids(model, ids)
                     new_dict = model.read(list(set(http.request.env[modelname]._fields)))
                     mod['result'] = new_dict
                     mod['success'] = written
@@ -198,3 +217,30 @@ def get_trans_from_request(kw):
         del kw[i]
 
     return trans
+
+
+def get_ids_from_request(kw):
+    # ids = []
+    many2many = {}
+    keys_for_delete = []
+    for key in kw:
+        if 'ids' in key:
+            ids = []
+            rs = get_recordset_from_ext_id(kw[key])[:1]
+            warnings.simplefilter(action='ignore', category=UserWarning)
+            if rs == kw[key]:
+                continue
+            ids.append((4, rs.id))
+            many2many[key] = ids
+            # kw[key] = ids
+            keys_for_delete.append(key)
+
+    for i in keys_for_delete:
+        del kw[i]
+
+    return many2many
+
+def update_ids(rec, ids):
+    if isinstance(ids, dict):
+        for key in ids:
+            rec[key] = ids[key]
