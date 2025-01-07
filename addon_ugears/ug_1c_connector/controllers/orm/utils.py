@@ -25,14 +25,23 @@ def get_recordset_from_ext_id(ext_id):
         return http.request.env[mn].sudo().search([('id', '=', id)])
     return ext_id
 
-
-def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=None, ids=None):
-    for key, value in search_criterias.items():
+def apply_id_from_ext_id(ext_id_dict):
+    key_for_del = []
+    for key, value in ext_id_dict.items():
         if 'id' in key:
             if key == 'guid' or key == 'id' or 'ids' in key:
                 continue
             new_value = get_id_from_ext_id(value)
-            search_criterias[key] = new_value
+            if isinstance(new_value, int):
+                ext_id_dict[key] = new_value
+            if isinstance(new_value, str):
+                key_for_del.append(key)
+    for x in key_for_del:
+        del ext_id_dict[x]
+
+
+def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=None, ids=None):
+    apply_id_from_ext_id(search_criterias)
     try:
         if guid:
             ext_id = http.request.env['ir.model.data'].sudo().search([('name', '=', guid)], limit=1)
@@ -77,6 +86,7 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=
                         http.request.env['ir.model.data'].sudo().create({
                             'name': id_ext,
                             'model': modelname,
+                            'noupdate': True,
                             'module': '__import__',
                             'res_id': moves[0].id
                         })
@@ -97,6 +107,7 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=
                         http.request.env['ir.model.data'].sudo().create({
                             'name': id_ext,
                             'model': modelname,
+                            'noupdate': True,
                             'module': '__import__',
                             'res_id': written.id
                         })
@@ -119,6 +130,7 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=
                         http.request.env['ir.model.data'].sudo().create({
                             'name': id_ext,
                             'model': modelname,
+                            'noupdate': True,
                             'module': '__import__',
                             'res_id': moves[0].id
                         })
