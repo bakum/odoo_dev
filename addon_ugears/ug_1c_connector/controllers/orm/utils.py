@@ -1,6 +1,4 @@
 import json
-import traceback
-import warnings
 
 from odoo import http
 
@@ -155,17 +153,7 @@ def translate_field(rec, trans):
             continue
         if not (field.column_type[0] == 'jsonb'):
             continue
-        # if field.compute:
-        #     continue
-        # if not isinstance(rec[fld], str):
-        #     continue
-        # try:
-        #     translations = field._get_stored_translations(rec)
-        #     if isinstance(translations, dict):
-        #         for key in translations:
-        #             pass
-        # except:
-        #     pass
+
         if not fld in trans:
             continue
         trans_fiels = trans[fld]
