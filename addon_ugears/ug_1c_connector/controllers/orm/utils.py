@@ -1,4 +1,5 @@
 import json
+import traceback
 import warnings
 
 from odoo import http
@@ -59,8 +60,8 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=
                     moves = http.request.env[modelname].sudo().search([('guid', '=', guid)], limit=1)
         else:
             moves = http.request.env[modelname].sudo().search_read(kw)
-    except Exception:
-        raise http.BadRequest("Bad request")
+    except Exception as e:
+        return {"success": False, 'error': str(e)}
 
     id_ext = None
     if 'id' in search_criterias:
@@ -143,8 +144,8 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=
             else:
                 deleted = False
             return {"success": deleted}
-    except Exception:
-        return {"success": False}
+    except Exception as e:
+        return {"success": False, 'error': str(e)}
 
 
 def translate_field(rec, trans):
@@ -239,8 +240,9 @@ def get_ids_from_request(kw):
         if 'ids' in key:
             ids = []
             rs = get_recordset_from_ext_id(kw[key])[:1]
-            warnings.simplefilter(action='ignore', category=UserWarning)
-            if rs == kw[key]:
+            # warnings.simplefilter(action='ignore', category=UserWarning)
+            if isinstance(rs, str):
+            # if rs == kw[key]:
                 continue
             ids.append((4, rs.id))
             many2many[key] = ids
