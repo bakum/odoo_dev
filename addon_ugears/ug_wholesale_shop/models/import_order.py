@@ -134,13 +134,14 @@ class UgImportOrder(models.TransientModel):
         sale_order_sudo = SaleOrder.with_user(self.env.user).create(so_data)
         products = []
         for line in self.products_ids:
-            product = {
-                'product_id': line.product_id.id,
-                'name': line.product_id.display_name,
-                'product_uom_qty': line.qtt
-            }
+            if line.product_id and line.qtt_by_box > 0:
+                product = {
+                    'product_id': line.product_id.id,
+                    'name': line.product_id.display_name,
+                    'product_uom_qty': line.qtt_by_box
+                }
 
-            products.append((0,0,product))
+                products.append((0,0,product))
 
         sale_order_sudo.order_line = products
         pass
