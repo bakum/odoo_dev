@@ -24,6 +24,7 @@
                         <page name="package" string="Packages" groups="ug_base_distrib.group_distrib_user">
                             <group>
                                 <group>
+                                    <field name="customscode"/>
                                     <field name="weight"/>
                                     <field name="qty_in_cartoon"/>
                                 </group>
