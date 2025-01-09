@@ -24,6 +24,9 @@
         'views/distributors.xml',
         'views/import_order.xml',
         'views/sales_order.xml',
+
+        'report/order_distrib_template.xml',
+        'report/order_distrib_action.xml',
     ],
     'assets': {
         'web.assets_frontend': [

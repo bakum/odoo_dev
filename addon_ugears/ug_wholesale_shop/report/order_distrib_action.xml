@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="report.paperformat" id="ug_wholesale_shop_paperformat_a4">
+        <field name="name">Distributor Order Confirmation A4</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">10</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="action_report_distriborder" model="ir.actions.report">
+        <field name="name">Distributor Order Confirmation</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ug_wholesale_shop.report_distriborder</field>
+        <field name="report_file">ug_wholesale_shop.report_distriborder</field>
+        <field name="print_report_name">'Order Confirmation - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_sale_order"/>
+        <field name="binding_type">report</field>
+<!--        <field name="paperformat_id" ref="ug_wholesale_shop.ug_wholesale_shop_paperformat_a4"/>-->
+    </record>
+</odoo>

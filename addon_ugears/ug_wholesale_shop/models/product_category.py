@@ -10,6 +10,7 @@ class Product(models.Model):
     cartoon_id = fields.Many2one('distrib.packages.sizes', 'Cartoon')
     cartoon_weight_with_model = fields.Float('Cartoon weight with model, gram', store=True,
                                              compute='_compute_cartoon_weight_with_model')
+    customscode = fields.Char('Customs tariff number', default='95030039')
 
     @api.depends('cartoon_id.cartoon_weight', 'weight', 'qty_in_cartoon')
     def _compute_cartoon_weight_with_model(self):

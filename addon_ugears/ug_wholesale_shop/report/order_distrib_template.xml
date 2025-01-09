@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_distriborder_document">
+        <t t-call="web.basic_layout">
+            <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>
+            <t t-set="no_vat" t-value="true"/>
+            <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)" class="float-start"
+                 alt="Logo"/>
+            <table class="table table-sm table-borderless">
+                <tr>
+                    <td width="40%" align="left">
+                        <h4>
+                            <strong style="margin-left:30px;">Order Confirmation #</strong>
+                        </h4>
+                    </td>
+                    <td width="60%" align="left">
+                        <h4>
+                            <span t-field="doc.name" style="margin-left:30px;"/>
+                        </h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left">
+                        <strong style="margin-left:30px;">The Supplier:</strong>
+                    </td>
+                    <td align="left">
+                        <h5>
+                            <span t-field="doc.company_id.partner_id.name" style="margin-left:30px;"/>
+                        </h5>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left">
+                        <strong style="margin-left:30px;">The Buyer:</strong>
+                    </td>
+                    <td align="left">
+                        <h5>
+                            <span t-field="doc.partner_id.name" style="margin-left:30px;"/>
+                        </h5>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left">
+                        <span style="margin-left:30px;">Dated:</span>
+                    </td>
+                    <td align="left">
+                        <span t-field="doc.date_order" style="margin-left:30px;"
+                              t-options="{'format': 'dd/MM/YYYY'}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left">
+                        <span style="margin-left:30px;">Currency:</span>
+                    </td>
+                    <td align="left">
+                        <span t-field="doc.currency_id" style="margin-left:30px;"/>
+                    </td>
+                </tr>
+            </table>
+            <t t-set="all_boxes" t-value="0"/>
+            <t t-set="all_qtt" t-value="0"/>
+            <t t-set="price_title" t-value="'Price per 1 pcs, %s' % (doc.currency_id.name)"/>
+            <t t-set="price_total_title" t-value="'Total, %s excl. VAT' % (doc.currency_id.name)"/>
+            <table class="table table-sm o_main_table mt-4">
+                <thead >
+                    <tr class="bg-200 fw-bold">
+                        <th name="th_number">#</th>
+                        <th name="th_tariff">Customs tariff number</th>
+                        <th name="th_country">Country of origin</th>
+                        <th name="th_barcode" class="col-md-1">Barcode</th>
+                        <th name="th_description" class="col-md-6">Description</th>
+                        <th name="th_qtt">Q-ty</th>
+                        <th name="th_quantity">Unit</th>
+                        <th name="th_pieces">Pieces of boxes in box</th>
+                        <th name="th_boxes">Number of boxes</th>
+                        <th name="th_price"><span t-raw="price_title"/></th>
+                        <th name="th_subtotal"><span t-raw="price_total_title"/></th>
+                    </tr>
+                </thead>
+                <tbody class="sale_tbody">
+                    <t t-set="current_row_number" t-value="0"/>
+
+                    <t t-foreach="doc.order_line" t-as="line">
+                        <t t-if="not line.display_type">
+                        <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_narration' if line.display_type == 'line_narration' else 'fst-normal'">
+                            <td name="td_number" align="center">
+                                <t t-set="current_row_number"
+                                   t-value="current_row_number + 1"/>
+                                <span t-raw="current_row_number"
+                                      style="text-indent:10px"/>
+                            </td>
+                            <td name="td_tariff" class="text-start" align="center"><span style="font-size: 0.7em;" t-field="line.product_id.customscode"/></td>
+                            <td name="td_country" class="text-center" align="center"><span style="font-size: 0.8em;" t-raw="doc.company_id.country_id.display_name"/></td>
+                            <td name="td_barcode" class="text-start">
+                                <span style="font-size: 0.7em;" t-field="line.product_id.barcode"/>
+                            </td>
+                            <td name="td_description" class="text-end">
+                                <span style="font-size: 0.8em;" t-field="line.product_id.display_name"/>
+                            </td>
+                            <td name="td_qtt" class="text-end">
+                                <t t-set="all_qtt" t-value="all_qtt + line.product_uom_qty"/>
+                                <span style="font-size: 0.8em;" t-field="line.product_uom_qty"/>
+                            </td>
+                            <td name="td_quantity" class="text-end">
+<!--                                <span t-field="line.product_uom"/>-->
+                                <span style="font-size: 0.8em;">pca</span>
+                            </td>
+                            <td name="td_pieces" class="text-end">
+                                <span style="font-size: 0.8em;" t-field="line.product_id.qty_in_cartoon"/>
+                            </td>
+                            <td name="td_boxes" class="text-end">
+                                <t t-set="number_of_boxes"
+                                   t-value="0 if line.product_id.qty_in_cartoon == 0 else line.product_uom_qty//line.product_id.qty_in_cartoon"/>
+                                <t t-set="all_boxes" t-value="all_boxes + number_of_boxes"/>
+                                <span t-raw="number_of_boxes"
+                                      style="font-size: 0.8em;"/>
+                            </td>
+                             <td name="td_price" class="text-end">
+                                <span style="font-size: 0.8em;" t-field="line.price_unit"/>
+                            </td>
+                             <td name="td_subtotal" class="text-end o_list_monetary">
+                                <span style="font-size: 0.8em;" t-field="line.price_total"/>
+                            </td>
+                        </tr>
+                        </t>
+                    </t>
+                </tbody>
+                <tfoot>
+                    <tr class="bg-200 fs-6 font-italic">
+                        <td/>
+                        <td/>
+                        <td/>
+                        <td/>
+                        <td>Total Invoice</td>
+                        <td class="text-end">
+                            <span t-raw="all_qtt"/>
+                        </td>
+                        <td/>
+                        <td/>
+                        <td class="text-end">
+                            <span t-raw="all_boxes"/>
+                        </td>
+                        <td/>
+                        <td class="text-end">
+                            <span class="text-nowrap">
+                                <span class="oe_currency_value" t-raw="doc.amount_total"/></span>
+
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </t>
+    </template>
+
+    <template id="report_distriborder">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="ug_wholesale_shop.report_distriborder_document" t-lang="doc.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+</odoo>
