@@ -8,12 +8,12 @@
                  alt="Logo"/>
             <table class="table table-sm table-borderless">
                 <tr>
-                    <td width="40%" align="left">
+                    <td width="50%" align="left">
                         <h4>
                             <strong style="margin-left:30px;">Order Confirmation #</strong>
                         </h4>
                     </td>
-                    <td width="60%" align="left">
+                    <td width="50%" align="left">
                         <h4>
                             <span t-field="doc.name" style="margin-left:30px;"/>
                         </h4>

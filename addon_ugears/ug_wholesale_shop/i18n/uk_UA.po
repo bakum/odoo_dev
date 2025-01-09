@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-02 08:42+0000\n"
-"PO-Revision-Date: 2025-01-02 08:42+0000\n"
+"POT-Creation-Date: 2025-01-09 14:13+0000\n"
+"PO-Revision-Date: 2025-01-09 14:13+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,6 +22,11 @@ msgstr ""
 #, python-format
 msgid " gram"
 msgstr " г"
+
+#. module: ug_wholesale_shop
+#: model:ir.actions.report,print_report_name:ug_wholesale_shop.action_report_distriborder
+msgid "'Order Confirmation - %s' % (object.name)"
+msgstr ""
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
@@ -49,6 +54,11 @@ msgstr ""
 "                                        До кошика"
 
 #. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.packing_list_lines
+msgid "<span class=\"badge bg-danger\">Product packaging is not configured</span>"
+msgstr ""
+
+#. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.packing_list
 msgid ""
 "<span class=\"fa fa-shopping-cart\"/>\n"
@@ -69,6 +79,21 @@ msgid ""
 msgstr ""
 "<span class=\"o_stat_text\">Калькулятор</span>\n"
 "                                <span class=\"o_stat_text\">Перегляд</span>"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
+msgid "<span style=\"font-size: 0.8em;\">pca</span>"
+msgstr "<span style=\"font-size: 0.8em;\">од</span>"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
+msgid "<span style=\"margin-left:30px;\">Currency:</span>"
+msgstr "<span style=\"margin-left:30px;\">Валюта:</span>"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
+msgid "<span style=\"margin-left:30px;\">Dated:</span>"
+msgstr "<span style=\"margin-left:30px;\">Дата:</span>"
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.packing_list_lines
@@ -146,6 +171,21 @@ msgid "<span>kg</span>"
 msgstr ""
 
 #. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
+msgid "<strong style=\"margin-left:30px;\">Order Confirmation #</strong>"
+msgstr "<strong style=\"margin-left:30px;\">Підтвердження замовлення №</strong>"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
+msgid "<strong style=\"margin-left:30px;\">The Buyer:</strong>"
+msgstr "<strong style=\"margin-left:30px;\">Покупець:</strong>"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
+msgid "<strong style=\"margin-left:30px;\">The Supplier:</strong>"
+msgstr "<strong style=\"margin-left:30px;\">Постачальник:</strong>"
+
+#. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.palettes_list_total
 msgid "<strong>Total:</strong>"
 msgstr "<strong>Всього:</strong>"
@@ -169,6 +209,7 @@ msgstr ""
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list__barcode
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.distrib_product_package
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
 msgid "Barcode"
 msgstr "Штрих-код"
 
@@ -224,6 +265,11 @@ msgid "Confirm"
 msgstr "Підтвердити"
 
 #. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
+msgid "Country of origin"
+msgstr "Країна походження"
+
+#. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__create_uid
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__create_uid
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__create_uid
@@ -252,6 +298,13 @@ msgid "Customer"
 msgstr ""
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_product_product__customscode
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_product_template__customscode
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
+msgid "Customs tariff number"
+msgstr "Код УКТЗЕД"
+
+#. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_website__palette_id
 msgid "Default Palette"
 msgstr ""
@@ -264,6 +317,7 @@ msgstr "Висота, мм"
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__name
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list__description
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
 msgid "Description"
 msgstr "Примітка"
 
@@ -279,6 +333,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__distrib_id
 msgid "Distributor"
 msgstr "Дистриб'ютор"
+
+#. module: ug_wholesale_shop
+#: model:ir.actions.report,name:ug_wholesale_shop.action_report_distriborder
+msgid "Distributor Order Confirmation"
+msgstr "Підтвердження замовлення дистриб'ютора"
 
 #. module: ug_wholesale_shop
 #: model:ir.model,name:ug_wholesale_shop.model_distrib_distributors
@@ -302,6 +361,7 @@ msgid "Extra boxes"
 msgstr "Додаткові коробки"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__guid
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_product_public_category__guid
 msgid "Guid 1C:Enterprise"
 msgstr "УІД 1С:Підприємство"
@@ -334,8 +394,11 @@ msgid "Import an order"
 msgstr "Імпорт замовлення"
 
 #. module: ug_wholesale_shop
+#. odoo-python
+#: code:addons/ug_wholesale_shop/models/import_order.py:0
 #: model:ir.actions.act_window,name:ug_wholesale_shop.action_import_order
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.ug_import_order_from_xls_view
+#, python-format
 msgid "Import order"
 msgstr "Імпорт замовлення"
 
@@ -383,6 +446,21 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__len_products
+msgid "Len Products"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.ug_import_order_from_xls_view
+msgid "Load order from Excel"
+msgstr "Завантажити замовлення з Excel"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
+msgid "Logo"
+msgstr "Лого"
+
+#. module: ug_wholesale_shop
 #: model:ir.model.constraint,message:ug_wholesale_shop.constraint_distrib_order_package_line_package_check
 msgid "Minimum 1 package allow"
 msgstr "Допускається мінімум 1 упаковка"
@@ -414,6 +492,11 @@ msgstr "Новий"
 #, python-format
 msgid "Nothing to load"
 msgstr "Даних для завантаження немає"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
+msgid "Number of boxes"
+msgstr "Кількість коробок"
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__date
@@ -502,6 +585,11 @@ msgid "Pallet"
 msgstr "Палета"
 
 #. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
+msgid "Pieces of boxes in box"
+msgstr "Виробів в коробці"
+
+#. module: ug_wholesale_shop
 #. odoo-python
 #: code:addons/ug_wholesale_shop/models/import_order.py:0
 #, python-format
@@ -536,6 +624,11 @@ msgstr "Товари"
 #: model:ir.model,name:ug_wholesale_shop.model_ug_wholesale_import_order_list
 msgid "Products list"
 msgstr "Перелік товарів"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
+msgid "Q-ty"
+msgstr "Кількість"
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__package_qty
@@ -578,6 +671,11 @@ msgstr "Рядок замовлення"
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__salesman_id
 msgid "Salesperson"
 msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.ug_import_order_from_xls_view
+msgid "Save order"
+msgstr "Зберегти замовлення"
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__self_height
@@ -642,9 +740,19 @@ msgid "This is a packaging calculator."
 msgstr "Це калькулятор пакування."
 
 #. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
+msgid "Total Invoice"
+msgstr "Загалом"
+
+#. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__type_of
 msgid "Type of package"
 msgstr "Тип пакування"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
+msgid "Unit"
+msgstr "Од."
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.packing_list_lines
