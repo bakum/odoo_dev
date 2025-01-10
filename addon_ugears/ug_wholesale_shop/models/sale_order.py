@@ -229,7 +229,8 @@ class SaleOrder(models.Model):
         value = {}
         values = []
         for line in self.order_line:
-            pack_quantity = 0 if line.product_id.qty_in_cartoon == 0 else int(line.product_uom_qty / line.product_id.qty_in_cartoon)
+            pack_quantity = 0 if line.product_id.qty_in_cartoon == 0 else int(
+                line.product_uom_qty / line.product_id.qty_in_cartoon)
             cartoon = line.cartoon_id
             pack_found = value.get(cartoon.id) or 0
             if not pack_found:
@@ -239,7 +240,7 @@ class SaleOrder(models.Model):
                 pack_found['name'] = cartoon.name
                 pack_found['quantity'] = pack_quantity
                 pack_found['lines'] = []
-                pack_found['product_id'] =line.product_id.id
+                pack_found['product_id'] = line.product_id.id
                 value[cartoon.id] = pack_found
             else:
                 pack_found['quantity'] = pack_found['quantity'] + pack_quantity
@@ -256,7 +257,7 @@ class SaleOrder(models.Model):
         for line in package_data:
             line['depth'] = line['box'].depth
             line['pallet11'] = 0 if line['box'].width == 0 else palette.width // line['box'].width
-            line['pallet22'] = 0 if line['box'].height == 0 else  palette.height // line['box'].height
+            line['pallet22'] = 0 if line['box'].height == 0 else palette.height // line['box'].height
             line['boxes_on_layer'] = line['pallet11'] * line['pallet22']
 
             line['pallet21'] = 0 if line['box'].width == 0 else palette.height // line['box'].width
@@ -553,4 +554,10 @@ class SaleOrder(models.Model):
         palette_id = self.pallet_id.id
         if palette_id:
             return self._calculate_package_list(package_data, palette_id)
-        return {'unselected_layers': [], 'palettes': []}
+        return {
+            'unselected_layers': [],
+            'palettes': [],
+            'all_products': 0,
+            'all_weight': 0,
+            'all_boxes': 0
+        }

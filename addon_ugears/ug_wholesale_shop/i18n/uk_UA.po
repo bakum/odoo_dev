@@ -26,7 +26,7 @@ msgstr " г"
 #. module: ug_wholesale_shop
 #: model:ir.actions.report,print_report_name:ug_wholesale_shop.action_report_distriborder
 msgid "'Order Confirmation - %s' % (object.name)"
-msgstr ""
+msgstr "'Order Confirmation - %s' % (object.name)"
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
@@ -173,7 +173,7 @@ msgstr ""
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
 msgid "<strong style=\"margin-left:30px;\">Order Confirmation #</strong>"
-msgstr "<strong style=\"margin-left:30px;\">Підтвердження замовлення №</strong>"
+msgstr "<strong style=\"margin-left:30px;\">Підтвердження №</strong>"
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document

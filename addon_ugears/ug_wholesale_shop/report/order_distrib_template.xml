@@ -4,16 +4,18 @@
         <t t-call="web.basic_layout">
             <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>
             <t t-set="no_vat" t-value="true"/>
+            <t t-set="palette_weight" t-value="0 if doc.pallet_id.cartoon_weight == 0 else doc.pallet_id.cartoon_weight//1000"/>
+            <t t-set="palette_gross" t-value="len(palettes_list['palettes']) * palette_weight + palettes_list['all_weight']//1000"/>
             <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)" class="float-start"
                  alt="Logo"/>
             <table class="table table-sm table-borderless">
                 <tr>
-                    <td width="50%" align="left">
+                    <td width="35%" align="left">
                         <h4>
                             <strong style="margin-left:30px;">Order Confirmation #</strong>
                         </h4>
                     </td>
-                    <td width="50%" align="left">
+                    <td width="65%" align="left">
                         <h4>
                             <span t-field="doc.name" style="margin-left:30px;"/>
                         </h4>
@@ -149,13 +151,45 @@
                     </tr>
                 </tfoot>
             </table>
+            <table class="table table-sm table-borderless mt-4">
+                <tbody>
+                    <tr>
+                        <td class="text-end">Gross / Net weight of Shipment (kg):</td>
+                        <td t-if="palettes_list and palettes_list['palettes']" class="text-center">
+                            <span t-raw="'%s/%s' % (palette_gross,palettes_list['all_weight']//1000)"/></td>
+                        <td t-else="" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td class="text-end">Net weight of Shipment (kg):</td>
+                        <td  t-if="palettes_list and palettes_list['all_weight']" class="text-center">
+                            <span t-raw="palettes_list['all_weight']//1000"/></td>
+                        <td  t-else="" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td class="text-end">Number of pallets:</td>
+                        <td t-if="palettes_list and palettes_list['palettes']" class="text-center">
+                            <span t-raw="len(palettes_list['palettes'])"/></td>
+                        <td t-else="" class="text-center"/>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-borderless mt-4">
+                <tbody>
+                    <tr>
+                        <td class="text-center">Terms of payment:</td>
+                        <td class="text-start"><span t-field="doc.payment_term_id"/></td>
+                    </tr>
+                </tbody>
+            </table>
         </t>
     </template>
 
     <template id="report_distriborder">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
-                <t t-call="ug_wholesale_shop.report_distriborder_document" t-lang="doc.partner_id.lang"/>
+                <t t-call="ug_wholesale_shop.report_distriborder_document" t-lang="doc.partner_id.lang">
+                     <t t-set="palettes_list" t-value="doc._get_packing_list()"/>
+                </t>
             </t>
         </t>
     </template>
