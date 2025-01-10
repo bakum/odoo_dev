@@ -523,6 +523,18 @@
         </div>
     </template>
 
+    <template id="alert_warning_logistics" name="Logistics data is preliminary">
+        <div class="alert alert-warning alert-dismissible rounded-0 fade show d-print-none css_editable_mode_hidden">
+            <div class="container">
+                <div class="text-center">
+                    Logistics data is preliminary. Final data will be available after the order is prepared for
+                    shipment.
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"/>
+            </div>
+        </div>
+    </template>
+
     <template id="packing_list" name="Packing List">
         <t t-call="website.layout">
             <t t-set="navClass" t-valuef="light"/>
@@ -530,6 +542,7 @@
             <t t-set="hasPalettesDropdown" t-value="website_sale_palettes and len(website_sale_palettes)&gt;1"/>
             <div id="wrap">
                 <div class="oe_structure" id="oe_structure_ug_wholesale_shop_cart_3"/>
+                <t t-call="ug_wholesale_shop.alert_warning_logistics"/>
                 <div class="container oe_website_sale oe_wholesale_calculator py-4">
                     <h3>
                         <span>Packing List</span>
@@ -586,6 +599,7 @@
         <t t-call="website.layout">
             <t t-set="additional_title">Shop - Confirmed</t>
             <div id="wrap">
+                <t t-call="ug_wholesale_shop.alert_warning_logistics"/>
                 <div class="container oe_website_sale py-2">
                     <h1>
                         <span>Order</span>
