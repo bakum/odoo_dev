@@ -404,9 +404,9 @@
 
     <template id="palettes_list_total" name="Calculated Palettes Total">
         <div class="card js_palettes_list_total mb16">
+            <t t-set="weight_total" t-value="0"/>
             <div class="palettes_total p-4">
                 <t t-if="palettes_list and palettes_list['palettes'] and len(palettes_list['palettes'])&gt;0">
-                    <t t-set="weight_total" t-value="0"/>
                     <h5 class="d-none d-xl-block">Palettes Total</h5>
                     <hr class="d-none d-xl-block"/>
                     <table class="table table-striped table-sm">
