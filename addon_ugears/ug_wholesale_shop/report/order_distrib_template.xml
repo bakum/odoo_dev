@@ -155,15 +155,21 @@
                 <tbody>
                     <tr>
                         <td class="text-end">Gross / Net weight of Shipment (kg):</td>
-                        <td t-if="palettes_list and palettes_list['palettes']" class="text-center">
-                            <span t-raw="'%s/%s' % (palette_gross,palettes_list['all_weight']//1000)"/></td>
-                        <td t-else="" class="text-center"/>
+<!--                        <td t-if="palettes_list and palettes_list['palettes']" class="text-center">-->
+<!--                            <span t-raw="'%s/%s' % (doc.brutto_total,doc.netto_total"/></td>-->
+<!--                        <td t-else="" class="text-center"/>-->
+                        <td class="text-center">
+                            <span t-raw="'%s/%s' % (doc.brutto_total//1000,doc.netto_total//1000)"/>
+                        </td>
                     </tr>
                     <tr>
                         <td class="text-end">Net weight of Shipment (kg):</td>
-                        <td  t-if="palettes_list and palettes_list['all_weight']" class="text-center">
-                            <span t-raw="palettes_list['all_weight']//1000"/></td>
-                        <td  t-else="" class="text-center"/>
+<!--                        <td  t-if="palettes_list and palettes_list['all_weight']" class="text-center">-->
+<!--                            <span t-raw="doc.netto_total"/></td>-->
+<!--                        <td  t-else="" class="text-center"/>-->
+                        <td class="text-center">
+                             <span t-raw="doc.netto_total//1000"/>
+                        </td>
                     </tr>
                     <tr>
                         <td class="text-end">Number of pallets:</td>

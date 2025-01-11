@@ -24,11 +24,26 @@ class DistributorOrderPackageLine(models.Model):
         compute='_compute_name',
         store=True, readonly=False, required=True, precompute=True)
 
+    # package_qty = fields.Integer(
+    #     string="Quantity",
+    #     compute='_compute_package_qty',
+    #     digits='Package Unit', default=0,
+    #     store=True, readonly=True, required=True, precompute=True)
+
     package_qty = fields.Integer(
         string="Quantity",
-        compute='_compute_package_qty',
         digits='Package Unit', default=0,
-        store=True, readonly=True, required=True, precompute=True)
+        readonly=True, required=True)
+
+    weight_netto = fields.Float(
+        string="Netto", digits=(16, 2),
+        default=0.0,
+        readonly=True, required=True)
+
+    weight_brutto = fields.Float(
+        string="Brutto", digits=(16, 2),
+        default=0.0,
+        readonly=True, required=True)
 
     # Order-related fields
     pallet_id = fields.Many2one(
@@ -51,10 +66,11 @@ class DistributorOrderPackageLine(models.Model):
         copy=False, store=True, precompute=True)
     date = fields.Datetime(related='order_id.date_order', string="Order Data", store=True, precompute=True)
 
-    @api.depends('cartoon_id')
-    def _compute_package_qty(self):
-        for line in self:
-            line.package_qty = 1
+    # @api.depends('cartoon_id')
+    # def _compute_package_qty(self):
+    #     for line in self:
+    #         if line.package_qty == 0:
+    #             line.package_qty = 1
 
     @api.depends('cartoon_id')
     def _compute_name(self):

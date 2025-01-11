@@ -552,6 +552,7 @@ class WebsiteWholeSale(WebsiteSale):
 
             if not order.cart_quantity:
                 request.website.sale_reset()
+                order.package_line = order._get_package_line_data()
                 return values
 
             values['cart_quantity'] = order.cart_quantity
@@ -583,6 +584,8 @@ class WebsiteWholeSale(WebsiteSale):
         packing_calc = None
         if palette_id is not None:
             packing_calc = order._calculate_package_list(packing_list, palette_id)
+
+        order.package_line = order._get_package_line_data()
 
         values['website_sale.cart_lines'] = request.env['ir.ui.view']._render_template(
             "website_sale.cart_lines", {

@@ -199,7 +199,7 @@
             <div class="oe_structure" id="oe_structure_ug_wholesale_shop_cart_5"/>
             <div class="palettes_body p-4">
                 <t t-set="all_boxes"
-                   t-value="0 if not palettes_list or not palettes_list['all_boxes'] else palettes_list['all_boxes']"/>
+                   t-value="0 if not website_sale_order else website_sale_order.boxes_total"/>
                 <t t-set="all_products"
                    t-value="0 if not palettes_list or not palettes_list['all_products'] else palettes_list['all_products']"/>
                 <t t-set="all_str" t-value="'%s/(%s)' % (all_boxes, all_products)"/>
@@ -406,6 +406,7 @@
         <div class="card js_palettes_list_total mb16">
             <div class="palettes_total p-4">
                 <t t-if="palettes_list and palettes_list['palettes'] and len(palettes_list['palettes'])&gt;0">
+                    <t t-set="weight_total" t-value="0"/>
                     <h5 class="d-none d-xl-block">Palettes Total</h5>
                     <hr class="d-none d-xl-block"/>
                     <table class="table table-striped table-sm">
@@ -441,6 +442,7 @@
                                     <td class="text-center">
                                         <!--                                        <span class="text-muted w-100"-->
                                         <!--                                              t-esc="int(palette['product_weight']//1000 + palette['cartoon_weight']//1000)"/>-->
+                                        <t t-set="weight_total" t-value="weight_total + int(palette['product_weight']/1000)"/>
                                         <span class="text-muted w-100"
                                               t-esc="int(palette['product_weight']/1000)"/>
                                     </td>
@@ -487,6 +489,7 @@
                                         <span class="text-muted w-100" t-esc="un_val"/>
                                     </td>
                                     <td class="text-center">
+                                        <t t-set="weight_total" t-value="weight_total + int(un_layer['product_weight']//1000)"/>
                                         <span class="text-muted w-100" t-esc="int(un_layer['product_weight']//1000)"/>
                                     </td>
                                     <td/>
@@ -496,8 +499,8 @@
                     </table>
                 </t>
                 <t t-if="palettes_list">
-                    <t t-set="all_boxes" t-value="'%s boxes' % (palettes_list['all_boxes'])"/>
-                    <t t-set="all_weight" t-value="'%s kg' % (int(palettes_list['all_weight']//1000))"/>
+                    <t t-set="all_boxes" t-value="'%s boxes' % (order.boxes_total)"/>
+                    <t t-set="all_weight" t-value="'%s kg' % (weight_total)"/>
                     <table class="table mb-0">
                         <tbody>
                             <tr>

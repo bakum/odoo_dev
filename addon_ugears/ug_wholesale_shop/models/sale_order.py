@@ -23,6 +23,22 @@ class SaleOrder(models.Model):
         states=LOCKED_FIELD_STATES,
         copy=True, auto_join=True)
 
+    boxes_total = fields.Integer(string="Total boxes", store=True, compute='_compute_boxes')
+    netto_total = fields.Float(string="Total netto", store=True, compute='_compute_boxes')
+    brutto_total = fields.Float(string="Total brutto", store=True, compute='_compute_boxes')
+
+    @api.depends('package_line.package_qty')
+    def _compute_boxes(self):
+        for order in self:
+            # order = order.with_company(order.company_id)
+            order_lines = order.package_line
+            amount_boxes = sum(order_lines.mapped('package_qty'))
+            amount_products = sum(order_lines.mapped('weight_netto'))
+            amount_brutto = sum(order_lines.mapped('weight_brutto'))
+            order.boxes_total = amount_boxes
+            order.netto_total = amount_products
+            order.brutto_total = amount_brutto
+
     @api.model
     def fields_view_get(self, view_id=None, view_type='form', toolbar=False, submenu=False):
         menu_id = self._context.get('menu_id', False)
@@ -108,21 +124,24 @@ class SaleOrder(models.Model):
         }
         return values
 
-    def _cart_update_package_line(self, cartoon_id, quantity, order_line, **kwargs):
+    def _cart_update_package_line(self, product_id, quantity, order_line, **kwargs):
         self.ensure_one()
 
-        if order_line and quantity <= 0:
+        cartoon = product_id.cartoon_id
+        package = 0 if product_id.qty_in_cartoon == 0 else quantity // product_id.qty_in_cartoon
+
+        if order_line and package <= 0:
             # Remove zero or negative lines
             order_line.unlink()
             order_line = self.env['distrib.order.package.line']
         elif order_line:
             # Update existing line
-            update_values = self._prepare_package_line_update_values(order_line, quantity, **kwargs)
+            update_values = self._prepare_package_line_update_values(order_line, package, **kwargs)
             if update_values:
                 self._update_package_line_values(order_line, update_values)
-        elif quantity > 0:
+        elif package > 0:
             # Create new line
-            order_line_values = self._prepare_package_line_values(cartoon_id, quantity, **kwargs)
+            order_line_values = self._prepare_package_line_values(cartoon.id, package, **kwargs)
             order_line = self.env['distrib.order.package.line'].sudo().create(order_line_values)
         return order_line
 
@@ -203,7 +222,7 @@ class SaleOrder(models.Model):
             warning = ''
 
         order_line = self._cart_update_order_line(product_id, quantity, order_line, **kwargs)
-        # pack_line = self._cart_update_package_line(product.cartoon_id.id, pack_quantity, pack_line, **kwargs)
+        # pack_line = self._cart_update_package_line(product, quantity, pack_line, **kwargs)
 
         if (
                 order_line
@@ -547,6 +566,22 @@ class SaleOrder(models.Model):
         # palettes['all_products'] = product_cnt
         # palettes['all_weight'] = product_weight
         return palettes
+
+    def _get_package_line_data(self):
+        self.package_line.unlink()
+        package_data = self._get_package_from_order()
+        data = []
+        for package in package_data:
+            line = {}
+            line['order_id'] = self.id
+            line['cartoon_id'] = package['box'].id
+            line['package_qty'] = package['quantity']
+            netto = sum([item.product_id.weight * item.product_uom_qty for item in package['lines']])
+            brutto = sum([item.product_id.weight * item.product_uom_qty + package['quantity'] * package['box'].cartoon_weight for item in package['lines']])
+            line['weight_netto'] = netto
+            line['weight_brutto'] = brutto
+            data.append((0, 0, line))
+        return data
 
     def _get_packing_list(self):
         self.ensure_one()

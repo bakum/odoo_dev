@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-10 15:01+0000\n"
-"PO-Revision-Date: 2025-01-10 15:01+0000\n"
+"POT-Creation-Date: 2025-01-11 12:04+0000\n"
+"PO-Revision-Date: 2025-01-11 12:04+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -217,6 +217,11 @@ msgstr "Штрих-код"
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.distrib_product_package
 msgid "Box size, mm"
 msgstr "Розмір коробки, мм"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__weight_brutto
+msgid "Brutto"
+msgstr "Брутто"
 
 #. module: ug_wholesale_shop
 #. odoo-python
@@ -497,6 +502,11 @@ msgid "Net weight of Shipment (kg):"
 msgstr "Нетто (кг):"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__weight_netto
+msgid "Netto"
+msgstr "Нетто"
+
+#. module: ug_wholesale_shop
 #. odoo-python
 #: code:addons/ug_wholesale_shop/models/product_category.py:0
 #, python-format
@@ -557,6 +567,7 @@ msgstr "Упаковка"
 #: model:ir.actions.act_window,name:ug_wholesale_shop.action_distrib_package
 #: model:ir.ui.menu,name:ug_wholesale_shop.menu_distrib_packages_pallets
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.view_product_package_form_inherit
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.view_sale_order_form_inherit_distrib
 msgid "Packages"
 msgstr "Пакування"
 
@@ -777,6 +788,21 @@ msgstr "Це калькулятор пакування."
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
 msgid "Total Invoice"
 msgstr "Загалом"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order__boxes_total
+msgid "Total boxes"
+msgstr "Всього ящиків"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order__brutto_total
+msgid "Total brutto"
+msgstr "Всього брутто"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order__netto_total
+msgid "Total netto"
+msgstr "Всього нетто"
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__type_of

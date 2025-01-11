@@ -16,6 +16,33 @@
                             </div>
                         </button>
                     </div>
+                    <xpath expr="//tree/field[@name='product_uom_qty']" position="attributes">
+                        <attribute name="readonly">1</attribute>
+                    </xpath>
+                    <xpath expr="//tree/field[@name='price_unit']" position="attributes">
+                        <attribute name="readonly">1</attribute>
+                    </xpath>
+                    <xpath expr="//tree/field[@name='product_template_id']" position="attributes">
+                        <attribute name="readonly">1</attribute>
+                    </xpath>
+                    <xpath expr="//page[@name='customer_signature']" position="after">
+                        <page name="package" string="Packages" groups="ug_base_distrib.group_distrib_user">
+                            <group>
+                                <field name="pallet_id" widget="many2one" options="{'no_create': True, 'no_open': True}"
+                                       domain="[('type_of', '=', 'pallet')]" readonly="1"/>
+                            </group>
+                            <field name="package_line"
+                                   attrs="{'readonly': 1}">
+                                <tree create="false" editable="top">
+                                    <field name="name" optional="hide"/>
+                                    <field name="cartoon_id" optional="show"/>
+                                    <field name="package_qty"/>
+                                    <field name="weight_netto"/>
+                                    <field name="weight_brutto"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </xpath>
                 </data>
             </field>
         </record>
