@@ -41,6 +41,14 @@
                                     <field name="weight_brutto"/>
                                 </tree>
                             </field>
+                            <group name="note_group" col="6" class="mt-2 mt-md-0">
+                                <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                    <field name="boxes_total" readonly="1"/>
+                                    <field name="netto_total" readonly="1"/>
+                                    <field name="brutto_total" readonly="1"/>
+                                </group>
+                                <div class="clearfix"/>
+                            </group>
                         </page>
                     </xpath>
                 </data>
