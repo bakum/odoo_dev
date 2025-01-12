@@ -621,6 +621,7 @@ class WebsiteWholeSale(WebsiteSale):
         if post.get('order'):
             order_id = int(post['order'])
             order = request.env['sale.order'].browse(order_id)
+            order._recalc_by_package()
 
             values = {
                 'order': order,
