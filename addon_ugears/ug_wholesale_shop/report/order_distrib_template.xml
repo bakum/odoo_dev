@@ -159,7 +159,7 @@
 <!--                            <span t-raw="'%s/%s' % (doc.brutto_total,doc.netto_total"/></td>-->
 <!--                        <td t-else="" class="text-center"/>-->
                         <td class="text-center">
-                            <span t-raw="'%s/%s' % (doc.brutto_total//1000,doc.netto_total//1000)"/>
+                            <span t-raw="'%s/%s' % (round(doc.brutto_total/1000,2),round(doc.netto_total/1000,2))"/>
                         </td>
                     </tr>
                     <tr>
@@ -168,7 +168,7 @@
 <!--                            <span t-raw="doc.netto_total"/></td>-->
 <!--                        <td  t-else="" class="text-center"/>-->
                         <td class="text-center">
-                             <span t-raw="doc.netto_total//1000"/>
+                             <span t-raw="round(doc.netto_total/1000,2)"/>
                         </td>
                     </tr>
                     <tr>

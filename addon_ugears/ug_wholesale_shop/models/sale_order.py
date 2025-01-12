@@ -577,7 +577,8 @@ class SaleOrder(models.Model):
             line['cartoon_id'] = package['box'].id
             line['package_qty'] = package['quantity']
             netto = sum([item.product_id.weight * item.product_uom_qty for item in package['lines']])
-            brutto = sum([item.product_id.weight * item.product_uom_qty + package['quantity'] * package['box'].cartoon_weight for item in package['lines']])
+            # brutto = sum([item.product_id.weight * item.product_uom_qty + package['quantity'] * package['box'].cartoon_weight for item in package['lines']])
+            brutto = package['box'].cartoon_weight * package['quantity'] + netto
             line['weight_netto'] = netto
             line['weight_brutto'] = brutto
             data.append((0, 0, line))

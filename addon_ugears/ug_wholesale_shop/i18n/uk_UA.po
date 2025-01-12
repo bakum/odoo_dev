@@ -221,7 +221,7 @@ msgstr "Розмір коробки, мм"
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__weight_brutto
 msgid "Brutto"
-msgstr "Брутто"
+msgstr "Брутто, г"
 
 #. module: ug_wholesale_shop
 #. odoo-python
@@ -504,7 +504,7 @@ msgstr "Нетто (кг):"
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__weight_netto
 msgid "Netto"
-msgstr "Нетто"
+msgstr "Нетто, г"
 
 #. module: ug_wholesale_shop
 #. odoo-python
@@ -797,12 +797,12 @@ msgstr "Всього ящиків"
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order__brutto_total
 msgid "Total brutto"
-msgstr "Всього брутто"
+msgstr "Всього брутто, г"
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order__netto_total
 msgid "Total netto"
-msgstr "Всього нетто"
+msgstr "Всього нетто, г"
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__type_of
