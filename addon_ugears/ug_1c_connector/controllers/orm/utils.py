@@ -24,6 +24,7 @@ def get_recordset_from_ext_id(ext_id):
         return http.request.env[mn].sudo().search([('id', '=', id)])
     return ext_id
 
+
 def apply_id_from_ext_id(ext_id_dict):
     key_for_del = []
     for key, value in ext_id_dict.items():
@@ -37,6 +38,55 @@ def apply_id_from_ext_id(ext_id_dict):
                 key_for_del.append(key)
     for x in key_for_del:
         del ext_id_dict[x]
+
+
+def apply_pricelist_from_request(kw, search_criterias, guid):
+    pricelist_sudo = http.request.env['product.pricelist'].sudo()
+    pricelist = pricelist_sudo
+    try:
+        if guid:
+            pricelist = pricelist_sudo.search([('guid', '=', guid)])[:1]
+
+        id_ext = search_criterias.get('id')
+        del search_criterias['id']
+        price_items = search_criterias.get('item_ids')
+        del search_criterias['item_ids']
+        apply_id_from_ext_id(search_criterias)
+
+        if pricelist:
+            written = pricelist.write(search_criterias)
+            mod = {"success": written}
+        else:
+            pricelist = pricelist.create(search_criterias)
+            mod = {"success": False}
+
+        for model in pricelist:
+            new_dict = model.read(list(set(http.request.env['product.pricelist']._fields)))
+            mod['result'] = new_dict
+            mod['success'] = True
+            # print(new_dict)
+        if id_ext:
+            found = http.request.env['ir.model.data'].sudo().search_read([('name', '=', id_ext)], limit=1)
+            if len(found) == 0:
+                http.request.env['ir.model.data'].sudo().create({
+                    'name': id_ext,
+                    'model': 'product.pricelist',
+                    'noupdate': True,
+                    'module': '__import__',
+                    'res_id': pricelist.id
+                })
+
+        pricelist.item_ids.unlink()
+        items = []
+        for x in price_items:
+            apply_id_from_ext_id(x)
+            items.append((0, 0, x))
+
+        pricelist.item_ids = items
+        return mod
+
+    except Exception as e:
+        return {"success": False, 'error': str(e)}
 
 
 def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=None, ids=None):
@@ -230,7 +280,7 @@ def get_ids_from_request(kw):
             rs = get_recordset_from_ext_id(kw[key])[:1]
             # warnings.simplefilter(action='ignore', category=UserWarning)
             if isinstance(rs, str):
-            # if rs == kw[key]:
+                # if rs == kw[key]:
                 continue
             ids.append((4, rs.id))
             many2many[key] = ids
@@ -241,6 +291,7 @@ def get_ids_from_request(kw):
         del kw[i]
 
     return many2many
+
 
 def update_ids(rec, ids):
     if isinstance(ids, dict):
