@@ -38,7 +38,7 @@ class DictionariesController(http.Controller):
                 methods=['POST'])
     def put_pricelist(self, guid=None, **kw):
         data_for_edit, sk = parse_data_from_request(kw)
-        result_dict = apply_pricelist_from_request(sk, data_for_edit, guid)
+        result_dict = apply_pricelist_from_request(data_for_edit, guid)
 
         if type(result_dict) is dict:
             return json.dumps(result_dict, default=date_utils.json_default)

@@ -40,7 +40,7 @@ def apply_id_from_ext_id(ext_id_dict):
         del ext_id_dict[x]
 
 
-def apply_pricelist_from_request(kw, search_criterias, guid):
+def apply_pricelist_from_request(search_criterias, guid):
     pricelist_sudo = http.request.env['product.pricelist'].sudo()
     pricelist = pricelist_sudo
     try:
