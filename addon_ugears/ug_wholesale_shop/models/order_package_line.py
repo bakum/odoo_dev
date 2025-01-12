@@ -32,7 +32,7 @@ class DistributorOrderPackageLine(models.Model):
 
     package_qty = fields.Integer(
         string="Quantity",
-        digits='Package Unit', default=0,
+        default=0,
         readonly=True, required=True)
 
     weight_netto = fields.Float(
@@ -79,4 +79,3 @@ class DistributorOrderPackageLine(models.Model):
                 continue
             name = line.cartoon_id.type_of + ' - ' + line.cartoon_id.ref
             line.name = name
-
