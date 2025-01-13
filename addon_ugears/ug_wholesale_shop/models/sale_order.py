@@ -2,9 +2,11 @@ import math
 from datetime import datetime
 
 from odoo import models, _, fields, api
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, AccessError
 from odoo.http import request
 from rectpack import newPacker, PackingBin
+
+from odoo.tools import float_is_zero
 
 LOCKED_FIELD_STATES = {
     state: [('readonly', True)]
@@ -27,6 +29,13 @@ class SaleOrder(models.Model):
     netto_total = fields.Float(string="Total netto", store=True, compute='_compute_boxes')
     brutto_total = fields.Float(string="Total brutto", store=True, compute='_compute_boxes')
 
+    def _action_confirm(self):
+        self._recalc_by_package()
+        return super(SaleOrder, self)._action_confirm()
+
+    def _action_cancel(self):
+        return super()._action_cancel()
+
     @api.depends('package_line.package_qty')
     def _compute_boxes(self):
         for order in self:
@@ -46,6 +55,52 @@ class SaleOrder(models.Model):
         res = super(SaleOrder, self).fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar,
                                                      submenu=submenu)
         return res
+
+    def _prepare_distrib_move_inc(self):
+        self.ensure_one()
+        domain = [('partner_id', '=', self.partner_invoice_id.id)]
+        distrib = self.env['distrib.distributors'].search(domain)[:1]
+
+        return {
+            'operation': 'inc',
+            'currency_id': self.currency_id.id,
+            'distrib_id': False if not distrib else distrib.id,
+            'move_line': [],
+            'user_id': self.user_id.id,
+        }
+
+    def _get_distrib_delivered_lines(self, final=False):
+        # pending_section = None
+        invoiceable_line_ids = []
+        precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
+        for line in self.order_line:
+            if line.display_type == 'line_section':
+                # Only invoice the section if one of its lines is invoiceable
+                # pending_section = line
+                continue
+            if line.display_type != 'line_note' and float_is_zero(line.qty_to_distrib_deliver, precision_digits=precision):
+                continue
+            if line.qty_to_distrib_deliver > 0 or (line.qty_to_distrib_deliver < 0 and final) or line.display_type == 'line_note':
+                invoiceable_line_ids.append(line.id)
+        return self.env['sale.order.line'].browse(invoiceable_line_ids)
+
+    def _create_distrib_move_inc(self):
+        if not self.env['distrib.distributors.move'].check_access_rights('create', False):
+            try:
+                self.check_access_rights('write')
+                self.check_access_rule('write')
+            except AccessError:
+                return self.env['distrib.distributors.move']
+
+        for order in self:
+            order = order.with_company(order.company_id).with_context(lang=order.partner_invoice_id.lang)
+            move_val = order._prepare_distrib_move_inc()
+            not_delivered_lines = order._get_distrib_delivered_lines(True)
+
+            if not any(not line.display_type for line in not_delivered_lines):
+                continue
+            for line in not_delivered_lines:
+                pass
 
     def _recalc_by_package(self):
         self.ensure_one()
