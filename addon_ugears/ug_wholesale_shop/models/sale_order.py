@@ -49,14 +49,15 @@ class SaleOrder(models.Model):
 
     def _recalc_by_package(self):
         self.ensure_one()
-        for line in self.order_line:
-            product = line.product_id
-            add_qty = line.product_uom_qty
-            package = add_qty // product.qty_in_cartoon
-            package_float = add_qty / product.qty_in_cartoon
-            if package_float > package:
-                package += 1
-            line.product_uom_qty = package * product.qty_in_cartoon
+        if self.state == 'draft':
+            for line in self.order_line:
+                product = line.product_id
+                add_qty = line.product_uom_qty
+                package = add_qty // product.qty_in_cartoon
+                package_float = add_qty / product.qty_in_cartoon
+                if package_float > package:
+                    package += 1
+                line.product_uom_qty = package * product.qty_in_cartoon
 
     def action_calculate_sale_order(self):
         self.ensure_one()
