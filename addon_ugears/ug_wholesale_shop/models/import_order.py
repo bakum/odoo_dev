@@ -144,7 +144,7 @@ class UgImportOrder(models.TransientModel):
                 products.append((0,0,product))
 
         sale_order_sudo.order_line = products
-        pass
+        sale_order_sudo.package_line = sale_order_sudo._get_package_line_data()
 
     # def cancel_order(self):
     #     pass

@@ -14,8 +14,14 @@
                                 <span class="o_stat_text">Calculator</span>
                                 <span class="o_stat_text">Preview</span>
                             </div>
+<!--                             <field name="incoming_count" widget="statinfo" string="incoming"/>-->
                         </button>
                     </div>
+                    <xpath expr="//button[@name='action_draft']" position="before">
+                        <button name="create_distrib_move_inc" string="Deliver"
+                                type="object" class="btn btn-outline-primary"
+                                attrs="{'invisible': ['|', ('state', 'not in', ['sale']), ('id', '=', False)]}"/>
+                    </xpath>
                     <xpath expr="//tree/field[@name='product_uom_qty']" position="attributes">
                         <attribute name="readonly">1</attribute>
                     </xpath>

@@ -4,6 +4,7 @@ from . import website
 from . import order_package_line
 from . import packages_sizes
 from . import distrib_move
+from . import distrib_move_line
 from . import sale_order
 from . import sale_order_line
 from . import distributors

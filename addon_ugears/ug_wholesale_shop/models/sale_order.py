@@ -29,6 +29,59 @@ class SaleOrder(models.Model):
     netto_total = fields.Float(string="Total netto", store=True, compute='_compute_boxes')
     brutto_total = fields.Float(string="Total brutto", store=True, compute='_compute_boxes')
 
+    incoming_count = fields.Integer(string="Incoming Count", compute='_get_incoming')
+    distrib_ids = fields.Many2many(
+        comodel_name='distrib.distributors.move',
+        string="Incoming Distributors",
+        compute='_get_incoming',
+        search='_search_distrib_ids',
+        copy=False)
+
+    @api.depends('order_line.incoming_lines')
+    def _get_incoming(self):
+        for order in self:
+            incoming = order.order_line.incoming_lines.move_id.filtered(
+                lambda r: r.operation in ('inc')
+            )
+            order.distrib_ids = incoming
+            order.incoming_count = len(incoming)
+
+    def _search_distrib_ids(self, operator, value):
+        if operator == 'in' and value:
+            self.env.cr.execute("""
+                SELECT array_agg(so.id)
+                    FROM sale_order so
+                    JOIN sale_order_line sol ON sol.order_id = so.id
+                    JOIN sale_order_line_incoming_rel soli_rel ON soli_rel.order_line_id = sol.id
+                    JOIN distrib_distributors_move_line aml ON aml.id = soli_rel.incoming_line_id
+                    JOIN distrib_distributors_move am ON am.id = aml.move_id
+                WHERE
+                    am.operation in ('inc') AND
+                    am.id = ANY(%s)
+            """, (list(value),))
+            so_ids = self.env.cr.fetchone()[0] or []
+            return [('id', 'in', so_ids)]
+        elif operator == '=' and not value:
+            # special case for [('invoice_ids', '=', False)], i.e. "Invoices is not set"
+            #
+            # We cannot just search [('order_line.invoice_lines', '=', False)]
+            # because it returns orders with uninvoiced lines, which is not
+            # same "Invoices is not set" (some lines may have invoices and some
+            # doesn't)
+            #
+            # A solution is making inverted search first ("orders with invoiced
+            # lines") and then invert results ("get all other orders")
+            #
+            # Domain below returns subset of ('order_line.invoice_lines', '!=', False)
+            order_ids = self._search([
+                ('order_line.incoming_lines.move_id.operation', 'in', ('inc'))
+            ])
+            return [('id', 'not in', order_ids)]
+        return [
+            ('order_line.incoming_lines.move_id.operation', 'in', ('inc')),
+            ('order_line.incoming_lines.move_id', operator, value),
+        ]
+
     def _action_confirm(self):
         self._recalc_by_package()
         return super(SaleOrder, self)._action_confirm()
@@ -78,11 +131,17 @@ class SaleOrder(models.Model):
                 # Only invoice the section if one of its lines is invoiceable
                 # pending_section = line
                 continue
-            if line.display_type != 'line_note' and float_is_zero(line.qty_to_distrib_deliver, precision_digits=precision):
+            if line.display_type != 'line_note' and float_is_zero(line.qty_to_distrib_deliver,
+                                                                  precision_digits=precision):
                 continue
-            if line.qty_to_distrib_deliver > 0 or (line.qty_to_distrib_deliver < 0 and final) or line.display_type == 'line_note':
+            if line.qty_to_distrib_deliver > 0 or (
+                    line.qty_to_distrib_deliver < 0 and final) or line.display_type == 'line_note':
                 invoiceable_line_ids.append(line.id)
         return self.env['sale.order.line'].browse(invoiceable_line_ids)
+
+    def create_distrib_move_inc(self):
+        self.ensure_one()
+        return self._create_distrib_move_inc()
 
     def _create_distrib_move_inc(self):
         if not self.env['distrib.distributors.move'].check_access_rights('create', False):
@@ -95,12 +154,34 @@ class SaleOrder(models.Model):
         for order in self:
             order = order.with_company(order.company_id).with_context(lang=order.partner_invoice_id.lang)
             move_val = order._prepare_distrib_move_inc()
+            if not move_val['distrib_id']:
+                return {
+                    'type': 'ir.actions.client',
+                    'tag': 'display_notification',
+                    'params': {
+                        'title': _('Warning'),
+                        'type': 'warning',
+                        'message': _('Unable to find distributor for deliver'),
+                        'sticky': True,
+                    }
+                }
             not_delivered_lines = order._get_distrib_delivered_lines(True)
 
             if not any(not line.display_type for line in not_delivered_lines):
                 continue
             for line in not_delivered_lines:
                 pass
+
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'title': _('Success'),
+                    'type': 'success',
+                    'message': _('The incoming document has been successfully generated.'),
+                    'sticky': True,
+                }
+            }
 
     def _recalc_by_package(self):
         self.ensure_one()

@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from odoo import models, fields, api, Command
 
 
 class SaleOrder(models.Model):
@@ -12,6 +12,25 @@ class SaleOrder(models.Model):
     distrib_move_ids = fields.One2many('distrib.distributors.move', 'sale_line_id', string='Distributor Moves')
     qty_to_distrib_deliver = fields.Float(compute='_compute_qty_to_distrib_deliver', digits='Product Unit of Measure')
     display_qty_distrib_widget = fields.Boolean(compute='_compute_qty_to_distrib_deliver')
+
+    incoming_lines = fields.Many2many(
+        comodel_name='distrib.distributors.move.line',
+        relation='sale_order_line_incoming_rel', column1='order_line_id', column2='incoming_line_id',
+        string="Incoming Lines",
+        copy=False)
+
+    def _prepare_incoming_line(self, **optional_values):
+        self.ensure_one()
+        res = {
+            'display_type': self.display_type or 'product',
+            'sequence': self.sequence,
+            'name': self.name,
+            'product_id': self.product_id.id,
+            'product_uom_id': self.product_uom.id,
+            'product_uom_qty': self.qty_to_distrib_deliver,
+            'price_unit': self.price_unit,
+            'sale_line_ids': [Command.link(self.id)],
+        }
 
     def _get_outgoing_incoming_moves(self):
         outgoing_moves_ids = set()
