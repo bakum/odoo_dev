@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="view_form_inherit_distrib_move" model="ir.ui.view">
+            <field name="name">distributors.form.inherit.distrib.move</field>
+            <field name="model">distrib.distributors.move</field>
+            <field name="inherit_id" ref="ug_base_distrib.view_distributors_distrib_move_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//div[hasclass('oe_title')]" position="before">
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_order" type="object" class="oe_stat_button"
+                                    icon="fa-pencil-square-o" attrs="{'invisible': [('order_count', '=', 0)]}">
+                                <field name="order_count" widget="statinfo" string="Sale Order"/>
+                            </button>
+                        </div>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+    </data>
+</odoo>

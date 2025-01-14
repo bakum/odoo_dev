@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-11 12:04+0000\n"
-"PO-Revision-Date: 2025-01-11 12:04+0000\n"
+"POT-Creation-Date: 2025-01-14 18:35+0000\n"
+"PO-Revision-Date: 2025-01-14 18:35+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -191,6 +191,21 @@ msgid "<strong>Total:</strong>"
 msgstr "<strong>Всього:</strong>"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,help:ug_wholesale_shop.field_sale_order_line__qty_delivered_method
+msgid ""
+"According to product configuration, the delivered quantity can be automatically computed by mechanism :\n"
+"  - Manual: the quantity is set manually on the line\n"
+"  - Analytic From expenses: the quantity is the quantity sum from posted expenses\n"
+"  - Timesheet: the quantity is the sum of hours recorded on tasks linked to this sale line\n"
+"  - Stock Moves: the quantity comes from confirmed pickings\n"
+msgstr ""
+"Відповідно до налаштування товару, доставлена кількість може автоматично обчислюватися за допомогою механізму:\n"
+"   - Вручну: кількість на рядку встановлюється вручну\n"
+"   - Аналітика з витрат: кількість - сума від опублікованих витрат\n"
+"   - Табель: кількість - це сума годин, записаних на завданні, пов'язані з цим рядком продажу\n"
+"   - Складські переміщення: кількість надходить від підтверджених комплектувань\n"
+
+#. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__active
 msgid "Active"
 msgstr ""
@@ -320,6 +335,16 @@ msgid "Default Palette"
 msgstr ""
 
 #. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.view_sale_order_form_inherit_distrib
+msgid "Deliver"
+msgstr "Доставити"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.view_sale_order_form_inherit_distrib
+msgid "Delivery"
+msgstr "Доставка"
+
+#. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__depth
 msgid "Depth, mm"
 msgstr "Висота, мм"
@@ -340,9 +365,20 @@ msgid "Display Name"
 msgstr ""
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order_line__display_qty_distrib_widget
+msgid "Display Qty Distrib Widget"
+msgstr ""
+
+#. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__distrib_id
 msgid "Distributor"
 msgstr "Дистриб'ютор"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order_line__distrib_move_ids
+#: model:ir.model.fields.selection,name:ug_wholesale_shop.selection__sale_order_line__qty_delivered_method__distrib_move
+msgid "Distributor Moves"
+msgstr ""
 
 #. module: ug_wholesale_shop
 #: model:ir.actions.report,name:ug_wholesale_shop.action_report_distriborder
@@ -353,6 +389,16 @@ msgstr "Підтвердження замовлення дистриб'ютор�
 #: model:ir.model,name:ug_wholesale_shop.model_distrib_distributors
 msgid "Distributors records"
 msgstr "Дистриб'ютори"
+
+#. module: ug_wholesale_shop
+#: model:ir.model,name:ug_wholesale_shop.model_distrib_distributors_move_line
+msgid "Distributors stock record lines"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model:ir.model,name:ug_wholesale_shop.model_distrib_distributors_move
+msgid "Distributors stock records"
+msgstr ""
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__xls_filename
@@ -423,6 +469,21 @@ msgid "Import order from xls"
 msgstr "Імпорт замовлення з xls"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order__incoming_count
+msgid "Incoming Count"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order__distrib_ids
+msgid "Incoming Distributors"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order_line__incoming_lines
+msgid "Incoming Lines"
+msgstr ""
+
+#. module: ug_wholesale_shop
 #. odoo-python
 #: code:addons/ug_wholesale_shop/controllers/main.py:0
 #, python-format
@@ -485,6 +546,11 @@ msgid "Logo"
 msgstr "Лого"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order_line__qty_delivered_method
+msgid "Method to update delivered qty"
+msgstr "Метод оновлення доставленої кількості"
+
+#. module: ug_wholesale_shop
 #: model:ir.model.constraint,message:ug_wholesale_shop.constraint_distrib_order_package_line_package_check
 msgid "Minimum 1 package allow"
 msgstr "Допускається мінімум 1 упаковка"
@@ -536,6 +602,11 @@ msgstr "Кількість коробок"
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
 msgid "Number of pallets:"
 msgstr "Кількість палет:"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_distributors_move__order_count
+msgid "Order Count"
+msgstr ""
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__date
@@ -671,6 +742,11 @@ msgid "Q-ty"
 msgstr "Кількість"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order_line__qty_to_distrib_deliver
+msgid "Qty To Distrib Deliver"
+msgstr ""
+
+#. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__package_qty
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list__qtt
 msgid "Quantity"
@@ -698,6 +774,17 @@ msgid "Remove one"
 msgstr ""
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_distributors_move__sale_line_id
+msgid "Sale Line"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_distributors_move__sale_order_id
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.view_form_inherit_distrib_move
+msgid "Sale Order"
+msgstr "Замовлення"
+
+#. module: ug_wholesale_shop
 #: model:ir.model,name:ug_wholesale_shop.model_sale_order
 msgid "Sales Order"
 msgstr "Замовлення на продаж"
@@ -706,6 +793,11 @@ msgstr "Замовлення на продаж"
 #: model:ir.model,name:ug_wholesale_shop.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Рядок замовлення"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_distributors_move_line__sale_line_ids
+msgid "Sales Order Lines"
+msgstr ""
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__salesman_id
@@ -810,12 +902,22 @@ msgid "Type of package"
 msgstr "Тип пакування"
 
 #. module: ug_wholesale_shop
+#. odoo-python
+#: code:addons/ug_wholesale_shop/models/sale_order.py:0
+#, python-format
+msgid "Unable to find distributor for delivery"
+msgstr "Не вдалося знайти дистриб'ютора для доставки"
+
+#. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
 msgid "Unit"
 msgstr "Од."
 
 #. module: ug_wholesale_shop
+#. odoo-python
+#: code:addons/ug_wholesale_shop/models/sale_order.py:0
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.packing_list_lines
+#, python-format
 msgid "Warning"
 msgstr "Увага"
 

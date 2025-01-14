@@ -24,6 +24,7 @@
         'views/distributors.xml',
         'views/import_order.xml',
         'views/sales_order.xml',
+        'views/distrib_move.xml',
 
         'report/order_distrib_template.xml',
         'report/order_distrib_action.xml',

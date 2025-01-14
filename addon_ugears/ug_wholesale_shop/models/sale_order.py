@@ -1,7 +1,7 @@
 import math
 from datetime import datetime
 
-from odoo import models, _, fields, api
+from odoo import models, _, fields, api, Command
 from odoo.exceptions import UserError, AccessError
 from odoo.http import request
 from rectpack import newPacker, PackingBin
@@ -119,6 +119,7 @@ class SaleOrder(models.Model):
             'currency_id': self.currency_id.id,
             'distrib_id': False if not distrib else distrib.id,
             'move_line': [],
+            'sale_order_id': self.id,
             'user_id': self.user_id.id,
         }
 
@@ -141,7 +142,41 @@ class SaleOrder(models.Model):
 
     def create_distrib_move_inc(self):
         self.ensure_one()
-        return self._create_distrib_move_inc()
+        result = self._create_distrib_move_inc()
+        if isinstance(result, dict):
+            return result
+        if result:
+            return self.action_view_incomes()
+        return {'type': 'ir.actions.act_window_close'}
+
+    def action_view_incomes(self):
+        incomes = self.mapped('distrib_ids')
+        action = self.env['ir.actions.actions']._for_xml_id('ug_base_distrib.action_distrib_move_in')
+        if len(incomes) > 1:
+            action['domain'] = [('id', 'in', incomes.ids)]
+        elif len(incomes) == 1:
+            form_view = [(self.env.ref('ug_base_distrib.view_distributors_distrib_move_form').id, 'form')]
+            if 'views' in action:
+                action['views'] = form_view + [(state,view) for state,view in action['views'] if view != 'form']
+            else:
+                action['views'] = form_view
+            action['res_id'] = incomes.id
+        else:
+            action = {'type': 'ir.actions.act_window_close'}
+
+        context = {
+            'default_operation': 'inc',
+        }
+        # if len(self) == 1:
+        #     context.update({
+        #         'default_partner_id': self.partner_id.id,
+        #         'default_partner_shipping_id': self.partner_shipping_id.id,
+        #         'default_invoice_payment_term_id': self.payment_term_id.id or self.partner_id.property_payment_term_id.id or self.env['account.move'].default_get(['invoice_payment_term_id']).get('invoice_payment_term_id'),
+        #         'default_invoice_origin': self.name,
+        #     })
+        action['context'] = context
+        return action
+
 
     def _create_distrib_move_inc(self):
         if not self.env['distrib.distributors.move'].check_access_rights('create', False):
@@ -151,6 +186,8 @@ class SaleOrder(models.Model):
             except AccessError:
                 return self.env['distrib.distributors.move']
 
+        invoice_vals_list = []
+        invoice_item_sequence = 0
         for order in self:
             order = order.with_company(order.company_id).with_context(lang=order.partner_invoice_id.lang)
             move_val = order._prepare_distrib_move_inc()
@@ -161,7 +198,7 @@ class SaleOrder(models.Model):
                     'params': {
                         'title': _('Warning'),
                         'type': 'warning',
-                        'message': _('Unable to find distributor for deliver'),
+                        'message': _('Unable to find distributor for delivery'),
                         'sticky': True,
                     }
                 }
@@ -169,19 +206,30 @@ class SaleOrder(models.Model):
 
             if not any(not line.display_type for line in not_delivered_lines):
                 continue
+            incoming_line_vals = []
             for line in not_delivered_lines:
-                pass
+                incoming_line_vals.append(
+                    Command.create(
+                        line._prepare_incoming_line(sequence=invoice_item_sequence)
+                    ),
+                )
+                invoice_item_sequence += 1
+            move_val['move_line'] += incoming_line_vals
+            invoice_vals_list.append(move_val)
 
-            return {
-                'type': 'ir.actions.client',
-                'tag': 'display_notification',
-                'params': {
-                    'title': _('Success'),
-                    'type': 'success',
-                    'message': _('The incoming document has been successfully generated.'),
-                    'sticky': True,
-                }
-            }
+            moves = self.env['distrib.distributors.move'].sudo().with_context(default_operation='inc').create(invoice_vals_list)
+            return moves
+
+            # return {
+            #     'type': 'ir.actions.client',
+            #     'tag': 'display_notification',
+            #     'params': {
+            #         'title': _('Success'),
+            #         'type': 'success',
+            #         'message': _('The incoming document has been successfully generated.'),
+            #         'sticky': True,
+            #     }
+            # }
 
     def _recalc_by_package(self):
         self.ensure_one()

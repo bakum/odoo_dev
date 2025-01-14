@@ -16,11 +16,16 @@
                             </div>
 <!--                             <field name="incoming_count" widget="statinfo" string="incoming"/>-->
                         </button>
+                        <button name="action_view_incomes" type="object" class="oe_stat_button"
+                                icon="fa-truck" attrs="{'invisible': [('incoming_count', '=', 0)]}">
+                            <field name="incoming_count" widget="statinfo" string="Delivery"/>
+                        </button>
                     </div>
                     <xpath expr="//button[@name='action_draft']" position="before">
+                        <field name="incoming_count" invisible="1"/>
                         <button name="create_distrib_move_inc" string="Deliver"
                                 type="object" class="btn btn-outline-primary"
-                                attrs="{'invisible': ['|', ('state', 'not in', ['sale']), ('id', '=', False)]}"/>
+                                attrs="{'invisible': ['|', ('state', 'not in', ['sale']), ('id', '=', False), ('incoming_count', '=', 0)]}"/>
                     </xpath>
                     <xpath expr="//tree/field[@name='product_uom_qty']" position="attributes">
                         <attribute name="readonly">1</attribute>
