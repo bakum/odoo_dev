@@ -20,4 +20,11 @@ export class ImportOrderController extends ListController {
             },
         });
     }
+    OnDownload() {
+        this.actionService.doAction({
+            'type': 'ir.actions.act_url',
+            'url': '/ug_wholesale_shop/static/xls/order_template.xlsx',
+            'target': 'new'
+        })
+    }
 }

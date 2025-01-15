@@ -4,8 +4,13 @@
 <t t-name="ImportOrder.Buttons" t-inherit="web.ListView.Buttons" t-inherit-mode="primary" owl="1">
     <xpath expr="(//div/*)[last()]" position="after">
         <button
-                class="btn btn-secondary px-4" type="button" t-on-click="onClickImportOrder">
+                class="btn btn-secondary px-4 o_button_import" type="button" t-on-click="onClickImportOrder">
             Import an order
+        </button>
+        <button type="button" class="btn btn-outline-primary o_download_template" style="margin-left: 10px;"
+                t-on-click="OnDownload">
+            <i class="fa fa-download"/>
+            Import Template for Distribution Order
         </button>
     </xpath>
 </t>
