@@ -11,7 +11,8 @@
             <field name="res_model">sale.order</field>
             <field name="view_mode">tree,form,kanban,activity</field>
             <field name="domain">[]</field>
-            <field name="context">{'show_sale': True, 'search_default_from_website': 1}</field>
+<!--            <field name="context">{'show_sale': True, 'search_default_from_website': 1}</field>-->
+            <field name="context">{'show_sale': True}</field>
             <field name="search_view_id" ref="website_sale.view_sales_order_filter_ecommerce"/>
             <field name="help" type="html">
                 <p class="o_view_nocontent_empty_folder">
