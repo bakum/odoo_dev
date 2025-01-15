@@ -28,6 +28,7 @@ class SaleOrder(models.Model):
     boxes_total = fields.Integer(string="Total boxes", store=True, compute='_compute_boxes')
     netto_total = fields.Float(string="Total netto", store=True, compute='_compute_boxes')
     brutto_total = fields.Float(string="Total brutto", store=True, compute='_compute_boxes')
+    can_full_access = fields.Boolean(compute='_compute_access', string="Can Full Access")
 
     incoming_count = fields.Integer(string="Incoming Count", compute='_get_incoming')
     distrib_ids = fields.Many2many(
@@ -36,6 +37,15 @@ class SaleOrder(models.Model):
         compute='_get_incoming',
         search='_search_distrib_ids',
         copy=False)
+
+    def _compute_access(self):
+        for record in self:
+            if self.env.user.has_group('base.group_system'):
+                record.can_full_access = True
+            elif self.env.user.has_group('ug_base_distrib.group_distrib_user'):
+                record.can_full_access = False
+            else:
+                record.can_full_access = True
 
     @api.depends('order_line.incoming_lines')
     def _get_incoming(self):

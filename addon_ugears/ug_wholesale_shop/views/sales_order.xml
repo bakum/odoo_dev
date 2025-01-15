@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <data>
                     <div name="button_box" position="inside">
+                        <field name="can_full_access" invisible="1"/>
                         <button name="action_calculate_sale_order" type="object" class="oe_stat_button"
                                 icon="fa-calculator icon">
                             <div class="o_field_widget o_stat_info">
@@ -31,13 +32,13 @@
                                 attrs="{'invisible': ['|', ('state', 'not in', ['sale']), ('id', '=', False), ('incoming_count', '=', 0)]}"/>
                     </xpath>
                     <xpath expr="//tree/field[@name='product_uom_qty']" position="attributes">
-                        <attribute name="readonly">1</attribute>
+                         <attribute name="attrs">{'readonly': [('parent.can_full_access', '=' ,False)]}</attribute>
                     </xpath>
                     <xpath expr="//tree/field[@name='price_unit']" position="attributes">
-                        <attribute name="readonly">1</attribute>
+                        <attribute name="attrs">{'readonly': [('parent.can_full_access', '=' ,False)]}</attribute>
                     </xpath>
                     <xpath expr="//tree/field[@name='product_template_id']" position="attributes">
-                        <attribute name="readonly">1</attribute>
+                        <attribute name="attrs">{'readonly': [('parent.can_full_access', '=' ,False)]}</attribute>
                     </xpath>
                     <xpath expr="//page[@name='customer_signature']" position="after">
                         <page name="package" string="Packages" groups="ug_base_distrib.group_distrib_user">
