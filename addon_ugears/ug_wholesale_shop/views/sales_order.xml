@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <data>
+<!--        <record id="view_sale_order_tree_inherit" model="ir.ui.view">-->
+<!--            <field name="name">sale.order.tree.customization</field>-->
+<!--            <field name="model">sale.order</field>-->
+<!--            <field name="inherit_id" ref="sale.view_order_tree"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <data>-->
+<!--                    <xpath expr="//button[hasclass('o_list_button_add')]"  position="attributes">-->
+<!--                        <attribute name="groups">base.group_system</attribute>-->
+<!--                    </xpath>-->
+<!--                </data>-->
+<!--            </field>-->
+<!--        </record>-->
+
         <record id="view_sale_order_form_inherit_distrib" model="ir.ui.view">
             <field name="name">sale.order.form.inherit.distrib</field>
             <field name="model">sale.order</field>
@@ -21,6 +34,9 @@
                             <field name="incoming_count" widget="statinfo" string="Delivery"/>
                         </button>
                     </div>
+<!--                    <xpath expr="//button[@name='create']" position="attributes">-->
+<!--                        <attribute name="groups">base.group_system</attribute>-->
+<!--                    </xpath>-->
                     <xpath expr="//button[@name='action_draft']" position="before">
                         <field name="incoming_count" invisible="1"/>
                         <button name="create_distrib_move_inc" string="Deliver"
