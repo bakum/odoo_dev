@@ -2,7 +2,7 @@ import base64
 
 import xlrd
 
-from odoo import models, fields, _, api
+from odoo import models, fields, _, api, SUPERUSER_ID
 from odoo.exceptions import UserError
 from odoo.http import request
 
@@ -158,7 +158,8 @@ class UgImportOrder(models.TransientModel):
 
         SaleOrder = self.env['sale.order'].sudo()
         so_data = self._prepare_order_value()
-        sale_order_sudo = SaleOrder.with_user(self.env.user).create(so_data)
+        sale_order_sudo = SaleOrder.with_user(SUPERUSER_ID).create(so_data)
+        sale_order_sudo = sale_order_sudo.with_user(self.env.user).sudo()
         products = []
         for line in self.products_ids:
             if line.product_id and line.qtt_by_box > 0:
