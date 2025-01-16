@@ -63,20 +63,47 @@ class UgImportOrder(models.TransientModel):
     #     if self.xls_filename:
     #         self.load_order_from_xls()
 
-    def _get_product_dict(self, data_array):
-        ProductRec = self.env['product.product']
-        try:
-            barcode = str(int(data_array[0]))
-        except ValueError:
-            barcode = str(data_array[0])
+    def _validate_array(self, data):
+        new_data = []
+        for counter, row in enumerate(data):
+            if counter == 2:
+                new_data.append(row)
+                continue
+            try:
+                value = str(int(row))
+            except ValueError:
+                value = str(row)
+            value = value.replace(' ','')
+            if counter == 3:
+                value = value.replace(',', '.')
+                try:
+                    value = int(value)
+                except ValueError:
+                    value = 0
+            new_data.append(value)
+        return new_data
 
-        domain = [('barcode', '=', barcode)]
+    def _get_product_dict(self, data_array):
+        data_array = self._validate_array(data_array)
+        ProductRec = self.env['product.product']
+        empty_record = {'product_id': ProductRec, 'description': data_array[2], 'qtt': data_array[3], 'barcode': data_array[0],
+                'name': data_array[2], 'default_code': data_array[1]}
+        barcode = data_array[0]
+        art = data_array[1]
+
+        if barcode and art:
+            domain = ['&',('barcode', '=', barcode),('default_code', '=', art)]
+        elif barcode:
+            domain = [('barcode', '=', barcode)]
+        elif art:
+            domain = [('default_code', '=', art)]
+        else:
+            return empty_record
         product = ProductRec.search(domain)[:1]
         if product:
-            return {'product_id': product.id, 'description': data_array[1], 'qtt': data_array[2], 'barcode': barcode,
-                    'name': data_array[1]}
-        return {'product_id': ProductRec, 'description': data_array[1], 'qtt': data_array[2], 'barcode': barcode,
-                'name': data_array[1]}
+            return {'product_id': product.id, 'description': data_array[2], 'qtt': data_array[3], 'barcode': barcode,
+                    'name': data_array[2], 'default_code': data_array[1]}
+        return empty_record
 
     def load_order_from_xls(self):
         # sale_order_id = request.session.get('sale_order_id')
@@ -174,6 +201,7 @@ class UgImportOrderList(models.TransientModel):
     qtt = fields.Float('Quantity', digits=(12, 1))
     qtt_by_box = fields.Float('Quantity by boxes', compute='_compute_product_by_box', store=True)
     barcode = fields.Char('Barcode')
+    default_code = fields.Char('Default code')
     description = fields.Char('Description')
 
     @api.depends('qtt', 'product_id')
