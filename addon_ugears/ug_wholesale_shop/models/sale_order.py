@@ -280,7 +280,7 @@ class SaleOrder(models.Model):
         """returns the xlsx import template file"""
         return [{
             'label': _('Import Template for Distribution Order'),
-            'template': '/ug_wholesale_shop/static/xls/order_template.xlsx'
+            'template': '/ug_wholesale_shop/static/xls/template.xlsx'
         }]
 
     def _cart_find_package_line(self, cartoon_id, line_id=None, **kwargs):
