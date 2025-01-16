@@ -77,7 +77,7 @@ class UgImportOrder(models.TransientModel):
             if counter == 3:
                 value = value.replace(',', '.')
                 try:
-                    value = int(value)
+                    value = int(float(value))
                 except ValueError:
                     value = 0
             new_data.append(value)
