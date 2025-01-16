@@ -538,15 +538,31 @@
         </div>
     </template>
 
+    <template id="alert_warning_package_rounding" name="Logistics data is preliminary">
+        <div class="alert alert-warning alert-dismissible rounded-0 fade show d-print-none css_editable_mode_hidden">
+            <div class="container">
+                <div class="text-center">
+                    Please note that <strong>product orders should align with the quantities indicated in the logistics data per carton with models.</strong>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"/>
+            </div>
+        </div>
+    </template>
+
     <template id="packing_list" name="Packing List">
         <t t-call="website.layout">
             <t t-set="navClass" t-valuef="light"/>
             <t t-set="website_sale_palettes" t-value="website.get_palettes_available()"/>
             <t t-set="hasPalettesDropdown" t-value="website_sale_palettes and len(website_sale_palettes)&gt;1"/>
+            <t t-set="order1_is_draft"
+                       t-value="true if not website_sale_order else website_sale_order.state in ['draft']"/>
             <div id="wrap">
                 <div class="oe_structure" id="oe_structure_ug_wholesale_shop_cart_3"/>
-                <t t-call="ug_wholesale_shop.alert_warning_logistics"/>
                 <div class="container oe_website_sale oe_wholesale_calculator py-4">
+                    <t t-call="ug_wholesale_shop.alert_warning_logistics"/>
+                    <t t-if="order1_is_draft">
+                        <t t-call="ug_wholesale_shop.alert_warning_package_rounding"/>
+                    </t>
                     <h3>
                         <span>Packing List</span>
                     </h3>
@@ -602,8 +618,8 @@
         <t t-call="website.layout">
             <t t-set="additional_title">Shop - Confirmed</t>
             <div id="wrap">
-                <t t-call="ug_wholesale_shop.alert_warning_logistics"/>
                 <div class="container oe_website_sale py-2">
+                    <t t-call="ug_wholesale_shop.alert_warning_logistics"/>
                     <h1>
                         <span>Order</span>
                         <em t-field="order.name"/>
@@ -781,6 +797,18 @@
         <xpath expr='//div[hasclass("product_price")]' position="before">
             <t t-call="ug_wholesale_shop.product_barcode">
             </t>
+        </xpath>
+    </template>
+
+    <template id="distrib_card_wizard" inherit_id="website_sale.wizard_checkout" name="Shopping Cart">
+         <xpath expr='//*[hasclass("wizard")]' position="replace">
+             <t t-call="ug_wholesale_shop.alert_warning_package_rounding"/>
+         </xpath>
+    </template>
+
+    <template id="distrib_products" inherit_id="website_sale.products" name="Products">
+        <xpath expr='//*[hasclass("o_wsale_products_main_row")]' position="before">
+            <t t-call="ug_wholesale_shop.alert_warning_package_rounding"/>
         </xpath>
     </template>
 </odoo>

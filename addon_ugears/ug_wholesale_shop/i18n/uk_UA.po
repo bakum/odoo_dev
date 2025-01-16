@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-15 22:16+0000\n"
-"PO-Revision-Date: 2025-01-15 22:16+0000\n"
+"POT-Creation-Date: 2025-01-16 09:20+0000\n"
+"PO-Revision-Date: 2025-01-16 09:20+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -276,6 +276,7 @@ msgstr "Вага коробки з моделлю, г"
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.alert_warning_logistics
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.alert_warning_package_rounding
 msgid "Close"
 msgstr "Закрити"
 
@@ -713,6 +714,15 @@ msgstr "Виробів в коробці"
 #, python-format
 msgid "Please load the xlsx file"
 msgstr "Завантажте файл xlsx"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.alert_warning_package_rounding
+msgid ""
+"Please note that <strong>product orders should align with the quantities "
+"indicated in the logistics data per carton with models.</strong>"
+msgstr ""
+"Зверніть увагу, <strong>що замовлення продукції має відповідати кількостям, "
+"зазначеним у логістичних даних на коробку з моделями.</strong>"
 
 #. module: ug_wholesale_shop
 #: model:ir.model,name:ug_wholesale_shop.model_product_template
