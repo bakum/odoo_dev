@@ -23,6 +23,10 @@ class UgImportOrder(models.TransientModel):
     products_ids = fields.One2many('ug.wholesale.import.order.list', 'wizard_id')
     distrib_id = fields.Many2one('distrib.distributors', 'Distributor', required=True, default=_default_distrib)
     len_products = fields.Integer(compute='get_len_products')
+    date_order = fields.Datetime(
+        string="Operation Date",
+        required=True, readonly=False,
+        default=fields.Datetime.now)
 
     @api.depends('products_ids')
     def get_len_products(self):
@@ -42,6 +46,7 @@ class UgImportOrder(models.TransientModel):
 
             'team_id': self.distrib_id.partner_id.parent_id.team_id.id or self.distrib_id.partner_id.team_id.id,
             'user_id': self.env.user.id,
+            'date_order' : self.date_order,
             # 'website_id': self.id,
         }
         return values

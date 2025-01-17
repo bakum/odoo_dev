@@ -23,6 +23,7 @@
                                 <field name="xls_file" filename="xls_filename"/>
                             </group>
                             <group>
+                                 <field name="date_order"/>
                                 <field name="distrib_id" widget="many2one" options="{'no_create': True, 'no_open': True}"/>
                             </group>
                         </group>
