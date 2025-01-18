@@ -31,12 +31,15 @@
         'views/res_config_settings_views.xml',
         'views/distrib_expenses.xml',
         'views/sales_dashboard.xml',
+        'views/import_move.xml',
     ],
     'assets': {
         'web.assets_backend': [
             'ug_base_distrib/static/src/components/**/*.js',
             'ug_base_distrib/static/src/components/**/*.xml',
             'ug_base_distrib/static/src/components/**/*.scss',
+            'ug_base_distrib/static/src/views/**/*.js',
+            'ug_base_distrib/static/src/views/**/*.xml',
         ],
     },
     'depends': [

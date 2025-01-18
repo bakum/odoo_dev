@@ -3,7 +3,7 @@ from odoo import models, fields, api, _
 
 class UgImportMove(models.TransientModel):
     _name = "ug.distrib.import.move"
-    _description = "Import expenses from xls"
+    _description = "Import distributor move from xls"
 
     def _default_name(self):
         return _('Please load the xlsx file')
@@ -35,6 +35,10 @@ class UgImportMove(models.TransientModel):
         self.len_products = len(self.products_ids)
 
 
+    def load_move_from_xls(self):
+        pass
+
+
 class UgImportMoveList(models.TransientModel):
     _name = "ug.distrib.import.move.list"
     _description = "Products list"
@@ -57,6 +61,9 @@ class UgImportMoveList(models.TransientModel):
     )
     name = fields.Char('Name', readonly=True)
     qtt = fields.Float('Quantity', digits=(12, 1))
+    barcode = fields.Char('Barcode')
+    default_code = fields.Char('Default code')
+    description = fields.Char('Description')
 
     @api.depends('product_id')
     def _compute_product_template_id(self):
