@@ -1,3 +1,5 @@
+from email.policy import default
+
 from odoo import models, fields, api, _
 
 
@@ -10,6 +12,9 @@ class DistributorMoveLines(models.Model):
     _sql_constraints = [
         ('quantity_check', 'CHECK(product_uom_qty>0)', 'Minimum 1 quantity allow')
     ]
+
+    def _default_channel(self):
+        return self.move_id.channel_id.id
 
     move_id = fields.Many2one(
         comodel_name='distrib.distributors.move',
@@ -26,9 +31,16 @@ class DistributorMoveLines(models.Model):
         related='move_id.distrib_id.pricelist_id.currency_id',
         store=True, index=True, precompute=True)
 
+    # channel_id = fields.Many2one(
+    #     related='move_id.channel_id',
+    #     store=True, index=True, precompute=True)
+
     channel_id = fields.Many2one(
-        related='move_id.channel_id',
-        store=True, index=True, precompute=True)
+        comodel_name='distrib.sales.channels',
+        string="Sales Channel",
+        default=_default_channel,
+        readonly=False, index=True
+    )
 
     date = fields.Datetime(related='move_id.date_order', string="Move Data", store=True, precompute=True)
     salesman_id = fields.Many2one(

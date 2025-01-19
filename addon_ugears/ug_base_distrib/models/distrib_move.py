@@ -80,6 +80,13 @@ class DistributorMove(models.Model):
     is_inventory = fields.Boolean('Inventory', default=False)
     is_manager = fields.Boolean(compute='_compute_is_manager')
 
+    @api.onchange('channel_id')
+    def _on_change_channel(self):
+        if self.move_line:
+            for move in self.move_line:
+                if not move.channel_id:
+                    move.channel_id = self.channel_id
+
     @api.depends_context('uid')
     @api.depends('operation', 'distrib_id')
     def _compute_is_manager(self):
@@ -99,6 +106,11 @@ class DistributorMove(models.Model):
                     vals['name'] = self.env['ir.sequence'].next_by_code('distrib.distributors.move.in')
                 else:
                     vals['name'] = self.env['ir.sequence'].next_by_code('distrib.distributors.move.out')
+            if 'channel_id' in list(vals.keys()):
+                mls = vals['move_line'][0][2]
+                if 'channel_id' in mls:
+                    if not mls['channel_id'] and vals['channel_id']:
+                        mls['channel_id'] = vals['channel_id']
         return super(DistributorMove, self).create(vals_list)
 
     def write(self, vals):
@@ -126,6 +138,16 @@ class DistributorMove(models.Model):
                         Quant._update_available_quantity(ml.product_id, -quantity, distrib_id=ml.distrib_id)
                         # Quant._update_available_quantity(ml.product_id, quantity, distrib_id=ml.distrib_id, in_date=in_date)
 
+        if 'channel_id' in vals:
+            mls = self.move_line
+            for ml in mls:
+                if not ml.channel_id and vals['channel_id']:
+                    ml.channel_id = vals['channel_id']
+        if 'move_line' in vals:
+            mls = vals['move_line'][1][2]
+            if 'channel_id' in mls:
+                if not mls['channel_id'] and self.channel_id:
+                    mls['channel_id'] = self.channel_id.id
         res = super(DistributorMove, self).write(vals)
 
         return res
@@ -152,6 +174,9 @@ class DistributorMove(models.Model):
 
     def action_cancel(self):
         self.write({'state': 'cancel'})
+
+    def action_draft(self):
+        self.write({'state': 'draft'})
 
     @api.depends('move_line.price_total')
     def _compute_amounts(self):

@@ -7,11 +7,13 @@
             <form>
                 <header>
                     <button name="action_done" class="btn-primary" data-hotkey="v" string="Confirm" type="object"
-                            attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>
+                            attrs="{'invisible': ['|',('state', 'not in', ['draft']),('id', '=', False)]}"/>
                     <button name="action_cancel" type="object" string="Cancel"
                             attrs="{'invisible': ['|', ('state', 'not in', ['done']), ('id', '=', False)]}"
                             data-hotkey="z"
                             confirm="The selected operation will change the status and cancel transaction. Are you sure you want to do this?"/>
+                    <button name="action_draft" class="btn-primary" data-hotkey="v" string="Draft" type="object"
+                            attrs="{'invisible': ['|',('state', 'not in', ['cancel']),('id', '=', False)]}"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,done,cancel"/>
                 </header>
                 <sheet>
@@ -31,23 +33,23 @@
                         </group>
                         <group id="header_right_group">
                             <field name="date_order" options="{'datepicker': {'warn_future': true}}"/>
-                            <field name="channel_id" widget="res_partner_many2one"
+                            <field name="channel_id"
                                    attrs="{'invisible': [('operation', '!=', 'out')],'required' : [('operation', '=', 'out')]}"
-                                   options="{'no_open' : True, 'no_create': True}"/>
+                                   options="{'no_open' : True, 'no_create': True}" force_save="1"/>
                             <field name="user_id" widget="res_partner_many2one"/>
                         </group>
                     </group>
                     <notebook>
                         <page id="move_tab" name="move_tab" string="Products">
                             <field name="move_line" widget="section_and_note_one2many" mode="tree,kanban"
-                                   context="{'default_display_type': 'product'}">
+                                   context="{'default_display_type': 'product', 'default_channel_id': channel_id}">
                                 <tree editable="bottom" string="Journal Items" default_order="sequence, id">
                                     <control>
                                         <create name="add_line_control" string="Add a line"/>
                                         <!--    <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
                                             <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/> -->
                                     </control>
-
+                                    <field name="operation" invisible="1"/>
                                     <field name="sequence" widget="handle"/>
                                     <field name="product_id" optional="show"
                                            options="{'no_create': True, 'no_open': True}"/>
@@ -59,6 +61,8 @@
                                     <field name="product_uom" string="UoM" groups="uom.group_uom" optional="show"
                                            options="{'no_create': True, 'no_open': True}"/>
                                     <field name="price_total" optional="show" readonly="1"/>
+                                    <field name="channel_id" force_save="1" optional="hide"
+                                           attrs="{'invisible': [('operation', '=', 'inc')],'required' : [('operation', '=', 'out')]}"/>
 
                                     <field name="display_type" force_save="1" invisible="1"/>
                                     <!-- /l10n_in_edi.test_edi_json -->
