@@ -1,4 +1,9 @@
+import base64
+
+import xlrd
+
 from odoo import models, fields, api, _
+from odoo.exceptions import UserError
 
 
 class UgImportMove(models.TransientModel):
@@ -36,6 +41,20 @@ class UgImportMove(models.TransientModel):
 
 
     def load_move_from_xls(self):
+        try:
+            file_data = base64.b64decode(self.xls_file)
+            book = xlrd.open_workbook(file_contents=file_data)
+        except FileNotFoundError:
+            raise UserError('No such file or directory found. \n%s.' % self.xls_filename)
+        except xlrd.biffh.XLRDError:
+            raise UserError('Only excel files are supported.')
+
+        products = []
+        self.products_ids.unlink()
+        for sheet in book.sheets():
+            pass
+
+    def save_move(self):
         pass
 
 
