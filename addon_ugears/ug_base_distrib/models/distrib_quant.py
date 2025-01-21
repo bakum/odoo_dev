@@ -185,12 +185,14 @@ class DistributorQuant(models.Model):
         if quant:
             quant.write({
                 'quantity': quant.quantity + quantity,
+                'inventory_quantity' : quant.quantity + quantity,
                 'in_date': in_date,
             })
         else:
             self.create({
                 'product_id': product_id.id,
                 'quantity': quantity,
+                'inventory_quantity': quantity,
                 'distrib_id': distrib_id and distrib_id.id,
                 'in_date': in_date,
             })
@@ -296,13 +298,13 @@ class DistributorQuant(models.Model):
             elif float_compare(quant.inventory_diff_quantity, 0, precision_rounding=quant.product_uom_id.rounding) < 0:
                 move_vals.append(quant._get_inventory_move_values(-quant.inventory_diff_quantity, out=True))
             else:
-                self.write({'inventory_quantity': 0, 'user_id': False})
+                self.write({'inventory_quantity': quant.quantity, 'user_id': False})
                 self.write({'inventory_diff_quantity': 0})
                 return
         moves = self.env['distrib.distributors.move']
         moves.with_context(inventory_mode=False).create(move_vals)
         # moves.action_done()
-        self.write({'inventory_quantity': 0, 'user_id': False})
+        self.write({'inventory_quantity': self.quantity, 'user_id': False})
         self.write({'inventory_diff_quantity': 0})
 
     def action_inventory_history(self):

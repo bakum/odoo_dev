@@ -29,7 +29,7 @@
         <field name="name">distrib.sales.channels.tree</field>
         <field name="model">distrib.sales.channels</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree editable="top">
                 <field name="name"/>
             </tree>
         </field>

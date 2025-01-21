@@ -34,8 +34,9 @@
                         </group>
                         <group id="header_right_group">
                             <field name="date_order" options="{'datepicker': {'warn_future': true}}"/>
+                            <field name="is_inventory" invisible="1"/>
                             <field name="channel_id"
-                                   attrs="{'invisible': [('operation', '!=', 'out')],'required' : [('operation', '=', 'out')]}"
+                                   attrs="{'invisible': [('operation', '!=', 'out')],'required' : [('operation', '=', 'out'),('is_inventory', '=', False)]}"
                                    options="{'no_open' : True, 'no_create': True}" force_save="1"/>
                             <field name="user_id" widget="res_partner_many2one"/>
                         </group>

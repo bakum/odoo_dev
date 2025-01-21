@@ -33,7 +33,7 @@
         <field name="name">distrib.theme.tree</field>
         <field name="model">distrib.product.theme</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree editable="top" multi_edit="1">
                 <field name="name"/>
             </tree>
         </field>
