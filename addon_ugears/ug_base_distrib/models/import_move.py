@@ -2,9 +2,16 @@ import base64
 
 import xlrd
 
-from odoo import models, fields, api, _
+from odoo import models, fields, api, _, SUPERUSER_ID
 from odoo.exceptions import UserError
 
+CHANNEL_MAP = {
+    0: 'Channel_0001',
+    1: 'Channel_0002',
+    2: 'Channel_0003',
+    3: 'Channel_0004',
+    4: 'Channel_0005',
+}
 
 class UgImportMove(models.TransientModel):
     _name = "ug.distrib.import.move"
@@ -28,12 +35,25 @@ class UgImportMove(models.TransientModel):
             ('inc', _("Income")),
             ('out', _("Expenses")),
         ],
-        required=True,
         string="Operation")
     date_order = fields.Datetime(
         string="Operation Date",
         required=True, readonly=False,
         default=fields.Datetime.now)
+
+    # @api.onchange('xls_filename')
+    # def _onchange_xls_filename(self):
+    #     self.products_ids.unlink()
+    def _prepare_move_value(self):
+        values = {
+            'operation': self.operation,
+            'distrib_id': self.distrib_id.id,
+            # 'channel_id': self.channel_id,
+            'user_id': self.env.user.id,
+            'date_order': self.date_order,
+            # 'website_id': self.id,
+        }
+        return values
 
     @api.depends('products_ids')
     def get_len_products(self):
@@ -49,7 +69,7 @@ class UgImportMove(models.TransientModel):
                 value = str(int(row))
             except ValueError:
                 value = str(row)
-            value = value.replace(' ','')
+            value = value.replace(' ', '')
             if counter >= 3:
                 value = value.replace(',', '.')
                 try:
@@ -59,10 +79,40 @@ class UgImportMove(models.TransientModel):
             new_data.append(value)
         return new_data
 
-    def _get_product_dict(self, data_array):
+    def rearrage_array(self, data):
+        array_of_data = []
+        new_data = data[0:4]
+        array_of_data.append(new_data)
+        for counter, row in enumerate(data):
+            app_data = new_data[0:3]
+            if counter > 3:
+                app_data.append(row)
+                array_of_data.append(app_data)
+        return array_of_data
+
+    def get_id_from_ext_id(self, ext_id):
+        ext = self.env['ir.model.data'].sudo().search([('name', '=', ext_id)], limit=1)
+        id = False
+        if len(ext) > 0:
+            for line in ext:
+                id = line.res_id
+        return ext_id if not id else id
+
+    def _get_product_list(self, data_array):
+        array_for_product = []
         data_array = self._validate_array(data_array)
+        data_array = self.rearrage_array(data_array)
+        for counter, row in enumerate(data_array):
+            new_dict = self._get_product_dict(row)
+            if len(data_array) > 1:
+                new_dict['channel_id'] = self.get_id_from_ext_id(CHANNEL_MAP[counter])
+            array_for_product.append(new_dict)
+        return array_for_product
+
+    def _get_product_dict(self, data_array):
+        # data_array = self._validate_array(data_array)
         ProductRec = self.env['product.product']
-        ChannelRec = self.env['distrib.sales.channels']
+        # ChannelRec = self.env['distrib.sales.channels']
         empty_record = {'product_id': False, 'description': data_array[2], 'qtt': data_array[3],
                         'barcode': data_array[0], 'channel_id': False,
                         'name': data_array[2], 'default_code': data_array[1]}
@@ -96,14 +146,21 @@ class UgImportMove(models.TransientModel):
         self.products_ids.unlink()
         for sheet in book.sheets():
             try:
-                if sheet.name == 'Distr Order':
+                if sheet.name == 'Distr Sales' or sheet.name == 'Distr Order':
                     for row in range(sheet.nrows):
                         if row >= 1:
                             row_values = sheet.row_values(row)
-                            vals = self._get_product_dict(row_values)
-                            if not vals['qtt'] or vals['qtt'] == 0:
-                                continue
-                            products.append((0, 0, vals))
+                            vals = self._get_product_list(row_values)
+                            if len(vals) > 1:
+                                self.operation = 'out'
+                                self.channel_id = vals[0]['channel_id']
+                            else:
+                                self.operation = 'inc'
+
+                            for val in vals:
+                                if not val['qtt'] or val['qtt'] == 0:
+                                    continue
+                                products.append((0, 0, val))
             except IndexError:
                 pass
         try:
@@ -115,8 +172,8 @@ class UgImportMove(models.TransientModel):
         except ValueError:
             self.name = _("Wrong format of file")
         return {
-            'name': _('Import order'),
-            'res_model': 'ug.wholesale.import.order',
+            'name': _('Import move'),
+            'res_model': 'ug.distrib.import.move',
             'view_mode': 'form',
             'res_id': self.id,
             'context': {
@@ -132,8 +189,22 @@ class UgImportMove(models.TransientModel):
         }
 
     def save_move(self):
-        pass
-
+        so_data = self._prepare_move_value()
+        DistribMove = self.env['distrib.distributors.move'].sudo()
+        move_sudo = DistribMove.with_user(SUPERUSER_ID).create(so_data)
+        move_sudo = move_sudo.with_user(self.env.user).sudo()
+        products = []
+        for line in self.products_ids:
+            if line.product_id:
+                product = {
+                    'product_id': line.product_id.id,
+                    'channel_id': line.channel_id.id,
+                    'name': line.product_id.display_name,
+                    'product_uom_qty': line.qtt
+                }
+                products.append((0,0,product))
+        move_sudo.move_line = products
+        move_sudo.update({'channel_id': self.products_ids[0].channel_id.id})
 
 class UgImportMoveList(models.TransientModel):
     _name = "ug.distrib.import.move.list"
