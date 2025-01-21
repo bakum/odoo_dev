@@ -32,6 +32,7 @@
         'views/distrib_expenses.xml',
         'views/sales_dashboard.xml',
         'views/import_move.xml',
+        'data/sale_channels.xml',
     ],
     'assets': {
         'web.assets_backend': [

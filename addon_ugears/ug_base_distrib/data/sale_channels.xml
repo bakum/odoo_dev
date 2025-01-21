@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="Channel_0001" model="distrib.sales.channels">
+            <field name="name">Offline sales</field>
+            <field name="active">True</field>
+        </record>
+        <record id="Channel_0002" model="distrib.sales.channels">
+            <field name="name">Own web-store</field>
+            <field name="active">True</field>
+        </record>
+        <record id="Channel_0003" model="distrib.sales.channels">
+            <field name="name">Marketplaces</field>
+            <field name="active">True</field>
+        </record>
+        <record id="Channel_0004" model="distrib.sales.channels">
+            <field name="name">Wholesale online accounts</field>
+            <field name="active">True</field>
+        </record>
+        <record id="Channel_0005" model="distrib.sales.channels">
+            <field name="name">Fairs</field>
+            <field name="active">True</field>
+        </record>
+    </data>
+</odoo>

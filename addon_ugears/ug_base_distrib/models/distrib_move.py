@@ -106,11 +106,11 @@ class DistributorMove(models.Model):
                     vals['name'] = self.env['ir.sequence'].next_by_code('distrib.distributors.move.in')
                 else:
                     vals['name'] = self.env['ir.sequence'].next_by_code('distrib.distributors.move.out')
-            if 'channel_id' in list(vals.keys()):
-                mls = vals['move_line'][0][2]
-                if 'channel_id' in mls:
-                    if not mls['channel_id'] and vals['channel_id']:
-                        mls['channel_id'] = vals['channel_id']
+            # if 'channel_id' in list(vals.keys()):
+            #     mls = vals['move_line'][0][2]
+            #     if 'channel_id' in mls:
+            #         if not mls['channel_id'] and vals['channel_id']:
+            #             mls['channel_id'] = vals['channel_id']
         return super(DistributorMove, self).create(vals_list)
 
     def write(self, vals):
@@ -143,11 +143,11 @@ class DistributorMove(models.Model):
             for ml in mls:
                 if not ml.channel_id and vals['channel_id']:
                     ml.channel_id = vals['channel_id']
-        if 'move_line' in vals:
-            mls = vals['move_line'][1][2]
-            if 'channel_id' in mls:
-                if not mls['channel_id'] and self.channel_id:
-                    mls['channel_id'] = self.channel_id.id
+        # if 'move_line' in vals:
+        #     mls = vals['move_line'][0][2]
+        #     if 'channel_id' in mls:
+        #         if not mls['channel_id'] and self.channel_id:
+        #             mls['channel_id'] = self.channel_id.id
         res = super(DistributorMove, self).write(vals)
 
         return res

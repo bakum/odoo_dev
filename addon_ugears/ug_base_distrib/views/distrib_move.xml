@@ -10,10 +10,11 @@
                             attrs="{'invisible': ['|',('state', 'not in', ['draft']),('id', '=', False)]}"/>
                     <button name="action_cancel" type="object" string="Cancel"
                             attrs="{'invisible': ['|', ('state', 'not in', ['done']), ('id', '=', False)]}"
-                            data-hotkey="z"
+                            data-hotkey="z" groups="ug_base_distrib.group_distrib_manager"
                             confirm="The selected operation will change the status and cancel transaction. Are you sure you want to do this?"/>
                     <button name="action_draft" class="btn-primary" data-hotkey="v" string="Draft" type="object"
-                            attrs="{'invisible': ['|',('state', 'not in', ['cancel']),('id', '=', False)]}"/>
+                            attrs="{'invisible': ['|',('state', 'not in', ['cancel']),('id', '=', False)]}"
+                            groups="ug_base_distrib.group_distrib_manager"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,done,cancel"/>
                 </header>
                 <sheet>
