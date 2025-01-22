@@ -6,14 +6,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-19 20:27+0000\n"
-"PO-Revision-Date: 2025-01-19 20:27+0000\n"
+"POT-Creation-Date: 2025-01-22 14:22+0000\n"
+"PO-Revision-Date: 2025-01-22 14:22+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: ug_base_distrib
+#: model:ir.actions.report,print_report_name:ug_base_distrib.report_export_horizont_xls
+msgid "'Export Order Horizont - %s' % (object.name)"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_form
@@ -587,6 +592,11 @@ msgid "Expenses amount cannot be zero"
 msgstr "Сума витрат не може дорівнювати нулю"
 
 #. module: ug_base_distrib
+#: model:ir.actions.report,name:ug_base_distrib.report_export_horizont_xls
+msgid "Export to Horizont"
+msgstr "Експортувати в Горизонт (xlsx)"
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__product_no_variant_attribute_value_ids
 msgid "Extra Values"
 msgstr ""
@@ -750,9 +760,16 @@ msgid "Import distributor move from xls"
 msgstr "Імпорт рухів з xls файлу"
 
 #. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/import_move.py:0
+#, python-format
+msgid "Import move"
+msgstr "Імпортувати рухи"
+
+#. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.ug_import_distrib_move_from_xls_view
 msgid "Import moves"
-msgstr ""
+msgstr "Імпортувати рухи"
 
 #. module: ug_base_distrib
 #. odoo-python
@@ -960,7 +977,7 @@ msgstr ""
 #. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.ug_import_distrib_move_from_xls_view
 msgid "Load move from Excel"
-msgstr ""
+msgstr "Завантажити з Екселю"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_distributors_move__state__done
@@ -1123,6 +1140,13 @@ msgstr ""
 #: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses_line__display_type__line_note
 msgid "Note"
 msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/import_move.py:0
+#, python-format
+msgid "Nothing to load"
+msgstr "Нічого немає для завантаження"
 
 #. module: ug_base_distrib
 #. odoo-python
@@ -1423,6 +1447,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__channel_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__channel_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__channel_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move_list__channel_id
 msgid "Sales Channel"
 msgstr "Канал продажу"
 
@@ -1541,6 +1566,13 @@ msgid "Success!"
 msgstr "Успішно!"
 
 #. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/import_move.py:0
+#, python-format
+msgid "Successfully loaded"
+msgstr "Успішно завантажено"
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_quant__inventory_quantity
 msgid "The product's counted quantity."
 msgstr ""
@@ -1594,6 +1626,8 @@ msgstr "Найкращі продавці"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__price_total
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__expense_total
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__total
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_line_tree
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_quants_tree
 msgid "Total"
 msgstr "Сума"
 
@@ -1601,6 +1635,11 @@ msgstr "Сума"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__total_uah
 msgid "Total UAH"
 msgstr "Загалом ГРН"
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_quants_tree
+msgid "Total inventory"
+msgstr "Загалом по інвентаризації"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__expense_id
@@ -1715,6 +1754,13 @@ msgid "Wizard"
 msgstr ""
 
 #. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/import_move.py:0
+#, python-format
+msgid "Wrong format of file"
+msgstr "Невірний формат файлу"
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__year
 msgid "Year"
 msgstr "Рік"
@@ -1726,6 +1772,32 @@ msgstr "Рік"
 #, python-format
 msgid "You can not delete the moves if is done."
 msgstr "Ви не можете видалити записи в статусі ЗАВЕРШЕНО"
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_sales_channels.py:0
+#, python-format
+msgid ""
+"You cannot delete those channel(s):\n"
+"(%s)\n"
+", they are used in other distributors move(s):\n"
+"%s"
+msgstr ""
+"Ви не можете видалити канал(и):\n"
+"(%s)\n"
+", вони використовуються в іннших рухах:\n"
+"%s"
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_themes.py:0
+#, python-format
+msgid ""
+"Ви не можете видалити теми(и):\n"
+"(%s)\n"
+", вони використовуються в іннших товарах:\n"
+"%s"
+msgstr ""
 
 #. module: ug_base_distrib
 #. odoo-python
@@ -1770,6 +1842,11 @@ msgstr ""
 #, python-format
 msgid "inventory quantity is not set."
 msgstr "Кількість запасів не встановлена."
+
+#. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_report_ug_base_distrib_export_horizont_xls
+msgid "report.ug_base_distrib.export_horizont_xls"
+msgstr ""
 
 #. module: ug_base_distrib
 #. odoo-javascript

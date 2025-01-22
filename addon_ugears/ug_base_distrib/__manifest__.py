@@ -33,6 +33,7 @@
         'views/sales_dashboard.xml',
         'views/import_move.xml',
         'data/sale_channels.xml',
+        'reports/report_xls.xml',
     ],
     'assets': {
         'web.assets_backend': [
