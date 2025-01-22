@@ -119,7 +119,8 @@ class DistributorQuant(models.Model):
 
     @api.depends('inventory_quantity')
     def _compute_inventory_quantity_set(self):
-        self.inventory_quantity_set = True
+        for quant in self:
+            quant.inventory_quantity_set = (quant.inventory_quantity - quant.quantity) != 0
 
     @api.model
     def _is_inventory_mode(self):
@@ -316,13 +317,15 @@ class DistributorQuant(models.Model):
             'views': [(self.env.ref('ug_base_distrib.view_distributors_distrib_move_line_tree').id, 'list'), (False, 'form')],
             'type': 'ir.actions.act_window',
             # 'context': {
-            #     'search_default_inventory': 1,
-            #     'search_default_done': 1,
-            #     'search_default_product_id': self.product_id.id,
+            #     'default_order': 'date'
+            #     # 'search_default_inventory': 1,
+            #     # 'search_default_done': 1,
+            #     # 'search_default_product_id': self.product_id.id,
             # },
             'domain': [
                 ('product_id', '=', self.product_id.id),
-                ('is_inventory', '=', True),
+                ('state', '=', 'done'),
+                # ('is_inventory', '=', True),
                 ('distrib_id', '=', self.distrib_id.id),
             ],
         }

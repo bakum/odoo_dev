@@ -151,7 +151,7 @@
             <tree>
                 <field name="date"/>
                 <field name="product_id"/>
-                <field name="balance"/>
+                <field name="balance" sum="Total"/>
                 <field name="operation" widget="badge" decoration-success="operation == 'inc'"
                        decoration-warning="operation == 'out'"/>
                 <field name="move_id"/>
