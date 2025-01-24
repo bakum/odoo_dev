@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <record id="action_distrib_budgets" model="ir.actions.act_window">
+        <field name="name">Sales budgets</field>
+        <field name="res_model">distrib.budget.move</field>
+        <field name="view_mode">tree</field>
+    </record>
+    <record id="action_distrib_budgets_line" model="ir.actions.act_window">
+        <field name="name">Distributor sales plan</field>
+        <field name="res_model">distrib.budget.move.line</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <record id="view_distrib_budgets_tree" model="ir.ui.view">
+        <field name="name">distrib.budgets.move.tree</field>
+        <field name="model">distrib.budget.move</field>
+        <field name="arch" type="xml">
+            <tree editable="top">
+                <field name="is_manager" invisible="1"/>
+                <field name="date"/>
+                <field name="name" readonly="1"/>
+                <field name="distrib_id" widget="res_partner_many2one" options="{'no_create': True, 'no_open': True}"
+                       attrs="{'readonly': ['|', ('is_manager', '==', False),('state', 'not in', ['draft'])]}" force_save="1" width="300px"/>
+                <field name="year"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'"
+                       decoration-warning="state == 'draft'"/>
+                <field name="user_id" readonly="1" widget="res_partner_many2one" options="{'no_create': True, 'no_open': True}"/>
+                <button name="action_view_budget" type="object" class="btn btn-link text-info" icon="fa-history"
+                        string="Preview" attrs="{'invisible': [('id', '=', False)]}"/>
+                <button name="action_done" class="btn-primary"  string="Confirm" type="object"
+                        attrs="{'invisible': ['|',('state', 'not in', ['draft']),('id', '=', False)]}"/>
+                <button name="action_cancel" type="object" string="Cancel"
+                        attrs="{'invisible': ['|', '|',('state', 'not in', ['done']), ('id', '=', False),('is_manager', '==', False)]}"
+                        groups="ug_base_distrib.group_distrib_manager"
+                        confirm="The selected operation will change the status and cancel transaction. Are you sure you want to do this?"/>
+                <button name="action_draft" class="btn-primary" string="Draft" type="object"
+                        attrs="{'invisible': ['|',('state', 'not in', ['cancel']),('id', '=', False)]}"
+                        groups="ug_base_distrib.group_distrib_manager"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_distrib_budgets_tree_search" model="ir.ui.view">
+        <field name="name">distrib.budget.move.search</field>
+        <field name="model">distrib.budget.move</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Budgets" filter_domain="['|', '|', ('distrib_id.name', 'ilike', self), ('name', 'ilike', self), ('year', 'ilike', self)]"/>
+                <separator/>
+                <filter name="filter_draft" string="Draft" domain="[('state','=','draft')]"/>
+                <filter name="filter_done" string="Complete" domain="[('state','=','done')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_distrib_budgets_line_tree" model="ir.ui.view">
+        <field name="name">distrib.budgets.line.tree</field>
+        <field name="model">distrib.budget.move.line</field>
+        <field name="arch" type="xml">
+            <tree editable="top" create="false" limit="30">
+                <field name="currency_id" invisible="1"/>
+                <field name="state" invisible="1"/>
+                <field name="product_id" readonly="1" widget="res_partner_many2one" options="{'no_create': True, 'no_open': True}"/>
+                <field name="price_unit" widget="monetary" readonly="1" optional="hide"/>
+                <field name="product_uom_qty" decoration-info="product_uom_qty > 0" decoration-muted="product_uom_qty == 0" sum="Total January"/>
+                <field name="product_uom_qty2" decoration-info="product_uom_qty2 > 0" decoration-muted="product_uom_qty2 == 0" sum="Total February"/>
+                <field name="product_uom_qty3" decoration-info="product_uom_qty3 > 0" decoration-muted="product_uom_qty3 == 0" sum="Total March"/>
+                <field name="product_uom_qty4" decoration-info="product_uom_qty4 > 0" decoration-muted="product_uom_qty4 == 0" sum="Total April"/>
+                <field name="product_uom_qty5" decoration-info="product_uom_qty5 > 0" decoration-muted="product_uom_qty5 == 0" sum="Total May"/>
+                <field name="product_uom_qty6" decoration-info="product_uom_qty6 > 0" decoration-muted="product_uom_qty6 == 0" sum="Total June"/>
+                <field name="product_uom_qty7" decoration-info="product_uom_qty7 > 0" decoration-muted="product_uom_qty7 == 0" sum="Total July"/>
+                <field name="product_uom_qty8" decoration-info="product_uom_qty8 > 0" decoration-muted="product_uom_qty8 == 0" sum="Total August"/>
+                <field name="product_uom_qty9" decoration-info="product_uom_qty9 > 0" decoration-muted="product_uom_qty9 == 0" sum="Total September"/>
+                <field name="product_uom_qty10" decoration-info="product_uom_qty10 > 0" decoration-muted="product_uom_qty10 == 0" sum="Total October"/>
+                <field name="product_uom_qty11" decoration-info="product_uom_qty11 > 0" decoration-muted="product_uom_qty11 == 0" sum="Total November"/>
+                <field name="product_uom_qty12" decoration-info="product_uom_qty12 > 0" decoration-muted="product_uom_qty12 == 0" sum="Total December"/>
+                <field name="qtt_total" decoration-bf="1" decoration-it="1" sum="Total quantity"/>
+                <field name="price_total" decoration-bf="1" decoration-it="1" widget="monetary" optional="hide" sum="Total"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_distrib_budgets_line_search" model="ir.ui.view">
+        <field name="name">distrib.budget.move.line.search</field>
+        <field name="model">distrib.budget.move.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Products" filter_domain="['|', '|', ('product_id.name', 'ilike', self), ('product_id.default_code', 'ilike', self), ('product_id.barcode', 'ilike', self)]"/>
+                <separator/>
+<!--                <filter name="filter_draft" string="Draft" domain="[('state','=','draft')]"/>-->
+<!--                <filter name="filter_done" string="Complete" domain="[('state','=','done')]"/>-->
+            </search>
+        </field>
+    </record>
+
+    <menuitem id="menu_distrib_budgets_1" name="Budgets" parent="menu_distrib_operations" sequence="2"/>
+    <menuitem
+            id="menu_distrib_budgets_sale"
+            name="Sales budgets"
+            parent="menu_distrib_budgets_1"
+            action="action_distrib_budgets"
+            groups="ug_base_distrib.group_distrib_manager,ug_base_distrib.group_distrib_user"
+            sequence="12"/>
+</odoo>

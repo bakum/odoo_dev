@@ -5,6 +5,8 @@ from . import distrib_move_line
 from . import distrib_quant
 from . import distrib_move_statistic
 from . import distrib_themes
+from . import distrib_sales_budget
+from . import distrib_sales_budget_line
 from . import distrib_type_of_marketings
 from . import distrib_marketing_expenses
 from . import distrib_marketing_expenses_line
