@@ -2,20 +2,14 @@ import base64
 
 import xlrd
 
-from odoo import models, fields, api, _, SUPERUSER_ID
+from odoo import models, fields, api, _
 from odoo.exceptions import UserError
+from odoo.osv import expression
 
-CHANNEL_MAP = {
-    0: 'Channel_0001',
-    1: 'Channel_0002',
-    2: 'Channel_0003',
-    3: 'Channel_0004',
-    4: 'Channel_0005',
-}
 
-class UgImportMove(models.TransientModel):
-    _name = "ug.distrib.import.move"
-    _description = "Import distributor move from xls"
+class UgImportInventory(models.TransientModel):
+    _name = "ug.distrib.import.inventory"
+    _description = "Import distributor inventory from xls"
 
     def _default_name(self):
         return _('Please load the xlsx file')
@@ -26,34 +20,14 @@ class UgImportMove(models.TransientModel):
     name = fields.Char('Name', default=_default_name)
     xls_file = fields.Binary(string='Excel file', required=True)
     xls_filename = fields.Char(string='Excel Filename')
-    products_ids = fields.One2many('ug.distrib.import.move.list', 'wizard_id')
+    products_ids = fields.One2many('ug.distrib.import.inventory.list', 'wizard_id')
     distrib_id = fields.Many2one('distrib.distributors', 'Distributor', required=True, default=_default_distrib)
-    channel_id = fields.Many2one(comodel_name='distrib.sales.channels', string="Sales Channel")
     len_products = fields.Integer(compute='get_len_products')
-    operation = fields.Selection(
-        selection=[
-            ('inc', _("Income")),
-            ('out', _("Expenses")),
-        ],
-        string="Operation")
-    date_order = fields.Datetime(
-        string="Operation Date",
+
+    date = fields.Datetime(
+        string="Date",
         required=True, readonly=False,
         default=fields.Datetime.now)
-
-    # @api.onchange('xls_filename')
-    # def _onchange_xls_filename(self):
-    #     self.products_ids.unlink()
-    def _prepare_move_value(self):
-        values = {
-            'operation': self.operation,
-            'distrib_id': self.distrib_id.id,
-            # 'channel_id': self.channel_id,
-            'user_id': self.env.user.id,
-            'date_order': self.date_order,
-            # 'website_id': self.id,
-        }
-        return values
 
     @api.depends('products_ids')
     def get_len_products(self):
@@ -70,7 +44,7 @@ class UgImportMove(models.TransientModel):
             except ValueError:
                 value = str(row)
             value = value.replace(' ', '')
-            if counter >= 3:
+            if counter == 3:
                 value = value.replace(',', '.')
                 try:
                     value = int(float(value))
@@ -79,42 +53,11 @@ class UgImportMove(models.TransientModel):
             new_data.append(value)
         return new_data
 
-    def rearrage_array(self, data):
-        array_of_data = []
-        new_data = data[0:4]
-        array_of_data.append(new_data)
-        for counter, row in enumerate(data):
-            app_data = new_data[0:3]
-            if counter > 3:
-                app_data.append(row)
-                array_of_data.append(app_data)
-        return array_of_data
-
-    def get_id_from_ext_id(self, ext_id):
-        ext = self.env['ir.model.data'].sudo().search([('name', '=', ext_id)], limit=1)
-        id = False
-        if len(ext) > 0:
-            for line in ext:
-                id = line.res_id
-        return ext_id if not id else id
-
-    def _get_product_list(self, data_array):
-        array_for_product = []
-        data_array = self._validate_array(data_array)
-        data_array = self.rearrage_array(data_array)
-        for counter, row in enumerate(data_array):
-            new_dict = self._get_product_dict(row)
-            if len(data_array) > 1:
-                new_dict['channel_id'] = self.get_id_from_ext_id(CHANNEL_MAP[counter])
-            array_for_product.append(new_dict)
-        return array_for_product
-
     def _get_product_dict(self, data_array):
-        # data_array = self._validate_array(data_array)
+        data_array = self._validate_array(data_array)
         ProductRec = self.env['product.product']
-        # ChannelRec = self.env['distrib.sales.channels']
-        empty_record = {'product_id': False, 'description': data_array[2], 'qtt': data_array[3],
-                        'barcode': data_array[0], 'channel_id': False,
+        empty_record = {'product_id': ProductRec, 'description': data_array[2], 'qtt': data_array[3],
+                        'barcode': data_array[0],
                         'name': data_array[2], 'default_code': data_array[1]}
         barcode = data_array[0]
         art = data_array[1]
@@ -133,7 +76,7 @@ class UgImportMove(models.TransientModel):
                     'name': data_array[2], 'default_code': data_array[1]}
         return empty_record
 
-    def load_move_from_xls(self):
+    def load_inventory_from_xls(self):
         try:
             file_data = base64.b64decode(self.xls_file)
             book = xlrd.open_workbook(file_contents=file_data)
@@ -146,21 +89,14 @@ class UgImportMove(models.TransientModel):
         self.products_ids.unlink()
         for sheet in book.sheets():
             try:
-                if sheet.name in ['Distr Sales','Distr Incomes']:
+                if sheet.name in ['Distr Inventory']:
                     for row in range(sheet.nrows):
                         if row >= 1:
                             row_values = sheet.row_values(row)
-                            vals = self._get_product_list(row_values)
-                            if len(vals) > 1:
-                                self.operation = 'out'
-                                self.channel_id = vals[0]['channel_id']
-                            else:
-                                self.operation = 'inc'
-
-                            for val in vals:
-                                if not val['qtt'] or val['qtt'] == 0:
-                                    continue
-                                products.append((0, 0, val))
+                            vals = self._get_product_dict(row_values)
+                            if not vals['qtt']:
+                                continue
+                            products.append((0, 0, vals))
             except IndexError:
                 pass
         try:
@@ -172,8 +108,8 @@ class UgImportMove(models.TransientModel):
         except ValueError:
             self.name = _("Wrong format of file")
         return {
-            'name': _('Import move'),
-            'res_model': 'ug.distrib.import.move',
+            'name': _('Import inventory'),
+            'res_model': 'ug.distrib.import.inventory',
             'view_mode': 'form',
             'res_id': self.id,
             'context': {
@@ -188,33 +124,50 @@ class UgImportMove(models.TransientModel):
             'type': 'ir.actions.act_window',
         }
 
-    def save_move(self):
-        so_data = self._prepare_move_value()
-        DistribMove = self.env['distrib.distributors.move'].sudo()
-        move_sudo = DistribMove.with_user(SUPERUSER_ID).create(so_data)
-        move_sudo = move_sudo.with_user(self.env.user).sudo()
-        products = []
-        for line in self.products_ids:
-            if line.product_id:
-                product = {
-                    'product_id': line.product_id.id,
-                    'channel_id': line.channel_id.id,
-                    'name': line.product_id.display_name,
-                    'product_uom_qty': line.qtt
+    def save_inventory(self):
+        Quants = self.env['distrib.quant'].sudo()
+        # domain = [('distrib_id', '=', self.distrib_id)]
+        # quants_so = Quants.search(domain)
+        product_ids = []
+        for products in self.products_ids:
+            product_ids.append(products.product_id.id)
+            domain = [('product_id', '=', products.product_id.id)]
+            domain = expression.AND([
+                domain,
+                [('distrib_id', '=', self.distrib_id.id)]
+            ])
+            quants_so = Quants.search(domain)
+            if quants_so:
+                for quant in quants_so:
+                    if products.qtt != quant.quantity:
+                        quant.inventory_quantity = products.qtt
+                        quant.action_apply_inventory()
+            else:
+                value = {
+                    'distrib_id': self.distrib_id.id,
+                    'product_id': products.product_id.id,
+                    'quantity': 0,
+                    'inventory_quantity': 0,
+                    'in_date': self.date
                 }
-                products.append((0,0,product))
-        move_sudo.move_line = products
-        move_sudo.update({'channel_id': self.products_ids[0].channel_id.id})
+                quant_new = Quants.create(value)
+                quant_new.inventory_quantity = products.qtt
+                quant_new.action_apply_inventory()
 
-class UgImportMoveList(models.TransientModel):
-    _name = "ug.distrib.import.move.list"
+        domain = ['&',('distrib_id', '=', self.distrib_id.id), ('product_id', 'not in', product_ids)]
+        quants_so = Quants.search(domain)
+        for quant in quants_so:
+            if quant.quantity != 0:
+                quant.inventory_quantity = 0.0
+                quant.action_apply_inventory()
+
+
+class UgImportInventoryList(models.TransientModel):
+    _name = "ug.distrib.import.inventory.list"
     _description = "Products list"
     _order = 'name'
 
-    def _default_channel(self):
-        return self.wizard_id.channel_id.id
-
-    wizard_id = fields.Many2one('ug.distrib.import.move', ondelete='cascade')
+    wizard_id = fields.Many2one('ug.distrib.import.inventory', ondelete='cascade')
     product_id = fields.Many2one(
         comodel_name='product.product',
         string="Product")
@@ -228,12 +181,6 @@ class UgImportMoveList(models.TransientModel):
         # previously related='product_id.product_tmpl_id'
         # not anymore since the field must be considered editable for product configurator logic
         # without modifying the related product_id when updated.
-    )
-    channel_id = fields.Many2one(
-        comodel_name='distrib.sales.channels',
-        string="Sales Channel",
-        default=_default_channel,
-        readonly=False, index=True
     )
     name = fields.Char('Name', readonly=True)
     qtt = fields.Float('Quantity', digits=(12, 1))

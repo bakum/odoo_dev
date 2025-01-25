@@ -20,7 +20,7 @@ class DistributorSaleBudget(models.Model):
         states=LOCKED_FIELD_STATES,
         index=True, required=True, tracking=True)
     date = fields.Datetime(
-        string="Operation Date",
+        string="Date",
         states=LOCKED_FIELD_STATES,
         required=True, readonly=False, copy=False,
         default=fields.Datetime.now, tracking=True)

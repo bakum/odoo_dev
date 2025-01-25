@@ -20,6 +20,28 @@ export class ImportMoveController extends ListController {
             },
         });
     }
+
+    OnDownloadIn() {
+        this.actionService.doAction({
+            'type': 'ir.actions.act_url',
+            'url': '/ug_base_distrib/static/xls/template_incomes_distrib.xlsx',
+            'target': 'new'
+        })
+    }
+    OnDownloadOut() {
+        this.actionService.doAction({
+            'type': 'ir.actions.act_url',
+            'url': '/ug_base_distrib/static/xls/template_sales_distrib.xlsx',
+            'target': 'new'
+        })
+    }
+    // OnDownloadInventory() {
+    //     this.actionService.doAction({
+    //         'type': 'ir.actions.act_url',
+    //         'url': '/ug_base_distrib/static/xls/template_inventory_distrib.xlsx',
+    //         'target': 'new'
+    //     })
+    // }
 }
 
 export const ImportMoveListView = {

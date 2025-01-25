@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates id="template" xml:space="preserve">
+
+<t t-name="ImportDistribInventory.Buttons" t-inherit="web.ListView.Buttons" t-inherit-mode="primary" owl="1">
+    <xpath expr="(//div/*)[last()]" position="after">
+        <button
+                class="btn btn-secondary px-4 o_button_import" type="button" t-on-click="onClickImport">
+            Import an inventory
+        </button>
+    </xpath>
+</t>
+
+</templates>

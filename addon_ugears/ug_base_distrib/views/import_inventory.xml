@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="ug_import_distrib_inventory_from_xls_view" model="ir.ui.view">
+            <field name="name">Import inventory</field>
+            <field name="model">ug.distrib.import.inventory</field>
+            <field name="arch" type="xml">
+                <form string="Import moves">
+                    <sheet>
+                        <div class="oe_title pb-4">
+                            <H3>
+                                <field name="name" readonly="1"/>
+                            </H3>
+                        </div>
+                        <field name="len_products" invisible="1"/>
+                        <group>
+                            <group>
+                                <field name="xls_filename" invisible="1"/>
+                                <field name="xls_file" filename="xls_filename"/>
+                            </group>
+                            <group>
+                                 <field name="date"/>
+                                <field name="distrib_id" widget="many2one" options="{'no_create': True, 'no_open': True}"/>
+                            </group>
+                        </group>
+                        <div class="o_statusbar_buttons d-flex align-items-center align-content-around flex-wrap">
+                            <button string="Load inventory from Excel" name="load_inventory_from_xls" class="oe_highlight" type="object"
+                                attrs="{'invisible': [('xls_filename', '=', False)]}"/>
+                        </div>
+                        <notebook attrs="{'invisible': [('len_products', '=', 0)]}">
+                            <page string="Products">
+                                <field name="products_ids">
+                                    <tree create="false" editable="top">
+<!--                                        <field name="name" readonly="1"/>-->
+                                        <field name="barcode" readonly="1"/>
+                                        <field name="default_code" readonly="1"/>
+                                        <field name="product_id" widget="many2one" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('product_id', '!=', False)]}"/>
+<!--                                        <field name="product_template_id"/>-->
+                                        <field name="description" readonly="1" optional="hide"/>
+                                        <field name="qtt"/>
+<!--                                        <field name="channel_id" readonly="1" widget="many2one" options="{'no_create': True, 'no_open': True}" optional="hide"/>-->
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <footer>
+                        <button string="Save inventory" name="save_inventory" class="oe_highlight" type="object"
+                                attrs="{'invisible': [('len_products', '=', 0)]}"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_import_distrib_inventory" model="ir.actions.act_window">
+            <field name="name">Import distributor inventory</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ug.distrib.import.inventory</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="ug_import_distrib_inventory_from_xls_view"/>
+            <field name="target">new</field>
+        </record>
+
+        <record id="view_ug_import_distrib_inventory_tree" model="ir.ui.view">
+            <field name="name">ug.import.distrib.inventory.tree.inherit</field>
+            <field name="model">distrib.quant</field>
+            <field name="inherit_id" ref="ug_base_distrib.view_distributors_quants_tree"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//tree" position="attributes">
+                        <attribute name="js_class">import_distrib_inventory_list</attribute>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+    </data>
+</odoo>

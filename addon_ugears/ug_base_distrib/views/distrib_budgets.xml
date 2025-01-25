@@ -34,7 +34,7 @@
                         groups="ug_base_distrib.group_distrib_manager"
                         confirm="The selected operation will change the status and cancel transaction. Are you sure you want to do this?"/>
                 <button name="action_draft" class="btn-primary" string="Draft" type="object"
-                        attrs="{'invisible': ['|',('state', 'not in', ['cancel']),('id', '=', False)]}"
+                        attrs="{'invisible': ['|','|',('state', 'not in', ['cancel']),('id', '=', False),('is_manager', '==', False)]}"
                         groups="ug_base_distrib.group_distrib_manager"/>
             </tree>
         </field>

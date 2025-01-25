@@ -7,11 +7,35 @@
                 class="btn btn-secondary px-4 o_button_import" type="button" t-on-click="onClickImport">
             Import an move
         </button>
-<!--        <button type="button" class="btn btn-outline-primary o_download_template" style="margin-left: 10px;"-->
-<!--                t-on-click="OnDownload">-->
-<!--            <i class="fa fa-download"/>-->
-<!--            Import Template for Distribution Order-->
-<!--        </button>-->
+<!--        <div class="o-dropdown dropdown o_filter_menu btn-group undefined o-dropdown&#45;&#45;no-caret">-->
+<!--            <div class="btn-group o_search_options position-static">-->
+<!--                <button type="button" class="btn btn-outline-primary o_download_template" style="margin-left: 10px;"-->
+<!--                        t-on-click="OnDownload">-->
+<!--                    <i class="fa fa-download"/>-->
+<!--                    Import Template for Distribution Order-->
+<!--                </button>-->
+<!--            </div>-->
+<!--        </div>-->
+        <nav class="navbar navbar-expand-md navbar-light bg-outline-primary p-0">
+          <div class="container-fluid">
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          <i class="fa fa-download"/>
+                          Import Template for Distribution Moves
+                      </a>
+                      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" t-on-click="OnDownloadIn" href="#">Template Incoming Move</a></li>
+                        <li><a class="dropdown-item" t-on-click="OnDownloadOut" href="#">Template Sales Move</a></li>
+<!--                        <li><hr class="dropdown-divider"></hr></li>-->
+<!--                        <li><a class="dropdown-item" t-on-click="OnDownloadInventory" href="#">Template Inventory Move</a></li>-->
+                      </ul>
+                    </li>
+                </ul>
+              </div>
+          </div>
+        </nav>
     </xpath>
 </t>
 

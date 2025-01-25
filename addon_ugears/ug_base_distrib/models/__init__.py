@@ -17,3 +17,4 @@ from . import res_users
 from . import res_partner
 from . import res_config_settings
 from . import import_move
+from . import import_inventory
