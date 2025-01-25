@@ -20,6 +20,13 @@ export class ImportInventoryController extends ListController {
             },
         });
     }
+    OnDownload() {
+        this.actionService.doAction({
+            'type': 'ir.actions.act_url',
+            'url': '/ug_base_distrib/static/xls/template_inventory_distrib.xlsx',
+            'target': 'new'
+        })
+    }
 }
 
 export const ImportInventoryListView = {

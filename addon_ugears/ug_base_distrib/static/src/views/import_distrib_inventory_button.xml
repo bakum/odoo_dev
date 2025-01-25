@@ -7,6 +7,11 @@
                 class="btn btn-secondary px-4 o_button_import" type="button" t-on-click="onClickImport">
             Import an inventory
         </button>
+        <button type="button" class="btn btn-outline-primary o_download_template" style="margin-left: 10px;"
+                t-on-click="OnDownload">
+            <i class="fa fa-download"/>
+            Import Template for Distribution Inventory
+        </button>
     </xpath>
 </t>
 
