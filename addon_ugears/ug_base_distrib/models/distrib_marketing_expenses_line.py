@@ -32,7 +32,7 @@ class MarketingExpensesLines(models.Model):
         store=True, index=True, precompute=True)
     date = fields.Datetime(related='move_id.date_order', string="Expenses Data", store=True, precompute=True)
     year = fields.Char(related='move_id.year', string="Expenses Year", store=True, precompute=True)
-    month = fields.Datetime(related='move_id.month', string="Expenses Month", store=True, precompute=True)
+    # month = fields.Datetime(related='move_id.month', string="Expenses Month", store=True, precompute=True)
     salesman_id = fields.Many2one(
         related='move_id.user_id',
         string="User",
