@@ -54,10 +54,10 @@ class MarketingExpenses(models.Model):
         default=lambda self: self.env.user.id,
         readonly=False, index=True, tracking=True
     )
-    # month = fields.Datetime(
-    #     string="Month",
-    #     states=LOCKED_FIELD_STATES,
-    #     tracking=True, store=True, compute='_compute_year')
+    month = fields.Datetime(
+        string="Month",
+        states=LOCKED_FIELD_STATES,
+        tracking=True, store=True, compute='_compute_year')
     # month = fields.Selection(
     #     selection=[
     #         ('january', _('January')),
