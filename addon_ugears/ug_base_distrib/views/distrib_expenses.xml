@@ -7,11 +7,13 @@
             <form>
                 <header>
                     <button name="action_done" class="btn-primary" data-hotkey="v" string="Confirm" type="object"
-                            attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>
+                            attrs="{'invisible': ['|', ('state', 'not in', ['draft']), ('id', '=', False)]}"/>
                     <button name="action_cancel" type="object" string="Cancel"
                             attrs="{'invisible': ['|', ('state', 'not in', ['done']), ('id', '=', False)]}"
                             data-hotkey="z"
                             confirm="The selected operation will change the status and cancel transaction. Are you sure you want to do this?"/>
+                    <button name="action_draft" class="btn-primary" string="Draft" type="object"
+                            attrs="{'invisible': [('state', 'not in', ['cancel'])]}"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,done,cancel"/>
                 </header>
                 <sheet>

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-25 16:58+0000\n"
-"PO-Revision-Date: 2025-01-25 16:58+0000\n"
+"POT-Creation-Date: 2025-01-26 12:53+0000\n"
+"PO-Revision-Date: 2025-01-26 12:53+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -74,6 +74,13 @@ msgid "Activities"
 msgstr "Заходи"
 
 #. module: ug_base_distrib
+#: model:distrib.types.marketings,desc:ug_base_distrib.type_5
+msgid ""
+"Activities on social media platforms such as Facebook, TikTok, Instagram, "
+"Pinterest, and others"
+msgstr ""
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__activity_exception_decoration
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__activity_exception_decoration
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__activity_exception_decoration
@@ -106,6 +113,13 @@ msgid "Administrator"
 msgstr "Адміністратор"
 
 #. module: ug_base_distrib
+#: model:distrib.types.marketings,desc:ug_base_distrib.type_4
+msgid ""
+"All forms of online advertising, such as Google Ads, and other digital "
+"marketing strategies designed to increase brand visibility and drive sales"
+msgstr ""
+
+#. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_users_distrib__form_inherit
 msgid "Allowed Distributor"
 msgstr "Дозволений дистриб'ютор"
@@ -122,11 +136,7 @@ msgid "Apply"
 msgstr "Застосувати"
 
 #. module: ug_base_distrib
-#. odoo-python
-#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty4
-#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__month__april
-#, python-format
 msgid "April"
 msgstr "Квітень"
 
@@ -155,11 +165,7 @@ msgid "Attachment Count"
 msgstr ""
 
 #. module: ug_base_distrib
-#. odoo-python
-#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty8
-#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__month__august
-#, python-format
 msgid "August"
 msgstr "Серпень"
 
@@ -406,11 +412,7 @@ msgid "Debit"
 msgstr "Дебіт"
 
 #. module: ug_base_distrib
-#. odoo-python
-#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty12
-#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__month__december
-#, python-format
 msgid "December"
 msgstr "Грудень"
 
@@ -429,6 +431,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__descr
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__desc
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory_list__description
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move_list__description
 msgid "Description"
@@ -684,11 +687,7 @@ msgid "Extra Values"
 msgstr ""
 
 #. module: ug_base_distrib
-#. odoo-python
-#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty2
-#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__month__february
-#, python-format
 msgid "February"
 msgstr "Лютий"
 
@@ -980,11 +979,7 @@ msgid "Is Manager"
 msgstr "Це менеджер"
 
 #. module: ug_base_distrib
-#. odoo-python
-#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty
-#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__month__january
-#, python-format
 msgid "January"
 msgstr "Січень"
 
@@ -996,20 +991,12 @@ msgid "Journal Items"
 msgstr "Проводки"
 
 #. module: ug_base_distrib
-#. odoo-python
-#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty7
-#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__month__july
-#, python-format
 msgid "July"
 msgstr "Липень"
 
 #. module: ug_base_distrib
-#. odoo-python
-#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty6
-#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__month__june
-#, python-format
 msgid "June"
 msgstr "Червень"
 
@@ -1153,11 +1140,7 @@ msgid "Main Attachment"
 msgstr ""
 
 #. module: ug_base_distrib
-#. odoo-python
-#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty3
-#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__month__march
-#, python-format
 msgid "March"
 msgstr "Березень"
 
@@ -1174,11 +1157,47 @@ msgid "Marketing Expenses"
 msgstr "Маркетингові витрати"
 
 #. module: ug_base_distrib
-#. odoo-python
-#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#: model:distrib.types.marketings,desc:ug_base_distrib.type_3
+msgid ""
+"Marketing expenses related to collaborating with bloggers and influencers to"
+" promote products. This includes fees for sponsored content, product "
+"reviews, social media mentions, and any other activities aimed at leveraging"
+" the blogger's audience to increase brand visibility, drive engagement, and "
+"boost sales"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:distrib.types.marketings,desc:ug_base_distrib.type_6
+msgid ""
+"Marketing expenses related to listing, building visibility, and promoting "
+"products through physical retail stores. This includes listing fees, "
+"merchandising, leaflets, posters, voblers, and promotional compensation, all"
+" aimed at enhancing product placement and driving customer engagement and "
+"purchases."
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:distrib.types.marketings,desc:ug_base_distrib.type_1
+msgid ""
+"Marketing expenses related to participation in trade fairs and exhibitions. "
+"This includes booth rental, design and construction of the booth, shipping "
+"and logistics, promotional materials (such as leaflets and banners), staff "
+"costs, and any other expenses related to showcasing products and engaging "
+"with potential clients or partners at the event"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:distrib.types.marketings,desc:ug_base_distrib.type_2
+msgid ""
+"Marketing expenses related to promoting and selling products through "
+"alternative channels such as museums, duty-free stores, and similar non-"
+"traditional retail environments. This includes costs for product placement, "
+"display setup, promotional materials, and any activities aimed at enhancing "
+"visibility and driving sales in these specific locations."
+msgstr ""
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty5
-#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__month__may
-#, python-format
 msgid "May"
 msgstr "Травень"
 
@@ -1210,6 +1229,7 @@ msgstr "Мобільний"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__month
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__month_str
 msgid "Month"
 msgstr "Місяць"
 
@@ -1325,11 +1345,7 @@ msgid "Nothing to load"
 msgstr "Нічого немає для завантаження"
 
 #. module: ug_base_distrib
-#. odoo-python
-#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty11
-#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__month__november
-#, python-format
 msgid "November"
 msgstr "Листопад"
 
@@ -1371,11 +1387,7 @@ msgid "Number of messages with delivery error"
 msgstr ""
 
 #. module: ug_base_distrib
-#. odoo-python
-#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty10
-#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__month__october
-#, python-format
 msgid "October"
 msgstr "Жовтень"
 
@@ -1708,11 +1720,7 @@ msgid "Select Period"
 msgstr "Оберіть період"
 
 #. module: ug_base_distrib
-#. odoo-python
-#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty9
-#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__month__september
-#, python-format
 msgid "September"
 msgstr "Вересень"
 

@@ -137,3 +137,6 @@ class MarketingExpenses(models.Model):
 
     def action_cancel(self):
         self.write({'state': 'cancel'})
+
+    def action_draft(self):
+        self.write({'state': 'draft'})
