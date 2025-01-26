@@ -49,7 +49,7 @@
                                     </control>
                                     <field name="expense_id" optional="show"
                                            options="{'no_create': True, 'no_open': True}"/>
-                                    <field name="descr"/>
+                                    <field name="descr" readonly="1"/>
                                  <!--   <field name="name" widget="section_and_note_text" optional="show" readonly="1"/> -->
                                     <field name="currency_id" invisible="1"/>
                                     <field name="expense_total" optional="show"/>

@@ -33,6 +33,7 @@
         'views/sales_dashboard.xml',
         'views/import_move.xml',
         'views/import_inventory.xml',
+        'views/import_expenses.xml',
         'data/sale_channels.xml',
         'reports/report_xls.xml',
         'views/distrib_budgets.xml',

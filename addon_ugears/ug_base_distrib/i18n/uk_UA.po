@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-26 12:53+0000\n"
-"PO-Revision-Date: 2025-01-26 12:53+0000\n"
+"POT-Creation-Date: 2025-01-26 16:14+0000\n"
+"PO-Revision-Date: 2025-01-26 16:14+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -325,6 +325,8 @@ msgstr "Створити новий продукт"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__create_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__create_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses_list__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory_list__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__create_uid
@@ -344,6 +346,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__create_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__create_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses_list__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory_list__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__create_date
@@ -367,6 +371,8 @@ msgstr "Кредит"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__currency_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__currency_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__currency_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__currency_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses_list__currency_id
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_currency
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_settings_currency
 msgid "Currency"
@@ -401,6 +407,7 @@ msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__date
 msgid "Date"
 msgstr "Дата"
@@ -432,6 +439,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__descr
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__desc
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses_list__descr
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory_list__description
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move_list__description
 msgid "Description"
@@ -456,6 +464,8 @@ msgstr "Різниця"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses_list__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory_list__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__display_name
@@ -505,6 +515,7 @@ msgstr "Дистрибуція"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__distrib_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__distrib_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_res_users__distrib_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__distrib_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__distrib_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__distrib_id
 msgid "Distributor"
@@ -611,12 +622,14 @@ msgid "EMail"
 msgstr "Електронна пошта"
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__xls_filename
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__xls_filename
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__xls_filename
 msgid "Excel Filename"
 msgstr "Ім'я файлу Excel"
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__xls_file
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__xls_file
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__xls_file
 msgid "Excel file"
@@ -632,9 +645,11 @@ msgstr ""
 #: code:addons/ug_base_distrib/models/distrib_move.py:0
 #: code:addons/ug_base_distrib/models/import_move.py:0
 #: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_move_out
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__expenses_ids
 #: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_distributors_move__operation__out
 #: model:ir.model.fields.selection,name:ug_base_distrib.selection__ug_distrib_import_move__operation__out
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_move_out
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.ug_import_distrib_expenses_from_xls_view
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_expenses_form
 #, python-format
 msgid "Expenses"
@@ -674,6 +689,11 @@ msgstr "Рік витрати"
 #: model:ir.model.constraint,message:ug_base_distrib.constraint_distrib_marketing_expenses_line_expenses_total__check
 msgid "Expenses amount cannot be zero"
 msgstr "Сума витрат не може дорівнювати нулю"
+
+#. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_ug_distrib_import_expenses_list
+msgid "Expenses list"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.actions.report,name:ug_base_distrib.report_export_horizont_xls
@@ -775,6 +795,8 @@ msgstr "Історія"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses_list__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory_list__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__id
@@ -825,6 +847,13 @@ msgstr "Імпорт"
 
 #. module: ug_base_distrib
 #. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/views/import_expenses_button.xml:0
+#, python-format
+msgid "Import Template for Distribution Expenses"
+msgstr "Імпорт шаблону видатків"
+
+#. module: ug_base_distrib
+#. odoo-javascript
 #: code:addons/ug_base_distrib/static/src/views/import_distrib_inventory_button.xml:0
 #, python-format
 msgid "Import Template for Distribution Inventory"
@@ -871,6 +900,16 @@ msgid "Import distrib moves"
 msgstr "Імпорт рухів дистриб'юторів"
 
 #. module: ug_base_distrib
+#: model:ir.actions.act_window,name:ug_base_distrib.action_import_distrib_expenses
+msgid "Import distributor expenses"
+msgstr "Імпорт видатків дистриб'юторів"
+
+#. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_ug_distrib_import_expenses
+msgid "Import distributor expenses from xls"
+msgstr ""
+
+#. module: ug_base_distrib
 #: model:ir.actions.act_window,name:ug_base_distrib.action_import_distrib_inventory
 msgid "Import distributor inventory"
 msgstr "Імпорт інвентаризації"
@@ -884,6 +923,16 @@ msgstr ""
 #: model:ir.model,name:ug_base_distrib.model_ug_distrib_import_move
 msgid "Import distributor move from xls"
 msgstr "Імпорт рухів з xls файлу"
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#. odoo-python
+#: code:addons/ug_base_distrib/models/import_expenses.py:0
+#: code:addons/ug_base_distrib/static/src/views/import_expenses_button.xml:0
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.ug_import_distrib_expenses_from_xls_view
+#, python-format
+msgid "Import expenses"
+msgstr "Імпорт видатків"
 
 #. module: ug_base_distrib
 #. odoo-python
@@ -1052,6 +1101,8 @@ msgstr "Дата останньої інвентаризації"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses_list____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory_list____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move____last_update
@@ -1071,6 +1122,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__write_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__write_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses_list__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory_list__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__write_uid
@@ -1090,6 +1143,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__write_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__write_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses_list__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory_list__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__write_date
@@ -1103,6 +1158,11 @@ msgid "Last time the Quantity was Updated"
 msgstr "Останній раз кількість оновлювалась"
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__len_expenses
+msgid "Len Expenses"
+msgstr ""
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__len_products
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__len_products
 msgid "Len Products"
@@ -1113,6 +1173,11 @@ msgstr ""
 #: model:ir.cron,cron_name:ug_base_distrib.import_dayli_rates_cron
 msgid "Load Currency Rates Cron Job"
 msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.ug_import_distrib_expenses_from_xls_view
+msgid "Load costs from Excel"
+msgstr "Завантажити видатки з Екселю"
 
 #. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.ug_import_distrib_inventory_from_xls_view
@@ -1286,6 +1351,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses_list__name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory_list__name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__name
@@ -1338,6 +1405,7 @@ msgstr ""
 
 #. module: ug_base_distrib
 #. odoo-python
+#: code:addons/ug_base_distrib/models/import_expenses.py:0
 #: code:addons/ug_base_distrib/models/import_inventory.py:0
 #: code:addons/ug_base_distrib/models/import_move.py:0
 #, python-format
@@ -1440,6 +1508,7 @@ msgstr "Телефон"
 
 #. module: ug_base_distrib
 #. odoo-python
+#: code:addons/ug_base_distrib/models/import_expenses.py:0
 #: code:addons/ug_base_distrib/models/import_inventory.py:0
 #: code:addons/ug_base_distrib/models/import_move.py:0
 #, python-format
@@ -1691,6 +1760,11 @@ msgid "Sales channels"
 msgstr "Канали продажу"
 
 #. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.ug_import_distrib_expenses_from_xls_view
+msgid "Save costs"
+msgstr "Зберегти видатки"
+
+#. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.ug_import_distrib_inventory_from_xls_view
 msgid "Save inventory"
 msgstr "Зберегти інвентаризацію"
@@ -1795,6 +1869,7 @@ msgstr "Успішно!"
 
 #. module: ug_base_distrib
 #. odoo-python
+#: code:addons/ug_base_distrib/models/import_expenses.py:0
 #: code:addons/ug_base_distrib/models/import_inventory.py:0
 #: code:addons/ug_base_distrib/models/import_move.py:0
 #, python-format
@@ -1871,6 +1946,7 @@ msgstr "Найкращі продавці"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__price_total
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__expense_total
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__total
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses_list__expense_total
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_budgets_line_tree
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_line_tree
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_quants_tree
@@ -1959,6 +2035,7 @@ msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__expense_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses_list__expense_id
 msgid "Type of Expense"
 msgstr "Стаття"
 
@@ -2073,6 +2150,7 @@ msgid "Website communication history"
 msgstr "Історія спілкування сайту"
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses_list__wizard_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory_list__wizard_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move_list__wizard_id
 msgid "Wizard"
@@ -2080,6 +2158,7 @@ msgstr ""
 
 #. module: ug_base_distrib
 #. odoo-python
+#: code:addons/ug_base_distrib/models/import_expenses.py:0
 #: code:addons/ug_base_distrib/models/import_inventory.py:0
 #: code:addons/ug_base_distrib/models/import_move.py:0
 #, python-format

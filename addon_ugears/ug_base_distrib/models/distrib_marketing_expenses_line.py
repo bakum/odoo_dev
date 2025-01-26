@@ -12,7 +12,7 @@ DISCRIPTION_DICT = {
 
 class MarketingExpensesLines(models.Model):
     _name = 'distrib.marketing.expenses.line'
-    _description = 'Msrketing Expenses Lines'
+    _description = 'Marketing Expenses Lines'
     _rec_names_search = ['name', 'move_id.name']
     _order = 'move_id, distrib_id asc, id'
 
