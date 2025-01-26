@@ -7,6 +7,7 @@ class TypesOfMarketings(models.Model):
 
     name = fields.Char(string='Name', required=True)
     active = fields.Boolean(default=True)
+    desc = fields.Text(string='Description')
 
     def get_expenses_multiline_description(self):
         return self.name

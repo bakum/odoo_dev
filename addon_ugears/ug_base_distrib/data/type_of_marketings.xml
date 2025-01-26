@@ -2,27 +2,33 @@
 <odoo>
     <data>
         <record id="type_1" model="distrib.types.marketings">
-            <field name="name">Mass Media</field>
+            <field name="name">Fairs</field>
+            <field name="desc">Marketing expenses related to participation in trade fairs and exhibitions. This includes booth rental, design and construction of the booth, shipping and logistics, promotional materials (such as leaflets and banners), staff costs, and any other expenses related to showcasing products and engaging with potential clients or partners at the event</field>
             <field name="active">True</field>
         </record>
         <record id="type_2" model="distrib.types.marketings">
-            <field name="name">TV</field>
+            <field name="name">Other channels (Museums, Duty free)</field>
+            <field name="desc">Marketing expenses related to promoting and selling products through alternative channels such as museums, duty-free stores, and similar non-traditional retail environments. This includes costs for product placement, display setup, promotional materials, and any activities aimed at enhancing visibility and driving sales in these specific locations.</field>
             <field name="active">True</field>
         </record>
         <record id="type_3" model="distrib.types.marketings">
-            <field name="name">Amazon</field>
+            <field name="name">Bloggers</field>
+            <field name="desc">Marketing expenses related to collaborating with bloggers and influencers to promote products. This includes fees for sponsored content, product reviews, social media mentions, and any other activities aimed at leveraging the blogger's audience to increase brand visibility, drive engagement, and boost sales</field>
             <field name="active">True</field>
         </record>
         <record id="type_4" model="distrib.types.marketings">
             <field name="name">Advertising</field>
+            <field name="desc">All forms of online advertising, such as Google Ads, and other digital marketing strategies designed to increase brand visibility and drive sales</field>
             <field name="active">True</field>
         </record>
         <record id="type_5" model="distrib.types.marketings">
-            <field name="name">Social network</field>
+            <field name="name">Social Media</field>
+            <field name="desc">Activities on social media platforms such as Facebook, TikTok, Instagram, Pinterest, and others</field>
             <field name="active">True</field>
         </record>
         <record id="type_6" model="distrib.types.marketings">
-            <field name="name">Retail</field>
+            <field name="name">Offline Retail</field>
+            <field name="desc">Marketing expenses related to listing, building visibility, and promoting products through physical retail stores. This includes listing fees, merchandising, leaflets, posters, voblers, and promotional compensation, all aimed at enhancing product placement and driving customer engagement and purchases.</field>
             <field name="active">True</field>
         </record>
     </data>

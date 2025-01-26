@@ -13,7 +13,7 @@ LOCKED_FIELD_STATES = {
 class MarketingExpenses(models.Model):
     _name = 'distrib.marketing.expenses'
     _description = 'Marketing Expenses'
-    _order = 'year desc, month desc, id desc'
+    _order = 'year desc, id desc'
     _inherit = ['mail.thread']
 
     def _default_month(self):
@@ -54,25 +54,30 @@ class MarketingExpenses(models.Model):
         default=lambda self: self.env.user.id,
         readonly=False, index=True, tracking=True
     )
-    month = fields.Selection(
-        selection=[
-            ('january', _('January')),
-            ('february', _('February')),
-            ('march', _('March')),
-            ('april', _('April')),
-            ('may', _('May')),
-            ('june', _('June')),
-            ('july', _('July')),
-            ('august', _('August')),
-            ('september', _('September')),
-            ('october', _('October')),
-            ('november', _('November')),
-            ('december', _('December')),
-        ],
+    month = fields.Datetime(
+        string="Month",
         states=LOCKED_FIELD_STATES,
-        required=True,
-        string="Month", default=_default_month,
-        copy=False, index=True, tracking=True)
+        tracking=True, store=True, compute='_compute_year')
+    # month = fields.Selection(
+    #     selection=[
+    #         ('january', _('January')),
+    #         ('february', _('February')),
+    #         ('march', _('March')),
+    #         ('april', _('April')),
+    #         ('may', _('May')),
+    #         ('june', _('June')),
+    #         ('july', _('July')),
+    #         ('august', _('August')),
+    #         ('september', _('September')),
+    #         ('october', _('October')),
+    #         ('november', _('November')),
+    #         ('december', _('December')),
+    #     ],
+    #     states=LOCKED_FIELD_STATES,
+    #     required=False,
+    #     string="Month",
+    #     copy=False, index=True, tracking=True)
+    month_str = fields.Char("Month", compute='_compute_year')
     year = fields.Char("Year", store=True, tracking=True, compute='_compute_year')
     move_line = fields.One2many(
         comodel_name='distrib.marketing.expenses.line',
@@ -95,7 +100,7 @@ class MarketingExpenses(models.Model):
 
     def init(self):
         create_index(self._cr, 'distrib_marketing_date_order_id_idx', 'distrib_marketing_expenses',
-                     ["year desc, month desc, id desc"])
+                     ["year desc, id desc"])
 
     @api.ondelete(at_uninstall=False)
     def _unlink_except_done_or_cancel(self):
@@ -114,7 +119,9 @@ class MarketingExpenses(models.Model):
         for order in self:
             if order.date_order:
                 order.year = order.date_order.strftime("%Y")
-                order.month = order.date_order.strftime("%B").lower()
+                first_day = order.date_order.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+                order.month_str = order.date_order.strftime("%B").lower()
+                order.month = first_day
 
     @api.depends('move_line.expense_total')
     def _compute_amounts(self):
