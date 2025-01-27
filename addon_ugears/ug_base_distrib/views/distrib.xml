@@ -38,6 +38,7 @@
                             <field name="mobile" widget="phone"/>
                             <field name="email" widget="email" context="{'gravatar_image': True}"/>
                             <field name="website" string="Website" widget="url" placeholder="e.g. https://www.odoo.com"/>
+                            <field name="region_id" required="1" options="{'no_open': True, 'no_create': True}" groups="ug_base_distrib.group_distrib_manager"/>
                         </group>
                     </group>
                     <notebook colspan="4">

@@ -10,6 +10,7 @@ class PublicProduct(models.Model):
         'Quantity On Distributor', compute='_compute_quantities_dist',
         compute_sudo=False, digits='Product Unit of Measure')
     theme_id = fields.Many2one('distrib.product.theme','Theme')
+    region_ids = fields.Many2many('distrib.regions', string='Regions')
 
     def _compute_quantities_dist(self):
         res = self._compute_quantities_dict_dist()

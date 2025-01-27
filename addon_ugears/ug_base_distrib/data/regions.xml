@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="Region_1" model="distrib.regions">
+            <field name="name">EMEA</field>
+            <field name="desc">Europe, the Middle East and Africa</field>
+        </record>
+        <record id="Region_2" model="distrib.regions">
+            <field name="name">NA</field>
+            <field name="desc">North America</field>
+        </record>
+        <record id="Region_3" model="distrib.regions">
+            <field name="name">LATAM</field>
+            <field name="desc">Latin America</field>
+        </record>
+        <record id="Region_4" model="distrib.regions">
+            <field name="name">APAC</field>
+            <field name="desc">Asia-Pacific</field>
+        </record>
+        <record id="Region_5" model="distrib.regions">
+            <field name="name">PRC</field>
+            <field name="desc">People's Republic of China</field>
+        </record>
+    </data>
+</odoo>

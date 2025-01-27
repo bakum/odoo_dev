@@ -23,6 +23,7 @@ class Distributors(models.Model):
     partner_id = fields.Many2one('res.partner', 'Partner', tracking=True)
     pricelist_id = fields.Many2one('product.pricelist', 'Pricelist', tracking=True, required=True)
     currency_id = fields.Many2one('res.currency', compute="_compute_currency")
+    region_id = fields.Many2one('distrib.regions', "Region", tracking=True)
 
     @api.depends('pricelist_id')
     def _compute_currency(self):

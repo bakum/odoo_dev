@@ -141,6 +141,19 @@
             <field name="groups" eval="[(4, ref('ug_base_distrib.group_distrib_user'))]"/>
         </record>
 
+        <record id="distrib_product_user_rule" model="ir.rule">
+            <field name="name">Distributor Product Template</field>
+            <field name="model_id" ref="product.model_product_template"/>
+            <field name="domain_force">[('region_ids', 'in', [user.distrib_id.region_id.id])]</field>
+            <field name="groups" eval="[(4, ref('ug_base_distrib.group_distrib_user'))]"/>
+        </record>
+        <record id="distrib_product_manager_rule" model="ir.rule">
+            <field name="name">Distributor All Product Template</field>
+            <field name="model_id" ref="product.model_product_template"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('ug_base_distrib.group_distrib_manager'))]"/>
+        </record>
+
     </data>
     <data noupdate="1">
         <record id="base.default_user" model="res.users">

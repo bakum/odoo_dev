@@ -35,6 +35,7 @@
         'views/import_inventory.xml',
         'views/import_expenses.xml',
         'data/sale_channels.xml',
+        'data/regions.xml',
         'reports/report_xls.xml',
         'views/distrib_budgets.xml',
     ],
