@@ -27,13 +27,13 @@
                 <field name="user_id" readonly="1" widget="res_partner_many2one" options="{'no_create': True, 'no_open': True}"/>
                 <button name="action_view_budget" type="object" class="btn btn-link text-info" icon="fa-history"
                         string="Preview" attrs="{'invisible': [('id', '=', False)]}"/>
-                <button name="action_done" class="btn-primary"  string="Confirm" type="object"
+                <button name="action_done" class="btn btn-outline-primary"  string="Confirm" type="object"
                         attrs="{'invisible': ['|',('state', 'not in', ['draft']),('id', '=', False)]}"/>
                 <button name="action_cancel" type="object" string="Cancel"
                         attrs="{'invisible': ['|', '|',('state', 'not in', ['done']), ('id', '=', False),('is_manager', '==', False)]}"
                         groups="ug_base_distrib.group_distrib_manager"
                         confirm="The selected operation will change the status and cancel transaction. Are you sure you want to do this?"/>
-                <button name="action_draft" class="btn-primary" string="Draft" type="object"
+                <button name="action_draft" class="btn btn-outline-primary" string="Draft" type="object"
                         attrs="{'invisible': ['|','|',('state', 'not in', ['cancel']),('id', '=', False),('is_manager', '==', False)]}"
                         groups="ug_base_distrib.group_distrib_manager"/>
             </tree>
