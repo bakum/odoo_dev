@@ -105,7 +105,7 @@
                             </td>
                             <td name="td_quantity" class="text-end">
 <!--                                <span t-field="line.product_uom"/>-->
-                                <span style="font-size: 0.8em;">pca</span>
+                                <span style="font-size: 0.8em;">pcs</span>
                             </td>
                             <td name="td_pieces" class="text-end">
                                 <span style="font-size: 0.8em;" t-field="line.product_id.qty_in_cartoon"/>
