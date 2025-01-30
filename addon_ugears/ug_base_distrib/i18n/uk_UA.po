@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-27 17:53+0000\n"
-"PO-Revision-Date: 2025-01-27 17:53+0000\n"
+"POT-Creation-Date: 2025-01-30 18:04+0000\n"
+"PO-Revision-Date: 2025-01-30 18:04+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -438,6 +438,8 @@ msgid "Default unit of measure used for all stock operations."
 msgstr ""
 
 #. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/log_renderer/log_renderer.xml:0
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__descr
@@ -446,6 +448,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses_list__descr
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory_list__description
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move_list__description
+#, python-format
 msgid "Description"
 msgstr "Опис"
 
@@ -519,7 +522,9 @@ msgstr "Дистрибуція"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__distrib_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__distrib_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__distrib_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_res_partner__distrib_ids
 #: model:ir.model.fields,field_description:ug_base_distrib.field_res_users__distrib_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_res_users__distrib_ids
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__distrib_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__distrib_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__distrib_id
@@ -609,6 +614,13 @@ msgid "Distributors stock records"
 msgstr ""
 
 #. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/import_region_rel.xml:0
+#, python-format
+msgid "Download Regions Relations Template"
+msgstr "Завантажити шаблон взаємозвязків"
+
+#. module: ug_base_distrib
 #: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_budget_move__state__draft
 #: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_distributors_move__state__draft
 #: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__state__draft
@@ -639,6 +651,13 @@ msgstr "Ім'я файлу Excel"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__xls_file
 msgid "Excel file"
 msgstr "Файл Excel"
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/import_region_rel.xml:0
+#, python-format
+msgid "Excel files are recommended as formatting is automatic."
+msgstr "Файли Excel рекомендується, оскільки форматування відбувається автоматично."
 
 #. module: ug_base_distrib
 #: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses_line__display_type__expense
@@ -715,6 +734,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty2
 msgid "February"
 msgstr "Лютий"
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/import_region_rel.xml:0
+#, python-format
+msgid "File Uploader"
+msgstr "Завантажувач файлів"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__message_follower_ids
@@ -845,11 +871,27 @@ msgid "If checked, some messages have a delivery error."
 msgstr "Якщо позначено, у деяких повідомленнях є помилка доставки."
 
 #. module: ug_base_distrib
+#. odoo-javascript
 #. odoo-python
 #: code:addons/ug_base_distrib/models/distrib_quant.py:0
+#: code:addons/ug_base_distrib/static/src/components/import_region_rel.xml:0
+#: code:addons/ug_base_distrib/static/src/components/import_region_rel.xml:0
 #, python-format
 msgid "Import"
 msgstr "Імпорт"
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/import_region_rel.xml:0
+#: model:ir.actions.client,name:ug_base_distrib.action_region_rel
+#, python-format
+msgid "Import Regions Relations"
+msgstr "Імпорт взаємозв'язки з регіонами"
+
+#. module: ug_base_distrib
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_relations
+msgid "Import Relations"
+msgstr "Імпорт взаємозв'язків"
 
 #. module: ug_base_distrib
 #. odoo-javascript
@@ -1032,6 +1074,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__is_manager
 msgid "Is Manager"
 msgstr "Це менеджер"
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/log_renderer/log_renderer.xml:0
+#, python-format
+msgid "Item"
+msgstr "Елемент"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty
@@ -1405,6 +1454,13 @@ msgstr ""
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_quant__inventory_date
 msgid "Next date the On Hand Quantity should be counted."
 msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/log_renderer/log_renderer.xml:0
+#, python-format
+msgid "No Errors"
+msgstr "Помилок немає"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_budget_move_line__display_type__line_note
@@ -2124,6 +2180,20 @@ msgstr "Оновити код валюти"
 #, python-format
 msgid "Update Quantity"
 msgstr "Оновити кількість"
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/import_region_rel.xml:0
+#, python-format
+msgid "Upload an Excel file to import"
+msgstr "Завантажте файл Excel для імпорту"
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/import_region_rel.xml:0
+#, python-format
+msgid "Upload file"
+msgstr "Завантажити файл"
 
 #. module: ug_base_distrib
 #: model:ir.model,name:ug_base_distrib.model_res_users

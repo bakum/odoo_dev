@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="owl.LogRenderer" owl="1">
+        <div class="m-2 p-0 text-center">
+            <div class="accordion" t-attf-id="accordion{{props.identity}}">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" t-attf-id="heading{{props.identity}}">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                t-attf-data-bs-target="#collapse{{props.identity}}" aria-expanded="true"
+                                t-attf-aria-controls="collapse{{props.identity}}">
+                            <span t-esc="props.name"/>
+                        </button>
+                    </h2>
+                    <div t-attf-id="collapse{{props.identity}}" class="accordion-collapse collapse"
+                         t-attf-aria-labelledby="heading{{props.identity}}" t-attf-data-bs-parent="#accordion{{props.identity}}">
+                        <div class="accordion-body">
+                            <table class="table table-sm">
+<!--                                <caption t-esc="props.name"/>-->
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Item</th>
+                                        <th scope="col">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="counter" t-value="1"/>
+                                    <t t-set="is_errors_present" t-value="false"/>
+                                    <t t-foreach="props.log" t-as="log" t-key="log.id">
+                                        <t t-if="!log.result">
+                                            <tr>
+                                                <td t-esc="counter"/>
+                                                <td t-esc="log.name"/>
+                                                <td t-esc="log.description"/>
+                                                <t t-set="counter" t-value="counter + 1"/>
+                                                <t t-set="is_errors_present" t-value="true"/>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                    <t t-if="!is_errors_present">
+                                        <tr>
+                                            <td/>
+                                            <td>No Errors</td>
+                                            <td/>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </t>
+</templates>

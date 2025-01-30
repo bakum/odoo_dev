@@ -40,5 +40,5 @@ ug_base_distrib.access_ug_distrib_import_expenses_list,access_ug_distrib_import_
 ug_base_distrib.access_distrib_regions,access_distrib_regions,ug_base_distrib.model_distrib_regions,ug_base_distrib.group_distrib_user,1,0,0,0
 ug_base_distrib.access_distrib_regions_manager,access_distrib_regions.manager,ug_base_distrib.model_distrib_regions,ug_base_distrib.group_distrib_manager,1,1,0,0
 ug_base_distrib.access_distrib_regions_root,access_distrib_regions.root,ug_base_distrib.model_distrib_regions,base.group_system,1,1,1,1
-,,,,,,,
+
 access_distrib_product_template_manager,access_distrib_product_template.manager,product.model_product_template,ug_base_distrib.group_distrib_manager,1,1,,

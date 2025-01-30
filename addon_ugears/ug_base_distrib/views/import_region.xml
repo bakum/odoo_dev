@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_region_rel" model="ir.actions.client">
+            <field name="name">Import Regions Relations</field>
+            <field name="tag">region.import_relations</field>
+        </record>
+
+        <menuitem
+                id="menu_distrib_relations"
+                name="Import Relations"
+                parent="menu_distrib_settings"
+                action="action_region_rel"
+                groups="base.group_system"
+                sequence="20"/>
+    </data>
+</odoo>
