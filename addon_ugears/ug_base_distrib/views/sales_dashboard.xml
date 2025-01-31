@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <data>
+    <data noupdate="0">
         <record id="action_owl_sales_dashboard" model="ir.actions.client">
             <field name="name">Sales Dashboard</field>
             <field name="tag">owl.sales_dashboard</field>
@@ -10,6 +10,7 @@
             name="Review"
             parent="menu_distrib_root"
             action="action_owl_sales_dashboard"
-            sequence="1"/>
+            groups="ug_base_distrib.group_distrib_manager,ug_base_distrib.group_distrib_user"
+            sequence="-1"/>
     </data>
 </odoo>
