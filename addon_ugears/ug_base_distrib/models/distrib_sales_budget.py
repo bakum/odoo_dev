@@ -80,7 +80,7 @@ class DistributorSaleBudget(models.Model):
 
         created = super(DistributorSaleBudget, self).create(vals_list)
         if created:
-            created.move_line = self._create_move_line()
+            created.move_line = self._create_move_line(vals_list)
         return created
 
     @api.ondelete(at_uninstall=False)
@@ -106,14 +106,20 @@ class DistributorSaleBudget(models.Model):
             'product_id': product.id
         }
 
-    def _search_products(self):
-        Products = self.env['product.product']
-        domain = [('is_published', '=', True)]
+    def _search_products(self, vals_list):
+        DistributorRec = self.env['distrib.distributors']
+        distributor = DistributorRec
+        for vals in vals_list:
+            distributor = DistributorRec.search([('id', '=', vals['distrib_id'])])
+        Products = self.env['product.product'].sudo()
+        domain = []
+        if distributor:
+            domain.append(('region_ids', 'in', distributor.region_id.id))
         return Products.search(domain)
 
-    def _create_move_line(self):
+    def _create_move_line(self, vals_list):
         products_list = []
-        products = self._search_products()
+        products = self._search_products(vals_list)
         for product in products:
             products_list.append((0, 0, self._prepare_move_line_value(product)))
         return products_list

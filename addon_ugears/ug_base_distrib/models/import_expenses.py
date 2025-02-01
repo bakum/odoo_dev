@@ -46,7 +46,6 @@ class UgImportExpenses(models.Model):
     def get_len_expenses(self):
         self.len_expenses = len(self.expenses_ids)
 
-
     def get_id_from_ext_id(self, ext_id):
         if not ext_id:
             return False
@@ -77,10 +76,9 @@ class UgImportExpenses(models.Model):
             new_data.append(value)
         return new_data
 
-
     def _get_costs_dict(self, data_array, num):
         data_array = self._validate_array(data_array)
-        empty_record = {'expense_id': False, 'descr': '', 'expense_total': 0,'name': '',}
+        empty_record = {'expense_id': False, 'descr': '', 'expense_total': 0, 'name': '', }
         expense_id = self.get_id_from_ext_id(COSTS_MAP[num])
         if expense_id:
             empty_record['expense_id'] = expense_id
@@ -135,6 +133,7 @@ class UgImportExpenses(models.Model):
             'target': 'new',
             'type': 'ir.actions.act_window',
         }
+
     def _prepare_move_value(self):
         return {
             'distrib_id': self.distrib_id.id,

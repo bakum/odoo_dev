@@ -5161,7 +5161,7 @@ msgstr "ПОСТАЧАННЯ ЗІ СПЛАТОЮ МИТА"
 #. module: account
 #: model:ir.ui.menu,name:account.menu_board_journal_1
 msgid "Dashboard"
-msgstr "Панель приладів"
+msgstr "Інформаційна панель"
 
 #. module: account
 #: model:ir.actions.server,name:account.action_check_hash_integrity
