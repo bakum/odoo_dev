@@ -39,7 +39,8 @@ class DistributorMoveLines(models.Model):
         comodel_name='distrib.sales.channels',
         string="Sales Channel",
         default=_default_channel,
-        readonly=False, index=True
+        readonly=False, index=True,
+        copy=False
     )
 
     date = fields.Datetime(related='move_id.date_order', string="Move Data", store=True, precompute=True)

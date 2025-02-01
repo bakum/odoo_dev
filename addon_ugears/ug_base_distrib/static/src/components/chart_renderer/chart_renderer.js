@@ -1,55 +1,75 @@
 /** @odoo-module */
 
-import { registry } from "@web/core/registry"
-import { loadJS } from "@web/core/assets"
-const { Component, onWillStart, useRef, onMounted } = owl
+import {registry} from "@web/core/registry"
+import {loadJS} from "@web/core/assets"
+
+const {Component, onWillStart, useRef, onMounted, useEffect, onWillUnmount} = owl
 
 export class ChartRenderer extends Component {
-    setup(){
+    setup() {
         this.chartRef = useRef("chart")
-        onWillStart(async ()=>{
-            await loadJS("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js")
+        onWillStart(async () => {
+            await loadJS("/ug_base_distrib/static/src/lib/chartjs/chart.umd.min.js")
         })
+        useEffect(() => {
+            this.renderChart()
+        }, () => [this.props.config])
 
-        onMounted(()=>this.renderChart())
+        onMounted(() => this.renderChart())
+
+        onWillUnmount(() => {
+            if (this.chart) {
+                this.chart.destroy()
+            }
+        })
     }
 
-    renderChart(){
-        new Chart(this.chartRef.el,
-        {
-          type: this.props.type,
-          data: {
-            labels: [
-                'Red',
-                'Blue',
-                'Yellow'
-              ],
-              datasets: [
-              {
-                label: 'My First Dataset',
-                data: [300, 50, 100],
-                hoverOffset: 4
-              },{
-                label: 'My Second Dataset',
-                data: [100, 70, 150],
-                hoverOffset: 4
-              }]
-          },
-          options: {
-            responsive: true,
-            plugins: {
-              legend: {
-                position: 'bottom',
-              },
-              title: {
-                display: true,
-                text: this.props.title,
-                position: 'bottom',
-              }
-            }
-          },
+    renderChart() {
+        const old_chartjs = document.querySelector('script[src="/web/static/lib/Chart/Chart.js"]')
+
+        if (old_chartjs) {
+            return
         }
-      );
+
+        if (this.chart) {
+            this.chart.destroy()
+        }
+
+        this.chart = new Chart(this.chartRef.el,
+            {
+                type: this.props.type,
+                data: {
+                    labels: [
+                        'Red',
+                        'Blue',
+                        'Yellow'
+                    ],
+                    datasets: [
+                        {
+                            label: 'My First Dataset',
+                            data: [300, 50, 100],
+                            hoverOffset: 4
+                        }, {
+                            label: 'My Second Dataset',
+                            data: [100, 70, 150],
+                            hoverOffset: 4
+                        }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        },
+                        title: {
+                            display: true,
+                            text: this.props.title,
+                            position: 'bottom',
+                        }
+                    }
+                },
+            }
+        );
     }
 }
 
