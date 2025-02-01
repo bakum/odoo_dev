@@ -39,6 +39,7 @@
         'reports/report_xls.xml',
         'views/distrib_budgets.xml',
         'views/import_region.xml',
+        'views/import_budget.xml',
     ],
     'assets': {
         'web.assets_backend': [
