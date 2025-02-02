@@ -36,7 +36,7 @@ class DistributorMoveLinesStatistic(models.Model):
             left join distrib_quant as quant
                 on quant.product_id=line.product_id
                     and quant.distrib_id=line.distrib_id
-            where line.state='done'
+            where line.state IN ('done')
             group by line.distrib_id, line.product_id,line.product_category_id
             order by line.product_id
             )""")

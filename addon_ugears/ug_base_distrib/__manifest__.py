@@ -37,6 +37,7 @@
         'data/sale_channels.xml',
         'data/regions.xml',
         'reports/report_xls.xml',
+        'reports/report_distrib_quantity.xml',
         'views/distrib_budgets.xml',
         'views/import_region.xml',
         'views/import_budget.xml',
