@@ -7,7 +7,8 @@
         <field name="arch" type="xml">
             <graph string="distrib_report_qtt_view_graph" type="line" sample="1" disable_linking="1">
                 <field name="date" interval="day"/>
-                <field name="product_id"/>
+                <field name="categ_id"/>
+<!--                <field name="product_id"/>-->
                 <field name="product_qty" type="measure"/>
             </graph>
         </field>
@@ -35,13 +36,14 @@
                 <filter string="Today" name="today"
                         domain="[('date','&gt;=', datetime.datetime.now().strftime('%Y-%m-%d')),
                         ('date','&lt;=', datetime.datetime.now().strftime('%Y-%m-%d'))]"/>
-
+                <filter string="Last Week" name="week"
+                        domain="[('date','&gt;', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d')),
+                        ('date','&lt;=', datetime.datetime.now().strftime('%Y-%m-%d'))]"/>
                 <filter string="Last Month" name="month"
                         domain="[('date','&gt;', (context_today() - datetime.timedelta(days=30)).strftime('%Y-%m-%d')),
                         ('date','&lt;=', datetime.datetime.now().strftime('%Y-%m-%d'))]"/>
-
-                <filter string="Last Week" name="week"
-                        domain="[('date','&gt;', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d')),
+                <filter string="Last Year" name="year"
+                        domain="[('date','&gt;', (context_today() - datetime.timedelta(days=365)).strftime('%Y-%m-%d')),
                         ('date','&lt;=', datetime.datetime.now().strftime('%Y-%m-%d'))]"/>
                 <group expand="0" string="Group By">
                     <filter string="Date" name="date" domain="[]" context="{'group_by':'date'}"/>
@@ -62,7 +64,7 @@
 
     <menuitem
             id="menu_distrib_quantity_report"
-            name="Distributors Quantity"
+            name="Distributor Quantity Report"
             parent="menu_distrib_report"
             action="action_distrib_quantity_report"
             groups="ug_base_distrib.group_distrib_manager,ug_base_distrib.group_distrib_user"
