@@ -177,5 +177,5 @@ class ReportDistribQuantity(models.Model):
     );
     """
         report_period = self.env['ir.config_parameter'].sudo().get_param('distrib.report_distrib_quantity_period',
-                                                                         default='3')
+                                                                         default='12')
         self.env.cr.execute(query, {'report_period': int(report_period)})
