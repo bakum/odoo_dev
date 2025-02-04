@@ -106,7 +106,10 @@ class ReportDistribQuantity(models.Model):
                 EXISTING_DM AS M
         )
     SELECT
-        MAIN.ID,
+        ROW_NUMBER() OVER (
+		ORDER BY
+			MAIN.ID
+	    ) AS ID,
         MAIN.PRODUCT_ID,
         MAIN.STATE,
         MAIN.DATE,
