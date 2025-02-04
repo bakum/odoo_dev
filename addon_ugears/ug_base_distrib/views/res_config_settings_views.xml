@@ -25,6 +25,15 @@
                                     <span class="o_form_label">Currency of multi-currency accounting of distributors.</span>
                                 </div>
                             </div>
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_right_pane">
+                                    <span class="o_form_label">Distributor accounting report period</span>
+                                    <div class="text-muted content-group mt16">
+                                        <field name="report_period" />
+                                    </div>
+                                    <span class="o_form_label">Period in Months for reports.</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </xpath>

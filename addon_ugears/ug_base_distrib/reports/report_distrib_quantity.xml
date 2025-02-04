@@ -5,7 +5,7 @@
         <field name="name">distrib_report_qtt_view_graph</field>
         <field name="model">report.distrib.quantity</field>
         <field name="arch" type="xml">
-            <graph string="distrib_report_qtt_view_graph" type="line" sample="1" disable_linking="1">
+            <graph string="distrib_report_qtt_view_graph" type="pie" sample="1" disable_linking="1">
                 <field name="date" interval="day"/>
                 <field name="categ_id"/>
 <!--                <field name="product_id"/>-->
@@ -31,7 +31,7 @@
         <field name="name">distrib_report_qtt_view.search</field>
         <field name="model">report.distrib.quantity</field>
         <field name="arch" type="xml">
-            <search string="Search xxx">
+            <search string="Search">
                 <field name="distrib_id"/>
                 <filter string="Today" name="today"
                         domain="[('date','&gt;=', datetime.datetime.now().strftime('%Y-%m-%d')),
@@ -58,7 +58,7 @@
         <field name="res_model">report.distrib.quantity</field>
         <field name="search_view_id" ref="distrib_report_qtt_view_search"/>
         <field name="domain">[('state', '=', 'forecast')]</field>
-        <field name="context">{'search_default_week': 1}</field>
+        <field name="context">{'search_default_today': 1}</field>
         <field name="view_mode">pivot,graph</field>
     </record>
 

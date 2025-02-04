@@ -70,6 +70,50 @@ class DistributorQuant(models.Model):
     user_id = fields.Many2one(
         'res.users', 'Assigned To', help="User assigned to do product count.")
 
+    currency_id = fields.Many2one(
+        related='distrib_id.pricelist_id.currency_id',
+        store=True, index=True, precompute=True)
+    pricelist_item_id = fields.Many2one(
+        comodel_name='product.pricelist.item',
+        compute='_compute_pricelist_item_id')
+    price_unit = fields.Float(
+        string="Unit Price",
+        compute='_compute_price_unit',
+        digits='Product Price',
+        store=True, readonly=False, required=True, precompute=True)
+    rate = fields.Float(compute='_compute_current_rate', string='Current Rate', digits=0, store=True,
+                        precompute=True, help='The rate of the currency to the currency of accounting')
+
+    @api.model
+    def _get_rate_for_move(self, currency_from_code, currency_to_code, date=None):
+        if not currency_from_code or not currency_to_code:
+            return False
+        if currency_from_code == currency_to_code:
+            return 1.0
+        Currency = self.env["res.currency"].with_context({"active_test": False})
+        currency_from = Currency.search([("name", "=", currency_from_code)])
+        currency_to = Currency.search([("name", "=", currency_to_code)])
+        if not currency_from or not currency_to:
+            return 1.0
+        company = self.env.company
+        date = fields.Date.from_string(date) if date else fields.Date.context_today(self)
+        return Currency._get_conversion_rate(currency_from, currency_to, company, date)
+
+    @api.depends('currency_id', 'in_date','currency_id.rate_ids')
+    def _compute_current_rate(self):
+        currency_to = self.env['ir.config_parameter'].sudo().get_param('ug_base_distrib.default_currency_accounting',
+                                                                       default='0')
+        for currency in self:
+            if int(currency_to) == 0:
+                currency.rate = 1.0
+            else:
+                currency_to = self.env['res.currency'].sudo().search([('id', '=', int(currency_to))])
+                if currency_to:
+                    currency.rate = self._get_rate_for_move(currency.currency_id.display_name, currency_to.display_name,
+                                                            date=currency.in_date)
+                else:
+                    currency.rate = 1.0
+
     @api.depends_context('uid')
     @api.depends('product_id', 'inventory_quantity')
     def _compute_is_manager(self):
@@ -186,7 +230,7 @@ class DistributorQuant(models.Model):
         if quant:
             quant.write({
                 'quantity': quant.quantity + quantity,
-                'inventory_quantity' : quant.quantity + quantity,
+                'inventory_quantity': quant.quantity + quantity,
                 'in_date': in_date,
             })
         else:
@@ -264,7 +308,7 @@ class DistributorQuant(models.Model):
         self.inventory_quantity_set = False
 
     def action_view_inventory(self):
-        #self = self._set_view_context()
+        # self = self._set_view_context()
         ctx = dict(self.env.context or {})
         action = {
             'name': _('Inventory Adjustments'),
@@ -273,7 +317,7 @@ class DistributorQuant(models.Model):
             'res_model': 'distrib.quant',
             'type': 'ir.actions.act_window',
             'context': ctx,
-            #'domain': [('location_id.usage', 'in', ['internal', 'transit'])],
+            # 'domain': [('location_id.usage', 'in', ['internal', 'transit'])],
             'help': """
                 <p class="o_view_nocontent_smiling_face">
                     {}
@@ -314,7 +358,8 @@ class DistributorQuant(models.Model):
             'name': _('History'),
             'view_mode': 'list,form',
             'res_model': 'distrib.distributors.move.line',
-            'views': [(self.env.ref('ug_base_distrib.view_distributors_distrib_move_line_tree').id, 'list'), (False, 'form')],
+            'views': [(self.env.ref('ug_base_distrib.view_distributors_distrib_move_line_tree').id, 'list'),
+                      (False, 'form')],
             'type': 'ir.actions.act_window',
             # 'context': {
             #     'default_order': 'date'
@@ -330,3 +375,82 @@ class DistributorQuant(models.Model):
             ],
         }
         return action
+
+    def _get_pricelist_price(self):
+        """Compute the price given by the pricelist for the given line information.
+
+        :return: the product sales price in the order currency (without taxes)
+        :rtype: float
+        """
+        self.ensure_one()
+        self.product_id.ensure_one()
+
+        pricelist_rule = self.pricelist_item_id
+        order_date = fields.Date.today()
+        product = self.product_id
+        qty = 1.0
+        uom = self.product_id.uom_id
+
+        price = pricelist_rule._compute_price(
+            product, qty, uom, order_date, self.distrib_id.pricelist_id.currency_id)
+
+        return price
+
+    def _get_display_price(self):
+        """Compute the displayed unit price for a given line.
+
+        Overridden in custom flows:
+        * where the price is not specified by the pricelist
+        * where the discount is not specified by the pricelist
+
+        Note: self.ensure_one()
+        """
+        self.ensure_one()
+
+        pricelist_price = self._get_pricelist_price()
+
+        if self.distrib_id.pricelist_id.discount_policy == 'with_discount':
+            return pricelist_price
+
+        if not self.pricelist_item_id:
+            # No pricelist rule found => no discount from pricelist
+            return pricelist_price
+
+        # base_price = self._get_pricelist_price_before_discount()
+
+        # negative discounts (= surcharge) are included in the display price
+        return pricelist_price
+
+    @api.depends('product_id')
+    def _compute_price_unit(self):
+        for line in self:
+            # check if there is already invoiced amount. if so, the price shouldn't change as it might have been
+            # manually edited
+            if not line.product_uom_id or not line.product_id or not line.distrib_id.pricelist_id:
+                line.price_unit = 0.0
+            else:
+                # price = line.with_company(line.company_id)._get_display_price()
+                price = line._get_display_price()
+                line.price_unit = price
+                # line.price_unit = line.product_id._get_tax_included_unit_price(
+                #     line.company_id,
+                #     line.order_id.currency_id,
+                #     line.order_id.date_order,
+                #     'sale',
+                #     fiscal_position=line.order_id.fiscal_position_id,
+                #     product_price_unit=price,
+                #     product_currency=line.currency_id
+                # )
+
+    @api.depends('product_id')
+    def _compute_pricelist_item_id(self):
+        for line in self:
+            if not line.product_id or not line.distrib_id.pricelist_id:
+                line.pricelist_item_id = False
+            else:
+                line.pricelist_item_id = line.distrib_id.pricelist_id._get_product_rule(
+                    line.product_id,
+                    1.0,
+                    uom=line.product_uom_id,
+                    date=line.in_date,
+                )

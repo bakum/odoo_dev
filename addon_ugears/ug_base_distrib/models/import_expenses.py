@@ -78,7 +78,7 @@ class UgImportExpenses(models.Model):
 
     def _get_costs_dict(self, data_array, num):
         data_array = self._validate_array(data_array)
-        empty_record = {'expense_id': False, 'descr': '', 'expense_total': 0, 'name': '', }
+        empty_record = {'expense_id': False, 'descr': '', 'expense_total': 0, 'name': ''}
         expense_id = self.get_id_from_ext_id(COSTS_MAP[num])
         if expense_id:
             empty_record['expense_id'] = expense_id
@@ -153,6 +153,7 @@ class UgImportExpenses(models.Model):
                     'expense_id': line.expense_id.id,
                     'name': line.expense_id.name,
                     'expense_total': line.expense_total,
+                    'display_type': 'expense',
                     'descr': line.expense_id.desc,
                 }
                 expenses.append((0, 0, expense))

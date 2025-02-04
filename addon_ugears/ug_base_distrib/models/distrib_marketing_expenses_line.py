@@ -51,7 +51,7 @@ class MarketingExpensesLines(models.Model):
         change_default=True, ondelete='restrict', index='btree_not_null',
         required=True,
         domain="[('active', '=', True)]")
-    descr = fields.Text('Description', required=True, copy=True)
+    descr = fields.Text('Description', compute='_compute_name', store=True, precompute=True, required=True)
     expense_total = fields.Monetary(
         string="Total",
         required=True
@@ -61,8 +61,9 @@ class MarketingExpensesLines(models.Model):
             ('expense', 'Expense'),
             ('line_section', "Section"),
             ('line_note', "Note"),
-        ],
+        ], required=True,
         default=False)
+    rate = fields.Float(related='move_id.rate', string="Current Rate", store=True, precompute=True)
 
     @api.onchange('expense_id')
     def _onchange_expense_id(self):
@@ -79,3 +80,4 @@ class MarketingExpensesLines(models.Model):
                 continue
             name = line.expense_id.get_expenses_multiline_description()
             line.name = name
+            line.descr = line.expense_id.desc

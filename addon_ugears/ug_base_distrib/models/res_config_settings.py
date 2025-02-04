@@ -10,3 +10,8 @@ class ResConfigSettings(models.TransientModel):
         config_parameter='ug_base_distrib.default_currency_accounting',
         help="Currency of multi-currency accounting of distributors.",
     )
+    report_period = fields.Integer(
+        string='Distributor accounting report period',
+        config_parameter='distrib.report_distrib_quantity_period',
+        help="Period in Months for reports.",
+    )

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="distrib_report_qtt_view_graph_inherit" model="ir.ui.view">
+            <field name="name">distrib_report_qtt_view_graph.inherit</field>
+            <field name="model">report.distrib.quantity</field>
+            <field name="inherit_id" ref="ug_base_distrib.distrib_report_qtt_view_graph"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='categ_id']" position="after">
+                        <field name="cartoon_id"/>
+                    </xpath>
+                    <xpath expr="//field[@name='product_qty']" position="replace">
+                         <field name="qty_all_in_cartoon" type="measure"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record id="distrib_report_qtt_view_pivot_inherit" model="ir.ui.view">
+            <field name="name">distrib_report_qtt_view.pivot.inherit</field>
+            <field name="model">report.distrib.quantity</field>
+            <field name="inherit_id" ref="ug_base_distrib.distrib_report_qtt_view_pivot"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='categ_id']" position="after">
+                        <field name="cartoon_id"/>
+                    </xpath>
+                    <xpath expr="//field[@name='product_qty']" position="after">
+                        <field name="qty_all_in_cartoon" type="measure"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+    </data>
+</odoo>

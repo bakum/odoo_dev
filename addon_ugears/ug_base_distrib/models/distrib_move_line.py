@@ -143,6 +143,7 @@ class DistributorMoveLines(models.Model):
         string="Total",
         compute='_compute_amount',
         store=True, precompute=True)
+    rate = fields.Float(related='move_id.rate', string="Current Rate", store=True, precompute=True)
 
     @api.depends('product_uom_id.category_id', 'product_id.uom_id.category_id', 'product_id.uom_id')
     def _compute_product_uom_id(self):

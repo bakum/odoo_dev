@@ -28,6 +28,7 @@
 
         'report/order_distrib_template.xml',
         'report/order_distrib_action.xml',
+        'report/report_distrib_quantity.xml',
     ],
     'assets': {
         'web.assets_frontend': [
