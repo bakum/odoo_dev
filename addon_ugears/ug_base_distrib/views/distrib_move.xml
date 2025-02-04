@@ -100,6 +100,16 @@
                                 </tree>
                             </field>
                         </page>
+                        <page if="info" string="Info">
+                            <group>
+                                <group id="header_left_group">
+                                    <field name="currency_id" readonly="1"/>
+                                </group>
+                                <group id="header_right_group">
+                                    <field name="rate" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
                     </notebook>
                 </sheet>
 

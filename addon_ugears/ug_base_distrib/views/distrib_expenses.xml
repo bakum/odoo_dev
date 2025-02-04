@@ -68,6 +68,13 @@
                                 <div class="clearfix"/>
                             </group>
                         </page>
+                        <page if="info" string="Info">
+                            <group>
+                                <group id="header_right_group">
+                                    <field name="rate" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
                     </notebook>
                 </sheet>
                 <!-- Chatter -->

@@ -79,7 +79,7 @@ class DistributorMove(models.Model):
     amount_untaxed = fields.Monetary(string="Amount", store=True, compute='_compute_amounts')
     is_inventory = fields.Boolean('Inventory', default=False)
     is_manager = fields.Boolean(compute='_compute_is_manager')
-    rate = fields.Float(compute='_compute_current_rate', string='Current Rate', digits=0, store=True,
+    rate = fields.Float(compute='_compute_current_rate', string='Current Cross-Rate', digits=0, store=True,
                         precompute=True, help='The rate of the currency to the currency of accounting')
 
     @api.model

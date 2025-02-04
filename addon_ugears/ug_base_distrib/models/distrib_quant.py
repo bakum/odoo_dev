@@ -81,7 +81,7 @@ class DistributorQuant(models.Model):
         compute='_compute_price_unit',
         digits='Product Price',
         store=True, readonly=False, required=True, precompute=True)
-    rate = fields.Float(compute='_compute_current_rate', string='Current Rate', digits=0, store=True,
+    rate = fields.Float(compute='_compute_current_rate', string='Current Cross-Rate', digits=0, store=True,
                         precompute=True, help='The rate of the currency to the currency of accounting')
 
     @api.model

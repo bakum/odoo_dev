@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-17 18:37+0000\n"
-"PO-Revision-Date: 2025-01-17 18:37+0000\n"
+"POT-Creation-Date: 2025-02-04 16:09+0000\n"
+"PO-Revision-Date: 2025-02-04 16:09+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -82,8 +82,8 @@ msgstr ""
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
-msgid "<span style=\"font-size: 0.8em;\">pca</span>"
-msgstr "<span style=\"font-size: 0.8em;\">од</span>"
+msgid "<span style=\"font-size: 0.8em;\">pcs</span>"
+msgstr ""
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
@@ -216,6 +216,11 @@ msgid "Add one"
 msgstr "Додайте один"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_report_distrib_quantity__qty_all_in_cartoon
+msgid "Amount cartoons"
+msgstr "Загалом коробок"
+
+#. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.view_distributors_package_form
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.view_distributors_package_search
 msgid "Archived"
@@ -254,6 +259,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__cartoon_id
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_product_product__cartoon_id
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_product_template__cartoon_id
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_report_distrib_quantity__cartoon_id
 #: model:ir.model.fields.selection,name:ug_wholesale_shop.selection__distrib_packages_sizes__type_of__box
 msgid "Cartoon"
 msgstr "Коробка"
@@ -395,6 +401,11 @@ msgstr ""
 #: model:ir.actions.report,name:ug_wholesale_shop.action_report_distriborder
 msgid "Distributor Order Confirmation"
 msgstr "Підтвердження замовлення дистриб'ютора"
+
+#. module: ug_wholesale_shop
+#: model:ir.model,name:ug_wholesale_shop.model_report_distrib_quantity
+msgid "Distributor Quantity Report"
+msgstr "Звіт дистриб'ютора про кількість"
 
 #. module: ug_wholesale_shop
 #: model:ir.model,name:ug_wholesale_shop.model_distrib_distributors
@@ -783,6 +794,11 @@ msgstr "Кількість"
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list__qtt_by_box
 msgid "Quantity by boxes"
 msgstr "Кількість по коробках"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_report_distrib_quantity__qty_in_cartoon
+msgid "Quantity in an cartoon"
+msgstr "Одиниць в коробці"
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_product_product__qty_in_cartoon
