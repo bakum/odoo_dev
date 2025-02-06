@@ -137,8 +137,8 @@ class ReportDistribExpenses(models.Model):
                         CURRENCY_ID,
                         DATE,
                         STATE,
-                        EXPENSE_TOTAL,
-                        EXPENSE_TOTAL_ACC
+                        NULL,
+                        NULL
                     FROM
                         ALL_EXPENSES
                 ) AS MAIN

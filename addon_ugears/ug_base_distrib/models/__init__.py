@@ -1,3 +1,4 @@
+from . import ir_filters
 from . import distrib_regions
 from . import distributors
 from . import distrib_sales_channels

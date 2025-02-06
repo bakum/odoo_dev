@@ -36,15 +36,15 @@
                 <filter string="Today" name="today"
                         domain="[('date','&gt;=', datetime.datetime.now().strftime('%Y-%m-%d')),
                         ('date','&lt;=', datetime.datetime.now().strftime('%Y-%m-%d'))]"/>
-                <filter string="Last Week" name="week"
+                <filter string="Last 7 days" name="week"
                         domain="[('date','&gt;', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d')),
                         ('date','&lt;=', datetime.datetime.now().strftime('%Y-%m-%d'))]"/>
-                <filter string="Last Month" name="month"
+                <filter string="Last 30 days" name="month"
                         domain="[('date','&gt;', (context_today() - datetime.timedelta(days=30)).strftime('%Y-%m-%d')),
                         ('date','&lt;=', datetime.datetime.now().strftime('%Y-%m-%d'))]"/>
-                <filter string="Last Year" name="year"
-                        domain="[('date','&gt;', (context_today() - datetime.timedelta(days=365)).strftime('%Y-%m-%d')),
-                        ('date','&lt;=', datetime.datetime.now().strftime('%Y-%m-%d'))]"/>
+<!--                <filter string="Last Year" name="year"-->
+<!--                        domain="[('date','&gt;', (context_today() - datetime.timedelta(days=365)).strftime('%Y-%m-%d')),-->
+<!--                        ('date','&lt;=', datetime.datetime.now().strftime('%Y-%m-%d'))]"/>-->
                 <group expand="0" string="Group By">
                     <filter string="Date" name="date" domain="[]" context="{'group_by':'date'}"/>
                     <filter string="Distributor" name="distrib_id" domain="[]" context="{'group_by':'distrib_id'}"/>

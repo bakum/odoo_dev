@@ -6,7 +6,7 @@
         <field name="arch" type="xml">
             <pivot string="Distributor expenses" sample="0">
                 <field name="distrib_id" type="col"/>
-                <field name="date" type="col" interval="year"/>
+                <field name="date" type="col" interval="month"/>
                 <field name="expense_id" type="row"/>
                 <field name="expense_total" type="measure"/>
             </pivot>
@@ -19,15 +19,20 @@
         <field name="arch" type="xml">
             <search string="Search">
                 <field name="distrib_id"/>
-                <filter string="Last Week" name="week"
-                        domain="[('date','&gt;', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d')),
-                        ('date','&lt;=', datetime.datetime.now().strftime('%Y-%m-%d'))]"/>
-                <filter string="Last Month" name="month"
-                        domain="[('date','&gt;', (context_today() - datetime.timedelta(days=30)).strftime('%Y-%m-%d')),
-                        ('date','&lt;=', datetime.datetime.now().strftime('%Y-%m-%d'))]"/>
-                <filter string="Last Year" name="year"
-                        domain="[('date','&gt;', (context_today() - datetime.timedelta(days=365)).strftime('%Y-%m-%d')),
-                        ('date','&lt;=', datetime.datetime.now().strftime('%Y-%m-%d'))]"/>
+<!--                <filter string="Last Week" name="week"-->
+<!--                        domain="[('date','&gt;=', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d')),-->
+<!--                        ('date','&lt;=', datetime.datetime.now().strftime('%Y-%m-%d'))]"/>-->
+                <filter string="Current Month" name="month"
+                        domain="[('date','=', (context_today()).strftime('%Y-%m-01'))]"/>
+                <filter string="Previous Month" name="last_year"
+                        domain="[('date','&gt;=', (context_today()- datetime.timedelta(days=context_today().day + 1)).strftime('%Y-%m-01')),
+                        ('date','&lt;', context_today().strftime('%Y-%m-01'))]"/>
+                <filter string="Current Year" name="year"
+                        domain="[('date','&gt;=', (context_today()).strftime('%Y-01-01')),
+                        ('date','&lt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter string="Previous Year" name="last_year"
+                        domain="[('date','&gt;=', (context_today()- datetime.timedelta(days=365)).strftime('%Y-01-01')),
+                        ('date','&lt;', context_today().strftime('%Y-01-01'))]"/>
 <!--                <searchpanel>-->
 <!--                        <field name="distrib_id" icon="fa-building" enable_counters="1"/>-->
 <!--                </searchpanel>-->

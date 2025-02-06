@@ -70,7 +70,7 @@
                         </page>
                         <page if="info" string="Info">
                             <group>
-                                <group id="header_right_group">
+                                <group id="header_left_group">
                                     <field name="rate" readonly="1"/>
                                 </group>
                             </group>

@@ -35,6 +35,12 @@ class PublicProduct(models.Model):
     def action_open_distrib_quants(self):
         return self.product_variant_ids.filtered(lambda p: p.active or p.qty_available != 0).action_open_distrib_quants()
 
+    def name_get(self):
+        # Prefetch the fields used by the `name_get`, so `browse` doesn't fetch other fields
+        self.browse(self.ids).read(['name'])
+        return [(template.id, '%s' % (template.name))
+                for template in self]
+
 
 class PublicProductDistrib(models.Model):
     _inherit = "product.product"
@@ -207,6 +213,15 @@ class PublicProductDistrib(models.Model):
         action['domain'] = [('product_id', 'in', self.ids)]
         action["name"] = _('Update Quantity')
         return action
+
+    def name_get(self):
+        result = []
+        for product in self.sudo():
+            variant = product.product_template_attribute_value_ids._get_combination_name()
+
+            name = variant and "%s (%s)" % (product.name, variant) or product.name
+            result.append((product.id, name))
+        return result
 
 
 class ProductCategoryImport(models.Model):
