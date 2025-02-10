@@ -10,12 +10,21 @@
                                 <div class="d-flex align-items-center justify-content-between">
                                     <h1 class="text-primary fw-bold">Distribution Sales Dashboard</h1>
                                     <div>
-                                        <select class="form-select">
+                                        <select class="form-select" t-model="state.period" t-on-change="onChangePeriod">
                                             <option value="0">Select Period</option>
                                             <option value="7">Last 7 Days</option>
                                             <option value="30">Last 30 Days</option>
                                             <option value="90">Last 90 Days</option>
                                             <option value="365">Last 365 Days</option>
+                                        </select>
+                                    </div>
+                                    <div t-if="!state.restricted">
+                                        <select class="form-select" t-model="state.distributor"
+                                                t-on-change="onChangeDistributor">
+                                            <option value="0">Select Distributor</option>
+                                            <t t-foreach="state.distributors" t-as="item" t-key="item.id">
+                                            <option t-att-value="item.id"><t t-esc="item.name"/></option>
+                                            </t>
                                         </select>
                                     </div>
                                 </div>

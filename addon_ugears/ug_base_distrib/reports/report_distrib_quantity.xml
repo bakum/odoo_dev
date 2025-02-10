@@ -65,7 +65,7 @@
     <menuitem
             id="menu_distrib_quantity_report"
             name="Distributor Quantity Report"
-            parent="menu_distrib_report"
+            parent="menu_distrib_stock_parent_report"
             action="action_distrib_quantity_report"
             groups="ug_base_distrib.group_distrib_manager,ug_base_distrib.group_distrib_user"
             sequence="14"/>

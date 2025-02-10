@@ -6,14 +6,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-22 07:20+0000\n"
-"PO-Revision-Date: 2023-09-22 07:20+0000\n"
+"POT-Creation-Date: 2025-02-09 13:49+0000\n"
+"PO-Revision-Date: 2025-02-09 13:49+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: ug_base_distrib
+#: model:ir.actions.report,print_report_name:ug_base_distrib.report_export_horizont_xls
+msgid "'Export Order Horizont - %s' % (object.name)"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_form
@@ -24,44 +29,88 @@ msgid ""
 msgstr ""
 
 #. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.res_config_settings_view_form
+msgid ""
+"<span class=\"o_form_label\">Currency of multi-currency accounting of "
+"distributors.</span>"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.res_config_settings_view_form
+msgid "<span class=\"o_form_label\">Distributor accounting currency</span>"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.res_config_settings_view_form
+msgid "<span class=\"o_form_label\">Distributor accounting report period</span>"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.res_config_settings_view_form
+msgid "<span class=\"o_form_label\">Period in Months for reports.</span>"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_product_public_form_inherit
+msgid "<span class=\"o_stat_text\">Distributors</span>"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__message_needaction
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_needaction
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__message_needaction
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__message_needaction
 msgid "Action Needed"
 msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__active
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__active
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_regions__active
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__active
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__active
 msgid "Active"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__activity_ids
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__activity_ids
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__activity_ids
 msgid "Activities"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:distrib.types.marketings,desc:ug_base_distrib.type_5
+msgid ""
+"Activities on social media platforms such as Facebook, TikTok, Instagram, "
+"Pinterest, and others"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__activity_exception_decoration
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__activity_exception_decoration
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__activity_exception_decoration
 msgid "Activity Exception Decoration"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__activity_state
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__activity_state
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__activity_state
 msgid "Activity State"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__activity_type_icon
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__activity_type_icon
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__activity_type_icon
 msgid "Activity Type Icon"
 msgstr ""
 
 #. module: ug_base_distrib
-#. odoo-python
-#: code:addons/ug_base_distrib/models/distrib_move.py:0
-#: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_move_adj
-#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_distributors_move__operation__adjustements
-#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_move_adj
-#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_search
-#, python-format
-msgid "Adjustements"
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_expenses_form
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_form
+msgid "Add a line"
 msgstr ""
 
 #. module: ug_base_distrib
@@ -70,24 +119,156 @@ msgid "Administrator"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:distrib.types.marketings,desc:ug_base_distrib.type_4
+msgid ""
+"All forms of online advertising, such as Google Ads, and other digital "
+"marketing strategies designed to increase brand visibility and drive sales"
+msgstr ""
+
+#. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_users_distrib__form_inherit
 msgid "Allowed Distributor"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__amount_untaxed
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__amount_untaxed
+msgid "Amount"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__price_total
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__price_total
+msgid "Amount in Currency"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__price_total_acc
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__price_total_acc
+msgid "Amount in Currency Accounting"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_quants_tree
+msgid "Apply"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty4
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget_list__product_uom_qty4
+msgid "April"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_sales_channels_form
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_sales_channels_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_theme_form
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_theme_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_types_marketing_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_form
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_search
 msgid "Archived"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__user_id
+msgid "Assigned To"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__message_attachment_count
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_attachment_count
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__message_attachment_count
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__message_attachment_count
 msgid "Attachment Count"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty8
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget_list__product_uom_qty8
+msgid "August"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__avg_price
+msgid "Average Price"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__balance
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_statistic__balance
+msgid "Balance"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_quants
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_quant
+msgid "Balance adjustment"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget_list__barcode
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory_list__barcode
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move_list__barcode
+msgid "Barcode"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_statistic__begin_ost
+msgid "Begin"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__beginning_stock
+msgid "Beginning stock, pcs"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_budgets_1
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_budgets_tree_search
+msgid "Budgets"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_budgets_tree
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_expenses_form
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_form
+msgid "Cancel"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_budget_move__state__cancel
 #: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_distributors_move__state__cancel
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__state__cancel
 msgid "Cancelled"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.constraint,message:ug_base_distrib.constraint_distrib_quant_unique_product
+msgid ""
+"Cannot Use one distribution's product twice!\n"
+"Please, select a different product or distributor"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__cartoon_id
+msgid "Cartoon"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_category_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__product_uom_category_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_statistic__product_category_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__product_category_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_quantity__categ_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__product_category_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__categ_id
+msgid "Category"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__channel_id
+msgid "Channel"
 msgstr ""
 
 #. module: ug_base_distrib
@@ -112,8 +293,22 @@ msgid "Company name"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_budgets_tree_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_expenses_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_search
 msgid "Complete"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_budgets_tree
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_expenses_form
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_form
+msgid "Confirm"
 msgstr ""
 
 #. module: ug_base_distrib
@@ -122,10 +317,24 @@ msgid "Contact"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_budget_move_line__product_uom_category_id
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors_move_line__product_uom_category_id
+msgid ""
+"Conversion between Units of Measure can only occur if they belong to the "
+"same category. The conversion will be made based on the ratios."
+msgstr ""
+
+#. module: ug_base_distrib
 #. odoo-python
+#: code:addons/ug_base_distrib/models/res_currency.py:0
 #: code:addons/ug_base_distrib/models/res_currency.py:0
 #, python-format
 msgid "Could not connect to %s"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__inventory_quantity
+msgid "Counted Quantity"
 msgstr ""
 
 #. module: ug_base_distrib
@@ -140,20 +349,75 @@ msgid "Create a new product"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__create_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__create_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__create_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__create_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__create_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__create_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__create_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_regions__create_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__create_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__create_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget__create_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget_list__create_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__create_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses_list__create_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__create_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory_list__create_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__create_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move_list__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__create_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__create_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__create_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__create_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__create_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__create_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__create_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_regions__create_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__create_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__create_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget__create_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget_list__create_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__create_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses_list__create_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__create_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory_list__create_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__create_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move_list__create_date
 msgid "Created on"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__credit
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_statistic__credit
+msgid "Credit"
+msgstr ""
+
+#. module: ug_base_distrib
 #: model:ir.model,name:ug_base_distrib.model_res_currency
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__currency_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__currency_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__currency_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__currency_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__currency_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__currency_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__currency_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__currency_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__currency_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_expenses__currency_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__currency_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__currency_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__currency_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses_list__currency_id
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_currency
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_settings_currency
 msgid "Currency"
@@ -167,19 +431,165 @@ msgid "Currency code successfully loaded!"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_res_config_settings__accounting_currency_id
+msgid "Currency of multi-currency accounting of distributors."
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__rate
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__rate
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__rate
+msgid "Current Cross-Rate"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_expenses_view_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_sales_view_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_turnover_view_search
+msgid "Current Month"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__rate
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__rate
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__rate
+msgid "Current Rate"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_expenses_view_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_sales_view_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_turnover_view_search
+msgid "Current Year"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_product_product__qty_available_dist
+msgid ""
+"Current quantity of products.\n"
+"In a context with a single Stock Location, this includes goods stored at this Location, or any of its children.\n"
+"In a context with a single Warehouse, this includes goods stored in the Stock Location of this Warehouse, or any of its children.\n"
+"stored in the Stock Location of the Warehouse of this Shop, or any of its children.\n"
+"Otherwise, this includes goods stored in any Stock Location with 'internal' type."
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_expenses__date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_quantity__date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget__date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__date
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_qtt_view_search
+msgid "Date"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__report_distrib_turnover_quantity__period__days
+msgid "Days"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__debit
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_statistic__debit
+msgid "Debit"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty12
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget_list__product_uom_qty12
+msgid "December"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget_list__default_code
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory_list__default_code
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move_list__default_code
+msgid "Default code"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_quant__product_uom_id
+msgid "Default unit of measure used for all stock operations."
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/log_renderer/log_renderer.xml:0
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__descr
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_regions__desc
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__desc
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget_list__description
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses_list__descr
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory_list__description
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move_list__description
+#, python-format
+msgid "Description"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__inventory_diff_quantity
+msgid "Difference"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_statistic__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_regions__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_expenses__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_quantity__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget_list__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses_list__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory_list__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move_list__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__display_type
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__display_type
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__display_type
+msgid "Display Type"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.res_config_settings_view_form
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_users_distrib__form_inherit
 msgid "Distribution"
 msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.module.category,name:ug_base_distrib.module_category_distrib_distributors
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.res_config_settings_view_form
 msgid "Distribution Management"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/sales_dashboard.xml:0
+#, python-format
+msgid "Distribution Sales Dashboard"
 msgstr ""
 
 #. module: ug_base_distrib
@@ -188,9 +598,107 @@ msgid "Distributions"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__distrib_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__distrib_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__distrib_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__distrib_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_statistic__distrib_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__distrib_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__distrib_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__distrib_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__distrib_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_expenses__distrib_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_quantity__distrib_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__distrib_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__distrib_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_res_partner__distrib_ids
 #: model:ir.model.fields,field_description:ug_base_distrib.field_res_users__distrib_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_res_users__distrib_ids
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget__distrib_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__distrib_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__distrib_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__distrib_id
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_qtt_view_search
 msgid "Distributor"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__move_id
+msgid "Distributor Budget Reference"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_expenses_report
+#: model:ir.model,name:ug_base_distrib.model_report_distrib_expenses
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_expenses_report
+msgid "Distributor Expenses Report"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_expenses
+msgid "Distributor Marketing Expenses"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__move_id
+msgid "Distributor Move Reference"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_quantity_report
+#: model:ir.model,name:ug_base_distrib.model_report_distrib_quantity
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_quantity_report
+msgid "Distributor Quantity Report"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_sales_report
+#: model:ir.model,name:ug_base_distrib.model_report_distrib_sales
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_sales_report
+msgid "Distributor Sales Report"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_turnover_report
+#: model:ir.model,name:ug_base_distrib.model_report_distrib_turnover_quantity
+msgid "Distributor Turnover Quantity Report"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_res_config_settings__accounting_currency_id
+msgid "Distributor accounting currency"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_res_config_settings__report_period
+msgid "Distributor accounting report period"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_expenses_view_pivot
+msgid "Distributor expenses"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_qtt_view_pivot
+msgid "Distributor quantity"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_sales_view_pivot
+msgid "Distributor sales"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_budgets_line
+msgid "Distributor sales plan"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_sales_budget.py:0
+#, python-format
+msgid "Distributor sales plan - %s"
 msgstr ""
 
 #. module: ug_base_distrib
@@ -208,8 +716,34 @@ msgid "Distributors Move"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_channels_statistic
+msgid "Distributors Sales Channels"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_statistic
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_stock_report
+msgid "Distributors Stock"
+msgstr ""
+
+#. module: ug_base_distrib
 #: model:ir.model,name:ug_base_distrib.model_distrib_distributors
 msgid "Distributors records"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_distrib_budget_move
+msgid "Distributors sales budget"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_distrib_budget_move_line
+msgid "Distributors sales budget line"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_distrib_distributors_move_line
+msgid "Distributors stock record lines"
 msgstr ""
 
 #. module: ug_base_distrib
@@ -218,7 +752,21 @@ msgid "Distributors stock records"
 msgstr ""
 
 #. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/import_region_rel.xml:0
+#, python-format
+msgid "Download Regions Relations Template"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_budget_move__state__draft
 #: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_distributors_move__state__draft
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__state__draft
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_budgets_tree
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_budgets_tree_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_expenses_form
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_expenses_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_form
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_search
 msgid "Draft"
 msgstr ""
@@ -229,32 +777,185 @@ msgid "EMail"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__product_qty
+msgid "End Quantity"
+msgstr "Ending stock"
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget__xls_filename
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__xls_filename
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__xls_filename
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__xls_filename
+msgid "Excel Filename"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget__xls_file
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__xls_file
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__xls_file
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__xls_file
+msgid "Excel file"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/import_region_rel.xml:0
+#, python-format
+msgid "Excel files are recommended as formatting is automatic."
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses_line__display_type__expense
+msgid "Expense"
+msgstr ""
+
+#. module: ug_base_distrib
 #. odoo-python
 #: code:addons/ug_base_distrib/models/distrib_move.py:0
+#: code:addons/ug_base_distrib/models/import_move.py:0
 #: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_move_out
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__expenses_ids
 #: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_distributors_move__operation__out
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__ug_distrib_import_move__operation__out
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_move_out
-#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.ug_import_distrib_expenses_from_xls_view
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_expenses_form
 #, python-format
 msgid "Expenses"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__date
+msgid "Expenses Data"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_expenses_form
+msgid "Expenses Items"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__move_line
+msgid "Expenses Lines"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__month
+msgid "Expenses Month"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__move_id
+msgid "Expenses Move Reference"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__year
+msgid "Expenses Year"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.constraint,message:ug_base_distrib.constraint_distrib_marketing_expenses_line_expenses_total__check
+msgid "Expenses amount cannot be zero"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_ug_distrib_import_expenses_list
+msgid "Expenses list"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.actions.report,name:ug_base_distrib.report_export_horizont_xls
+msgid "Export to Horizont"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_no_variant_attribute_value_ids
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__product_no_variant_attribute_value_ids
+msgid "Extra Values"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty2
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget_list__product_uom_qty2
+msgid "February"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/import_region_rel.xml:0
+#, python-format
+msgid "File Uploader"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_ir_filters
+msgid "Filters"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__message_follower_ids
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_follower_ids
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__message_follower_ids
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__message_follower_ids
 msgid "Followers"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__message_partner_ids
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_partner_ids
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__message_partner_ids
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__message_partner_ids
 msgid "Followers (Partners)"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_budget_move__activity_type_icon
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors__activity_type_icon
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors_move__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_product_product__virtual_available_dist
+msgid ""
+"Forecast quantity (computed as Quantity On Hand - Outgoing + Incoming)\n"
+"In a context with a single Stock Location, this includes goods stored in this location, or any of its children.\n"
+"In a context with a single Warehouse, this includes goods stored in the Stock Location of this Warehouse, or any of its children.\n"
+"Otherwise, this includes goods stored in any Stock Location with 'internal' type."
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__report_distrib_quantity__state__out
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__report_distrib_turnover_quantity__state__out
+msgid "Forecasted Deliveries"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_product_product__virtual_available_dist
+msgid "Forecasted Quantity Distributor"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__report_distrib_quantity__state__in
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__report_distrib_turnover_quantity__state__in
+msgid "Forecasted Receipts"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__report_distrib_quantity__state__forecast
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__report_distrib_turnover_quantity__state__forecast
+msgid "Forecasted Stock"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_qtt_view_search
+msgid "Group By"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__guid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__guid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_product_category__guid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_product_pricelist__guid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_product_product__guid
@@ -265,7 +966,10 @@ msgid "Guid 1C:Enterprise"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__has_message
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__has_message
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__has_message
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__has_message
 msgid "Has Message"
 msgstr ""
 
@@ -275,30 +979,126 @@ msgid "Helps you manage your distribution"
 msgstr ""
 
 #. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_quant.py:0
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_quants_tree
+#, python-format
+msgid "History"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_statistic__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_regions__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_expenses__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_quantity__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget_list__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses_list__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory_list__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move_list__id
 msgid "ID"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__activity_exception_icon
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__activity_exception_icon
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__activity_exception_icon
 msgid "Icon"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_budget_move__activity_exception_icon
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors__activity_exception_icon
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors_move__activity_exception_icon
 msgid "Icon to indicate an exception activity."
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_budget_move__message_needaction
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors__message_needaction
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors_move__message_needaction
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_marketing_expenses__message_needaction
 msgid "If checked, new messages require your attention."
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_budget_move__message_has_error
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_budget_move__message_has_sms_error
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors__message_has_error
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors__message_has_sms_error
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors_move__message_has_error
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors_move__message_has_sms_error
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_marketing_expenses__message_has_error
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_marketing_expenses__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_quant.py:0
+#: code:addons/ug_base_distrib/static/src/components/import_region_rel.xml:0
+#: code:addons/ug_base_distrib/static/src/components/import_region_rel.xml:0
+#, python-format
+msgid "Import"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/import_region_rel.xml:0
+#: model:ir.actions.client,name:ug_base_distrib.action_region_rel
+#, python-format
+msgid "Import Regions Relations"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_relations
+msgid "Import Relations"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/views/import_budget_button.xml:0
+#, python-format
+msgid "Import Template for Distribution Budget"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/views/import_expenses_button.xml:0
+#, python-format
+msgid "Import Template for Distribution Expenses"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/views/import_distrib_inventory_button.xml:0
+#, python-format
+msgid "Import Template for Distribution Inventory"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/views/import_distrib_move_button.xml:0
+#, python-format
+msgid "Import Template for Distribution Moves"
 msgstr ""
 
 #. module: ug_base_distrib
@@ -316,14 +1116,137 @@ msgid "Import Template for Product Categories"
 msgstr ""
 
 #. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/views/import_budget_button.xml:0
+#, python-format
+msgid "Import an budget"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/views/import_distrib_inventory_button.xml:0
+#, python-format
+msgid "Import an inventory"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/views/import_distrib_move_button.xml:0
+#, python-format
+msgid "Import an move"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/import_budget.py:0
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.ug_import_distrib_budget_from_xls_view
+#, python-format
+msgid "Import budget"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.actions.act_window,name:ug_base_distrib.action_import_distrib_move
+msgid "Import distrib moves"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.actions.act_window,name:ug_base_distrib.action_import_distrib_budget
+msgid "Import distributor budget"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_ug_distrib_import_budget
+msgid "Import distributor budget from xls"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.actions.act_window,name:ug_base_distrib.action_import_distrib_expenses
+msgid "Import distributor expenses"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_ug_distrib_import_expenses
+msgid "Import distributor expenses from xls"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.actions.act_window,name:ug_base_distrib.action_import_distrib_inventory
+msgid "Import distributor inventory"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_ug_distrib_import_inventory
+msgid "Import distributor inventory from xls"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_ug_distrib_import_move
+msgid "Import distributor move from xls"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#. odoo-python
+#: code:addons/ug_base_distrib/models/import_expenses.py:0
+#: code:addons/ug_base_distrib/static/src/views/import_expenses_button.xml:0
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.ug_import_distrib_expenses_from_xls_view
+#, python-format
+msgid "Import expenses"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/import_inventory.py:0
+#, python-format
+msgid "Import inventory"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/import_move.py:0
+#, python-format
+msgid "Import move"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.ug_import_distrib_inventory_from_xls_view
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.ug_import_distrib_move_from_xls_view
+msgid "Import moves"
+msgstr ""
+
+#. module: ug_base_distrib
 #. odoo-python
 #: code:addons/ug_base_distrib/models/distrib_move.py:0
+#: code:addons/ug_base_distrib/models/import_move.py:0
 #: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_move_in
 #: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_distributors_move__operation__inc
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__ug_distrib_import_move__operation__inc
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_move_in
-#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_search
 #, python-format
 msgid "Income"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__in_date
+msgid "Incoming Date"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_product_product__incoming_qty_dist
+msgid "Incoming Qtt"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_quant__inventory_diff_quantity
+msgid ""
+"Indicates the gap between the product's theoretical quantity and its counted"
+" quantity."
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_expenses_form
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_form
+msgid "Info"
 msgstr ""
 
 #. module: ug_base_distrib
@@ -332,46 +1255,348 @@ msgid "Informations"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__inventory_quantity_auto_apply
+msgid "Inventoried Quantity"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__is_inventory
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__is_inventory
+msgid "Inventory"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_quant.py:0
+#, python-format
+msgid "Inventory Adjustments"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__inventory_quantity_set
+msgid "Inventory Quantity Set"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__message_is_follower
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_is_follower
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__message_is_follower
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__message_is_follower
 msgid "Is Follower"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__is_manager
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__is_manager
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__is_manager
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__is_manager
+msgid "Is Manager"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/log_renderer/log_renderer.xml:0
+#, python-format
+msgid "Item"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget_list__product_uom_qty
+msgid "January"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_channels_statistic_pivot
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_form
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_statistic_pivot
+msgid "Journal Items"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty7
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget_list__product_uom_qty7
+msgid "July"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty6
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget_list__product_uom_qty6
+msgid "June"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__name
+msgid "Label"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/sales_dashboard.xml:0
+#, python-format
+msgid "Last 30 Days"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_qtt_view_search
+msgid "Last 30 days"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/sales_dashboard.xml:0
+#, python-format
+msgid "Last 365 Days"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/sales_dashboard.xml:0
+#, python-format
+msgid "Last 7 Days"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_qtt_view_search
+msgid "Last 7 days"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/sales_dashboard.xml:0
+#, python-format
+msgid "Last 90 Days"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__last_count_date
+msgid "Last Count Date"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_statistic____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_regions____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_expenses____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_quantity____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget_list____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses_list____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory_list____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move_list____last_update
 msgid "Last Modified on"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__write_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__write_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__write_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__write_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__write_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__write_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__write_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_regions__write_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__write_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__write_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget__write_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget_list__write_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__write_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses_list__write_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__write_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory_list__write_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__write_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move_list__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__write_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__write_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__write_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__write_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__write_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__write_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__write_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_regions__write_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__write_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__write_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget__write_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget_list__write_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__write_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses_list__write_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__write_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory_list__write_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__write_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move_list__write_date
 msgid "Last Updated on"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_quant__last_count_date
+msgid "Last time the Quantity was Updated"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__len_expenses
+msgid "Len Expenses"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget__len_products
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__len_products
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__len_products
+msgid "Len Products"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.actions.server,name:ug_base_distrib.import_dayli_rates_cron_ir_actions_server
+#: model:ir.cron,cron_name:ug_base_distrib.import_dayli_rates_cron
+msgid "Load Currency Rates Cron Job"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.ug_import_distrib_budget_from_xls_view
+msgid "Load budget from Excel"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.ug_import_distrib_expenses_from_xls_view
+msgid "Load costs from Excel"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.ug_import_distrib_inventory_from_xls_view
+msgid "Load inventory from Excel"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.ug_import_distrib_move_from_xls_view
+msgid "Load move from Excel"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_budget_move__state__done
 #: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_distributors_move__state__done
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__state__done
 msgid "Locked"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__message_main_attachment_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_main_attachment_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__message_main_attachment_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__message_main_attachment_id
 msgid "Main Attachment"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty3
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget_list__product_uom_qty3
+msgid "March"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_settings_marketing
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_settings_marketings
+msgid "Marketing"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_distrib_marketing_expenses
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_marketing_expenses
+msgid "Marketing Expenses"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_distrib_marketing_expenses_line
+msgid "Marketing Expenses Lines"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:distrib.types.marketings,desc:ug_base_distrib.type_3
+msgid ""
+"Marketing expenses related to collaborating with bloggers and influencers to"
+" promote products. This includes fees for sponsored content, product "
+"reviews, social media mentions, and any other activities aimed at leveraging"
+" the blogger's audience to increase brand visibility, drive engagement, and "
+"boost sales"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:distrib.types.marketings,desc:ug_base_distrib.type_6
+msgid ""
+"Marketing expenses related to listing, building visibility, and promoting "
+"products through physical retail stores. This includes listing fees, "
+"merchandising, leaflets, posters, voblers, and promotional compensation, all"
+" aimed at enhancing product placement and driving customer engagement and "
+"purchases."
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:distrib.types.marketings,desc:ug_base_distrib.type_1
+msgid ""
+"Marketing expenses related to participation in trade fairs and exhibitions. "
+"This includes booth rental, design and construction of the booth, shipping "
+"and logistics, promotional materials (such as leaflets and banners), staff "
+"costs, and any other expenses related to showcasing products and engaging "
+"with potential clients or partners at the event"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:distrib.types.marketings,desc:ug_base_distrib.type_2
+msgid ""
+"Marketing expenses related to promoting and selling products through "
+"alternative channels such as museums, duty-free stores, and similar non-"
+"traditional retail environments. This includes costs for product placement, "
+"display setup, promotional materials, and any activities aimed at enhancing "
+"visibility and driving sales in these specific locations."
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty5
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget_list__product_uom_qty5
+msgid "May"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__message_has_error
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_has_error
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__message_has_error
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__message_has_error
 msgid "Message Delivery error"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__message_ids
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_ids
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__message_ids
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__message_ids
 msgid "Messages"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.constraint,message:ug_base_distrib.constraint_distrib_distributors_move_line_quantity_check
+msgid "Minimum 1 quantity allow"
 msgstr ""
 
 #. module: ug_base_distrib
@@ -380,41 +1605,140 @@ msgid "Mobile"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__month
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__month_str
+msgid "Month"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/sales_dashboard.xml:0
+#, python-format
+msgid "Monthly Sales"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__report_distrib_turnover_quantity__period__month
+msgid "Months"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_product_product__move_ids
+msgid "Move"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__date
+msgid "Move Data"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__move_line
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__move_line
+msgid "Move Lines"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__operation
+msgid "Move Operation"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__state
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__state
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__state
+msgid "Move Status"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__my_activity_date_deadline
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__my_activity_date_deadline
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__my_activity_date_deadline
 msgid "My Activity Deadline"
 msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_regions__name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget__name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget_list__name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses_list__name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory_list__name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move_list__name
 msgid "Name"
 msgstr ""
 
 #. module: ug_base_distrib
 #. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
 #: code:addons/ug_base_distrib/models/distrib_move.py:0
+#: code:addons/ug_base_distrib/models/distrib_sales_budget.py:0
 #: code:addons/ug_base_distrib/models/distributors.py:0
 #, python-format
 msgid "New"
 msgstr ""
 
 #. module: ug_base_distrib
-#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__activity_calendar_event_id
-msgid "Next Activity Calendar Event"
-msgstr ""
-
-#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__activity_date_deadline
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__activity_date_deadline
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__activity_date_deadline
 msgid "Next Activity Deadline"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__activity_summary
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__activity_summary
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__activity_summary
 msgid "Next Activity Summary"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__activity_type_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__activity_type_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__activity_type_id
 msgid "Next Activity Type"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_quant__inventory_date
+msgid "Next date the On Hand Quantity should be counted."
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/log_renderer/log_renderer.xml:0
+#, python-format
+msgid "No Errors"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_budget_move_line__display_type__line_note
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_distributors_move_line__display_type__line_note
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses_line__display_type__line_note
+msgid "Note"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/import_budget.py:0
+#: code:addons/ug_base_distrib/models/import_expenses.py:0
+#: code:addons/ug_base_distrib/models/import_inventory.py:0
+#: code:addons/ug_base_distrib/models/import_move.py:0
+#, python-format
+msgid "Nothing to load"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty11
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget_list__product_uom_qty11
+msgid "November"
 msgstr ""
 
 #. module: ug_base_distrib
@@ -423,28 +1747,61 @@ msgid "Number"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__message_needaction_counter
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_needaction_counter
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__message_needaction_counter
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__message_needaction_counter
 msgid "Number of Actions"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__message_has_error_counter
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_has_error_counter
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__message_has_error_counter
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__message_has_error_counter
 msgid "Number of errors"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_budget_move__message_needaction_counter
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors__message_needaction_counter
-msgid "Number of messages which requires an action"
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors_move__message_needaction_counter
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_marketing_expenses__message_needaction_counter
+msgid "Number of messages requiring action"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_budget_move__message_has_error_counter
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors__message_has_error_counter
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors_move__message_has_error_counter
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_marketing_expenses__message_has_error_counter
 msgid "Number of messages with delivery error"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty10
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget_list__product_uom_qty10
+msgid "October"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_quant.py:0
+#, python-format
+msgid "Only a stock manager can validate an inventory adjustment."
+msgstr ""
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__operation
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__operation
 msgid "Operation"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__date_order
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__date_order
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__date_order
+msgid "Operation Date"
 msgstr ""
 
 #. module: ug_base_distrib
@@ -453,9 +1810,9 @@ msgid "Operations"
 msgstr ""
 
 #. module: ug_base_distrib
-#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__date_order
-msgid "Order Date"
-msgstr "Date"
+#: model:ir.model.fields,field_description:ug_base_distrib.field_product_product__outgoing_qty_dist
+msgid "Outgoing Qtt"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__partner_id
@@ -463,8 +1820,80 @@ msgid "Partner"
 msgstr ""
 
 #. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/sales_dashboard.xml:0
+#, python-format
+msgid "Partner Orders"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__period
+msgid "Period"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_res_config_settings__report_period
+msgid "Period in Months for reports."
+msgstr ""
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__phone
 msgid "Phone"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/import_budget.py:0
+#: code:addons/ug_base_distrib/models/import_expenses.py:0
+#: code:addons/ug_base_distrib/models/import_inventory.py:0
+#: code:addons/ug_base_distrib/models/import_move.py:0
+#, python-format
+msgid "Please load the xlsx file"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_form
+msgid "Posted"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_form
+msgid "Posted Items"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__posted_line
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__posted_line
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__posted_line
+msgid "Posted Lines"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_quant.py:0
+#, python-format
+msgid ""
+"Press the CREATE button to define quantity for each product in your stock or"
+" import them from a spreadsheet throughout Favorites"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_budgets_tree
+msgid "Preview"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_expenses_view_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_sales_view_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_turnover_view_search
+msgid "Previous Month"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_expenses_view_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_sales_view_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_turnover_view_search
+msgid "Previous Year"
 msgstr ""
 
 #. module: ug_base_distrib
@@ -475,13 +1904,78 @@ msgid "Pricelist"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__pricelist_item_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__pricelist_item_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__pricelist_item_id
+msgid "Pricelist Item"
+msgstr ""
+
+#. module: ug_base_distrib
 #: model:ir.model,name:ug_base_distrib.model_product_template
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__product_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_statistic__product_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__product_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__product_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_quantity__product_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__product_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__product_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget_list__product_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory_list__product_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move_list__product_id
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_budget_move_line__display_type__product
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_distributors_move_line__display_type__product
 msgid "Product"
 msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model,name:ug_base_distrib.model_product_category
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_category_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__product_category_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__product_categ_id
 msgid "Product Category"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__full_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__full_name
+msgid "Product Full Name"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_quant.py:0
+#, python-format
+msgid "Product Quantity Confirmed"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_quant.py:0
+#, python-format
+msgid "Product Quantity Updated"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_template_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__product_template_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__product_tmpl_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget_list__product_template_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory_list__product_template_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move_list__product_template_id
+msgid "Product Template"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_quantity__product_tmpl_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__product_tmpl_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__product_tmpl_id
+msgid "Product Tmpl"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_product_product
+msgid "Product Variant"
 msgstr ""
 
 #. module: ug_base_distrib
@@ -490,19 +1984,120 @@ msgid "Product categories"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_distrib_product_theme
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_theme
+msgid "Product theme"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_theme_form
+msgid "Product themes"
+msgstr ""
+
+#. module: ug_base_distrib
 #: model:ir.actions.act_window,name:ug_base_distrib.product_template_action_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget__products_ids
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__products_ids
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__products_ids
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_products
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_settings_product
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.ug_import_distrib_budget_from_xls_view
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.ug_import_distrib_inventory_from_xls_view
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.ug_import_distrib_move_from_xls_view
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_budgets_line_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_theme_form
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_form
 msgid "Products"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_ug_distrib_import_budget_list
+#: model:ir.model,name:ug_base_distrib.model_ug_distrib_import_inventory_list
+#: model:ir.model,name:ug_base_distrib.model_ug_distrib_import_move_list
+msgid "Products list"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_product_product__quant_ids
+msgid "Quant"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__product_uom_qty
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__qtt
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__quantity
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_quantity__product_qty
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory_list__qtt
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move_list__qtt
+msgid "Quantity"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_product_product__qty_available_dist
+#: model:ir.model.fields,field_description:ug_base_distrib.field_product_template__qty_available_dist
+msgid "Quantity On Distributor"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_product_product__incoming_qty_dist
+msgid ""
+"Quantity of planned incoming products.\n"
+"In a context with a single Stock Location, this includes goods arriving to this Location, or any of its children.\n"
+"In a context with a single Warehouse, this includes goods arriving to the Stock Location of this Warehouse, or any of its children.\n"
+"Otherwise, this includes goods arriving to any Stock Location with 'internal' type."
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_product_product__outgoing_qty_dist
+msgid ""
+"Quantity of planned outgoing products.\n"
+"In a context with a single Stock Location, this includes goods leaving this Location, or any of its children.\n"
+"In a context with a single Warehouse, this includes goods leaving the Stock Location of this Warehouse, or any of its children.\n"
+"Otherwise, this includes goods leaving any Stock Location with 'internal' type."
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_quant__quantity
+msgid ""
+"Quantity of products in this quant, in the default unit of measure of the "
+"product"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_distrib_quant
+msgid "Quants"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__name
 msgid "Ref"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__region_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_expenses__region_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__region_id
+msgid "Region"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_distrib_regions
+#: model:ir.model.fields,field_description:ug_base_distrib.field_product_product__region_ids
+#: model:ir.model.fields,field_description:ug_base_distrib.field_product_template__region_ids
+msgid "Regions"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_report
+msgid "Reports"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__activity_user_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__activity_user_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__activity_user_id
 msgid "Responsible User"
 msgstr ""
 
@@ -512,38 +2107,183 @@ msgid "Review"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__message_has_sms_error
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__message_has_sms_error
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__message_has_sms_error
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__message_has_sms_error
 msgid "SMS Delivery error"
 msgstr ""
 
 #. module: ug_base_distrib
-#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__user_id
-msgid "Salesperson"
-msgstr "User"
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__channel_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__channel_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__channel_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__channel_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move_list__channel_id
+msgid "Sales Channel"
+msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_distrib_sales_channels
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_sales_channels
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_stock_channels_report
+msgid "Sales Channels"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.actions.client,name:ug_base_distrib.action_owl_sales_dashboard
+msgid "Sales Dashboard"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_budgets
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_budgets_sale
+msgid "Sales budgets"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_sales_channels_form
+msgid "Sales channels"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.ug_import_distrib_budget_from_xls_view
+msgid "Save budget"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.ug_import_distrib_expenses_from_xls_view
+msgid "Save costs"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.ug_import_distrib_inventory_from_xls_view
+msgid "Save inventory"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.ug_import_distrib_move_from_xls_view
+msgid "Save move"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__inventory_date
+msgid "Scheduled Date"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_expenses_view_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_qtt_view_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_sales_view_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_turnover_view_search
+msgid "Search"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_budget_move_line__display_type__line_section
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_distributors_move_line__display_type__line_section
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses_line__display_type__line_section
+msgid "Section"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/sales_dashboard.xml:0
+#, python-format
+msgid "Select Distributor"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/sales_dashboard.xml:0
+#, python-format
+msgid "Select Period"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__sell_in_curr
+msgid "Sell-In Currency"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__sell_in_acc
+msgid "Sell-In Currency Accounting"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__sell_in
+msgid "Sell-In, pcs"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty9
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget_list__product_uom_qty9
+msgid "September"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__sequence
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.actions.act_window,name:ug_base_distrib.distrib_config_settings_action
+#: model:ir.ui.menu,name:ug_base_distrib.distrib_config_settings_menu
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_settings
 msgid "Settings"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__start_price_total
+msgid "Start Amount in Currency"
+msgstr "Beginning amount"
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__start_price_total_acc
+msgid "Start Amount in Currency Accounting"
+msgstr "Beginning amount (acc)"
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__start_product_qty
+msgid "Start Quantity"
+msgstr "Beginning stock"
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__state_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_quantity__state
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__state
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_form
 msgid "State"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__state
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__state
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__state
 msgid "Status"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_budget_move__activity_state
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors__activity_state
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors_move__activity_state
 msgid ""
 "Status based on activities\n"
 "Overdue: Due date is already passed\n"
 "Today: Activity date is today\n"
 "Planned: Future activities."
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_settings_stock
+msgid "Stock"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_turnover_report
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_turnover_view_pivot
+msgid "Stock Turnover Report"
 msgstr ""
 
 #. module: ug_base_distrib
@@ -574,8 +2314,248 @@ msgid "Success!"
 msgstr ""
 
 #. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/import_budget.py:0
+#: code:addons/ug_base_distrib/models/import_expenses.py:0
+#: code:addons/ug_base_distrib/models/import_inventory.py:0
+#: code:addons/ug_base_distrib/models/import_move.py:0
+#, python-format
+msgid "Successfully loaded"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/views/import_distrib_move_button.xml:0
+#, python-format
+msgid "Template Incoming Move"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/views/import_distrib_move_button.xml:0
+#, python-format
+msgid "Template Sales Move"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_quant__inventory_quantity
+msgid "The product's counted quantity."
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors_move__rate
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors_move_line__rate
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_marketing_expenses__rate
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_marketing_expenses_line__rate
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_quant__rate
+msgid "The rate of the currency to the currency of accounting"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_move_channels_statistic__rate
+msgid "The rate of the currency to the currency of rate 1."
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_budgets_tree
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_expenses_form
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_form
+msgid ""
+"The selected operation will change the status and cancel transaction. Are "
+"you sure you want to do this?"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_product_product__theme_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_product_template__theme_id
+msgid "Theme"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__product_ids
+msgid "Theming Products"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_quant__distrib_id
+msgid "This is the owner of the quant"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_qtt_view_search
+msgid "Today"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/sales_dashboard.xml:0
+#, python-format
+msgid "Top Products"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/sales_dashboard.xml:0
+#, python-format
+msgid "Top Sales People"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__price_total
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__price_total
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__expense_total
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__total
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_expenses__expense_total
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses_list__expense_total
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_budgets_line_tree
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_line_tree
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_quants_tree
+msgid "Total"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_budgets_line_tree
+msgid "Total April"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_budgets_line_tree
+msgid "Total August"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_budgets_line_tree
+msgid "Total December"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_budgets_line_tree
+msgid "Total February"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_budgets_line_tree
+msgid "Total January"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_budgets_line_tree
+msgid "Total July"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_budgets_line_tree
+msgid "Total June"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_budgets_line_tree
+msgid "Total March"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_budgets_line_tree
+msgid "Total May"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_budgets_line_tree
+msgid "Total November"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_budgets_line_tree
+msgid "Total October"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__qtt_total
+msgid "Total Quantity"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_budgets_line_tree
+msgid "Total September"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__total_uah
+msgid "Total UAH"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_expenses__expense_total_acc
+msgid "Total in currency of accounting"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_quants_tree
+msgid "Total inventory"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_budgets_line_tree
+msgid "Total quantity"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__expense_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_expenses__expense_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses_list__expense_id
+msgid "Type of Expense"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_budget_move__activity_exception_decoration
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors__activity_exception_decoration
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors_move__activity_exception_decoration
 msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_types_of_marketings
+msgid "Types of Marketings"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_types_marketing
+#: model:ir.model,name:ug_base_distrib.model_distrib_types_marketings
+msgid "Types of marketings"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/res_currency.py:0
+#, python-format
+msgid "UAH currency is not used in accounting!"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/res_currency.py:0
+#, python-format
+msgid "UAH is not the currency of the current organization!"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__price_unit
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__price_unit
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__price_unit
+msgid "Unit Price"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__product_uom
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__product_uom_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__product_uom_id
+msgid "Unit of Measure"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_form
+msgid "UoM"
 msgstr ""
 
 #. module: ug_base_distrib
@@ -584,9 +2564,49 @@ msgid "Update Currency code"
 msgstr ""
 
 #. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/product_category.py:0
+#, python-format
+msgid "Update Quantity"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/import_region_rel.xml:0
+#, python-format
+msgid "Upload an Excel file to import"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/import_region_rel.xml:0
+#, python-format
+msgid "Upload file"
+msgstr ""
+
+#. module: ug_base_distrib
 #: model:ir.model,name:ug_base_distrib.model_res_users
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__user_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__salesman_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__user_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__salesman_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__user_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses_line__salesman_id
 #: model:res.groups,name:ug_base_distrib.group_distrib_user
 msgid "User"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_quant__user_id
+msgid "User assigned to do product count."
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/res_currency.py:0
+#: code:addons/ug_base_distrib/models/res_currency.py:0
+#, python-format
+msgid "Warning!"
 msgstr ""
 
 #. module: ug_base_distrib
@@ -595,13 +2615,92 @@ msgid "Website"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__website_message_ids
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__website_message_ids
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__website_message_ids
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__website_message_ids
 msgid "Website Messages"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_budget_move__website_message_ids
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors__website_message_ids
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors_move__website_message_ids
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_marketing_expenses__website_message_ids
 msgid "Website communication history"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget_list__wizard_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses_list__wizard_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory_list__wizard_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move_list__wizard_id
+msgid "Wizard"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/import_budget.py:0
+#: code:addons/ug_base_distrib/models/import_expenses.py:0
+#: code:addons/ug_base_distrib/models/import_inventory.py:0
+#: code:addons/ug_base_distrib/models/import_move.py:0
+#, python-format
+msgid "Wrong format of file"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__year
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__year
+msgid "Year"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields.selection,name:ug_base_distrib.selection__report_distrib_turnover_quantity__period__year
+msgid "Years"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_sales_budget.py:0
+#, python-format
+msgid "You can not delete the budget if is done."
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#: code:addons/ug_base_distrib/models/distrib_move.py:0
+#, python-format
+msgid "You can not delete the moves if is done."
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_sales_channels.py:0
+#, python-format
+msgid ""
+"You cannot delete those channel(s):\n"
+"(%s)\n"
+", they are used in other distributors move(s):\n"
+"%s"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_themes.py:0
+#, python-format
+msgid ""
+"You cannot delete those theme(s):\n"
+"(%s)\n"
+", they are used in other product(s):\n"
+"%s"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_quant.py:0
+#, python-format
+msgid "Your stock is currently empty"
 msgstr ""
 
 #. module: ug_base_distrib
@@ -615,6 +2714,21 @@ msgid "Zip"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_distrib_distributors_move_statistic
+msgid "distrib.distributors.move.statistic"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_distrib_move_channels_statistic
+msgid "distrib.move.channels.statistic"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_qtt_view_graph
+msgid "distrib_report_qtt_view_graph"
+msgstr ""
+
+#. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_form
 msgid "e.g. Lumber Inc"
 msgstr ""
@@ -625,6 +2739,30 @@ msgid "e.g. https://www.odoo.com"
 msgstr ""
 
 #. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_quant.py:0
+#, python-format
+msgid "inventory quantity is not set."
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__balance
+msgid "pcs"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_report_ug_base_distrib_export_horizont_xls
+msgid "report.ug_base_distrib.export_horizont_xls"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/kpi_card/kpi_card.xml:0
+#, python-format
+msgid "since last period"
+msgstr ""
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__website
 msgid "website"
-msgstr "WWW"
+msgstr ""

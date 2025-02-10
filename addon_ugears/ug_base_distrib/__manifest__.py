@@ -40,6 +40,7 @@
         'reports/report_distrib_quantity.xml',
         'reports/report_distrib_expenses.xml',
         'reports/report_distrib_sales.xml',
+        'reports/report_distrib_turnover_quantity.xml',
         'views/distrib_budgets.xml',
         'views/import_region.xml',
         'views/import_budget.xml',

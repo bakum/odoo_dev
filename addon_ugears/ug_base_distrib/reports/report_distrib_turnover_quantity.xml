@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="distrib_report_sales_view_pivot" model="ir.ui.view">
-        <field name="name">distrib_report_sales_view.pivot</field>
-        <field name="model">report.distrib.sales</field>
+    <record id="distrib_report_turnover_view_pivot" model="ir.ui.view">
+        <field name="name">distrib_report_turnover_view.pivot</field>
+        <field name="model">report.distrib.turnover.quantity</field>
         <field name="arch" type="xml">
-            <pivot string="Distributor sales" sample="0">
-<!--                <field name="currency_id" type="col"/>-->
+            <pivot string="Stock Turnover Report" sample="0">
                 <field name="date" type="col" interval="month"/>
-                <field name="channel_id" type="col"/>
-<!--                <field name="beginning_stock" type="measure"/>-->
-<!--                <field name="sell_in" type="measure"/>-->
-                <field name="balance" type="measure"/>
+                <field name="start_product_qty" type="measure"/>
+<!--                <field name="start_price_total" type="measure"/>-->
+<!--                <field name="start_price_total_acc" type="measure"/>-->
+                <field name="product_qty" type="measure"/>
+<!--                <field name="price_total" type="measure"/>-->
+<!--                <field name="price_total_acc" type="measure"/>-->
                 <field name="distrib_id" type="row"/>
-                <field name="product_category_id" type="row"/>
+                <field name="categ_id" type="row"/>
                 <field name="full_name" type="row"/>
             </pivot>
         </field>
     </record>
 
-    <record id="distrib_report_sales_view_search" model="ir.ui.view">
-        <field name="name">distrib_sales_view.search</field>
-        <field name="model">report.distrib.sales</field>
+    <record id="distrib_report_turnover_view_search" model="ir.ui.view">
+        <field name="name">distrib_turnover_view.search</field>
+        <field name="model">report.distrib.turnover.quantity</field>
         <field name="arch" type="xml">
             <search string="Search">
                 <field name="distrib_id"/>
@@ -41,21 +42,21 @@
         </field>
     </record>
 
-    <record id="action_distrib_sales_report" model="ir.actions.act_window">
-        <field name="name">Distributor Sales Report</field>
-        <field name="res_model">report.distrib.sales</field>
-        <field name="search_view_id" ref="distrib_report_sales_view_search"/>
-<!--        <field name="domain">[('state', '=', 'forecast')]</field>-->
+    <record id="action_distrib_turnover_report" model="ir.actions.act_window">
+        <field name="name">Distributor Turnover Quantity Report</field>
+        <field name="res_model">report.distrib.turnover.quantity</field>
+        <field name="search_view_id" ref="distrib_report_turnover_view_search"/>
+        <field name="domain">[('period', '=', 'month')]</field>
         <field name="context">{'search_default_month': 1}</field>
 <!--        <field name="context">{'search_default_month': 1, 'group_by': ['distrib_id','currency_id']}</field>-->
         <field name="view_mode">pivot</field>
     </record>
 
     <menuitem
-            id="menu_distrib_sales_report"
-            name="Distributor Sales Report"
-            parent="menu_distrib_sales_parent_report"
-            action="action_distrib_sales_report"
+            id="menu_distrib_turnover_report"
+            name="Stock Turnover Report"
+            parent="menu_distrib_stock_parent_report"
+            action="action_distrib_turnover_report"
             groups="ug_base_distrib.group_distrib_manager,ug_base_distrib.group_distrib_user"
-            sequence="16"/>
+            sequence="17"/>
 </odoo>

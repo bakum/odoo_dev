@@ -22,11 +22,13 @@ class ReportDistribSales(models.Model):
     beginning_stock = fields.Float(string='Beginning stock, pcs', readonly=True, group_operator='sum')
     sell_in = fields.Float(string='Sell-In, pcs', readonly=True, group_operator='sum')
     sell_in_curr = fields.Float(string='Sell-In Currency', readonly=True, group_operator='sum')
-    sell_in_acc = fields.Float(string='Sell-In Currency Accounting', readonly=True, group_operator='sum')
+    sell_in_acc = fields.Float(string='Sell-In Currency Accounting', readonly=True, group_operator='sum',
+                               groups="ug_base_distrib.group_distrib_manager")
 
     balance = fields.Float(string='pcs', readonly=True)
     price_total = fields.Float(string='Amount in Currency', readonly=True)
-    price_total_acc = fields.Float(string='Amount in Currency Accounting', readonly=True)
+    price_total_acc = fields.Float(string='Amount in Currency Accounting', readonly=True,
+                                   groups="ug_base_distrib.group_distrib_manager")
     full_name = fields.Char(string='Product Full Name', readonly=True)
 
     def init(self):

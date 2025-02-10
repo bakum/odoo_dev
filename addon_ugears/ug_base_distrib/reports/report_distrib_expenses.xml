@@ -5,8 +5,8 @@
         <field name="model">report.distrib.expenses</field>
         <field name="arch" type="xml">
             <pivot string="Distributor expenses" sample="0">
-                <field name="distrib_id" type="col"/>
                 <field name="date" type="col" interval="month"/>
+                <field name="distrib_id" type="row"/>
                 <field name="expense_id" type="row"/>
                 <field name="expense_total" type="measure"/>
             </pivot>
@@ -50,9 +50,16 @@
     </record>
 
     <menuitem
+            id="menu_distrib_expenses_parent_report"
+            name="Costs"
+            parent="menu_distrib_report"
+            groups="ug_base_distrib.group_distrib_manager,ug_base_distrib.group_distrib_user"
+            sequence="14"/>
+
+    <menuitem
             id="menu_distrib_expenses_report"
             name="Distributor Expenses Report"
-            parent="menu_distrib_report"
+            parent="menu_distrib_expenses_parent_report"
             action="action_distrib_expenses_report"
             groups="ug_base_distrib.group_distrib_manager,ug_base_distrib.group_distrib_user"
             sequence="15"/>
