@@ -933,7 +933,7 @@ msgstr ""
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_plan_fact__product_qty_fact
 msgid "Fact Quantity"
-msgstr ""
+msgstr "Факт"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty2
@@ -1908,7 +1908,7 @@ msgstr "Телефон"
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_plan_fact__product_qty_plan
 msgid "Plan Quantity"
-msgstr ""
+msgstr "План"
 
 #. module: ug_base_distrib
 #: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_plan_fact_report
@@ -1976,7 +1976,7 @@ msgstr "Попередній рік"
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_plan_fact__price_unit
 msgid "Price"
-msgstr ""
+msgstr "Ціна"
 
 #. module: ug_base_distrib
 #: model:ir.model,name:ug_base_distrib.model_product_pricelist
