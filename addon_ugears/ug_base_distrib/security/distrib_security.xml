@@ -141,6 +141,19 @@
             <field name="groups" eval="[(4, ref('ug_base_distrib.group_distrib_user'))]"/>
         </record>
 
+        <record id="distrib_report_plan_fact_manager_rule" model="ir.rule">
+            <field name="name">Distributor All Plan/Fact quantity report</field>
+            <field name="model_id" ref="model_report_distrib_plan_fact"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('ug_base_distrib.group_distrib_manager'))]"/>
+        </record>
+        <record id="distrib_report_plan_fact_user_rule" model="ir.rule">
+            <field name="name">Distributor Plan/Fact quantity report</field>
+            <field name="model_id" ref="model_report_distrib_plan_fact"/>
+            <field name="domain_force">[('distrib_id', '=', user.distrib_id.id)]</field>
+            <field name="groups" eval="[(4, ref('ug_base_distrib.group_distrib_user'))]"/>
+        </record>
+
         <record id="distrib_move_channels_statistic_manager_rule" model="ir.rule">
             <field name="name">Distributor All Move Channels</field>
             <field name="model_id" ref="model_distrib_move_channels_statistic"/>

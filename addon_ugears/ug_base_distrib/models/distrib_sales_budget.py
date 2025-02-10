@@ -58,6 +58,38 @@ class DistributorSaleBudget(models.Model):
         inverse_name='move_id',
         string="Posted Lines",
         states=LOCKED_FIELD_STATES)
+    rate = fields.Float(compute='_compute_current_rate', string='Current Cross-Rate', digits=0, store=True,
+                        precompute=True, help='The rate of the currency to the currency of accounting')
+
+    @api.model
+    def _get_rate_for_move(self, currency_from_code, currency_to_code, date=None):
+        if not currency_from_code or not currency_to_code:
+            return False
+        if currency_from_code == currency_to_code:
+            return 1.0
+        Currency = self.env["res.currency"].with_context({"active_test": False})
+        currency_from = Currency.search([("name", "=", currency_from_code)])
+        currency_to = Currency.search([("name", "=", currency_to_code)])
+        if not currency_from or not currency_to:
+            return 1.0
+        company = self.env.company
+        date = fields.Date.from_string(date) if date else fields.Date.context_today(self)
+        return Currency._get_conversion_rate(currency_from, currency_to, company, date)
+
+    @api.depends('currency_id', 'date', 'currency_id.rate_ids')
+    def _compute_current_rate(self):
+        currency_to = self.env['ir.config_parameter'].sudo().get_param('ug_base_distrib.default_currency_accounting',
+                                                                       default='0')
+        for currency in self:
+            if int(currency_to) == 0:
+                currency.rate = 1.0
+            else:
+                currency_to = self.env['res.currency'].sudo().search([('id', '=', int(currency_to))])
+                if currency_to:
+                    currency.rate = self._get_rate_for_move(currency.currency_id.display_name, currency_to.display_name,
+                                                            date=currency.date)
+                else:
+                    currency.rate = 1.0
 
     @api.depends_context('uid')
     @api.depends('distrib_id')

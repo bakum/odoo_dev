@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="distrib_report_plan_fact_view_pivot" model="ir.ui.view">
+        <field name="name">distrib_report_plan_fact_view.pivot</field>
+        <field name="model">report.distrib.plan.fact</field>
+        <field name="arch" type="xml">
+            <pivot string="Plan/Fact Quantity Report" sample="0">
+                <field name="date" type="col" interval="year"/>
+                <field name="product_qty_plan" type="measure"/>
+                <field name="product_qty_fact" type="measure"/>
+                <field name="distrib_id" type="row"/>
+                <field name="product_category_id" type="row"/>
+                <field name="full_name" type="row"/>
+            </pivot>
+        </field>
+    </record>
+
+     <record id="distrib_report_plan_fact_view_search" model="ir.ui.view">
+        <field name="name">distrib_report_plan_fact_view.search</field>
+        <field name="model">report.distrib.plan.fact</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <filter string="Current Year" name="year"
+                        domain="[('year','=', (context_today()).strftime('%Y-01-01'))]"/>
+                <filter string="Previous Year" name="last_year"
+                        domain="[('year','=', (context_today()- datetime.timedelta(days=365)).strftime('%Y-01-01'))]"/>
+                <separator/>
+                <filter string="Active sales" name="active_sales"
+                        domain="['|',('product_qty_plan','!=', 0),('product_qty_fact','!=', 0)]"/>
+            </search>
+        </field>
+     </record>
+
+    <record id="action_distrib_plan_fact_report" model="ir.actions.act_window">
+        <field name="name">Plan/Fact Quantity Report</field>
+        <field name="res_model">report.distrib.plan.fact</field>
+        <field name="search_view_id" ref="distrib_report_plan_fact_view_search"/>
+        <field name="domain">[]</field>
+        <field name="context">{'search_default_year': 1, 'search_default_active_sales': 1}</field>
+<!--        <field name="context">{'search_default_month': 1, 'group_by': ['distrib_id','currency_id']}</field>-->
+        <field name="view_mode">pivot</field>
+    </record>
+
+    <menuitem
+            id="menu_distrib_plan_fact_report"
+            name="Plan/Fact Quantity Report"
+            parent="menu_distrib_sales_parent_report"
+            action="action_distrib_plan_fact_report"
+            groups="ug_base_distrib.group_distrib_manager,ug_base_distrib.group_distrib_user"
+            sequence="17"/>
+</odoo>
