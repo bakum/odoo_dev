@@ -1,3 +1,5 @@
+import datetime
+
 from odoo import models, fields, _, api
 from odoo.exceptions import UserError
 from odoo.tools import create_index
@@ -76,6 +78,18 @@ class DistributorSaleBudget(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
+            if isinstance(vals['date'], str):
+                dt = datetime.datetime.strptime(vals['date'], '%Y-%m-%d %H:%M:%S')
+            else:
+                dt = vals['date']
+            year = dt.strftime("%Y")
+            BudgetRec = self.env['distrib.budget.move']
+            domain = [('year', '=', year), ('distrib_id', '=', vals['distrib_id'])]
+            budget = BudgetRec.search(domain)[:1]
+            if budget:
+                if budget.state == 'done':
+                    raise UserError('You can not create the budget if is exists. \n%s.' % budget.display_name)
+
             vals['name'] = self.env['ir.sequence'].next_by_code('distrib.sale.budget')
 
         created = super(DistributorSaleBudget, self).create(vals_list)
