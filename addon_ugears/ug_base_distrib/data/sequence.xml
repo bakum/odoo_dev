@@ -52,7 +52,7 @@
         <record id="seq_new_sale_order" model="ir.sequence">
             <field name="name">UG Sales Order</field>
             <field name="code">new.sale.order</field>
-            <field name="prefix">UG/%(range_year)s/</field>
+            <field name="prefix">UG/%(range_year)s/%(range_month)s/</field>
             <field eval="1" name="number_next"/>
             <field eval="1" name="number_increment"/>
             <field eval="True" name="use_date_range"/>
