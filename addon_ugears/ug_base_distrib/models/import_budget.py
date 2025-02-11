@@ -169,7 +169,7 @@ class UgImportBudget(models.Model):
         if budget:
             # product = []
             if budget.state == 'done':
-                raise UserError('You can not edit the budget if is done. \n%s.' % budget.display_name)
+                raise UserError(_('You can not edit the budget if is done. \n%s.') % budget.display_name)
             for row in self.products_ids:
                 BudgetRecLine = self.env['distrib.budget.move.line']
                 domain = [('move_id', '=', budget.id), ('product_id', '=', row.product_id.id)]

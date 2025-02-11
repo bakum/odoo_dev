@@ -120,7 +120,7 @@ class DistributorSaleBudget(models.Model):
             budget = BudgetRec.search(domain)[:1]
             if budget:
                 if budget.state == 'done':
-                    raise UserError('You can not create the budget if is exists. \n%s.' % budget.display_name)
+                    raise UserError(_('You can not create the budget if is exists. \n%s.') % budget.display_name)
 
             vals['name'] = self.env['ir.sequence'].next_by_code('distrib.sale.budget')
 

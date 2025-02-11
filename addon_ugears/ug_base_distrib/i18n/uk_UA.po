@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-10 19:40+0000\n"
-"PO-Revision-Date: 2025-02-10 19:40+0000\n"
+"POT-Creation-Date: 2025-02-11 08:03+0000\n"
+"PO-Revision-Date: 2025-02-11 08:03+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -2760,8 +2760,19 @@ msgstr ""
 #. odoo-python
 #: code:addons/ug_base_distrib/models/distrib_sales_budget.py:0
 #, python-format
-msgid "You can not delete the budget if is done."
+msgid ""
+"You can not create the budget if is exists. \n"
+"%s."
 msgstr ""
+"Ви не можете створити вже існуючий бюджет. \n"
+"%s."
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_sales_budget.py:0
+#, python-format
+msgid "You can not delete the budget if is done."
+msgstr "Ви не можете видалити бюджет в статусі ЗАВЕРШЕНО"
 
 #. module: ug_base_distrib
 #. odoo-python
@@ -2770,6 +2781,17 @@ msgstr ""
 #, python-format
 msgid "You can not delete the moves if is done."
 msgstr "Ви не можете видалити записи в статусі ЗАВЕРШЕНО"
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/import_budget.py:0
+#, python-format
+msgid ""
+"You can not edit the budget if is done. \n"
+"%s."
+msgstr ""
+"Ви не можете редагувати бюджет в статусі ЗАВЕРШЕНО. \n"
+"%s."
 
 #. module: ug_base_distrib
 #. odoo-python
