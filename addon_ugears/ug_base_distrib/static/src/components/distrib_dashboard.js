@@ -55,6 +55,7 @@ export class OwlDistribDashboard extends Component {
                 }
             }
             browser.location.href = browser.location.origin + routeToUrl(router.current)
+            return
         }
 
         onWillStart(async () => {
