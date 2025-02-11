@@ -113,6 +113,6 @@
             name="Sales Channels"
             parent="menu_distrib_sales_parent_report"
             action="action_distrib_channels_statistic"
-            groups="ug_base_distrib.group_distrib_manager,ug_base_distrib.group_distrib_user"
+            groups="ug_base_distrib.group_distrib_manager"
             sequence="12"/>
 </odoo>
