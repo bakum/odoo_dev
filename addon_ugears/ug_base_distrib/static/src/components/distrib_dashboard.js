@@ -63,8 +63,7 @@ export class OwlDistribDashboard extends Component {
             await this.getDistributors()
         })
     }
-
-    async onChangePeriod() {
+    async onRecalculate() {
         this.getDates()
         // await this.getQuotations()
         // await this.getOrders()
@@ -75,8 +74,12 @@ export class OwlDistribDashboard extends Component {
         // await this.getPartnerOrders()
     }
 
-    async onChangeDistributor() {
+    async onChangePeriod() {
+        await this.onRecalculate()
+    }
 
+    async onChangeDistributor() {
+        await this.onRecalculate()
     }
 
     getDates() {
