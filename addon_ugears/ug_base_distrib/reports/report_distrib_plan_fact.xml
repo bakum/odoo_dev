@@ -37,7 +37,6 @@
         <field name="search_view_id" ref="distrib_report_plan_fact_view_search"/>
         <field name="domain">[]</field>
         <field name="context">{'search_default_year': 1, 'search_default_active_sales': 1}</field>
-<!--        <field name="context">{'search_default_month': 1, 'group_by': ['distrib_id','currency_id']}</field>-->
         <field name="view_mode">pivot</field>
     </record>
 

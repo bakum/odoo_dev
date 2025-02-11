@@ -16,10 +16,10 @@ export class OwlDistribDashboard extends Component {
             user = await this.user.hasGroup('ug_base_distrib.group_distrib_user'),
             restricted = !manager && user
         if (restricted) {
-            let user_data = await this.orm.searchRead("res.users", [['id','=',this.user.userId]], ['id', 'distrib_id'],{
+            let user_data = await this.orm.searchRead("res.users", [['id', '=', this.user.userId]], ['id', 'distrib_id'], {
                 limit: 1,
             })
-            domain.push(['id','=',user_data[0].distrib_id[0]|| 0])
+            domain.push(['id', '=', user_data[0].distrib_id[0] || 0])
         }
         const data = await this.orm.searchRead("distrib.distributors", domain, ['id', 'name'])
         if (restricted && data.length > 0) {
@@ -28,11 +28,12 @@ export class OwlDistribDashboard extends Component {
         this.state.restricted = restricted
         this.state.distributors = data
     }
+
     async setup() {
         this.state = useState({
-            period:30,
-            distributor:0,
-            restricted:false,
+            period: 30,
+            distributor: 0,
+            restricted: true,
         })
         this.orm = useService("orm")
         this.actionService = useService("action")
@@ -43,26 +44,26 @@ export class OwlDistribDashboard extends Component {
         if (old_chartjs) {
             let root_menu = 'menu_distrib_root';
             let menu = 'ir.model.data';
-            const menu_ids = await this.orm.searchRead(menu, [['name', '=', root_menu]], ['res_id'], {
-                limit: 1,
-            })
-            if (menu_ids.length > 0) {
-                let menu_id = menu_ids[0]
-                let {search, hash} = router.current
-                search.old_chartjs = old_chartjs != null ? "0" : "1"
-                hash.action = this.props.actionId
-                hash.menu_id = menu_id.res_id
-                browser.location.href = browser.location.origin + routeToUrl(router.current)
+            let menu_ids = await this.orm.searchRead(menu, [['name', '=', root_menu]], ['res_id'])
+            let {search, hash} = router.current
+            search.old_chartjs = old_chartjs != null ? "0" : "1"
+            hash.action = this.props.actionId
+            if (menu_ids) {
+                if (menu_ids.length > 0) {
+                    let menu_id = menu_ids[0]
+                    hash.menu_id = menu_id.res_id
+                }
             }
+            browser.location.href = browser.location.origin + routeToUrl(router.current)
         }
 
-        onWillStart(async ()=> {
+        onWillStart(async () => {
             this.getDates()
             await this.getDistributors()
         })
     }
 
-    async onChangePeriod(){
+    async onChangePeriod() {
         this.getDates()
         // await this.getQuotations()
         // await this.getOrders()
@@ -73,11 +74,11 @@ export class OwlDistribDashboard extends Component {
         // await this.getPartnerOrders()
     }
 
-    async onChangeDistributor(){
+    async onChangeDistributor() {
 
     }
 
-    getDates(){
+    getDates() {
         this.state.current_date = moment().subtract(this.state.period, 'days').format('L')
         this.state.previous_date = moment().subtract(this.state.period * 2, 'days').format('L')
     }
