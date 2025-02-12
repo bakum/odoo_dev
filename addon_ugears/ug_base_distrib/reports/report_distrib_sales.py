@@ -17,7 +17,7 @@ class ReportDistribSales(models.Model):
     currency_id = fields.Many2one('res.currency', string='Currency', readonly=True)
     channel_id = fields.Many2one('distrib.sales.channels', string='Channel', readonly=True)
     product_id = fields.Many2one('product.product', string='Product', readonly=True)
-    product_tmpl_id = fields.Many2one('product.template', readonly=True)
+    product_tmpl_id = fields.Many2one('product.template', readonly=True, groups="ug_base_distrib.group_distrib_manager")
     product_category_id = fields.Many2one('product.category', readonly=True, string='Category')
     beginning_stock = fields.Float(string='Beginning stock, pcs', readonly=True, group_operator='sum')
     sell_in = fields.Float(string='Sell-In, pcs', readonly=True, group_operator='sum')

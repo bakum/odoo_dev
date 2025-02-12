@@ -18,7 +18,7 @@
 <!--                             <field name="incoming_count" widget="statinfo" string="incoming"/>-->
                         </button>
                         <button name="action_view_incomes" type="object" class="oe_stat_button"
-                                icon="fa-truck" attrs="{'invisible': [('incoming_count', '=', 0)]}">
+                                icon="fa-inbox" attrs="{'invisible': [('incoming_count', '=', 0)]}">
                             <field name="incoming_count" widget="statinfo" string="Delivery"/>
                         </button>
                     </div>

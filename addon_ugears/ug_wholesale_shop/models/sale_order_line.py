@@ -60,7 +60,7 @@ class SaleOrder(models.Model):
         super(SaleOrder, self)._compute_qty_delivered_method()
 
         for line in self:
-            if not line.is_expense and line.product_id.type in ['consu']:
+            if not line.is_expense and line.product_id.type in ['consu', 'product']:
                 line.qty_delivered_method = 'distrib_move'
 
     @api.depends('incoming_lines.state','incoming_lines.debit','incoming_lines.credit')

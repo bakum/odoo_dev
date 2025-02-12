@@ -18,6 +18,20 @@
         </field>
     </record>
 
+    <record id="distrib_report_sales_view_tree" model="ir.ui.view">
+        <field name="name">distrib_report_sales_view.tree</field>
+        <field name="model">report.distrib.sales</field>
+        <field name="arch" type="xml">
+            <tree string="Distributor sales" sample="0">
+                <field name="date" interval="month"/>
+                <field name="distrib_id"/>
+                <field name="channel_id"/>
+                <field name="product_id"/>
+                <field name="balance"/>
+            </tree>
+        </field>
+    </record>
+
     <record id="distrib_report_sales_view_search" model="ir.ui.view">
         <field name="name">distrib_sales_view.search</field>
         <field name="model">report.distrib.sales</field>
@@ -48,7 +62,7 @@
 <!--        <field name="domain">[('state', '=', 'forecast')]</field>-->
         <field name="context">{'search_default_month': 1}</field>
 <!--        <field name="context">{'search_default_month': 1, 'group_by': ['distrib_id','currency_id']}</field>-->
-        <field name="view_mode">pivot</field>
+        <field name="view_mode">pivot,tree</field>
     </record>
 
     <menuitem
