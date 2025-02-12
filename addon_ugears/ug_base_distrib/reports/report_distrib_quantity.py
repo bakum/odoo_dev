@@ -59,7 +59,7 @@ class ReportDistribQuantity(models.Model):
                     LEFT JOIN PRODUCT_PRODUCT PP ON PP.ID = DM.PRODUCT_ID
                     LEFT JOIN PRODUCT_TEMPLATE PT ON PT.ID = PP.PRODUCT_TMPL_ID
                 WHERE
-                    PT.TYPE = 'consu'
+                    PT.TYPE in ('consu','product')
                     AND DM.PRODUCT_UOM_QTY != 0
                     AND DM.STATE NOT IN ('draft', 'cancel')
             ),
