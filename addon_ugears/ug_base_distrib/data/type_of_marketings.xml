@@ -31,5 +31,10 @@
             <field name="desc">Marketing expenses related to listing, building visibility, and promoting products through physical retail stores. This includes listing fees, merchandising, leaflets, posters, voblers, and promotional compensation, all aimed at enhancing product placement and driving customer engagement and purchases.</field>
             <field name="active">True</field>
         </record>
+        <record id="type_7" model="distrib.types.marketings">
+            <field name="name">Mass Media</field>
+            <field name="desc">Marketing expenses related to traditional media channels such as television, radio, newspapers, and magazines. This includes costs for TV commercials, radio advertisements, print ads, and PR campaigns aimed at increasing brand awareness and promotion.</field>
+            <field name="active">True</field>
+        </record>
     </data>
 </odoo>

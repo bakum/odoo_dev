@@ -97,17 +97,18 @@ class DistributorMove(models.Model):
         date = fields.Date.from_string(date) if date else fields.Date.context_today(self)
         return Currency._get_conversion_rate(currency_from, currency_to, company, date)
 
-    @api.depends('currency_id','date_order','currency_id.rate_ids')
+    @api.depends('currency_id', 'date_order', 'currency_id.rate_ids')
     def _compute_current_rate(self):
         currency_to = self.env['ir.config_parameter'].sudo().get_param('ug_base_distrib.default_currency_accounting',
-                                                                         default='0')
+                                                                       default='0')
         for currency in self:
             if int(currency_to) == 0:
                 currency.rate = 1.0
             else:
                 currency_to = self.env['res.currency'].sudo().search([('id', '=', int(currency_to))])
                 if currency_to:
-                    currency.rate = self._get_rate_for_move(currency.currency_id.display_name, currency_to.display_name, date=currency.date_order)
+                    currency.rate = self._get_rate_for_move(currency.currency_id.display_name, currency_to.display_name,
+                                                            date=currency.date_order)
                 else:
                     currency.rate = 1.0
 
@@ -158,6 +159,10 @@ class DistributorMove(models.Model):
                         #                                                           distrib_id=ml.distrib_id)
                         Quant._update_available_quantity(ml.product_id, quantity, distrib_id=ml.distrib_id)
                         # Quant._update_available_quantity(ml.product_id, quantity, distrib_id=ml.distrib_id, in_date=in_date)
+                        QuantHistory = self.env['distrib.quant.history']
+                        QuantHistory._update_available_quantity(ml.product_id, quantity, distrib_id=ml.distrib_id,
+                                                                in_out=ml.operation,
+                                                                in_date=ml.date)
                 elif vals['state'] == 'cancel':
                     if ml.product_id.type != 'service':
                         Quant = self.env['distrib.quant']
@@ -168,6 +173,10 @@ class DistributorMove(models.Model):
                         #                                                           distrib_id=ml.distrib_id)
                         Quant._update_available_quantity(ml.product_id, -quantity, distrib_id=ml.distrib_id)
                         # Quant._update_available_quantity(ml.product_id, quantity, distrib_id=ml.distrib_id, in_date=in_date)
+                        QuantHistory = self.env['distrib.quant.history']
+                        QuantHistory._update_available_quantity(ml.product_id, -quantity, distrib_id=ml.distrib_id,
+                                                                in_out=ml.operation,
+                                                                in_date=ml.date)
 
         if 'channel_id' in vals:
             mls = self.move_line

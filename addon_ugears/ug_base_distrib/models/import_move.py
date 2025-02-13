@@ -200,6 +200,7 @@ class UgImportMove(models.TransientModel):
                     'product_id': line.product_id.id,
                     'channel_id': line.channel_id.id,
                     'name': line.product_id.display_name,
+                    'display_type': 'product',
                     'product_uom_qty': line.qtt
                 }
                 products.append((0,0,product))

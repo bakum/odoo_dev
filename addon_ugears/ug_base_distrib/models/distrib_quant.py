@@ -42,6 +42,7 @@ class DistributorQuant(models.Model):
         index=True, required=True,
         help='This is the owner of the quant')
     in_date = fields.Datetime('Incoming Date', readonly=True, required=True, default=fields.Datetime.now)
+    import_date = fields.Datetime('Date Import', readonly=True, required=False)
     quantity = fields.Float(
         'Quantity',
         help='Quantity of products in this quant, in the default unit of measure of the product',
@@ -281,7 +282,7 @@ class DistributorQuant(models.Model):
                 group['inventory_quantity_auto_apply'] = group['quantity']
         return result
 
-    def _get_inventory_move_values(self, qty, out=False):
+    def _get_inventory_move_values(self, qty, out=False, date=None):
         self.ensure_one()
         if fields.Float.is_zero(qty, 0, precision_rounding=self.product_uom_id.rounding):
             name = _('Product Quantity Confirmed')
@@ -294,6 +295,7 @@ class DistributorQuant(models.Model):
             'state': 'done',
             'is_inventory': True,
             'operation': 'out' if out else 'inc',
+            'date_order': date if date else fields.Datetime.now(),
             'move_line': [(0, 0, {
                 'product_id': self.product_id.id,
                 'product_uom_id': self.product_uom_id.id,
@@ -349,7 +351,7 @@ class DistributorQuant(models.Model):
         moves = self.env['distrib.distributors.move']
         moves.with_context(inventory_mode=False).create(move_vals)
         # moves.action_done()
-        self.write({'inventory_quantity': self.quantity, 'user_id': False})
+        self.write({'inventory_quantity': self.quantity, 'user_id': False, 'import_date': False})
         self.write({'inventory_diff_quantity': 0})
 
     def action_inventory_history(self):

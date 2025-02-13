@@ -141,6 +141,7 @@ class UgImportInventory(models.TransientModel):
                 for quant in quants_so:
                     if products.qtt != quant.quantity:
                         quant.inventory_quantity = products.qtt
+                        quant.import_date = self.date
                         quant.action_apply_inventory()
             else:
                 value = {
@@ -148,7 +149,8 @@ class UgImportInventory(models.TransientModel):
                     'product_id': products.product_id.id,
                     'quantity': 0,
                     'inventory_quantity': 0,
-                    'in_date': self.date
+                    'in_date': self.date,
+                    'import_date': self.date
                 }
                 quant_new = Quants.create(value)
                 quant_new.inventory_quantity = products.qtt

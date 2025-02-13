@@ -22,3 +22,4 @@ from . import import_move
 from . import import_inventory
 from . import import_expenses
 from . import import_budget
+from . import distrib_quant_history

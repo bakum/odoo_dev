@@ -8,10 +8,11 @@ from odoo.exceptions import UserError
 COSTS_MAP = {
     1: 'type_4',
     2: 'type_5',
-    3: 'type_6',
-    4: 'type_1',
-    5: 'type_2',
-    6: 'type_3',
+    3: 'type_7',
+    4: 'type_6',
+    5: 'type_1',
+    6: 'type_2',
+    7: 'type_3',
 }
 
 
