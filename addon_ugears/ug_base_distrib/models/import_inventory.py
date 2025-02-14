@@ -3,7 +3,7 @@ import base64
 import xlrd
 
 from odoo import models, fields, api, _
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, AccessError
 from odoo.osv import expression
 from odoo.tools import float_compare
 
@@ -152,13 +152,15 @@ class UgImportInventory(models.TransientModel):
         QuantHistory = self.env['distrib.quant.history'].sudo()
         for products in self.products_ids:
             move_vals = []
-            qtt_on_date = QuantHistory.balance_product_on_date(products.product_id,self.distrib_id,self.date)
+            qtt_on_date = QuantHistory.balance_product_on_date(products.product_id, self.distrib_id, self.date)
             if products.qtt != qtt_on_date:
                 qtt = products.qtt - qtt_on_date
                 if float_compare(qtt, 0, precision_rounding=0.01) > 0:
-                    move_vals.append(self._get_inventory_move_values(product_id=products.product_id,qty=qtt,date=self.date))
-                elif float_compare(qtt, 0,  precision_rounding=0.01) < 0:
-                    move_vals.append(self._get_inventory_move_values(product_id=products.product_id,qty=-qtt, out=True, date=self.date))
+                    move_vals.append(
+                        self._get_inventory_move_values(product_id=products.product_id, qty=qtt, date=self.date))
+                elif float_compare(qtt, 0, precision_rounding=0.01) < 0:
+                    move_vals.append(self._get_inventory_move_values(product_id=products.product_id, qty=-qtt, out=True,
+                                                                     date=self.date))
                 else:
                     return
             moves = self.env['distrib.distributors.move']
@@ -168,6 +170,9 @@ class UgImportInventory(models.TransientModel):
     def save_inventory(self):
         date_in_the_past = self.date.date() < fields.Datetime.today().date()
         if date_in_the_past:
+            if self.env.user.has_group('ug_base_distrib.group_distrib_user') and not self.env.user.has_group(
+                    'ug_base_distrib.group_distrib_manager'):
+                raise AccessError("You do not have access rights to make inventory in the past.")
             return self._save_inventory()
         Quants = self.env['distrib.quant'].sudo()
         # domain = [('distrib_id', '=', self.distrib_id)]
