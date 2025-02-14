@@ -292,7 +292,7 @@ class DistributorQuant(models.Model):
         return {
             'name': self.env.context.get('inventory_name') or name,
             'distrib_id': self.distrib_id.id,
-            'state': 'done',
+            'state': 'draft',
             'is_inventory': True,
             'operation': 'out' if out else 'inc',
             'date_order': date if date else fields.Datetime.now(),
@@ -349,8 +349,8 @@ class DistributorQuant(models.Model):
                 self.write({'inventory_diff_quantity': 0})
                 return
         moves = self.env['distrib.distributors.move']
-        moves.with_context(inventory_mode=False).create(move_vals)
-        # moves.action_done()
+        res = moves.with_context(inventory_mode=False).create(move_vals)
+        res.action_done()
         self.write({'inventory_quantity': self.quantity, 'user_id': False, 'import_date': False})
         self.write({'inventory_diff_quantity': 0})
 

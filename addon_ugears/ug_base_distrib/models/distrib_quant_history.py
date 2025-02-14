@@ -244,3 +244,29 @@ class DistributorQuantHistory(models.Model):
             })
 
         self._recalculate_results(product_id=product_id, distrib_id=distrib_id, from_date=in_date)
+
+    def balance_product_on_date(self, product_id, distrib_id, on_date=None):
+        self = self.sudo()
+        domain = []
+        strategy_order = 'distrib_id,product_id,date desc'
+        domain.append(('product_id', '=', product_id.id))
+        domain.append(('distrib_id', '=', distrib_id.id))
+        if on_date:
+            domain.append(('date', '<=', on_date.strftime("%Y-%m-%d 00:00:00")))
+
+        quant = None
+        quants = self.search(domain, order=strategy_order)
+        if quants:
+            # see _acquire_one_job for explanations
+            self._cr.execute(
+                "SELECT id FROM distrib_quant_history WHERE id IN %s ORDER BY distrib_id,product_id,date desc LIMIT 1 FOR NO KEY UPDATE SKIP LOCKED",
+                [tuple(quants.ids)])
+            stock_quant_result = self._cr.fetchone()
+            if stock_quant_result:
+                quant = self.browse(stock_quant_result[0])
+
+        if quant:
+            return quant.quantity_end
+
+        return 0.0
+

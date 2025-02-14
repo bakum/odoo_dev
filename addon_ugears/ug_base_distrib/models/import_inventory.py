@@ -5,6 +5,7 @@ import xlrd
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 from odoo.osv import expression
+from odoo.tools import float_compare
 
 
 class UgImportInventory(models.TransientModel):
@@ -124,7 +125,50 @@ class UgImportInventory(models.TransientModel):
             'type': 'ir.actions.act_window',
         }
 
+    def _get_inventory_move_values(self, product_id, qty, out=False, date=None):
+        # self.ensure_one()
+        if fields.Float.is_zero(qty, 0, precision_rounding=0.01):
+            name = _('Product Quantity Confirmed')
+        else:
+            name = _('Product Quantity Updated')
+
+        return {
+            'name': self.env.context.get('inventory_name') or name,
+            'distrib_id': self.distrib_id.id,
+            'state': 'draft',
+            'is_inventory': True,
+            'operation': 'out' if out else 'inc',
+            'date_order': date if date else fields.Datetime.now(),
+            'move_line': [(0, 0, {
+                'product_id': product_id.id,
+                # 'product_uom_id': product_uom_id.id,
+                'distrib_id': self.distrib_id.id,
+                'product_uom_qty': qty,
+                'operation': 'out' if out else 'inc',
+            })]
+        }
+
+    def _save_inventory(self):
+        QuantHistory = self.env['distrib.quant.history'].sudo()
+        for products in self.products_ids:
+            move_vals = []
+            qtt_on_date = QuantHistory.balance_product_on_date(products.product_id,self.distrib_id,self.date)
+            if products.qtt != qtt_on_date:
+                qtt = products.qtt - qtt_on_date
+                if float_compare(qtt, 0, precision_rounding=0.01) > 0:
+                    move_vals.append(self._get_inventory_move_values(product_id=products.product_id,qty=qtt,date=self.date))
+                elif float_compare(qtt, 0,  precision_rounding=0.01) < 0:
+                    move_vals.append(self._get_inventory_move_values(product_id=products.product_id,qty=-qtt, out=True, date=self.date))
+                else:
+                    return
+            moves = self.env['distrib.distributors.move']
+            res = moves.with_context(inventory_mode=False).create(move_vals)
+            res.action_done()
+
     def save_inventory(self):
+        date_in_the_past = self.date.date() < fields.Datetime.today().date()
+        if date_in_the_past:
+            return self._save_inventory()
         Quants = self.env['distrib.quant'].sudo()
         # domain = [('distrib_id', '=', self.distrib_id)]
         # quants_so = Quants.search(domain)
@@ -156,7 +200,7 @@ class UgImportInventory(models.TransientModel):
                 quant_new.inventory_quantity = products.qtt
                 quant_new.action_apply_inventory()
 
-        domain = ['&',('distrib_id', '=', self.distrib_id.id), ('product_id', 'not in', product_ids)]
+        domain = ['&', ('distrib_id', '=', self.distrib_id.id), ('product_id', 'not in', product_ids)]
         quants_so = Quants.search(domain)
         for quant in quants_so:
             if quant.quantity != 0:
