@@ -59,6 +59,8 @@ class DistributorQuantHistory(models.Model):
     def init(self):
         create_index(self._cr, 'distrib_quant_history_date_idx', 'distrib_quant_history',
                      ["distrib_id, product_id, date desc"])
+        create_index(self._cr, 'distrib_quant_history_date_asc_idx', 'distrib_quant_history',
+                     ["distrib_id, product_id, date"])
 
     @api.model
     def _get_rate_for_move(self, currency_from_code, currency_to_code, date=None):

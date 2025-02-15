@@ -7,11 +7,11 @@
             <pivot string="Stock Turnover Report" sample="0">
                 <field name="date" type="col" interval="month"/>
                 <field name="start_product_qty" type="measure"/>
-<!--                <field name="start_price_total" type="measure"/>-->
-<!--                <field name="start_price_total_acc" type="measure"/>-->
+                <!--                <field name="start_price_total" type="measure"/>-->
+                <!--                <field name="start_price_total_acc" type="measure"/>-->
                 <field name="product_qty" type="measure"/>
-<!--                <field name="price_total" type="measure"/>-->
-<!--                <field name="price_total_acc" type="measure"/>-->
+                <!--                <field name="price_total" type="measure"/>-->
+                <!--                <field name="price_total_acc" type="measure"/>-->
                 <field name="distrib_id" type="row"/>
                 <field name="categ_id" type="row"/>
                 <field name="full_name" type="row"/>
@@ -24,6 +24,8 @@
         <field name="model">report.distrib.turnover.quantity</field>
         <field name="arch" type="xml">
             <search string="Search">
+                <field name="product_id"
+                       filter_domain="['|',('product_id.barcode', 'ilike', self),('product_id.default_code', 'ilike', self)]"/>
                 <field name="distrib_id"/>
                 <filter string="Current Month" name="month"
                         domain="[('date','=', (context_today()).strftime('%Y-%m-01'))]"/>
@@ -35,9 +37,9 @@
                 <filter string="Previous Year" name="last_year"
                         domain="[('date','&gt;=', (context_today()- datetime.timedelta(days=365)).strftime('%Y-01-01')),
                         ('date','&lt;', context_today().strftime('%Y-01-01'))]"/>
-<!--                <group expand="0" string="Group By">-->
-<!--                    <filter string="Distributor" name="distrib" domain="[]" context="{'group_by':'distrib_id'}"/>-->
-<!--                </group>-->
+                <!--                <group expand="0" string="Group By">-->
+                <!--                    <filter string="Distributor" name="distrib" domain="[]" context="{'group_by':'distrib_id'}"/>-->
+                <!--                </group>-->
             </search>
         </field>
     </record>
@@ -48,7 +50,7 @@
         <field name="search_view_id" ref="distrib_report_turnover_view_search"/>
         <field name="domain">[('period', '=', 'month')]</field>
         <field name="context">{'search_default_month': 1}</field>
-<!--        <field name="context">{'search_default_month': 1, 'group_by': ['distrib_id','currency_id']}</field>-->
+        <!--        <field name="context">{'search_default_month': 1, 'group_by': ['distrib_id','currency_id']}</field>-->
         <field name="view_mode">pivot</field>
     </record>
 
