@@ -1,10 +1,12 @@
 from odoo import models, fields, api
 from odoo.osv import expression
+from odoo.tools import create_index
 
 
 class DistributorQuantHistory(models.Model):
     _name = 'distrib.quant.history'
     _description = 'Quants History'
+    _order = 'distrib_id, product_id, date desc'
 
     product_id = fields.Many2one(
         'product.product', 'Product',
@@ -26,7 +28,7 @@ class DistributorQuantHistory(models.Model):
         index=True, required=True,
         help='This is the owner of the quant')
 
-    date = fields.Datetime('Incoming Date', readonly=True, required=True, default=fields.Datetime.today)
+    date = fields.Datetime('Incoming Date', readonly=True, index=True, required=True, default=fields.Datetime.today)
 
     quantity_begin = fields.Float(
         'Beginning Quantity',
@@ -53,6 +55,10 @@ class DistributorQuantHistory(models.Model):
         store=True, readonly=False, required=True, precompute=True)
     rate = fields.Float(compute='_compute_current_rate', string='Current Cross-Rate', digits=0, store=True,
                         precompute=True, help='The rate of the currency to the currency of accounting')
+
+    def init(self):
+        create_index(self._cr, 'distrib_quant_history_date_idx', 'distrib_quant_history',
+                     ["distrib_id, product_id, date desc"])
 
     @api.model
     def _get_rate_for_move(self, currency_from_code, currency_to_code, date=None):
