@@ -31,7 +31,7 @@ export class ImportInventoryController extends ListController {
         const context = {
             active_model: this.props.resModel,
         };
-        console.log('props',this.props)
+        // console.log('props',this.props)
         this.actionService.doAction({
             res_model: "distrib.quantity.history",
             views: [[false, "form"]],
