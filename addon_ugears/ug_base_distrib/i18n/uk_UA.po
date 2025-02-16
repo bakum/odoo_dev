@@ -139,12 +139,12 @@ msgstr "Дозволений дистриб'ютор"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__amount_untaxed
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__price_total
 msgid "Amount"
-msgstr "Разом"
+msgstr "Amount"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__price_total_acc
 msgid "Amount (acc)"
-msgstr "Сума (упр)"
+msgstr "Amount (acc)"
 
 #. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_quants_tree
@@ -696,7 +696,7 @@ msgstr "Посилання на документ"
 #. module: ug_base_distrib
 #: model:ir.model,name:ug_base_distrib.model_report_distrib_plan_fact
 msgid "Distributor Plan/Fact Report"
-msgstr "Звіт план/факт"
+msgstr "Sell-in Plan/Fact"
 
 #. module: ug_base_distrib
 #: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_quantity_report
@@ -2361,7 +2361,7 @@ msgstr "Оберіть період"
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_budgets_sale
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_plan_fact_view_pivot
 msgid "Sell-in Plan"
-msgstr "Плани продажів"
+msgstr "Sell-in Plan"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty9
@@ -2690,32 +2690,32 @@ msgstr ""
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_plan_fact__amount_fact
 msgid "UGmodels Sell-In Fact, amount"
-msgstr "Сума факт"
+msgstr "UGmodels Sell-In Fact, amount"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_plan_fact__amount_fact_acc
 msgid "UGmodels Sell-In Fact, amount (acc)"
-msgstr "Сума факт. (упр)"
+msgstr "UGmodels Sell-In Fact, amount (acc)"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_plan_fact__product_qty_fact
 msgid "UGmodels Sell-In Fact, pcs"
-msgstr "Факт"
+msgstr "UGmodels Sell-In Fact, pcs"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_plan_fact__amount_plan
 msgid "UGmodels Sell-In Plan, amount"
-msgstr "Сума план"
+msgstr "UGmodels Sell-In Plan, amount"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_plan_fact__amount_plan_acc
 msgid "UGmodels Sell-In Plan, amount (acc)"
-msgstr "Сума план (упр)"
+msgstr "UGmodels Sell-In Plan, amount (acc)"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_plan_fact__product_qty_plan
 msgid "UGmodels Sell-In Plan, pcs"
-msgstr "План"
+msgstr "UGmodels Sell-In Plan, pcs"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__sell_in_acc
@@ -2968,7 +2968,7 @@ msgstr "Кількість запасів не встановлена."
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__balance
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_sales_view_pivot
 msgid "pcs"
-msgstr "од"
+msgstr "pcs"
 
 #. module: ug_base_distrib
 #: model:ir.model,name:ug_base_distrib.model_report_ug_base_distrib_export_horizont_xls
