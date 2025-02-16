@@ -15,8 +15,8 @@ class ReportDistribExpenses(models.Model):
     expense_id = fields.Many2one('distrib.types.marketings', string='Type of Expense', readonly=True)
     currency_id = fields.Many2one('res.currency', string='Currency', readonly=True)
     region_id = fields.Many2one('distrib.regions', "Region", readonly=True, groups="ug_base_distrib.group_distrib_manager")
-    expense_total = fields.Float(string='Total', readonly=True)
-    expense_total_acc = fields.Float(string='Total in currency of accounting', readonly=True,
+    expense_total = fields.Float(string='Spent Budget, amount', readonly=True)
+    expense_total_acc = fields.Float(string='Spent Budget, amount(acc)', readonly=True,
                                      groups="ug_base_distrib.group_distrib_manager")
 
     def init(self):

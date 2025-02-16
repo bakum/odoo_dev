@@ -4,10 +4,11 @@
         <field name="name">distrib_report_plan_fact_view.pivot</field>
         <field name="model">report.distrib.plan.fact</field>
         <field name="arch" type="xml">
-            <pivot string="Plan/Fact Quantity Report" sample="0">
+            <pivot string="Sell-in Plan" sample="0" disable_linking="1">
                 <field name="date" type="col" interval="year"/>
                 <field name="product_qty_plan" type="measure"/>
                 <field name="product_qty_fact" type="measure"/>
+                <field name="price_unit" type="measure" invisible="1"/>
                 <field name="distrib_id" type="row"/>
                 <field name="product_category_id" type="row"/>
                 <field name="full_name" type="row"/>
@@ -20,6 +21,9 @@
         <field name="model">report.distrib.plan.fact</field>
         <field name="arch" type="xml">
             <search string="Search">
+                <field name="product_id"
+                       filter_domain="['|',('product_id.barcode', 'ilike', self),('product_id.default_code', 'ilike', self)]"/>
+                <field name="distrib_id"/>
                 <filter string="Current Year" name="year"
                         domain="[('year','=', (context_today()).strftime('%Y-01-01'))]"/>
                 <filter string="Previous Year" name="last_year"

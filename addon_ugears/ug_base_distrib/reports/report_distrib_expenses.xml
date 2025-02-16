@@ -4,7 +4,8 @@
         <field name="name">distrib_report_expenses_view.pivot</field>
         <field name="model">report.distrib.expenses</field>
         <field name="arch" type="xml">
-            <pivot string="Distributor expenses" sample="0">
+            <pivot string="Distributor expenses" sample="0" disable_linking="1">
+                <field name="date" type="col" interval="year"/>
                 <field name="date" type="col" interval="month"/>
                 <field name="distrib_id" type="row"/>
                 <field name="expense_id" type="row"/>
@@ -45,7 +46,7 @@
         <field name="res_model">report.distrib.expenses</field>
         <field name="search_view_id" ref="distrib_report_expenses_view_search"/>
 <!--        <field name="domain">[('state', '=', 'forecast')]</field>-->
-        <field name="context">{'search_default_month': 1}</field>
+        <field name="context">{'search_default_year': 1}</field>
         <field name="view_mode">pivot</field>
     </record>
 

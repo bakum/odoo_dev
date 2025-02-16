@@ -7,6 +7,7 @@ class ProductChannels(models.Model):
     _description = 'Sales Channels'
 
     name = fields.Char(string='Name', required=True)
+    report_description = fields.Char(string='Description')
     active = fields.Boolean(default=True)
     guid = fields.Char(string='Guid 1C:Enterprise')
 

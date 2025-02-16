@@ -20,17 +20,17 @@ class ReportDistribSales(models.Model):
     product_tmpl_id = fields.Many2one('product.template', readonly=True, groups="ug_base_distrib.group_distrib_manager")
     product_category_id = fields.Many2one('product.category', readonly=True, string='Category')
     beginning_stock = fields.Float(string='Beginning stock, pcs', readonly=True, group_operator='sum')
-    sell_in = fields.Float(string='Sell-In, pcs', readonly=True, group_operator='sum')
-    sell_in_curr = fields.Float(string='Sell-In Currency', readonly=True, group_operator='sum')
-    sell_in_acc = fields.Float(string='Sell-In Currency Accounting', readonly=True, group_operator='sum',
+    sell_in = fields.Float(string='UGmodels Sell-In. pcs', readonly=True, group_operator='sum')
+    sell_in_curr = fields.Float(string='UGmodels Sell-In', readonly=True, group_operator='sum')
+    sell_in_acc = fields.Float(string='UGmodels Sell-In, (acc)', readonly=True, group_operator='sum',
                                groups="ug_base_distrib.group_distrib_manager")
 
     balance = fields.Float(string='pcs', readonly=True)
-    price_total = fields.Float(string='Amount in Currency', readonly=True)
-    price_total_acc = fields.Float(string='Amount in Currency Accounting', readonly=True,
+    price_total = fields.Float(string='Amount', readonly=True)
+    price_total_acc = fields.Float(string='Amount (acc)', readonly=True,
                                    groups="ug_base_distrib.group_distrib_manager")
     full_name = fields.Char(string='Product Full Name', readonly=True)
-    barcode = fields.Char(string='Product Barcode', readonly=True)
+    barcode = fields.Char(string='EAN', readonly=True)
     default_code = fields.Char(string='Product Code', readonly=True)
 
     def init(self):

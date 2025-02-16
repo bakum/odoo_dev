@@ -23,7 +23,7 @@ export class ImportExpensesController extends ListController {
     OnDownload() {
         this.actionService.doAction({
             'type': 'ir.actions.act_url',
-            'url': '/ug_base_distrib/static/xls/template_costs_distrib.xlsx',
+            'url': '/ug_base_distrib/static/xls/template_costs.xlsx',
             'target': 'new'
         })
     }

@@ -4,13 +4,13 @@
         <field name="name">distrib_report_sales_view.pivot</field>
         <field name="model">report.distrib.sales</field>
         <field name="arch" type="xml">
-            <pivot string="Distributor sales" sample="0">
+            <pivot string="Distributor sales" sample="0" disable_linking="1">
 <!--                <field name="currency_id" type="col"/>-->
                 <field name="date" type="col" interval="month"/>
                 <field name="channel_id" type="col"/>
 <!--                <field name="beginning_stock" type="measure"/>-->
 <!--                <field name="sell_in" type="measure"/>-->
-                <field name="balance" type="measure"/>
+                <field name="balance" type="measure" string="pcs"/>
                 <field name="distrib_id" type="row"/>
                 <field name="product_category_id" type="row"/>
                 <field name="full_name" type="row"/>
@@ -37,6 +37,8 @@
         <field name="model">report.distrib.sales</field>
         <field name="arch" type="xml">
             <search string="Search">
+                <field name="product_id"
+                       filter_domain="['|',('product_id.barcode', 'ilike', self),('product_id.default_code', 'ilike', self)]"/>
                 <field name="distrib_id"/>
                 <filter string="Current Month" name="month"
                         domain="[('date','=', (context_today()).strftime('%Y-%m-01'))]"/>

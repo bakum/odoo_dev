@@ -26,22 +26,22 @@ class ReportDistribTurnoverQuantity(models.Model):
         ('month', 'Months'),
         ('year', 'Years'),
     ], string='Period', readonly=True)
-    start_product_qty = fields.Float(string='Start Quantity', readonly=True)
-    product_qty = fields.Float(string='End Quantity', readonly=True)
+    start_product_qty = fields.Float(string='Beginning Stock, pcs', readonly=True)
+    product_qty = fields.Float(string='Ending Stock, pcs', readonly=True)
     distrib_id = fields.Many2one('distrib.distributors', readonly=True, string='Distributor')
     categ_id = fields.Many2one('product.category', readonly=True, string='Category')
     currency_id = fields.Many2one('res.currency', string='Currency', readonly=True)
     region_id = fields.Many2one('distrib.regions', "Region", readonly=True,
                                 groups="ug_base_distrib.group_distrib_manager")
     cartoon_id = fields.Many2one('distrib.packages.sizes', 'Cartoon', readonly=True)
-    start_price_total = fields.Float(string='Start Amount in Currency', readonly=True)
-    start_price_total_acc = fields.Float(string='Start Amount in Currency Accounting', readonly=True,
+    start_price_total = fields.Float(string='Beginning Amount', readonly=True)
+    start_price_total_acc = fields.Float(string='Beginning Amount (acc)', readonly=True,
                                          groups="ug_base_distrib.group_distrib_manager")
-    price_total = fields.Float(string='Amount in Currency', readonly=True)
-    price_total_acc = fields.Float(string='Amount in Currency Accounting', readonly=True,
+    price_total = fields.Float(string='Ending Amount', readonly=True)
+    price_total_acc = fields.Float(string='Ending Amount (acc)', readonly=True,
                                    groups="ug_base_distrib.group_distrib_manager")
     full_name = fields.Char(string='Product Full Name', readonly=True)
-    barcode = fields.Char(string='Product Barcode', readonly=True)
+    barcode = fields.Char(string='EAN', readonly=True)
     default_code = fields.Char(string='Product Code', readonly=True)
 
     def init(self):

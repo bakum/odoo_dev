@@ -30,14 +30,16 @@ class ReportDistribPlanFact(models.Model):
     ], string='State', readonly=True, groups="ug_base_distrib.group_distrib_manager")
     price_unit = fields.Float(string='Price', readonly=True, group_operator='avg',
                               groups="ug_base_distrib.group_distrib_manager")
-    product_qty_plan = fields.Float(string='Plan Quantity', readonly=True)
-    product_qty_fact = fields.Float(string='Fact Quantity', readonly=True)
-    amount_plan = fields.Float(string='Amount Plan', readonly=True, groups="ug_base_distrib.group_distrib_manager")
-    amount_fact = fields.Float(string='Amount Fact', readonly=True, groups="ug_base_distrib.group_distrib_manager")
-    amount_plan_acc = fields.Float(string='Amount Plan Accounting', readonly=True,
+    product_qty_plan = fields.Float(string='UGmodels Sell-In Plan, pcs', readonly=True)
+    product_qty_fact = fields.Float(string='UGmodels Sell-In Fact, pcs', readonly=True)
+    amount_plan = fields.Float(string='UGmodels Sell-In Plan, amount', readonly=True, groups="ug_base_distrib.group_distrib_manager")
+    amount_fact = fields.Float(string='UGmodels Sell-In Fact, amount', readonly=True, groups="ug_base_distrib.group_distrib_manager")
+    amount_plan_acc = fields.Float(string='UGmodels Sell-In Plan, amount (acc)', readonly=True,
                                    groups="ug_base_distrib.group_distrib_manager")
-    amount_fact_acc = fields.Float(string='Amount Fact Accounting', readonly=True,
+    amount_fact_acc = fields.Float(string='UGmodels Sell-In Fact, amount (acc)', readonly=True,
                                    groups="ug_base_distrib.group_distrib_manager")
+    barcode = fields.Char(string='EAN', readonly=True)
+    default_code = fields.Char(string='Product Code', readonly=True)
 
     def init(self):
         tools.drop_view_if_exists(self._cr, 'report_distrib_plan_fact')
@@ -136,7 +138,7 @@ class ReportDistribPlanFact(models.Model):
 			DISTRIB_DISTRIBUTORS_MOVE_LINE ML
 		WHERE
 			ML.STATE IN ('done')
-			AND ML.OPERATION = 'out'
+			AND ML.OPERATION = 'inc'
 			AND NOT ML.IS_INVENTORY
 	),
 	PLAN_FACT (
@@ -219,6 +221,8 @@ SELECT
 	MONTH AS DATE,
 	DISTRIB_ID,
 	PRODUCT_ID,
+	PP.BARCODE,
+	PP.DEFAULT_CODE,
 	CONCAT(
 		PT.NAME -> 'en_US',
 		'/',

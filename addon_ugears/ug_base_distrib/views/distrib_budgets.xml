@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
      <record id="action_distrib_budgets" model="ir.actions.act_window">
-        <field name="name">Sales budgets</field>
+        <field name="name">Sell-in Plan</field>
         <field name="res_model">distrib.budget.move</field>
         <field name="view_mode">tree</field>
     </record>
@@ -96,7 +96,7 @@
     <menuitem id="menu_distrib_budgets_1" name="Budgets" parent="menu_distrib_operations" sequence="2"/>
     <menuitem
             id="menu_distrib_budgets_sale"
-            name="Sales budgets"
+            name="Sell-in Plan"
             parent="menu_distrib_budgets_1"
             action="action_distrib_budgets"
             groups="ug_base_distrib.group_distrib_manager,ug_base_distrib.group_distrib_user"

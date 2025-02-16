@@ -6,13 +6,13 @@ from odoo import fields, models, api, _, SUPERUSER_ID
 from odoo.exceptions import UserError
 
 COSTS_MAP = {
-    1: 'type_4',
-    2: 'type_5',
-    3: 'type_7',
-    4: 'type_6',
-    5: 'type_1',
-    6: 'type_2',
-    7: 'type_3',
+    1: 'type_1',
+    2: 'type_2',
+    3: 'type_3',
+    4: 'type_4',
+    5: 'type_5',
+    6: 'type_6',
+    7: 'type_7',
 }
 
 
