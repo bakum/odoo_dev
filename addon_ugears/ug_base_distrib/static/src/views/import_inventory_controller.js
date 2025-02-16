@@ -27,6 +27,19 @@ export class ImportInventoryController extends ListController {
             'target': 'new'
         })
     }
+    onClickInventoryAtDate() {
+        const context = {
+            active_model: this.props.resModel,
+        };
+        console.log('props',this.props)
+        this.actionService.doAction({
+            res_model: "distrib.quantity.history",
+            views: [[false, "form"]],
+            target: "new",
+            type: "ir.actions.act_window",
+            context,
+        });
+    }
 }
 
 export const ImportInventoryListView = {

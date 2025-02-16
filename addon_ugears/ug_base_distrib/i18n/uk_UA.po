@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-16 11:18+0000\n"
-"PO-Revision-Date: 2025-02-16 11:18+0000\n"
+"POT-Creation-Date: 2025-02-16 17:31+0000\n"
+"PO-Revision-Date: 2025-02-16 17:31+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -139,12 +139,12 @@ msgstr "Дозволений дистриб'ютор"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__amount_untaxed
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__price_total
 msgid "Amount"
-msgstr "Amount"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__price_total_acc
 msgid "Amount (acc)"
-msgstr "Amount (acc)"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_quants_tree
@@ -219,12 +219,12 @@ msgstr "Початок"
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__start_price_total
 msgid "Beginning Amount"
-msgstr "Beginning Amount"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__start_price_total_acc
 msgid "Beginning Amount (acc)"
-msgstr "Beginning Amount (acc)"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant_history__quantity_begin
@@ -234,7 +234,7 @@ msgstr "Beginning Stock, pcs"
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__start_product_qty
 msgid "Beginning Stock, pcs"
-msgstr "Beginning Stock, pcs"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__beginning_stock
@@ -250,6 +250,7 @@ msgstr "Планування"
 #. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_budgets_tree
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_expenses_form
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_quantity_history
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_form
 msgid "Cancel"
 msgstr "Відміна"
@@ -294,6 +295,16 @@ msgid "Channel"
 msgstr "Канал"
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_quantity_history__inventory_datetime
+msgid "Choose a date to get the inventory at that date"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_quantity_history
+msgid "Choose your date"
+msgstr ""
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__city
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_form
 msgid "City"
@@ -329,6 +340,7 @@ msgstr "Налаштування"
 #. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_budgets_tree
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_expenses_form
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_quantity_history
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_form
 msgid "Confirm"
 msgstr "Підтвердити"
@@ -388,6 +400,7 @@ msgstr "Створити новий продукт"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant_history__create_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quantity_history__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_regions__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__create_uid
@@ -413,6 +426,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant_history__create_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quantity_history__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_regions__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__create_date
@@ -594,6 +608,7 @@ msgstr "Різниця"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant_history__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quantity_history__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_regions__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__display_name
@@ -655,6 +670,7 @@ msgstr "Дистрибуція"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__distrib_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__distrib_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant_history__distrib_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quantity_history__distrib_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_expenses__distrib_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_plan_fact__distrib_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_quantity__distrib_id
@@ -697,6 +713,11 @@ msgstr "Посилання на документ"
 #: model:ir.model,name:ug_base_distrib.model_report_distrib_plan_fact
 msgid "Distributor Plan/Fact Report"
 msgstr "Sell-in Plan/Fact"
+
+#. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_distrib_quantity_history
+msgid "Distributor Quantity History"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_quantity_report
@@ -841,12 +862,12 @@ msgstr "Електронна пошта"
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__price_total
 msgid "Ending Amount"
-msgstr "Ending Amount"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__price_total_acc
 msgid "Ending Amount (acc)"
-msgstr "Ending Amount (acc)"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant_history__quantity_end
@@ -856,7 +877,7 @@ msgstr "Ending Stock, pcs"
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__product_qty
 msgid "Ending Stock, pcs"
-msgstr "Ending Stock, pcs"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget__xls_filename
@@ -1077,6 +1098,7 @@ msgstr "Історія"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant_history__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quantity_history__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_regions__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__id
@@ -1341,6 +1363,27 @@ msgid "Informations"
 msgstr "Інформація"
 
 #. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/product_category.py:0
+#, python-format
+msgid "Invalid domain left operand %s"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/product_category.py:0
+#, python-format
+msgid "Invalid domain operator %s"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/product_category.py:0
+#, python-format
+msgid "Invalid domain right operand '%s'. It must be of type Integer/Float"
+msgstr ""
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__inventory_quantity_auto_apply
 msgid "Inventoried Quantity"
 msgstr "Підрахована кількість"
@@ -1362,6 +1405,14 @@ msgstr "Інвентаризація"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__inventory_quantity_set
 msgid "Inventory Quantity Set"
 msgstr "Кількість встановлена"
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/views/import_distrib_inventory_button.xml:0
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quantity_history__inventory_datetime
+#, python-format
+msgid "Inventory at Date"
+msgstr "Запаси на дату"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__message_is_follower
@@ -1472,6 +1523,7 @@ msgstr "Дата останньої інвентаризації"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant_history____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quantity_history____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_regions____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings____last_update
@@ -1502,6 +1554,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant_history__write_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quantity_history__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_regions__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__write_uid
@@ -1527,6 +1580,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant_history__write_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quantity_history__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_regions__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_sales_channels__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_types_marketings__write_date
@@ -1905,6 +1959,11 @@ msgid "October"
 msgstr "Жовтень"
 
 #. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_product_search
+msgid "On Hand"
+msgstr "В наявності"
+
+#. module: ug_base_distrib
 #. odoo-python
 #: code:addons/ug_base_distrib/models/distrib_quant.py:0
 #, python-format
@@ -2147,6 +2206,8 @@ msgid "Product themes"
 msgstr "Теми"
 
 #. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/wizard/distrib_quantity_history.py:0
 #: model:ir.actions.act_window,name:ug_base_distrib.product_template_action_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget__products_ids
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__products_ids
@@ -2159,6 +2220,7 @@ msgstr "Теми"
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_budgets_line_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_theme_form
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_form
+#, python-format
 msgid "Products"
 msgstr "Продукти"
 
@@ -2361,7 +2423,7 @@ msgstr "Оберіть період"
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_budgets_sale
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_plan_fact_view_pivot
 msgid "Sell-in Plan"
-msgstr "Sell-in Plan"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty9
@@ -2529,6 +2591,7 @@ msgstr "Темінг"
 #. module: ug_base_distrib
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_quant__distrib_id
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_quant_history__distrib_id
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_quantity_history__distrib_id
 msgid "This is the owner of the quant"
 msgstr ""
 
@@ -2690,32 +2753,32 @@ msgstr ""
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_plan_fact__amount_fact
 msgid "UGmodels Sell-In Fact, amount"
-msgstr "UGmodels Sell-In Fact, amount"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_plan_fact__amount_fact_acc
 msgid "UGmodels Sell-In Fact, amount (acc)"
-msgstr "UGmodels Sell-In Fact, amount (acc)"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_plan_fact__product_qty_fact
 msgid "UGmodels Sell-In Fact, pcs"
-msgstr "UGmodels Sell-In Fact, pcs"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_plan_fact__amount_plan
 msgid "UGmodels Sell-In Plan, amount"
-msgstr "UGmodels Sell-In Plan, amount"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_plan_fact__amount_plan_acc
 msgid "UGmodels Sell-In Plan, amount (acc)"
-msgstr "UGmodels Sell-In Plan, amount (acc)"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_plan_fact__product_qty_plan
 msgid "UGmodels Sell-In Plan, pcs"
-msgstr "UGmodels Sell-In Plan, pcs"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__sell_in_acc
@@ -2968,7 +3031,7 @@ msgstr "Кількість запасів не встановлена."
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__balance
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_sales_view_pivot
 msgid "pcs"
-msgstr "pcs"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model,name:ug_base_distrib.model_report_ug_base_distrib_export_horizont_xls

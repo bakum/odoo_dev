@@ -10,7 +10,7 @@
                     <div name="button_box" position="inside">
                         <t groups="ug_base_distrib.group_distrib_user">
                             <button type="object" class="oe_stat_button" icon="fa-shopping-basket"
-                                   name="action_open_distrib_quants"
+                                    name="action_open_distrib_quants"
                                     attrs="{'invisible': [('type', 'in', ('service'))]}">
                                 <div class="o_field_widget o_stat_info">
                                     <span class="o_stat_value" widget="statinfo">
@@ -25,7 +25,8 @@
                     <xpath expr="//field[@name='uom_po_id']" position="after">
                         <field name="guid" readonly="1"/>
                         <field name="theme_id" options="{'no_open': True, 'no_quick_create': True}"/>
-                        <field name="region_ids" widget="many2many_tags" groups="ug_base_distrib.group_distrib_manager"/>
+                        <field name="region_ids" widget="many2many_tags"
+                               groups="ug_base_distrib.group_distrib_manager"/>
                     </xpath>
                 </data>
             </field>
@@ -39,8 +40,34 @@
                 <data>
                     <xpath expr="//field[@name='standard_price']" position="after">
                         <field name="guid" readonly="1" optional="hide"/>
+                        <field name="qty_available_dist" readonly="1" optional="hide"/>
                     </xpath>
                 </data>
+            </field>
+        </record>
+
+        <record id="view_distrib_product_tree" model="ir.ui.view">
+            <field name="name">product.distrib.tree.inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="type" position="after">
+                    <field name="qty_available_dist" attrs="{'invisible':[('type', '!=', 'consu')]}" optional="show"
+                           decoration-danger="qty_available_dist &lt; 0" decoration-warning="qty_available_dist == 0" decoration-success="qty_available_dist &gt; 0" decoration-bf="1" groups="ug_base_distrib.group_distrib_user"/>
+                    <!--                    <field name="virtual_available_dist" attrs="{'invisible':[('type', '!=', 'consu')]}" string="Forecasted Quantity" optional="show" groups="ug_base_distrib.group_distrib_user"/>-->
+                </field>
+            </field>
+        </record>
+
+        <record id="view_distrib_product_search" model="ir.ui.view">
+            <field name="name">product.distrib.search.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='consumable']" position="after">
+                    <separator/>
+                    <filter string="On Hand" name="on_hand" domain="[('qty_available_dist', '&gt;', 0)]"/>
+                </xpath>
             </field>
         </record>
     </data>

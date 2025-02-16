@@ -45,6 +45,7 @@
         'views/distrib_budgets.xml',
         'views/import_region.xml',
         'views/import_budget.xml',
+        'views/inventory_history.xml',
     ],
     'assets': {
         'web.assets_backend': [

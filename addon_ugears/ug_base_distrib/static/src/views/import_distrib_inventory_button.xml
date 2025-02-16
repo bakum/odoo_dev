@@ -4,6 +4,10 @@
 <t t-name="ImportDistribInventory.Buttons" t-inherit="web.ListView.Buttons" t-inherit-mode="primary" owl="1">
     <xpath expr="(//div/*)[last()]" position="after">
         <button
+                type="button" class="btn btn-primary o_button_at_date me-2" t-on-click="onClickInventoryAtDate">
+            Inventory at Date
+        </button>
+        <button
                 class="btn btn-secondary px-4 o_button_import" type="button" t-on-click="onClickImport">
             Import an inventory
         </button>

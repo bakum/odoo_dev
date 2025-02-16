@@ -1,5 +1,17 @@
+from re import search
+import operator as py_operator
 from odoo import api, models, _, fields
+from odoo.exceptions import UserError
 from odoo.tools import float_round
+
+OPERATORS = {
+    '<': py_operator.lt,
+    '>': py_operator.gt,
+    '<=': py_operator.le,
+    '>=': py_operator.ge,
+    '=': py_operator.eq,
+    '!=': py_operator.ne
+}
 
 
 class PublicProduct(models.Model):
@@ -7,7 +19,7 @@ class PublicProduct(models.Model):
 
     guid = fields.Char(string='Guid 1C:Enterprise')
     qty_available_dist = fields.Float(
-        'Quantity On Distributor', compute='_compute_quantities_dist',
+        'Quantity On Distributor', compute='_compute_quantities_dist', search='_search_qty_available',
         compute_sudo=False, digits='Product Unit of Measure')
     theme_id = fields.Many2one('distrib.product.theme','Theme')
     region_ids = fields.Many2many('distrib.regions', string='Regions')
@@ -16,6 +28,11 @@ class PublicProduct(models.Model):
         res = self._compute_quantities_dict_dist()
         for template in self:
             template.qty_available_dist = res[template.id]['qty_available_dist']
+
+    def _search_qty_available(self, operator, value):
+        domain = [('qty_available_dist', operator, value)]
+        product_variant_query = self.env['product.product']._search(domain)
+        return [('product_variant_ids', 'in', product_variant_query)]
 
     def _compute_quantities_dict_dist(self):
         variants_available = {
@@ -49,6 +66,7 @@ class PublicProductDistrib(models.Model):
     move_ids = fields.One2many('distrib.distributors.move.line', 'product_id')  # used to compute quantities
     qty_available_dist = fields.Float('Quantity On Distributor',
                                       compute='_compute_quantities_dist',
+                                      search='_search_quantities_dist',
                                       digits='Product Unit of Measure', compute_sudo=False,
                                       help="Current quantity of products.\n"
                                            "In a context with a single Stock Location, this includes "
@@ -96,10 +114,34 @@ class PublicProductDistrib(models.Model):
              "Otherwise, this includes goods leaving any Stock "
              "Location with 'internal' type.")
 
+    def _search_quantities_dist(self, operator, value):
+        return self._search_product_quantity(operator, value, 'qty_available_dist')
+
+    def _search_product_quantity(self, operator, value, field):
+        # TDE FIXME: should probably clean the search methods
+        # to prevent sql injections
+        if field not in ('qty_available_dist', 'virtual_available_dist', 'incoming_qty_dist', 'outgoing_qty_dist'):
+            raise UserError(_('Invalid domain left operand %s', field))
+        if operator not in ('<', '>', '=', '!=', '<=', '>='):
+            raise UserError(_('Invalid domain operator %s', operator))
+        if not isinstance(value, (float, int)):
+            raise UserError(_("Invalid domain right operand '%s'. It must be of type Integer/Float", value))
+
+        # TODO: Still optimization possible when searching virtual quantities
+        ids = []
+        # Order the search on `id` to prevent the default order on the product name which slows
+        # down the search because of the join on the translation table to get the translated names.
+        for product in self.with_context(prefetch_fields=False).search([], order='id'):
+            if OPERATORS[operator](product[field], value):
+                ids.append(product.id)
+        return [('id', 'in', ids)]
+
     @api.depends('move_ids.product_uom_qty', 'move_ids.state')
     @api.depends_context('uid', 'from_date', 'to_date', )
     def _compute_quantities_dist(self):
         distrib_id = self.env.user.distrib_id.id
+        if not distrib_id:
+            distrib_id = self._context.get('distrib')
         products = self.filtered(lambda p: p.type != 'service')
         res = products._compute_quantities_dict_dist(distrib_id, self._context.get('from_date'),
                                                      self._context.get('to_date'))
