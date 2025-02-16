@@ -1957,7 +1957,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_plan_fact_report
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_plan_fact_report
 msgid "Plan/Fact Quantity Report"
-msgstr ""
+msgstr "Sell-in Plan/Fact"
 
 #. module: ug_base_distrib
 #. odoo-python
