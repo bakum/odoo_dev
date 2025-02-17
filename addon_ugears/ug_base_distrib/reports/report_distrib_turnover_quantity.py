@@ -453,6 +453,7 @@ class ReportDistribTurnoverQuantity(models.Model):
             ) AS MAIN
             LEFT JOIN PRODUCT_PRODUCT PP ON PP.ID = MAIN.PRODUCT_ID
             LEFT JOIN PRODUCT_TEMPLATE PT ON PT.ID = PP.PRODUCT_TMPL_ID
+            order by period, DISTRIB_ID, PT.NAME
     );
     """
         report_period = self.env['ir.config_parameter'].sudo().get_param('distrib.report_distrib_quantity_period',
