@@ -1,7 +1,6 @@
 import os
 import sys
 
-import psutil
 import subprocess
 
 from odoo import models, fields, api, _
