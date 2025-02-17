@@ -57,11 +57,6 @@ class ReportDistribSales(models.Model):
                 QUANTITY_INCOME,
                 QUANTITY_OUTCOME,
                 QUANTITY_END
-                -- GENERATE_SERIES(
-                -- 	(H.DATE::DATE)::DATE,
-                -- 	(H.DATE::DATE)::DATE + INTERVAL '2 month',
-                -- 	'1 day'::INTERVAL
-                -- )::DATE DATE
             FROM
                 DISTRIB_QUANT_HISTORY H
         ),
