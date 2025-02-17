@@ -729,7 +729,7 @@ msgstr ""
 #: model:ir.model,name:ug_base_distrib.model_report_distrib_quantity
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_quantity_report
 msgid "Distributor Quantity Report"
-msgstr "Звіт дистриб'ютора про кількість"
+msgstr "Звіт по залишкам дистриб'ютора"
 
 #. module: ug_base_distrib
 #: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_sales_report
