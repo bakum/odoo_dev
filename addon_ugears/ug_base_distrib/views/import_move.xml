@@ -17,37 +17,54 @@
                             <group>
                                 <field name="xls_filename" invisible="1"/>
                                 <field name="xls_file" filename="xls_filename"/>
-                                <field name="operation" attrs="{'invisible': [('len_products', '=', 0)],'readonly': 1}"/>
+                                <field name="operation"
+                                       attrs="{'invisible': [('len_products', '=', 0)],'readonly': 1}"/>
                             </group>
                             <group>
-                                 <field name="date_order"/>
-                                <field name="distrib_id" widget="many2one" options="{'no_create': True, 'no_open': True}"/>
+                                <field name="date_order"/>
+                                <field name="distrib_id" widget="many2one"
+                                       options="{'no_create': True, 'no_open': True}"/>
                             </group>
                         </group>
                         <div class="o_statusbar_buttons d-flex align-items-center align-content-around flex-wrap">
-                            <button string="Load move from Excel" name="load_move_from_xls" class="oe_highlight" type="object"
-                                attrs="{'invisible': [('xls_filename', '=', False)]}"/>
+                            <button string="Load move from Excel" name="load_move_from_xls" class="oe_highlight"
+                                    type="object"
+                                    attrs="{'invisible': [('xls_filename', '=', False)]}"/>
                         </div>
                         <notebook attrs="{'invisible': [('len_products', '=', 0)]}">
                             <page string="Products">
                                 <field name="products_ids">
                                     <tree create="false" editable="top">
-<!--                                        <field name="name" readonly="1"/>-->
+                                        <!--                                        <field name="name" readonly="1"/>-->
                                         <field name="barcode" readonly="1"/>
                                         <field name="default_code" readonly="1"/>
-                                        <field name="product_id" widget="many2one" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('product_id', '!=', False)]}"/>
-<!--                                        <field name="product_template_id"/>-->
+                                        <field name="product_id" widget="many2one"
+                                               options="{'no_create': True, 'no_open': True}"
+                                               attrs="{'readonly': [('product_id', '!=', False)]}"/>
+                                        <!--                                        <field name="product_template_id"/>-->
                                         <field name="description" readonly="1" optional="hide"/>
                                         <field name="qtt"/>
-                                        <field name="channel_id" readonly="1" widget="many2one" options="{'no_create': True, 'no_open': True}" optional="hide"/>
+                                        <field name="channel_id" readonly="1" widget="many2one"
+                                               options="{'no_create': True, 'no_open': True}" optional="hide"/>
                                     </tree>
                                 </field>
+                                <group name="note_group" col="6" class="mt-2 mt-md-0">
+                                    <!--   <group colspan="4">
+                                           <field colspan="2" name="note" nolabel="1" placeholder="Terms and conditions..."/>
+                                       </group> -->
+                                    <group class="oe_subtotal_footer oe_right" colspan="2">
+                                        <field name="total_qtt" decoration-bf="total_qtt >= 0" colspan="2"
+                                               readonly="1"/>
+                                    </group>
+                                    <div class="clearfix"/>
+                                </group>
                             </page>
                         </notebook>
                     </sheet>
-                     <footer>
+                    <footer>
                         <button string="Save move" name="save_move" class="oe_highlight" type="object"
                                 attrs="{'invisible': [('len_products', '=', 0)]}"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
                     </footer>
                 </form>
             </field>

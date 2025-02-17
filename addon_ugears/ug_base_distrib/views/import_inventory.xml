@@ -41,12 +41,23 @@
 <!--                                        <field name="channel_id" readonly="1" widget="many2one" options="{'no_create': True, 'no_open': True}" optional="hide"/>-->
                                     </tree>
                                 </field>
+                                <group name="note_group" col="6" class="mt-2 mt-md-0">
+                                    <!--   <group colspan="4">
+                                           <field colspan="2" name="note" nolabel="1" placeholder="Terms and conditions..."/>
+                                       </group> -->
+                                    <group class="oe_subtotal_footer oe_right" colspan="2">
+                                        <field name="total_qtt" decoration-bf="total_qtt >= 0" colspan="2"
+                                               readonly="1"/>
+                                    </group>
+                                    <div class="clearfix"/>
+                                </group>
                             </page>
                         </notebook>
                     </sheet>
                     <footer>
                         <button string="Save inventory" name="save_inventory" class="oe_highlight" type="object"
                                 attrs="{'invisible': [('len_products', '=', 0)]}"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
                     </footer>
                 </form>
             </field>

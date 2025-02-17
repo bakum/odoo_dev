@@ -53,6 +53,7 @@
                     <footer>
                         <button string="Save budget" name="save_budget" class="oe_highlight" type="object"
                                 attrs="{'invisible': [('len_products', '=', 0)]}"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
                     </footer>
                 </form>
             </field>

@@ -40,6 +40,16 @@ class UgImportMove(models.TransientModel):
         string="Operation Date",
         required=True, readonly=False,
         default=fields.Datetime.now)
+    total_qtt = fields.Float(string='Total quantity', compute='_compute_amounts')
+
+    @api.depends('products_ids.qtt')
+    def _compute_amounts(self):
+        for order in self:
+            # order_lines = order.move_line.filtered(lambda x: not x.display_type)
+            order_lines = order.products_ids
+            amount_untaxed = sum(order_lines.mapped('qtt'))
+
+            order.total_qtt = amount_untaxed
 
     # @api.onchange('xls_filename')
     # def _onchange_xls_filename(self):

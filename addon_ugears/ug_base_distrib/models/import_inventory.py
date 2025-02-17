@@ -24,6 +24,16 @@ class UgImportInventory(models.TransientModel):
     products_ids = fields.One2many('ug.distrib.import.inventory.list', 'wizard_id')
     distrib_id = fields.Many2one('distrib.distributors', 'Distributor', required=True, default=_default_distrib)
     len_products = fields.Integer(compute='get_len_products')
+    total_qtt = fields.Float(string='Total quantity', compute='_compute_amounts')
+
+    @api.depends('products_ids.qtt')
+    def _compute_amounts(self):
+        for order in self:
+            # order_lines = order.move_line.filtered(lambda x: not x.display_type)
+            order_lines = order.products_ids
+            amount_untaxed = sum(order_lines.mapped('qtt'))
+
+            order.total_qtt = amount_untaxed
 
     date = fields.Datetime(
         string="Date",

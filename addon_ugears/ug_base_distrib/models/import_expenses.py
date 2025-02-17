@@ -42,6 +42,16 @@ class UgImportExpenses(models.Model):
         string="Date",
         required=True, readonly=False,
         default=fields.Datetime.now)
+    amount_untaxed = fields.Monetary(string="Amount", store=True, compute='_compute_amounts')
+
+    @api.depends('expenses_ids.expense_total')
+    def _compute_amounts(self):
+        for order in self:
+            # order_lines = order.move_line.filtered(lambda x: not x.display_type)
+            order_lines = order.expenses_ids
+            amount_untaxed = sum(order_lines.mapped('expense_total'))
+
+            order.amount_untaxed = amount_untaxed
 
     @api.depends('expenses_ids')
     def get_len_expenses(self):
