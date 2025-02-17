@@ -236,11 +236,15 @@ class DistributorQuantHistory(models.Model):
             if stock_quant_result:
                 quant = self.browse(stock_quant_result[0])
 
+        dt = in_date or fields.Date.today()
+        if in_date:
+            dt = fields.Datetime.context_timestamp(self, in_date)
+
         if quant:
             quant.write({
                 'quantity_income': quant.quantity_income + quantity if in_out == 'inc' else quant.quantity_income,
                 'quantity_outcome': quant.quantity_outcome - quantity if in_out == 'out' else quant.quantity_outcome,
-                'date': in_date.strftime("%Y-%m-%d 00:00:00") if in_date else fields.Datetime.today,
+                'date': dt.strftime("%Y-%m-%d 00:00:00") if in_date else fields.Datetime.today,
             })
         else:
             self.create({
@@ -248,7 +252,7 @@ class DistributorQuantHistory(models.Model):
                 'quantity_income': quantity if in_out == 'inc' else 0.0,
                 'quantity_outcome': -quantity if in_out == 'out' else 0.0,
                 'distrib_id': distrib_id and distrib_id.id,
-                'date': in_date.strftime("%Y-%m-%d 00:00:00") if in_date else fields.Datetime.today,
+                'date': dt.strftime("%Y-%m-%d 00:00:00") if in_date else fields.Datetime.today,
             })
 
         self._recalculate_results(product_id=product_id, distrib_id=distrib_id, from_date=in_date)
