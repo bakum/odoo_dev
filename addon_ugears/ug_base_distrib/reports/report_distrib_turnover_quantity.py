@@ -47,30 +47,30 @@ class ReportDistribTurnoverQuantity(models.Model):
     def init(self):
         tools.drop_view_if_exists(self._cr, 'report_distrib_turnover_quantity')
         query = """
-        CREATE OR REPLACE FUNCTION public.first_agg (anyelement, anyelement)
-          RETURNS anyelement
-          LANGUAGE sql IMMUTABLE STRICT PARALLEL SAFE AS
-        'SELECT $1';
-        
-        DROP AGGREGATE IF EXISTS public.first(anyelement);
-        CREATE AGGREGATE public.first(anyelement) (
-          SFUNC = public.first_agg
-        , STYPE = anyelement
-        , PARALLEL = safe
-        );
-        
-        
-        CREATE OR REPLACE FUNCTION public.last_agg (anyelement, anyelement)
-          RETURNS anyelement
-          LANGUAGE sql IMMUTABLE STRICT PARALLEL SAFE AS
-        'SELECT $2';
-        
-        DROP AGGREGATE IF EXISTS public.last(anyelement);
-        CREATE AGGREGATE public.last(anyelement) (
-          SFUNC = public.last_agg
-        , STYPE = anyelement
-        , PARALLEL = safe
-        );
+        -- CREATE OR REPLACE FUNCTION public.first_agg (anyelement, anyelement)
+        --   RETURNS anyelement
+        --   LANGUAGE sql IMMUTABLE STRICT PARALLEL SAFE AS
+        -- 'SELECT $1';
+        -- 
+        -- DROP AGGREGATE IF EXISTS public.first(anyelement);
+        -- CREATE AGGREGATE public.first(anyelement) (
+        --   SFUNC = public.first_agg
+        -- , STYPE = anyelement
+        -- , PARALLEL = safe
+        -- );
+        -- 
+        -- 
+        -- CREATE OR REPLACE FUNCTION public.last_agg (anyelement, anyelement)
+        --   RETURNS anyelement
+        --   LANGUAGE sql IMMUTABLE STRICT PARALLEL SAFE AS
+        -- 'SELECT $2';
+        -- 
+        -- DROP AGGREGATE IF EXISTS public.last(anyelement);
+        -- CREATE AGGREGATE public.last(anyelement) (
+        --   SFUNC = public.last_agg
+        -- , STYPE = anyelement
+        -- , PARALLEL = safe
+        -- );
         CREATE or REPLACE VIEW report_distrib_turnover_quantity AS (
           WITH
             DISTRIBUTOR AS (
