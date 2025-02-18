@@ -34,7 +34,10 @@
         <field name="model">distrib.quant</field>
         <field name="arch" type="xml">
             <search>
-                <field name="product_id" filter_domain="[('product_id.name', 'ilike', self)]"/>
+                <field name="product_id"
+                       filter_domain="['|','|',('product_id.name', 'ilike', self),('product_id.barcode', 'ilike', self),('product_id.default_code', 'ilike', self)]"/>
+                <field name="distrib_id"/>
+<!--                <field name="product_id" filter_domain="[('product_id.name', 'ilike', self)]"/>-->
             </search>
         </field>
     </record>
