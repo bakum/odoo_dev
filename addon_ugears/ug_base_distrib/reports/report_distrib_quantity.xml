@@ -21,7 +21,7 @@
             <pivot string="Distributor quantity" sample="1">
                 <field name="date" type="col" interval="day"/>
                 <field name="distrib_id" type="row"/>
-                <field name="categ_id" type="row"/>
+                <field name="product_id" type="row"/>
                 <field name="product_qty" type="measure"/>
             </pivot>
         </field>
@@ -32,10 +32,14 @@
         <field name="model">report.distrib.quantity</field>
         <field name="arch" type="xml">
             <search string="Search">
+                <field name="product_id"
+                       filter_domain="['|',('product_id.barcode', 'ilike', self),('product_id.default_code', 'ilike', self)]"/>
                 <field name="distrib_id"/>
+<!--                <filter string="Today" name="today"-->
+<!--                        domain="['|',('date','&gt;=', datetime.datetime.now().strftime('%Y-%m-%d')),-->
+<!--                        ('date','&lt;=', datetime.datetime.now().strftime('%Y-%m-%d'))]"/>-->
                 <filter string="Today" name="today"
-                        domain="['|',('date','&gt;=', datetime.datetime.now().strftime('%Y-%m-%d')),
-                        ('date','&lt;=', datetime.datetime.now().strftime('%Y-%m-%d'))]"/>
+                        domain="[('date','=', datetime.datetime.now().strftime('%Y-%m-%d'))]"/>
                 <filter string="Last 7 days" name="week"
                         domain="[('date','&gt;', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d')),
                         ('date','&lt;=', datetime.datetime.now().strftime('%Y-%m-%d'))]"/>
@@ -58,7 +62,7 @@
         <field name="res_model">report.distrib.quantity</field>
         <field name="search_view_id" ref="distrib_report_qtt_view_search"/>
         <field name="domain">[('state', '=', 'forecast')]</field>
-        <field name="context">{'search_default_year': 1}</field>
+        <field name="context">{'search_default_today': 1}</field>
         <field name="view_mode">pivot,graph</field>
     </record>
 

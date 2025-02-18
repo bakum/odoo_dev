@@ -121,168 +121,111 @@ class ReportDistribTurnoverQuantity(models.Model):
                     LEFT JOIN PRODUCT_TEMPLATE PT ON PT.ID = PP.PRODUCT_TMPL_ID
                     LEFT JOIN DISTRIBUTOR D ON D.ID = H.DISTRIB_ID
             ),
-            LAST_IDS AS (
-                SELECT
-                    FIRST (ID) AS ID,
-                    DISTRIB_ID,
-                    PRODUCT_ID
-                FROM
-                    (
-                        SELECT
-                            ID,
-                            DISTRIB_ID,
-                            PRODUCT_ID
-                        FROM
-                            QTT_REMAINS
-                        ORDER BY
-                            DISTRIB_ID,
-                            PRODUCT_ID,
-                            DATE DESC
-                    ) AS MAIN
-                GROUP BY
-                    DISTRIB_ID,
-                    PRODUCT_ID
-            ),
-            CURRENT_VALUES (
-                ID,
-                PRODUCT_ID,
-                DISTRIB_ID,
-                REGION_ID,
-                DATE,
-                CURRENCY_ID,
-                CATEG_ID,
-                CARTOON_ID,
-                PRICE_UNIT,
-                RATE,
-                START_PRODUCT_QTY,
-                PRODUCT_QTY,
-                START_PRICE_TOTAL,
-                START_PRICE_TOTAL_ACC,
-                PRICE_TOTAL,
-                PRICE_TOTAL_ACC
-            ) AS (
-                SELECT
-                    ID,
-                    PRODUCT_ID,
-                    DISTRIB_ID,
-                    REGION_ID,
-                    GEN_DATE,
-                    CURRENCY_ID,
-                    CATEG_ID,
-                    CARTOON_ID,
-                    PRICE_UNIT,
-                    RATE,
-                    CASE
-                        WHEN DATE <> GEN_DATE THEN PRODUCT_QTY
-                        ELSE START_PRODUCT_QTY
-                    END AS START_PRODUCT_QTY,
-                    PRODUCT_QTY,
-                    CASE
-                        WHEN DATE <> GEN_DATE THEN PRICE_TOTAL
-                        ELSE START_PRICE_TOTAL
-                    END AS START_PRICE_TOTAL,
-                    CASE
-                        WHEN DATE <> GEN_DATE THEN PRICE_TOTAL_ACC
-                        ELSE START_PRICE_TOTAL_ACC
-                    END AS START_PRICE_TOTAL_ACC,
-                    PRICE_TOTAL,
-                    PRICE_TOTAL_ACC
-                FROM
-                    (
-                        SELECT
-                            ID,
-                            PRODUCT_ID,
-                            DISTRIB_ID,
-                            REGION_ID,
-                            GENERATE_SERIES(
-                                DATE::DATE,
-                                (NOW() AT TIME ZONE 'utc')::DATE + INTERVAL '1 day',
-                                '1 day'::INTERVAL
-                            )::DATE GEN_DATE,
-                            DATE,
-                            CURRENCY_ID,
-                            CATEG_ID,
-                            CARTOON_ID,
-                            PRICE_UNIT,
-                            RATE,
-                            START_PRODUCT_QTY,
-                            PRODUCT_QTY,
-                            START_PRICE_TOTAL,
-                            START_PRICE_TOTAL_ACC,
-                            PRICE_TOTAL,
-                            PRICE_TOTAL_ACC
-                        FROM
-                            QTT_REMAINS
-                        WHERE
-                            ID IN (
-                                SELECT
-                                    IDS.ID
-                                FROM
-                                    LAST_IDS IDS
-                            )
-                    ) AS MAIN
-            ),
-            ALL_DM_DAYS AS (
-                SELECT DISTINCT
-                    ID,
-                    PRODUCT_ID,
-                    DISTRIB_ID,
-                    REGION_ID,
-                    DATE,
-                    CURRENCY_ID,
-                    CATEG_ID,
-                    CARTOON_ID,
-                    PRICE_UNIT,
-                    RATE,
-                    START_PRODUCT_QTY,
-                    PRODUCT_QTY,
-                    START_PRICE_TOTAL,
-                    START_PRICE_TOTAL_ACC,
-                    PRICE_TOTAL,
-                    PRICE_TOTAL_ACC
-                FROM
-                    (
-                        SELECT
-                            ID,
-                            PRODUCT_ID,
-                            DISTRIB_ID,
-                            REGION_ID,
-                            DATE,
-                            CURRENCY_ID,
-                            CATEG_ID,
-                            CARTOON_ID,
-                            PRICE_UNIT,
-                            RATE,
-                            START_PRODUCT_QTY,
-                            PRODUCT_QTY,
-                            START_PRICE_TOTAL,
-                            START_PRICE_TOTAL_ACC,
-                            PRICE_TOTAL,
-                            PRICE_TOTAL_ACC
-                        FROM
-                            QTT_REMAINS
-                        UNION ALL
-                        SELECT
-                            ID,
-                            PRODUCT_ID,
-                            DISTRIB_ID,
-                            REGION_ID,
-                            DATE,
-                            CURRENCY_ID,
-                            CATEG_ID,
-                            CARTOON_ID,
-                            PRICE_UNIT,
-                            RATE,
-                            START_PRODUCT_QTY,
-                            PRODUCT_QTY,
-                            START_PRICE_TOTAL,
-                            START_PRICE_TOTAL_ACC,
-                            PRICE_TOTAL,
-                            PRICE_TOTAL_ACC
-                        FROM
-                            CURRENT_VALUES
-                    ) AS MAIN
-            ),
+            ALL_DAYS AS (
+		SELECT
+			MIN(ID) AS ID,
+			PRODUCT_ID,
+			DISTRIB_ID,
+			REGION_ID,
+			CURRENCY_ID,
+			CATEG_ID,
+			CARTOON_ID,
+			ROUND(AVG(PRICE_UNIT)::NUMERIC, 2) PRICE_UNIT,
+			ROUND(AVG(RATE)::NUMERIC, 5) RATE,
+			DATE,
+			LAST (
+				CASE
+					WHEN CURR_DATE <> DATE THEN PRODUCT_QTY
+					ELSE START_PRODUCT_QTY
+				END
+			) AS START_PRODUCT_QTY,
+			LAST (PRODUCT_QTY) PRODUCT_QTY,
+			LAST (
+				CASE
+					WHEN CURR_DATE <> DATE THEN PRICE_TOTAL
+					ELSE START_PRICE_TOTAL
+				END
+			) AS START_PRICE_TOTAL,
+			LAST (
+				CASE
+					WHEN CURR_DATE <> DATE THEN PRICE_TOTAL_ACC
+					ELSE START_PRICE_TOTAL_ACC
+				END
+			) AS START_PRICE_TOTAL_ACC,
+			LAST (PRICE_TOTAL) PRICE_TOTAL,
+			LAST (PRICE_TOTAL_ACC) PRICE_TOTAL_ACC
+		FROM
+			(
+				SELECT
+					ID,
+					PRODUCT_ID,
+					DISTRIB_ID,
+					REGION_ID,
+					CURRENCY_ID,
+					CATEG_ID,
+					CARTOON_ID,
+					PRICE_UNIT,
+					RATE,
+					CURR_DATE,
+					NEXT_DATE,
+					GENERATE_SERIES(
+						CURR_DATE::DATE,
+						NEXT_DATE::DATE - INTERVAL '1 day',
+						'1 day'::INTERVAL
+					)::DATE DATE,
+					START_PRODUCT_QTY,
+					PRODUCT_QTY,
+					START_PRICE_TOTAL,
+					START_PRICE_TOTAL_ACC,
+					PRICE_TOTAL,
+					PRICE_TOTAL_ACC
+				FROM
+					(
+						SELECT
+							Q1.ID,
+							Q1.PRODUCT_ID,
+							Q1.DISTRIB_ID,
+							Q1.REGION_ID,
+							Q1.CURRENCY_ID,
+							Q1.CATEG_ID,
+							Q1.CARTOON_ID,
+							Q1.PRICE_UNIT,
+							Q1.RATE,
+							Q1.DATE AS CURR_DATE,
+							COALESCE(
+								Q2.DATE,
+								DATE_TRUNC('year', NOW() AT TIME ZONE 'utc') + INTERVAL '12 month'
+							)::DATE AS NEXT_DATE,
+							Q1.START_PRODUCT_QTY,
+							Q1.PRODUCT_QTY,
+							Q1.START_PRICE_TOTAL,
+							Q1.START_PRICE_TOTAL_ACC,
+							Q1.PRICE_TOTAL,
+							Q1.PRICE_TOTAL_ACC
+						FROM
+							QTT_REMAINS Q1
+							LEFT JOIN QTT_REMAINS Q2 ON Q1.PRODUCT_ID = Q2.PRODUCT_ID
+							AND Q1.DISTRIB_ID = Q2.DISTRIB_ID
+							AND Q1.DATE::DATE < Q2.DATE::DATE
+					) AS MAIN
+				ORDER BY
+					DISTRIB_ID,
+					PRODUCT_ID,
+					DATE
+			) AS QQQ
+		GROUP BY
+			PRODUCT_ID,
+			DISTRIB_ID,
+			REGION_ID,
+			CURRENCY_ID,
+			CATEG_ID,
+			CARTOON_ID,
+			DATE
+		ORDER BY
+			DISTRIB_ID,
+			PRODUCT_ID,
+			DATE
+	),
             ALL_DM_MONTHS AS (
                 SELECT
                     MIN(ID) AS ID,
@@ -308,7 +251,7 @@ class ReportDistribTurnoverQuantity(models.Model):
                         SELECT
                             *
                         FROM
-                            ALL_DM_DAYS
+                            ALL_DAYS
                         ORDER BY
                             DISTRIB_ID,
                             PRODUCT_ID,
@@ -348,7 +291,7 @@ class ReportDistribTurnoverQuantity(models.Model):
                         SELECT
                             *
                         FROM
-                            ALL_DM_DAYS
+                            ALL_DAYS
                         ORDER BY
                             DISTRIB_ID,
                             PRODUCT_ID,
@@ -429,7 +372,7 @@ class ReportDistribTurnoverQuantity(models.Model):
                     PRICE_TOTAL,
                     PRICE_TOTAL_ACC
                 FROM
-                    ALL_DM_DAYS AS MM
+                    ALL_DAYS AS MM
                 UNION ALL
                 SELECT
                     ID,
