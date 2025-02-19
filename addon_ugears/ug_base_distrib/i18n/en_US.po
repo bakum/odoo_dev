@@ -713,7 +713,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_turnover_report
 #: model:ir.model,name:ug_base_distrib.model_report_distrib_turnover_quantity
 msgid "Distributor Turnover Quantity Report"
-msgstr ""
+msgstr "Distributor Stock Report"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_res_config_settings__accounting_currency_id
