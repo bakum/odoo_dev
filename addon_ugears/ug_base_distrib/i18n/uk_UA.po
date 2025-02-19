@@ -729,7 +729,7 @@ msgstr ""
 #: model:ir.model,name:ug_base_distrib.model_report_distrib_quantity
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_quantity_report
 msgid "Distributor Quantity Report"
-msgstr "Звіт по залишкам дистриб'ютора"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_sales_report
@@ -2496,7 +2496,7 @@ msgstr "Склад"
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_turnover_report
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_turnover_view_pivot
 msgid "Stock Turnover Report"
-msgstr "Звіт про оборот запасів"
+msgstr "Звіт по залишкам дистриб'ютора"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__street

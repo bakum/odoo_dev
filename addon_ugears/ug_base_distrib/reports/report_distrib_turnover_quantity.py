@@ -14,7 +14,7 @@ class ReportDistribTurnoverQuantity(models.Model):
     }
 
     date = fields.Date(string='Date', readonly=True)
-    product_tmpl_id = fields.Many2one('product.template', readonly=True)
+    # product_tmpl_id = fields.Many2one('product.template', readonly=True)
     product_id = fields.Many2one('product.product', string='Product', readonly=True)
     state = fields.Selection([
         ('forecast', 'Forecasted Stock'),
@@ -33,7 +33,7 @@ class ReportDistribTurnoverQuantity(models.Model):
     currency_id = fields.Many2one('res.currency', string='Currency', readonly=True)
     region_id = fields.Many2one('distrib.regions', "Region", readonly=True,
                                 groups="ug_base_distrib.group_distrib_manager")
-    cartoon_id = fields.Many2one('distrib.packages.sizes', 'Cartoon', readonly=True)
+    # cartoon_id = fields.Many2one('distrib.packages.sizes', 'Cartoon', readonly=True)
     start_price_total = fields.Float(string='Beginning Amount', readonly=True)
     start_price_total_acc = fields.Float(string='Beginning Amount (acc)', readonly=True,
                                          groups="ug_base_distrib.group_distrib_manager")
@@ -453,7 +453,7 @@ FROM
 	) AS MAIN
 	LEFT JOIN PRODUCT_PRODUCT PP ON PP.ID = MAIN.PRODUCT_ID
 	LEFT JOIN PRODUCT_TEMPLATE PT ON PT.ID = PP.PRODUCT_TMPL_ID
-	order by period, DISTRIB_ID, PT.NAME
+	where period='month'
     );
     """
         report_period = self.env['ir.config_parameter'].sudo().get_param('distrib.report_distrib_quantity_period',

@@ -4,19 +4,39 @@
         <field name="name">distrib_report_plan_fact_view.pivot</field>
         <field name="model">report.distrib.plan.fact</field>
         <field name="arch" type="xml">
-            <pivot string="Sell-in Plan" sample="0" disable_linking="1">
+            <pivot string="Sell-in Plan" sample="0" default_order="product_id, date" disable_linking="1">
                 <field name="date" type="col" interval="year"/>
                 <field name="product_qty_plan" type="measure"/>
                 <field name="product_qty_fact" type="measure"/>
                 <field name="price_unit" type="measure" invisible="1"/>
                 <field name="distrib_id" type="row"/>
-                <field name="product_category_id" type="row"/>
-                <field name="full_name" type="row"/>
+                <!--                <field name="product_category_id" type="row"/>-->
+                <field name="product_id" type="row"/>
             </pivot>
         </field>
     </record>
 
-     <record id="distrib_report_plan_fact_view_search" model="ir.ui.view">
+    <record id="distrib_report_plan_fact_view_tree" model="ir.ui.view">
+        <field name="name">distrib_report_plan_fact_view.tree</field>
+        <field name="model">report.distrib.plan.fact</field>
+        <field name="arch" type="xml">
+            <tree string="Sell-in Plan" sample="0" default_order="product_id, date">
+                <field name="distrib_id"/>
+                <field name="date" type="col"/>
+                <field name="default_code"/>
+                <field name="barcode"/>
+                <field name="product_id"/>
+                <field name="product_qty_plan"/>
+                <field name="amount_plan" optional="hide"/>
+                <field name="amount_plan_acc" optional="hide"/>
+                <field name="product_qty_fact"/>
+                <field name="amount_fact" optional="hide"/>
+                <field name="amount_fact_acc" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="distrib_report_plan_fact_view_search" model="ir.ui.view">
         <field name="name">distrib_report_plan_fact_view.search</field>
         <field name="model">report.distrib.plan.fact</field>
         <field name="arch" type="xml">
@@ -26,6 +46,7 @@
                 <field name="distrib_id"/>
                 <filter string="Current Year" name="year"
                         domain="[('year','=', (context_today()).strftime('%Y-01-01'))]"/>
+                <separator/>
                 <filter string="Previous Year" name="last_year"
                         domain="[('year','=', (context_today()- datetime.timedelta(days=365)).strftime('%Y-01-01'))]"/>
                 <separator/>
@@ -33,15 +54,15 @@
                         domain="['|',('product_qty_plan','!=', 0),('product_qty_fact','!=', 0)]"/>
             </search>
         </field>
-     </record>
+    </record>
 
     <record id="action_distrib_plan_fact_report" model="ir.actions.act_window">
         <field name="name">Plan/Fact Quantity Report</field>
         <field name="res_model">report.distrib.plan.fact</field>
         <field name="search_view_id" ref="distrib_report_plan_fact_view_search"/>
         <field name="domain">[]</field>
-        <field name="context">{'search_default_year': 1, 'search_default_active_sales': 1}</field>
-        <field name="view_mode">pivot</field>
+        <field name="context">{'search_default_year': 1, 'search_default_active_sales': 1, 'group_by': ['distrib_id','product_id']}</field>
+        <field name="view_mode">tree,pivot</field>
     </record>
 
     <menuitem

@@ -4,7 +4,7 @@
         <field name="name">distrib_report_turnover_view.pivot</field>
         <field name="model">report.distrib.turnover.quantity</field>
         <field name="arch" type="xml">
-            <pivot string="Stock Turnover Report" sample="0" disable_linking="1" default_order="product_id.name">
+            <pivot string="Stock Turnover Report" disable_linking="1" default_order="product_id.name">
                 <field name="date" type="col" interval="month"/>
                 <field name="start_product_qty" type="measure"/>
                 <!--                <field name="start_price_total" type="measure"/>-->
@@ -15,7 +15,29 @@
                 <field name="distrib_id" type="row"/>
 <!--                <field name="categ_id" type="row"/>-->
                 <field name="product_id" type="row"/>
+<!--                <field name="product_qty" type="row"/>-->
+<!--                <field name="start_product_qty" type="row"/>-->
             </pivot>
+        </field>
+    </record>
+
+    <record id="distrib_report_turnover_view_tree" model="ir.ui.view">
+        <field name="name">distrib_report_turnover_view.tree</field>
+        <field name="model">report.distrib.turnover.quantity</field>
+        <field name="arch" type="xml">
+            <tree string="Stock Turnover Report" sample="0" default_order="product_id">
+                <field name="distrib_id"/>
+<!--                <field name="date"/>-->
+                <field name="default_code"/>
+                <field name="barcode"/>
+                <field name="product_id"/>
+                <field name="start_product_qty" sum="1"/>
+                <field name="start_price_total" optional="hide"/>
+                <field name="start_price_total_acc" optional="hide"/>
+                <field name="product_qty" sum="1"/>
+                <field name="price_total" optional="hide"/>
+                <field name="price_total_acc" optional="hide"/>
+            </tree>
         </field>
     </record>
 
@@ -29,17 +51,19 @@
                 <field name="distrib_id"/>
                 <filter string="Current Month" name="month"
                         domain="[('date','=', (context_today()).strftime('%Y-%m-01'))]"/>
+                <separator/>
                 <filter string="Previous Month" name="last_month"
                         domain="[('date','=', (context_today() - datetime.timedelta(days=context_today().day + 1)).strftime('%Y-%m-01'))]"/>
-                <filter string="Current Year" name="year"
-                        domain="[('date','&gt;=', (context_today()).strftime('%Y-01-01')),
-                        ('date','&lt;=', context_today().strftime('%Y-%m-%d'))]"/>
-                <filter string="Previous Year" name="last_year"
-                        domain="[('date','&gt;=', (context_today()- datetime.timedelta(days=365)).strftime('%Y-01-01')),
-                        ('date','&lt;', context_today().strftime('%Y-01-01'))]"/>
-                <!--                <group expand="0" string="Group By">-->
-                <!--                    <filter string="Distributor" name="distrib" domain="[]" context="{'group_by':'distrib_id'}"/>-->
-                <!--                </group>-->
+<!--                <filter string="Current Year" name="year"-->
+<!--                        domain="[('date','&gt;=', (context_today()).strftime('%Y-01-01')),-->
+<!--                        ('date','&lt;=', context_today().strftime('%Y-%m-%d'))]"/>-->
+<!--                <filter string="Previous Year" name="last_year"-->
+<!--                        domain="[('date','&gt;=', (context_today()- datetime.timedelta(days=365)).strftime('%Y-01-01')),-->
+<!--                        ('date','&lt;', context_today().strftime('%Y-01-01'))]"/>-->
+                                <group expand="0" string="Group By">
+                                    <filter string="Distributor" name="distrib" domain="[]" context="{'group_by':'distrib_id'}"/>
+<!--                                    <filter string="Product" name="product" domain="[]" context="{'group_by':'distrib_id'}"/>-->
+                                </group>
             </search>
         </field>
     </record>
@@ -51,7 +75,7 @@
         <field name="domain">[('period', '=', 'month')]</field>
         <field name="context">{'search_default_month': 1}</field>
         <!--        <field name="context">{'search_default_month': 1, 'group_by': ['distrib_id','currency_id']}</field>-->
-        <field name="view_mode">pivot</field>
+        <field name="view_mode">tree,pivot</field>
     </record>
 
     <menuitem

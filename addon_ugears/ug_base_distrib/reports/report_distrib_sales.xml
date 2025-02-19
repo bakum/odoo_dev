@@ -13,7 +13,7 @@
                 <field name="balance" type="measure" string="pcs"/>
                 <field name="distrib_id" type="row"/>
                 <field name="product_category_id" type="row"/>
-                <field name="full_name" type="row"/>
+                <field name="product_id" type="row"/>
             </pivot>
         </field>
     </record>
