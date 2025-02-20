@@ -296,5 +296,5 @@ def get_ids_from_request(kw):
 def update_ids(rec, ids):
     if isinstance(ids, dict):
         for key in ids:
-            rec[key].unlink()
+            # rec[key].unlink()
             rec[key] = ids[key]
