@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-17 15:19+0000\n"
-"PO-Revision-Date: 2025-02-17 15:19+0000\n"
+"POT-Creation-Date: 2025-02-20 09:12+0000\n"
+"PO-Revision-Date: 2025-02-20 09:12+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,6 +18,11 @@ msgstr ""
 #. module: ug_base_distrib
 #: model:ir.actions.report,print_report_name:ug_base_distrib.report_export_horizont_xls
 msgid "'Export Order Horizont - %s' % (object.name)"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.actions.report,print_report_name:ug_base_distrib.report_export_order_to_xls
+msgid "'Export to Excel Order - %s' % (object.name)"
 msgstr ""
 
 #. module: ug_base_distrib
@@ -278,11 +283,6 @@ msgstr ""
 "Оберіть інший продукт або дистриб'ютора"
 
 #. module: ug_base_distrib
-#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__cartoon_id
-msgid "Cartoon"
-msgstr ""
-
-#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_category_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__product_uom_category_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_statistic__product_category_id
@@ -515,7 +515,6 @@ msgstr "Поточний курс"
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_expenses_view_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_plan_fact_view_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_sales_view_search
-#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_turnover_view_search
 msgid "Current Year"
 msgstr "Поточний рік"
 
@@ -689,6 +688,7 @@ msgstr "Дистрибуція"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__distrib_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__distrib_id
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_qtt_view_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_turnover_view_search
 msgid "Distributor"
 msgstr "Дистриб'ютор"
 
@@ -727,9 +727,8 @@ msgstr ""
 #. module: ug_base_distrib
 #: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_quantity_report
 #: model:ir.model,name:ug_base_distrib.model_report_distrib_quantity
-#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_quantity_report
 msgid "Distributor Quantity Report"
-msgstr ""
+msgstr "Звіт по залишкам дистриб'ютора"
 
 #. module: ug_base_distrib
 #: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_sales_report
@@ -737,6 +736,11 @@ msgstr ""
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_sales_report
 msgid "Distributor Sales Report"
 msgstr "Звіт дистриб'ютора про продажі"
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_turnover_view_pivot
+msgid "Distributor Stock Report"
+msgstr "Звіт по залишкам дистриб'ютора"
 
 #. module: ug_base_distrib
 #: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_turnover_report
@@ -969,6 +973,11 @@ msgid "Expenses list"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.actions.report,name:ug_base_distrib.report_export_order_to_xls
+msgid "Export to Excel"
+msgstr "Експортувати в Excel"
+
+#. module: ug_base_distrib
 #: model:ir.actions.report,name:ug_base_distrib.report_export_horizont_xls
 msgid "Export to Horizont"
 msgstr "Експортувати в Горизонт (xlsx)"
@@ -1054,6 +1063,7 @@ msgstr "Прогнозований запас"
 
 #. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_qtt_view_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_turnover_view_search
 msgid "Group By"
 msgstr "Групувати за"
 
@@ -1718,6 +1728,11 @@ msgid ""
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:distrib.types.marketings,desc:ug_base_distrib.type_7
+msgid "Marketing expenses related to product promotion and sales on Amazon."
+msgstr ""
+
+#. module: ug_base_distrib
 #: model:distrib.types.marketings,desc:ug_base_distrib.type_5
 msgid ""
 "Marketing expenses related to promoting and selling products through "
@@ -1734,15 +1749,6 @@ msgid ""
 " radio, OOH, newspapers, and magazines. This includes costs for TV "
 "commercials, radio advertisements, print ads, and PR campaigns aimed at "
 "increasing brand awareness and promotion."
-msgstr ""
-
-#. module: ug_base_distrib
-#: model:distrib.types.marketings,desc:ug_base_distrib.type_7
-msgid ""
-"Marketing expenses related to traditional media channels such as television,"
-" radio, newspapers, and magazines. This includes costs for TV commercials, "
-"radio advertisements, print ads, and PR campaigns aimed at increasing brand "
-"awareness and promotion."
 msgstr ""
 
 #. module: ug_base_distrib
@@ -2088,7 +2094,6 @@ msgstr "Попередній місяць"
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_expenses_view_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_plan_fact_view_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_sales_view_search
-#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_turnover_view_search
 msgid "Previous Year"
 msgstr "Попередній рік"
 
@@ -2185,7 +2190,6 @@ msgstr ""
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_quantity__product_tmpl_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__product_tmpl_id
-#: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__product_tmpl_id
 msgid "Product Tmpl"
 msgstr "Товар (шаблон)"
 
@@ -2427,6 +2431,7 @@ msgstr "Оберіть період"
 #: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_budgets
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_budgets_sale
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_plan_fact_view_pivot
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_plan_fact_view_tree
 msgid "Sell-in Plan"
 msgstr ""
 
@@ -2494,7 +2499,7 @@ msgstr "Склад"
 
 #. module: ug_base_distrib
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_turnover_report
-#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_turnover_view_pivot
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_turnover_view_tree
 msgid "Stock Turnover Report"
 msgstr "Звіт по залишкам дистриб'ютора"
 
@@ -3043,6 +3048,11 @@ msgstr ""
 #. module: ug_base_distrib
 #: model:ir.model,name:ug_base_distrib.model_report_ug_base_distrib_export_horizont_xls
 msgid "report.ug_base_distrib.export_horizont_xls"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_report_ug_base_distrib_export_order_to_xls
+msgid "report.ug_base_distrib.export_order_to_xls"
 msgstr ""
 
 #. module: ug_base_distrib
