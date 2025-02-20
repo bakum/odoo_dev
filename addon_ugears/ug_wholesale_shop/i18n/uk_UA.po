@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-04 16:09+0000\n"
-"PO-Revision-Date: 2025-02-04 16:09+0000\n"
+"POT-Creation-Date: 2025-02-20 19:22+0000\n"
+"PO-Revision-Date: 2025-02-20 19:22+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -207,6 +207,7 @@ msgstr ""
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__active
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_product_public_category__active
 msgid "Active"
 msgstr ""
 
@@ -223,8 +224,9 @@ msgstr "Загалом коробок"
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.view_distributors_package_form
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.view_distributors_package_search
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.view_product_public_category_search
 msgid "Archived"
-msgstr ""
+msgstr "Заархівовано"
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list__barcode
@@ -606,6 +608,9 @@ msgstr "Вага нетто "
 #. module: ug_wholesale_shop
 #. odoo-python
 #: code:addons/ug_wholesale_shop/models/packages_sizes.py:0
+#: code:addons/ug_wholesale_shop/models/sale_order.py:0
+#: code:addons/ug_wholesale_shop/models/sale_order.py:0
+#: code:addons/ug_wholesale_shop/models/sale_order.py:0
 #, python-format
 msgid "New"
 msgstr "Новий"
@@ -912,6 +917,11 @@ msgstr "Даний товар не має ціни, тому його не мо�
 #: model_terms:ir.actions.act_window,help:ug_wholesale_shop.action_orders_wholesale_shop
 msgid "There is no confirmed order from the website"
 msgstr "На сайті немає підтвердженого замовлення"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_product_public_category__has_product_recursive
+msgid "This category or one of its children has products"
+msgstr ""
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
