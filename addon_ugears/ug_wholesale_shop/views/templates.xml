@@ -811,4 +811,35 @@
             <t t-call="ug_wholesale_shop.alert_warning_package_rounding"/>
         </xpath>
     </template>
+
+    <template
+        inherit_id="website_sale.categories_recursive" id="hide_categories_recursive"
+        name="Hide Empty Category list">
+        <xpath expr="//t[@t-name='website_sale.categories_recursive']" position="attributes">
+            <attribute name="t-if">c.has_product_recursive and c.active</attribute>
+        </xpath>
+    </template>
+
+    <template
+        inherit_id="website_sale.option_collapse_categories_recursive" id="hide_categories_collapse_recursive"
+        name="Hide Empty Category Collapsible list">
+        <xpath expr="//t[@t-name='website_sale.option_collapse_categories_recursive']" position="attributes">
+            <attribute  name="t-if">c.has_product_recursive and c.active</attribute>
+        </xpath>
+    </template>
+
+<!--    <template-->
+<!--        inherit_id="website_sale.products_categories"-->
+<!--        id="hide_categories_recursive_helper"-->
+<!--        name="Hide Empty Category list"-->
+<!--        customize_show="True"-->
+<!--        active="True"-->
+<!--    >-->
+<!--        <xpath expr="//t[@t-foreach='categories']" position="before">-->
+<!--            <t t-set="hide_empty_category" t-value="True" />-->
+<!--        </xpath>-->
+<!--    </template>-->
+
+
+
 </odoo>

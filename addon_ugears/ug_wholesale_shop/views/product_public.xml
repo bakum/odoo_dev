@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <data>
                     <xpath expr="//field[@name='sequence']" position="after">
+                        <field name="active"/>
                         <field name="guid" readonly="1"/>
                     </xpath>
                 </data>
@@ -29,8 +30,9 @@
                                     <field name="qty_in_cartoon"/>
                                 </group>
                                 <group>
-                                    <field name="cartoon_id" widget="many2one" options="{'no_create': True, 'no_open': True}"
-                                            domain="[('type_of', '=', 'box')]"/>
+                                    <field name="cartoon_id" widget="many2one"
+                                           options="{'no_create': True, 'no_open': True}"
+                                           domain="[('type_of', '=', 'box')]"/>
                                     <field name="cartoon_weight_with_model"/>
                                 </group>
                             </group>
