@@ -102,3 +102,6 @@ class Product(models.Model):
 class ProductPublicCategory(models.Model):
     _inherit = 'product.public.category'
     guid = fields.Char(string='Guid 1C:Enterprise')
+
+    def unlink(self):
+        return super(ProductPublicCategory, self).unlink()
