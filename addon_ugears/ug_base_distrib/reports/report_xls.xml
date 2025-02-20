@@ -11,4 +11,16 @@
         <field name="binding_model_id" ref="sale.model_sale_order"/>
         <field name="binding_type">report</field>
     </record>
+
+    <record id="report_export_order_to_xls" model="ir.actions.report">
+        <field name="name">Export to Excel</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">ug_base_distrib.export_order_to_xls</field>
+        <field name="report_file">ug_wholesale_shop.export_order</field>
+        <field name="attachment_use">False</field>
+        <field name="print_report_name">'Export to Excel Order - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
 </odoo>

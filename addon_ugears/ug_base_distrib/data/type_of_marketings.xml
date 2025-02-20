@@ -32,9 +32,9 @@
             <field name="active">True</field>
         </record>
         <record id="type_7" model="distrib.types.marketings">
-            <field name="name">Mass Media</field>
-            <field name="desc">Marketing expenses related to traditional media channels such as television, radio, newspapers, and magazines. This includes costs for TV commercials, radio advertisements, print ads, and PR campaigns aimed at increasing brand awareness and promotion.</field>
-            <field name="active">False</field>
+            <field name="name">Amazon</field>
+            <field name="desc">Marketing expenses related to product promotion and sales on Amazon.</field>
+            <field name="active">True</field>
         </record>
     </data>
 </odoo>
