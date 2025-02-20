@@ -28,6 +28,26 @@ class UgImportBudget(models.Model):
         required=True, readonly=False,
         default=fields.Datetime.now)
 
+    total_qtt = fields.Float(string='Total quantity', compute='_compute_amounts')
+
+    @api.depends('products_ids.product_uom_qty', 'products_ids.product_uom_qty2', 'products_ids.product_uom_qty3',
+                 'products_ids.product_uom_qty4', 'products_ids.product_uom_qty5', 'products_ids.product_uom_qty6',
+                 'products_ids.product_uom_qty7', 'products_ids.product_uom_qty8', 'products_ids.product_uom_qty9',
+                 'products_ids.product_uom_qty10', 'products_ids.product_uom_qty11', 'products_ids.product_uom_qty12')
+    def _compute_amounts(self):
+        for order in self:
+            # order_lines = order.move_line.filtered(lambda x: not x.display_type)
+            order_lines = order.products_ids
+            amount_untaxed = sum(order_lines.mapped('product_uom_qty')) + sum(
+                order_lines.mapped('product_uom_qty2')) + sum(order_lines.mapped('product_uom_qty3')) + sum(
+                order_lines.mapped('product_uom_qty4')) + sum(order_lines.mapped('product_uom_qty5')) + sum(
+                order_lines.mapped('product_uom_qty6')) + sum(order_lines.mapped('product_uom_qty7')) + sum(
+                order_lines.mapped('product_uom_qty8')) + sum(order_lines.mapped('product_uom_qty9')) + sum(
+                order_lines.mapped('product_uom_qty10')) + sum(order_lines.mapped('product_uom_qty11')) + sum(
+                order_lines.mapped('product_uom_qty12'))
+
+            order.total_qtt = amount_untaxed
+
     @api.depends('products_ids')
     def get_len_products(self):
         self.len_products = len(self.products_ids)

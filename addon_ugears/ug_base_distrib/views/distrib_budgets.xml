@@ -62,6 +62,7 @@
                 <field name="state" invisible="1"/>
                 <field name="product_id" readonly="1" widget="res_partner_many2one" options="{'no_create': True, 'no_open': True}"/>
                 <field name="price_unit" widget="monetary" readonly="1" optional="hide"/>
+                <field name="barcode" readonly="1" optional="hide"/>
                 <field name="product_uom_qty" decoration-info="product_uom_qty > 0" decoration-muted="product_uom_qty == 0" sum="Total January"/>
                 <field name="product_uom_qty2" decoration-info="product_uom_qty2 > 0" decoration-muted="product_uom_qty2 == 0" sum="Total February"/>
                 <field name="product_uom_qty3" decoration-info="product_uom_qty3 > 0" decoration-muted="product_uom_qty3 == 0" sum="Total March"/>

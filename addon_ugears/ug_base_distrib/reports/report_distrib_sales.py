@@ -30,8 +30,11 @@ class ReportDistribSales(models.Model):
     price_total_acc = fields.Float(string='Amount (acc)', readonly=True,
                                    groups="ug_base_distrib.group_distrib_manager")
     full_name = fields.Char(string='Product Full Name', readonly=True)
-    barcode = fields.Char(string='EAN', readonly=True)
+    # barcode = fields.Char(string='EAN', readonly=True)
     default_code = fields.Char(string='Product Code', readonly=True)
+    barcode = fields.Char(related='product_id.barcode',
+                          depends=['product_id'],
+                          help="International Article Number used for product identification.")
 
     def init(self):
         tools.drop_view_if_exists(self._cr, 'report_distrib_sales')

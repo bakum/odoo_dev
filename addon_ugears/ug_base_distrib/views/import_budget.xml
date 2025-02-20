@@ -47,6 +47,16 @@
                                         <field name="product_uom_qty12"/>
                                     </tree>
                                 </field>
+                                <group name="note_group" col="6" class="mt-2 mt-md-0">
+                                    <!--   <group colspan="4">
+                                           <field colspan="2" name="note" nolabel="1" placeholder="Terms and conditions..."/>
+                                       </group> -->
+                                    <group class="oe_subtotal_footer oe_right" colspan="2">
+                                        <field name="total_qtt" decoration-bf="total_qtt >= 0" colspan="2"
+                                               readonly="1"/>
+                                    </group>
+                                    <div class="clearfix"/>
+                                </group>
                             </page>
                         </notebook>
                     </sheet>

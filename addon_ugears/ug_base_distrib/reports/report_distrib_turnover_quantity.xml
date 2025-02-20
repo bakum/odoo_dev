@@ -25,7 +25,7 @@
         <field name="name">distrib_report_turnover_view.tree</field>
         <field name="model">report.distrib.turnover.quantity</field>
         <field name="arch" type="xml">
-            <tree string="Stock Turnover Report" sample="0" default_order="product_id">
+            <tree string="Stock Turnover Report" create="0" edit="0" delete="0" sample="0" default_order="product_id">
                 <field name="distrib_id"/>
 <!--                <field name="date"/>-->
                 <field name="default_code"/>

@@ -10,7 +10,7 @@
                 <field name="product_qty_fact" type="measure"/>
                 <field name="price_unit" type="measure" invisible="1"/>
                 <field name="distrib_id" type="row"/>
-                <!--                <field name="product_category_id" type="row"/>-->
+                <field name="product_category_id" type="row"/>
                 <field name="product_id" type="row"/>
             </pivot>
         </field>
@@ -61,8 +61,9 @@
         <field name="res_model">report.distrib.plan.fact</field>
         <field name="search_view_id" ref="distrib_report_plan_fact_view_search"/>
         <field name="domain">[]</field>
-        <field name="context">{'search_default_year': 1, 'search_default_active_sales': 1, 'group_by': ['distrib_id','product_id']}</field>
-        <field name="view_mode">tree,pivot</field>
+<!--        <field name="context">{'search_default_year': 1, 'search_default_active_sales': 1, 'group_by': ['distrib_id','product_category_id','product_id']}</field>-->
+        <field name="context">{'search_default_year': 1, 'search_default_active_sales': 1}</field>
+        <field name="view_mode">pivot,tree</field>
     </record>
 
     <menuitem

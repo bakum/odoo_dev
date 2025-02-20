@@ -77,10 +77,20 @@ class DistributorMove(models.Model):
         store=True, index=True, precompute=True)
 
     amount_untaxed = fields.Monetary(string="Amount", store=True, compute='_compute_amounts')
+    amount_qty = fields.Float(string="Total quantity", store=True, compute='_compute_quantity_amount')
     is_inventory = fields.Boolean('Inventory', default=False)
     is_manager = fields.Boolean(compute='_compute_is_manager')
     rate = fields.Float(compute='_compute_current_rate', string='Current Cross-Rate', digits=0, store=True,
                         precompute=True, help='The rate of the currency to the currency of accounting')
+
+    @api.depends('move_line.product_uom_qty')
+    def _compute_quantity_amount(self):
+        for order in self:
+            # order_lines = order.move_line.filtered(lambda x: not x.display_type)
+            order_lines = order.move_line
+            amount_qty = sum(order_lines.mapped('product_uom_qty'))
+
+            order.amount_qty = amount_qty
 
     @api.model
     def _get_rate_for_move(self, currency_from_code, currency_to_code, date=None):

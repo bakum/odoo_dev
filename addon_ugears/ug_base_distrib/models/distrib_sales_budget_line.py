@@ -4,6 +4,7 @@ LOCKED_FIELD_STATES = {
     state: [('readonly', True)] for state in {'done', 'cancel'}
 }
 
+
 class DistributorSaleBudgetLine(models.Model):
     _name = 'distrib.budget.move.line'
     _description = 'Distributors sales budget line'
@@ -49,6 +50,9 @@ class DistributorSaleBudgetLine(models.Model):
         change_default=True, ondelete='restrict', index='btree_not_null',
         required=True,
         domain="[('sale_ok', '=', True)]")
+    barcode = fields.Char(related='product_id.barcode',
+                                  copy=False, store=True, precompute=True, depends=['product_id'],
+                          help="International Article Number used for product identification.")
 
     product_template_id = fields.Many2one(
         string="Product Template",
@@ -356,7 +360,9 @@ class DistributorSaleBudgetLine(models.Model):
                 #     product_currency=line.currency_id
                 # )
 
-    @api.depends('product_uom_qty', 'product_uom_qty2','product_uom_qty3','product_uom_qty4','product_uom_qty5','product_uom_qty6','product_uom_qty7','product_uom_qty8','product_uom_qty9','product_uom_qty10','product_uom_qty11','product_uom_qty12','price_unit')
+    @api.depends('product_uom_qty', 'product_uom_qty2', 'product_uom_qty3', 'product_uom_qty4', 'product_uom_qty5',
+                 'product_uom_qty6', 'product_uom_qty7', 'product_uom_qty8', 'product_uom_qty9', 'product_uom_qty10',
+                 'product_uom_qty11', 'product_uom_qty12', 'price_unit')
     def _compute_amount(self):
         for line in self:
             line.qtt_total = (

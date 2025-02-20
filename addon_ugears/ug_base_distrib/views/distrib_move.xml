@@ -29,7 +29,8 @@
                             <field name="is_manager" invisible="1"/>
                             <field name="distrib_id" widget="res_partner_many2one"
                                    options="{'no_create': True, 'no_open': True}"/>
-                            <field name="operation" attrs="{'readonly' : ['|',('is_manager', '=', False),('state','not in',['draft'])] }"
+                            <field name="operation"
+                                   attrs="{'readonly' : ['|',('is_manager', '=', False),('state','not in',['draft'])] }"
                                    force_save="1"/>
                         </group>
                         <group id="header_right_group">
@@ -73,12 +74,14 @@
                                 </tree>
                             </field>
                             <group name="note_group" col="6" class="mt-2 mt-md-0">
-                                <!--   <group colspan="4">
-                                       <field colspan="2" name="note" nolabel="1" placeholder="Terms and conditions..."/>
-                                   </group> -->
+<!--                                <group colspan="4">-->
+<!--                                    <field colspan="2" name="amount_qty"/>-->
+<!--                                </group>-->
                                 <group class="oe_subtotal_footer oe_right" colspan="2">
                                     <field name="currency_id" invisible="1"/>
                                     <field name="amount_untaxed" decoration-bf="amount_untaxed >= 0" colspan="2"
+                                           readonly="1"/>
+                                    <field name="amount_qty" decoration-bf="amount_qty >= 0" colspan="2"
                                            readonly="1"/>
                                 </group>
                                 <div class="clearfix"/>
