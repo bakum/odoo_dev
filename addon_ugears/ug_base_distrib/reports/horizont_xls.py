@@ -58,12 +58,13 @@ class OrderToXlsx(models.AbstractModel):
             report_name = obj.name
             sheet = workbook.add_worksheet(report_name)
             bold = workbook.add_format({'bold': True, 'font_name': 'Arial', 'font_size': 10})
-            bold_head = workbook.add_format({'bold': True, 'font_name': 'Arial', 'font_size': 10, 'align': 'center'})
+            bold_head = workbook.add_format({'bold': True, 'font_name': 'Arial', 'font_size': 10})
             cell_format = workbook.add_format(
                 {'font_name': 'Arial', 'font_size': 10, 'align': 'center'})
             head = workbook.add_format(
                 {'align': 'center', 'bold': True, 'font_name': 'Arial', 'font_size': 10})
-            # head.set_bg_color('yellow')
+            head.set_bg_color('silver')
+            bold_head.set_bg_color('silver')
             txt = workbook.add_format({'font_size': 10, 'font_name': 'Arial'})
 
             price_title = 'Price per 1 pcs, %s' % (obj.currency_id.name)
@@ -78,15 +79,15 @@ class OrderToXlsx(models.AbstractModel):
             sheet.write(0, 1, report_name, bold)
 
             sheet.write(2, 0, 'The Supplier:', bold)
-            sheet.write(2, 1, obj.company_id.partner_id.name, bold)
+            sheet.write(2, 1, obj.company_id.partner_id.name, txt)
 
             sheet.write(4, 0, 'The Buyer:', bold)
-            sheet.write(4, 1, obj.partner_id.name, bold)
+            sheet.write(4, 1, obj.partner_id.name, txt)
 
             sheet.write(6, 0, 'Dated:', bold)
-            sheet.write(6, 1, obj.date_order.strftime('%Y-%m-%d'), bold)
+            sheet.write(6, 1, obj.date_order.strftime('%Y-%m-%d'), txt)
             sheet.write(7, 0, 'Currency:', bold)
-            sheet.write(7, 1, obj.currency_id.name, bold)
+            sheet.write(7, 1, obj.currency_id.name, txt)
 
             sheet.write(9, 0, '#', head)
             sheet.write(9, 1, 'Customs tariff number', head)
@@ -118,10 +119,10 @@ class OrderToXlsx(models.AbstractModel):
                 sheet.write(row_n, 10, line.price_total, txt)
 
             row_n += 1
-            sheet.write(row_n, 4, 'Total Invoice', bold)
-            sheet.write(row_n, 5, all_qtt, bold)
-            sheet.write(row_n, 8, all_boxes, bold)
-            sheet.write(row_n, 10, obj.amount_total, bold)
+            sheet.write(row_n, 4, 'Total Invoice', bold_head)
+            sheet.write(row_n, 5, all_qtt, bold_head)
+            sheet.write(row_n, 8, all_boxes, bold_head)
+            sheet.write(row_n, 10, obj.amount_total, bold_head)
 
             row_n += 2
             sheet.write(row_n, 4, 'Gross / Net weight of Shipment (kg):', bold)
