@@ -31,7 +31,7 @@ class ReportDistribSales(models.Model):
                                    groups="ug_base_distrib.group_distrib_manager")
     full_name = fields.Char(string='Product Full Name', readonly=True)
     # barcode = fields.Char(string='EAN', readonly=True)
-    default_code = fields.Char(string='Product Code', readonly=True)
+    default_code = fields.Char(related='product_id.default_code', depends=['product_id'])
     barcode = fields.Char(related='product_id.barcode',
                           depends=['product_id'],
                           help="International Article Number used for product identification.")
