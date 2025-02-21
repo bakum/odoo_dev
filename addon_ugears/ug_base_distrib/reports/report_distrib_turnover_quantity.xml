@@ -27,7 +27,7 @@
         <field name="arch" type="xml">
             <tree string="Stock Turnover Report" create="0" edit="0" delete="0" sample="0" default_order="product_id">
                 <field name="distrib_id"/>
-<!--                <field name="date"/>-->
+                <field name="date"/>
                 <field name="default_code"/>
                 <field name="barcode"/>
                 <field name="product_id"/>
