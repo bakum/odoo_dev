@@ -162,9 +162,11 @@ class UgImportInventory(models.TransientModel):
         QuantHistory = self.env['distrib.quant.history'].sudo()
         move_out = []
         move_in = []
+        product_ids = []
         for products in self.products_ids:
             if not products.product_id:
                 continue
+            product_ids.append(products.product_id.id)
             # move_vals = []
             qtt_on_date = QuantHistory.balance_product_on_date(products.product_id, self.distrib_id, self.date)
             if products.qtt != qtt_on_date:
@@ -204,6 +206,27 @@ class UgImportInventory(models.TransientModel):
             res = moves.with_context(inventory_mode=False).create(move_vals)
             res.move_line = move_in
             res.action_done()
+
+        Quants = self.env['distrib.quant'].sudo()
+        domain = ['&', ('distrib_id', '=', self.distrib_id.id), ('product_id', 'not in', product_ids)]
+        quants_so = Quants.search(domain)
+        move_out = []
+        for quant in quants_so:
+            qtt_on_date = QuantHistory.balance_product_on_date(quant.product_id, self.distrib_id, self.date)
+            if qtt_on_date != 0:
+                move_out.append((0, 0, {
+                        'product_id': quant.product_id.id,
+                        'name':quant.product_id.get_product_multiline_description_sale(),
+                        # 'product_uom_id': product_uom_id.id,
+                        'distrib_id': self.distrib_id.id,
+                        'product_uom_qty': qtt_on_date,
+                        'operation': 'out',
+                    }))  
+        if len(move_out) > 0:
+            move_vals = self._get_inventory_move_values(out=True, date=self.date)
+            res = moves.with_context(inventory_mode=False).create(move_vals)
+            res.move_line = move_out
+            res.action_done()          
 
     def save_inventory(self):
         date_in_the_past = self.date.date() < fields.Datetime.today().date()

@@ -311,3 +311,32 @@ class DistributorQuantHistory(models.Model):
             return quant.quantity_end
 
         return 0.0
+
+    def _update_per_days(self):
+        self = self.sudo()
+        quants = None
+        self._cr.execute("""
+                         SELECT FIRST (ID) AS ID
+                        FROM
+                            (
+                                SELECT
+                                    ID,
+                                    DISTRIB_ID,
+                                    PRODUCT_ID,
+                                    Date
+                                FROM
+                                    distrib_quant_history
+                                ORDER BY
+                                    DISTRIB_ID,
+                                    PRODUCT_ID,
+                                    DATE DESC
+                                FOR NO KEY UPDATE SKIP LOCKED
+                            ) AS MAIN
+                        GROUP BY
+                            DISTRIB_ID,
+                            PRODUCT_ID
+                         """)
+        stock_quant_result = self._cr.fetchall()
+        if stock_quant_result:
+            quants = self.browse(stock_quant_result)
+            pass
