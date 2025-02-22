@@ -312,33 +312,33 @@ class DistributorQuantHistory(models.Model):
 
         return 0.0
 
-    def _update_per_days(self):
+    def _recalculate_totals_by_days(self):
         self = self.sudo()
         quants = None
         self._cr.execute("""
                          SELECT FIRST (ID) AS ID
-                        FROM
-                            (
-                                SELECT
-                                    ID,
-                                    DISTRIB_ID,
-                                    PRODUCT_ID,
-                                    Date
-                                FROM
-                                    distrib_quant_history
-                                ORDER BY
-                                    DISTRIB_ID,
-                                    PRODUCT_ID,
-                                    DATE DESC
-                                FOR NO KEY UPDATE SKIP LOCKED
-                            ) AS MAIN
-                        GROUP BY
-                            DISTRIB_ID,
-                            PRODUCT_ID
+                            FROM
+                                (
+                                    SELECT
+                                        ID,
+                                        DISTRIB_ID,
+                                        PRODUCT_ID,
+                                        DATE
+                                    FROM
+                                        distrib_quant_history
+                                    ORDER BY
+                                        DISTRIB_ID,
+                                        PRODUCT_ID,
+                                        DATE DESC
+                                    FOR NO KEY UPDATE SKIP LOCKED
+                                ) AS MAIN
+                            GROUP BY
+                                DISTRIB_ID,
+                                PRODUCT_ID
                          """)
         stock_quant_result = self._cr.fetchall()
         if stock_quant_result:
-            quants = self.browse(stock_quant_result)
-            for quant in quants:
-                self._quants_for_all_days(quant.distrib_id, quant.product_id, quant.date)
-                self._recalculate_results(product_id=quant.product_id, distrib_id=quant.distrib_id, from_date=quant.date)
+            for quant in stock_quant_result:
+                quants = self.browse(quant)
+                self._quants_for_all_days(quants.distrib_id, quants.product_id, quants.date)
+                self._recalculate_results(product_id=quants.product_id, distrib_id=quants.distrib_id, from_date=quants.date)
