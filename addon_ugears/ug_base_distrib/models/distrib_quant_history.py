@@ -1,3 +1,6 @@
+from datetime import timedelta
+from dateutil.relativedelta import relativedelta
+
 from odoo import models, fields, api
 from odoo.osv import expression
 from odoo.tools import create_index
@@ -92,7 +95,7 @@ class DistributorQuantHistory(models.Model):
                 else:
                     currency.rate = 1.0
 
-    @api.depends('product_id', 'distrib_id', 'date','quantity_income','quantity_outcome')
+    @api.depends('product_id', 'distrib_id', 'date', 'quantity_income', 'quantity_outcome')
     def _compute_quantity_begin(self):
         for record in self:
             prev = self.env['distrib.quant.history']
@@ -189,18 +192,46 @@ class DistributorQuantHistory(models.Model):
                 #     product_currency=line.currency_id
                 # )
 
+    def _date_range_list(self, start_date, end_date):
+        # Return generator for a list datetime.date objects (inclusive) between start_date and end_date (inclusive).
+        curr_date = start_date
+        while curr_date <= end_date:
+            yield curr_date
+            curr_date += timedelta(days=1)
+
     def _gather(self, product_id, distrib_id, date):
         removal_strategy_order = 'date DESC'
 
-        domain = ['&',('product_id', '=', product_id.id),('date', '=', date.strftime("%Y-%m-%d 00:00:00"))]
+        domain = ['&', ('product_id', '=', product_id.id), ('date', '=', date.strftime("%Y-%m-%d 00:00:00"))]
         domain = expression.AND([[('distrib_id', '=', distrib_id.id)], domain])
 
         # domain = expression.AND([[], domain])
 
         return self.search(domain, order=removal_strategy_order)
 
+    def _quants_for_all_days(self, distrib_id, product_id, from_date):
+        # report_period = self.env['ir.config_parameter'].sudo().get_param('distrib.report_distrib_quantity_period',
+        #                                                                  default='12')
+        # new_date = fields.Datetime.now() + relativedelta(months=int(report_period))
+        # date_range = self._date_range_list(from_date, new_date)
+        date_range = self._date_range_list(from_date, fields.Datetime.now())
+        strategy_order = 'distrib_id,product_id,date'
+        for date in date_range:
+            domain = [('product_id', '=', product_id.id), ('distrib_id', '=', distrib_id.id),
+                      ('date', '=', date.strftime("%Y-%m-%d 00:00:00"))]
+            quants = self.search(domain, order=strategy_order)
+            if not quants:
+                quants.create({
+                    'product_id': product_id.id,
+                    'quantity_income': 0.0,
+                    'quantity_outcome': 0.0,
+                    'distrib_id': distrib_id and distrib_id.id,
+                    'date': date.strftime("%Y-%m-%d 00:00:00"),
+                })
+
     def _recalculate_results(self, product_id=None, distrib_id=None, from_date=None):
         self = self.sudo()
+
         domain = []
         strategy_order = 'distrib_id,product_id,date'
         if product_id:
@@ -220,7 +251,6 @@ class DistributorQuantHistory(models.Model):
                 'quantity_end': begining_next_step + quant.quantity_income - quant.quantity_outcome,
             })
             begining_next_step = begining_next_step + quant.quantity_income - quant.quantity_outcome
-
 
     @api.model
     def _update_available_quantity(self, product_id, quantity, distrib_id, in_out='inc', in_date=None):
@@ -254,7 +284,7 @@ class DistributorQuantHistory(models.Model):
                 'distrib_id': distrib_id and distrib_id.id,
                 'date': dt.strftime("%Y-%m-%d 00:00:00") if in_date else fields.Datetime.today,
             })
-
+        self._quants_for_all_days(distrib_id, product_id, in_date)
         self._recalculate_results(product_id=product_id, distrib_id=distrib_id, from_date=in_date)
 
     def balance_product_on_date(self, product_id, distrib_id, on_date=None):
@@ -281,4 +311,3 @@ class DistributorQuantHistory(models.Model):
             return quant.quantity_end
 
         return 0.0
-

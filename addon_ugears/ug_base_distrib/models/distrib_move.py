@@ -228,6 +228,38 @@ class DistributorMove(models.Model):
     def action_draft(self):
         self.write({'state': 'draft'})
 
+    def action_repost(self):
+        moves= []
+        for order in self:
+            if order.state == 'done':
+                res = order.write({'state': 'cancel'})
+                if res:
+                    reposted = order.write({'state': 'done'})
+                    if reposted:
+                        moves.append(order)
+        if len(moves) > 0:
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'title': _('Success!'),
+                    'message': _('Move successfully reposted!'),
+                    'sticky': False,
+                }
+            }
+        else:
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'type': 'warning',
+                    'title': _('Warning!'),
+                    'message': _('Error occurred while reposting the move!'),
+                    'sticky': False,
+                }
+            }
+
+
     @api.depends('move_line.price_total')
     def _compute_amounts(self):
         for order in self:
