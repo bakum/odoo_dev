@@ -339,4 +339,6 @@ class DistributorQuantHistory(models.Model):
         stock_quant_result = self._cr.fetchall()
         if stock_quant_result:
             quants = self.browse(stock_quant_result)
-            pass
+            for quant in quants:
+                self._quants_for_all_days(quant.distrib_id, quant.product_id, quant.date)
+                self._recalculate_results(product_id=quant.product_id, distrib_id=quant.distrib_id, from_date=quant.date)
