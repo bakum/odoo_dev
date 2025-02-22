@@ -42,6 +42,9 @@
                         <field name="guid" readonly="1" optional="hide"/>
                         <field name="qty_available_dist" readonly="1" optional="hide"/>
                     </xpath>
+                    <xpath expr="//field[@name='barcode']" position="replace">
+                        <field name="barcode" optional="show" attrs="{'readonly': [('product_variant_count', '&gt;', 1)]}"/>
+                    </xpath>
                 </data>
             </field>
         </record>

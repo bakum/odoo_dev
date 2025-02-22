@@ -38,9 +38,10 @@ class ReportDistribPlanFact(models.Model):
                                    groups="ug_base_distrib.group_distrib_manager")
     amount_fact_acc = fields.Float(string='UGmodels Sell-In Fact, amount (acc)', readonly=True,
                                    groups="ug_base_distrib.group_distrib_manager")
-    barcode = fields.Char(related='product_id.barcode',
-                          depends=['product_id'],
-                          help="International Article Number used for product identification.")
+    # barcode = fields.Char(related='product_id.barcode',
+    #                       depends=['product_id'],
+    #                       help="International Article Number used for product identification.")
+    barcode = fields.Char(string='EAN', readonly=True)
     default_code = fields.Char(related='product_id.default_code', depends=['product_id'])
 
     def init(self):

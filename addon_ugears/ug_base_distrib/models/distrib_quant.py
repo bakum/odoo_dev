@@ -31,6 +31,9 @@ class DistributorQuant(models.Model):
         'product.template', string='Product Template',
         related='product_id.product_tmpl_id')
     product_categ_id = fields.Many2one(related='product_tmpl_id.categ_id')
+    barcode = fields.Char(related='product_id.barcode',
+                          depends=['product_id'],
+                          help="International Article Number used for product identification.")
 
     product_uom_id = fields.Many2one(
         'uom.uom', 'Unit of Measure',

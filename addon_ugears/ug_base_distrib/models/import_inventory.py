@@ -67,7 +67,7 @@ class UgImportInventory(models.TransientModel):
     def _get_product_dict(self, data_array):
         data_array = self._validate_array(data_array)
         ProductRec = self.env['product.product']
-        empty_record = {'product_id': ProductRec, 'description': data_array[2], 'qtt': data_array[3],
+        empty_record = {'product_id': ProductRec, 'description': 'Product Not found', 'qtt': data_array[3],
                         'barcode': data_array[0],
                         'name': data_array[2], 'default_code': data_array[1]}
         barcode = data_array[0]
@@ -135,46 +135,74 @@ class UgImportInventory(models.TransientModel):
             'type': 'ir.actions.act_window',
         }
 
-    def _get_inventory_move_values(self, product_id, qty, out=False, date=None):
+    def _get_inventory_move_values(self, out=False, date=None):
         # self.ensure_one()
-        if fields.Float.is_zero(qty, 0, precision_rounding=0.01):
-            name = _('Product Quantity Confirmed')
-        else:
-            name = _('Product Quantity Updated')
+        # if fields.Float.is_zero(qty, 0, precision_rounding=0.01):
+        #     name = _('Product Quantity Confirmed')
+        # else:
+        #     name = _('Product Quantity Updated')
 
         return {
-            'name': self.env.context.get('inventory_name') or name,
+            'name': self.env.context.get('inventory_name'),
             'distrib_id': self.distrib_id.id,
             'state': 'draft',
             'is_inventory': True,
             'operation': 'out' if out else 'inc',
             'date_order': date if date else fields.Datetime.now(),
-            'move_line': [(0, 0, {
-                'product_id': product_id.id,
-                # 'product_uom_id': product_uom_id.id,
-                'distrib_id': self.distrib_id.id,
-                'product_uom_qty': qty,
-                'operation': 'out' if out else 'inc',
-            })]
+            # 'move_line': [(0, 0, {
+            #     'product_id': product_id.id,
+            #     # 'product_uom_id': product_uom_id.id,
+            #     'distrib_id': self.distrib_id.id,
+            #     'product_uom_qty': qty,
+            #     'operation': 'out' if out else 'inc',
+            # })]
         }
 
     def _save_inventory(self):
         QuantHistory = self.env['distrib.quant.history'].sudo()
+        move_out = []
+        move_in = []
         for products in self.products_ids:
-            move_vals = []
+            if not products.product_id:
+                continue
+            # move_vals = []
             qtt_on_date = QuantHistory.balance_product_on_date(products.product_id, self.distrib_id, self.date)
             if products.qtt != qtt_on_date:
                 qtt = products.qtt - qtt_on_date
                 if float_compare(qtt, 0, precision_rounding=0.01) > 0:
-                    move_vals.append(
-                        self._get_inventory_move_values(product_id=products.product_id, qty=qtt, date=self.date))
+                    # move_vals.append(
+                    #     self._get_inventory_move_values(product_id=products.product_id, qty=qtt, date=self.date))
+                    move_in.append((0, 0, {
+                        'product_id': products.product_id.id,
+                        'name': products.product_id.get_product_multiline_description_sale(),
+                        # 'product_uom_id': product_uom_id.id,
+                        'distrib_id': self.distrib_id.id,
+                        'product_uom_qty': qtt,
+                        'operation': 'inc',
+                    }))
                 elif float_compare(qtt, 0, precision_rounding=0.01) < 0:
-                    move_vals.append(self._get_inventory_move_values(product_id=products.product_id, qty=-qtt, out=True,
-                                                                     date=self.date))
+                    # move_vals.append(self._get_inventory_move_values(product_id=products.product_id, qty=-qtt, out=True,
+                    #                                                  date=self.date))
+                    move_out.append((0, 0, {
+                        'product_id': products.product_id.id,
+                        'name':products.product_id.get_product_multiline_description_sale(),
+                        # 'product_uom_id': product_uom_id.id,
+                        'distrib_id': self.distrib_id.id,
+                        'product_uom_qty': -qtt,
+                        'operation': 'out',
+                    }))
                 else:
                     return
-            moves = self.env['distrib.distributors.move']
+        moves = self.env['distrib.distributors.move']
+        if len(move_out) > 0:
+            move_vals = self._get_inventory_move_values(out=True, date=self.date)
             res = moves.with_context(inventory_mode=False).create(move_vals)
+            res.move_line = move_out
+            res.action_done()
+        if len(move_in) > 0:
+            move_vals = self._get_inventory_move_values(date=self.date)
+            res = moves.with_context(inventory_mode=False).create(move_vals)
+            res.move_line = move_in
             res.action_done()
 
     def save_inventory(self):
@@ -189,6 +217,8 @@ class UgImportInventory(models.TransientModel):
         # quants_so = Quants.search(domain)
         product_ids = []
         for products in self.products_ids:
+            if not products.product_id:
+                continue
             product_ids.append(products.product_id.id)
             domain = [('product_id', '=', products.product_id.id)]
             domain = expression.AND([
