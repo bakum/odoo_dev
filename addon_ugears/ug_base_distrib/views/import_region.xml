@@ -11,7 +11,7 @@
                 name="Import Relations"
                 parent="menu_distrib_settings"
                 action="action_region_rel"
-                groups="base.group_system"
+                groups="ug_base_distrib.group_distrib_technical"
                 sequence="20"/>
     </data>
 </odoo>
