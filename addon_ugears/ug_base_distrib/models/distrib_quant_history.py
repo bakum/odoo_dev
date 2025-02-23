@@ -64,6 +64,8 @@ class DistributorQuantHistory(models.Model):
                      ["distrib_id, product_id, date desc"])
         create_index(self._cr, 'distrib_quant_history_date_asc_idx', 'distrib_quant_history',
                      ["distrib_id, product_id, date"])
+        create_index(self._cr, 'distrib_quant_history_distrib_product_idx', 'distrib_quant_history',
+                     ["distrib_id, product_id"])
 
     @api.model
     def _get_rate_for_move(self, currency_from_code, currency_to_code, date=None):
@@ -255,6 +257,8 @@ class DistributorQuantHistory(models.Model):
     @api.model
     def _update_available_quantity(self, product_id, quantity, distrib_id, in_out='inc', in_date=None):
         self = self.sudo()
+        context = dict(self.env.context or {})
+        with_all_days = context.get('with_all_days', True)
         quants = self._gather(product_id, distrib_id=distrib_id, date=in_date)
         quant = None
         if quants:
@@ -284,7 +288,8 @@ class DistributorQuantHistory(models.Model):
                 'distrib_id': distrib_id and distrib_id.id,
                 'date': dt.strftime("%Y-%m-%d 00:00:00") if in_date else fields.Datetime.today,
             })
-        self._quants_for_all_days(distrib_id, product_id, in_date)
+        if with_all_days:
+            self._quants_for_all_days(distrib_id, product_id, in_date)
         self._recalculate_results(product_id=product_id, distrib_id=distrib_id, from_date=in_date)
 
     def balance_product_on_date(self, product_id, distrib_id, on_date=None):
@@ -329,7 +334,7 @@ class DistributorQuantHistory(models.Model):
                                     ORDER BY
                                         DISTRIB_ID,
                                         PRODUCT_ID,
-                                        DATE DESC
+                                        DATE ASC
                                     FOR NO KEY UPDATE SKIP LOCKED
                                 ) AS MAIN
                             GROUP BY

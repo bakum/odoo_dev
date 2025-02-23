@@ -23,3 +23,4 @@ from . import import_inventory
 from . import import_expenses
 from . import import_budget
 from . import distrib_quant_history
+from . import distrib_quant_totals

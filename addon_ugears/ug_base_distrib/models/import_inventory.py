@@ -1,11 +1,15 @@
 import base64
+import threading
+import time
 
 import xlrd
+import logging
 
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, AccessError
 from odoo.osv import expression
 from odoo.tools import float_compare
+_logger = logging.getLogger(__name__)
 
 
 class UgImportInventory(models.TransientModel):
@@ -198,12 +202,12 @@ class UgImportInventory(models.TransientModel):
         moves = self.env['distrib.distributors.move']
         if len(move_out) > 0:
             move_vals = self._get_inventory_move_values(out=True, date=self.date)
-            res = moves.with_context(inventory_mode=False).create(move_vals)
+            res = moves.with_context(inventory_mode=False, with_all_days=False).create(move_vals)
             res.move_line = move_out
             res.action_done()
         if len(move_in) > 0:
             move_vals = self._get_inventory_move_values(date=self.date)
-            res = moves.with_context(inventory_mode=False).create(move_vals)
+            res = moves.with_context(inventory_mode=False, with_all_days=False).create(move_vals)
             res.move_line = move_in
             res.action_done()
 
@@ -224,9 +228,34 @@ class UgImportInventory(models.TransientModel):
                     }))  
         if len(move_out) > 0:
             move_vals = self._get_inventory_move_values(out=True, date=self.date)
-            res = moves.with_context(inventory_mode=False).create(move_vals)
+            res = moves.with_context(inventory_mode=False, with_all_days=False).create(move_vals)
             res.move_line = move_out
-            res.action_done()          
+            res.action_done() 
+
+        threaded_calculation = threading.Thread(target=self._run_recalculate_job)
+        threaded_calculation.start()
+
+    def _run_recalculate_job(self):
+        time.sleep(3)
+        with api.Environment.manage():
+            new_cr = self.pool.cursor()
+            self = self.with_env(self.env(cr=new_cr))
+            by_days = self.env['distrib.quant.history'].with_env(self.env(cr=new_cr)).sudo()
+            _logger.info("job %s starting", 'by_days')
+            by_days._recalculate_totals_by_days()
+            _logger.info("job %s updated and released", 'by_days')
+            # print("job %s updated and released", 'by_days')
+            by_months = self.env['distrib.quant.totals'].with_env(self.env(cr=new_cr)).sudo()
+            _logger.info("job %s starting", 'by_months')
+            by_months._recalculate_totals_by_monts()
+            _logger.info("job %s updated and released", 'by_months')
+            # print("job %s updated and released", 'by_months')
+            new_cr.commit()
+            # IMPORTANT to close the cursor
+            new_cr.close()
+            return {}
+            
+
 
     def save_inventory(self):
         date_in_the_past = self.date.date() < fields.Datetime.today().date()

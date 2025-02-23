@@ -156,6 +156,8 @@ class DistributorMove(models.Model):
         return super(DistributorMove, self).create(vals_list)
 
     def write(self, vals):
+        context = dict(self.env.context or {})
+        with_all_days = context.get('with_all_days', True)
         if 'state' in vals:
             mls = self.move_line
             for ml in mls:
@@ -170,7 +172,7 @@ class DistributorMove(models.Model):
                         Quant._update_available_quantity(ml.product_id, quantity, distrib_id=ml.distrib_id)
                         # Quant._update_available_quantity(ml.product_id, quantity, distrib_id=ml.distrib_id, in_date=in_date)
                         QuantHistory = self.env['distrib.quant.history']
-                        QuantHistory._update_available_quantity(ml.product_id, quantity, distrib_id=ml.distrib_id,
+                        QuantHistory.with_context(with_all_days=with_all_days)._update_available_quantity(ml.product_id, quantity, distrib_id=ml.distrib_id,
                                                                 in_out=ml.operation,
                                                                 in_date=ml.date)
                 elif vals['state'] == 'cancel':
@@ -184,7 +186,7 @@ class DistributorMove(models.Model):
                         Quant._update_available_quantity(ml.product_id, -quantity, distrib_id=ml.distrib_id)
                         # Quant._update_available_quantity(ml.product_id, quantity, distrib_id=ml.distrib_id, in_date=in_date)
                         QuantHistory = self.env['distrib.quant.history']
-                        QuantHistory._update_available_quantity(ml.product_id, -quantity, distrib_id=ml.distrib_id,
+                        QuantHistory.with_context(with_all_days=with_all_days)._update_available_quantity(ml.product_id, -quantity, distrib_id=ml.distrib_id,
                                                                 in_out=ml.operation,
                                                                 in_date=ml.date)
 
