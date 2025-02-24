@@ -59,6 +59,9 @@ class DistributorQuantHistory(models.Model):
         store=True, readonly=False, required=True, precompute=True)
     rate = fields.Float(compute='_compute_current_rate', string='Current Cross-Rate', digits=0, store=True,
                         precompute=True, help='The rate of the currency to the currency of accounting')
+    
+    valid_rec = fields.Boolean(
+        'Record is valid', readonly=True, required=True, default=True)
 
     def init(self):
         create_index(self._cr, 'distrib_quant_history_date_idx', 'distrib_quant_history',
@@ -237,6 +240,15 @@ class DistributorQuantHistory(models.Model):
                     'date': date.strftime("%Y-%m-%d 00:00:00"),
                 })
 
+    def _validate_totals(self, product_id, distrib_id, from_date):
+        totals = self.env['distrib.quant.totals'].sudo()
+        strategy_order = 'distrib_id,product_id,date'
+        domain = [('product_id', '=', product_id.id), ('distrib_id', '=',
+                                                       distrib_id.id), ('date', '>', from_date.strftime("%Y-%m-01 00:00:00"))]
+        quants = totals.search(domain, order=strategy_order)
+        for quant in quants:
+            quant.write({'valid_rec': False})
+
     def _recalculate_results(self, product_id=None, distrib_id=None, from_date=None):
         self = self.sudo()
 
@@ -261,6 +273,8 @@ class DistributorQuantHistory(models.Model):
             })
             begining_next_step = begining_next_step + \
                 quant.quantity_income - quant.quantity_outcome
+
+        self._validate_totals(product_id, distrib_id, from_date)
 
     @api.model
     def _update_available_quantity(self, product_id, quantity, distrib_id, in_out='inc', in_date=None):
