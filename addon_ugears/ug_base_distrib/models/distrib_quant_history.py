@@ -31,7 +31,8 @@ class DistributorQuantHistory(models.Model):
         index=True, required=True,
         help='This is the owner of the quant')
 
-    date = fields.Datetime('Incoming Date', readonly=True, index=True, required=True, default=fields.Datetime.today)
+    date = fields.Datetime('Incoming Date', readonly=True,
+                           index=True, required=True, default=fields.Datetime.today)
 
     quantity_begin = fields.Float(
         'Beginning Quantity',
@@ -73,13 +74,15 @@ class DistributorQuantHistory(models.Model):
             return False
         if currency_from_code == currency_to_code:
             return 1.0
-        Currency = self.env["res.currency"].with_context({"active_test": False})
+        Currency = self.env["res.currency"].with_context(
+            {"active_test": False})
         currency_from = Currency.search([("name", "=", currency_from_code)])
         currency_to = Currency.search([("name", "=", currency_to_code)])
         if not currency_from or not currency_to:
             return 1.0
         company = self.env.company
-        date = fields.Date.from_string(date) if date else fields.Date.context_today(self)
+        date = fields.Date.from_string(
+            date) if date else fields.Date.context_today(self)
         return Currency._get_conversion_rate(currency_from, currency_to, company, date)
 
     @api.depends('currency_id', 'date', 'currency_id.rate_ids')
@@ -90,7 +93,8 @@ class DistributorQuantHistory(models.Model):
             if int(currency_to) == 0:
                 currency.rate = 1.0
             else:
-                currency_to = self.env['res.currency'].sudo().search([('id', '=', int(currency_to))])
+                currency_to = self.env['res.currency'].sudo().search(
+                    [('id', '=', int(currency_to))])
                 if currency_to:
                     currency.rate = self._get_rate_for_move(currency.currency_id.display_name, currency_to.display_name,
                                                             date=currency.date)
@@ -108,7 +112,8 @@ class DistributorQuantHistory(models.Model):
                 record.quantity_begin = rec.quantity_end
             else:
                 record.quantity_begin = 0.0
-            record.quantity_end = record.quantity_begin + record.quantity_income - record.quantity_outcome
+            record.quantity_end = record.quantity_begin + \
+                record.quantity_income - record.quantity_outcome
 
     # @api.depends('quantity_begin', 'quantity_income', 'quantity_outcome')
     # def _compute_quantity_end(self):
@@ -204,7 +209,8 @@ class DistributorQuantHistory(models.Model):
     def _gather(self, product_id, distrib_id, date):
         removal_strategy_order = 'date DESC'
 
-        domain = ['&', ('product_id', '=', product_id.id), ('date', '=', date.strftime("%Y-%m-%d 00:00:00"))]
+        domain = ['&', ('product_id', '=', product_id.id),
+                  ('date', '=', date.strftime("%Y-%m-%d 00:00:00"))]
         domain = expression.AND([[('distrib_id', '=', distrib_id.id)], domain])
 
         # domain = expression.AND([[], domain])
@@ -241,7 +247,8 @@ class DistributorQuantHistory(models.Model):
         if distrib_id:
             domain.append(('distrib_id', '=', distrib_id.id))
         if from_date:
-            domain.append(('date', '>=', from_date.strftime("%Y-%m-%d 00:00:00")))
+            domain.append(
+                ('date', '>=', from_date.strftime("%Y-%m-%d 00:00:00")))
         quants = self.search(domain, order=strategy_order)
         begining_next_step = 0.0
         for counter, quant in enumerate(quants):
@@ -252,7 +259,8 @@ class DistributorQuantHistory(models.Model):
                 'quantity_begin': begining_next_step,
                 'quantity_end': begining_next_step + quant.quantity_income - quant.quantity_outcome,
             })
-            begining_next_step = begining_next_step + quant.quantity_income - quant.quantity_outcome
+            begining_next_step = begining_next_step + \
+                quant.quantity_income - quant.quantity_outcome
 
     @api.model
     def _update_available_quantity(self, product_id, quantity, distrib_id, in_out='inc', in_date=None):
@@ -290,7 +298,8 @@ class DistributorQuantHistory(models.Model):
             })
         if with_all_days:
             self._quants_for_all_days(distrib_id, product_id, in_date)
-        self._recalculate_results(product_id=product_id, distrib_id=distrib_id, from_date=in_date)
+        self._recalculate_results(
+            product_id=product_id, distrib_id=distrib_id, from_date=in_date)
 
     def balance_product_on_date(self, product_id, distrib_id, on_date=None):
         self = self.sudo()
@@ -299,7 +308,8 @@ class DistributorQuantHistory(models.Model):
         domain.append(('product_id', '=', product_id.id))
         domain.append(('distrib_id', '=', distrib_id.id))
         if on_date:
-            domain.append(('date', '<=', on_date.strftime("%Y-%m-%d 00:00:00")))
+            domain.append(
+                ('date', '<=', on_date.strftime("%Y-%m-%d 00:00:00")))
 
         quant = None
         quants = self.search(domain, order=strategy_order)
@@ -345,5 +355,7 @@ class DistributorQuantHistory(models.Model):
         if stock_quant_result:
             for quant in stock_quant_result:
                 quants = self.browse(quant)
-                self._quants_for_all_days(quants.distrib_id, quants.product_id, quants.date)
-                self._recalculate_results(product_id=quants.product_id, distrib_id=quants.distrib_id, from_date=quants.date)
+                self._quants_for_all_days(
+                    quants.distrib_id, quants.product_id, quants.date)
+                self._recalculate_results(
+                    product_id=quants.product_id, distrib_id=quants.distrib_id, from_date=quants.date)
