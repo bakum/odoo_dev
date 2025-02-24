@@ -7,8 +7,10 @@
             <form>
                 <header>
                     <button name="action_done" class="btn-primary" data-hotkey="v" string="Confirm" type="object"
+                            context="{'recalc_totals': True}"
                             attrs="{'invisible': ['|',('state', 'not in', ['draft']),('id', '=', False)]}"/>
                     <button name="action_cancel" type="object" string="Cancel"
+                            context="{'recalc_totals': True}"
                             attrs="{'invisible': ['|', ('state', 'not in', ['done']), ('id', '=', False)]}"
                             data-hotkey="z" groups="ug_base_distrib.group_distrib_manager"
                             confirm="The selected operation will change the status and cancel transaction. Are you sure you want to do this?"/>

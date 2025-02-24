@@ -1,15 +1,12 @@
 import base64
 import threading
-import time
 
 import xlrd
-import logging
 
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, AccessError
 from odoo.osv import expression
 from odoo.tools import float_compare
-_logger = logging.getLogger(__name__)
 
 
 class UgImportInventory(models.TransientModel):
@@ -25,10 +22,13 @@ class UgImportInventory(models.TransientModel):
     name = fields.Char('Name', default=_default_name)
     xls_file = fields.Binary(string='Excel file', required=True)
     xls_filename = fields.Char(string='Excel Filename')
-    products_ids = fields.One2many('ug.distrib.import.inventory.list', 'wizard_id')
-    distrib_id = fields.Many2one('distrib.distributors', 'Distributor', required=True, default=_default_distrib)
+    products_ids = fields.One2many(
+        'ug.distrib.import.inventory.list', 'wizard_id')
+    distrib_id = fields.Many2one(
+        'distrib.distributors', 'Distributor', required=True, default=_default_distrib)
     len_products = fields.Integer(compute='get_len_products')
-    total_qtt = fields.Float(string='Total quantity', compute='_compute_amounts')
+    total_qtt = fields.Float(string='Total quantity',
+                             compute='_compute_amounts')
 
     @api.depends('products_ids.qtt')
     def _compute_amounts(self):
@@ -78,7 +78,8 @@ class UgImportInventory(models.TransientModel):
         art = data_array[1]
 
         if barcode and art:
-            domain = ['&', ('barcode', '=', barcode), ('default_code', '=', art)]
+            domain = ['&', ('barcode', '=', barcode),
+                      ('default_code', '=', art)]
         elif barcode:
             domain = [('barcode', '=', barcode)]
         elif art:
@@ -96,7 +97,8 @@ class UgImportInventory(models.TransientModel):
             file_data = base64.b64decode(self.xls_file)
             book = xlrd.open_workbook(file_contents=file_data)
         except FileNotFoundError:
-            raise UserError('No such file or directory found. \n%s.' % self.xls_filename)
+            raise UserError(
+                'No such file or directory found. \n%s.' % self.xls_filename)
         except xlrd.biffh.XLRDError:
             raise UserError('Only excel files are supported.')
 
@@ -172,7 +174,8 @@ class UgImportInventory(models.TransientModel):
                 continue
             product_ids.append(products.product_id.id)
             # move_vals = []
-            qtt_on_date = QuantHistory.balance_product_on_date(products.product_id, self.distrib_id, self.date)
+            qtt_on_date = QuantHistory.balance_product_on_date(
+                products.product_id, self.distrib_id, self.date)
             if products.qtt != qtt_on_date:
                 qtt = products.qtt - qtt_on_date
                 if float_compare(qtt, 0, precision_rounding=0.01) > 0:
@@ -191,7 +194,7 @@ class UgImportInventory(models.TransientModel):
                     #                                                  date=self.date))
                     move_out.append((0, 0, {
                         'product_id': products.product_id.id,
-                        'name':products.product_id.get_product_multiline_description_sale(),
+                        'name': products.product_id.get_product_multiline_description_sale(),
                         # 'product_uom_id': product_uom_id.id,
                         'distrib_id': self.distrib_id.id,
                         'product_uom_qty': -qtt,
@@ -201,68 +204,52 @@ class UgImportInventory(models.TransientModel):
                     return
         moves = self.env['distrib.distributors.move']
         if len(move_out) > 0:
-            move_vals = self._get_inventory_move_values(out=True, date=self.date)
-            res = moves.with_context(inventory_mode=False, with_all_days=False).create(move_vals)
+            move_vals = self._get_inventory_move_values(
+                out=True, date=self.date)
+            res = moves.with_context(inventory_mode=False).create(move_vals)
             res.move_line = move_out
             res.action_done()
         if len(move_in) > 0:
             move_vals = self._get_inventory_move_values(date=self.date)
-            res = moves.with_context(inventory_mode=False, with_all_days=False).create(move_vals)
+            res = moves.with_context(inventory_mode=False).create(move_vals)
             res.move_line = move_in
             res.action_done()
 
         Quants = self.env['distrib.quant'].sudo()
-        domain = ['&', ('distrib_id', '=', self.distrib_id.id), ('product_id', 'not in', product_ids)]
+        domain = ['&', ('distrib_id', '=', self.distrib_id.id),
+                  ('product_id', 'not in', product_ids)]
         quants_so = Quants.search(domain)
         move_out = []
         for quant in quants_so:
-            qtt_on_date = QuantHistory.balance_product_on_date(quant.product_id, self.distrib_id, self.date)
+            qtt_on_date = QuantHistory.balance_product_on_date(
+                quant.product_id, self.distrib_id, self.date)
             if qtt_on_date != 0:
                 move_out.append((0, 0, {
-                        'product_id': quant.product_id.id,
-                        'name':quant.product_id.get_product_multiline_description_sale(),
-                        # 'product_uom_id': product_uom_id.id,
-                        'distrib_id': self.distrib_id.id,
-                        'product_uom_qty': qtt_on_date,
-                        'operation': 'out',
-                    }))  
+                    'product_id': quant.product_id.id,
+                    'name': quant.product_id.get_product_multiline_description_sale(),
+                    # 'product_uom_id': product_uom_id.id,
+                    'distrib_id': self.distrib_id.id,
+                    'product_uom_qty': qtt_on_date,
+                    'operation': 'out',
+                }))
         if len(move_out) > 0:
-            move_vals = self._get_inventory_move_values(out=True, date=self.date)
-            res = moves.with_context(inventory_mode=False, with_all_days=False).create(move_vals)
+            move_vals = self._get_inventory_move_values(
+                out=True, date=self.date)
+            res = moves.with_context(inventory_mode=False).create(move_vals)
             res.move_line = move_out
-            res.action_done() 
+            res.action_done()
 
-        threaded_calculation = threading.Thread(target=self._run_recalculate_job)
+        threaded_calculation = threading.Thread(
+            target=moves._run_recalculate_job)
         threaded_calculation.start()
-
-    def _run_recalculate_job(self):
-        time.sleep(3)
-        with api.Environment.manage():
-            new_cr = self.pool.cursor()
-            self = self.with_env(self.env(cr=new_cr))
-            by_days = self.env['distrib.quant.history'].with_env(self.env(cr=new_cr)).sudo()
-            _logger.info("job %s starting", 'by_days')
-            by_days._recalculate_totals_by_days()
-            _logger.info("job %s updated and released", 'by_days')
-            # print("job %s updated and released", 'by_days')
-            by_months = self.env['distrib.quant.totals'].with_env(self.env(cr=new_cr)).sudo()
-            _logger.info("job %s starting", 'by_months')
-            by_months._recalculate_totals_by_monts()
-            _logger.info("job %s updated and released", 'by_months')
-            # print("job %s updated and released", 'by_months')
-            new_cr.commit()
-            # IMPORTANT to close the cursor
-            new_cr.close()
-            return {}
-            
-
 
     def save_inventory(self):
         date_in_the_past = self.date.date() < fields.Datetime.today().date()
         if date_in_the_past:
             if self.env.user.has_group('ug_base_distrib.group_distrib_user') and not self.env.user.has_group(
                     'ug_base_distrib.group_distrib_manager'):
-                raise AccessError("You do not have access rights to make inventory in the past.")
+                raise AccessError(
+                    "You do not have access rights to make inventory in the past.")
             return self._save_inventory()
         Quants = self.env['distrib.quant'].sudo()
         # domain = [('distrib_id', '=', self.distrib_id)]
@@ -297,7 +284,8 @@ class UgImportInventory(models.TransientModel):
                 quant_new.inventory_quantity = products.qtt
                 quant_new.action_apply_inventory()
 
-        domain = ['&', ('distrib_id', '=', self.distrib_id.id), ('product_id', 'not in', product_ids)]
+        domain = ['&', ('distrib_id', '=', self.distrib_id.id),
+                  ('product_id', 'not in', product_ids)]
         quants_so = Quants.search(domain)
         for quant in quants_so:
             if quant.quantity != 0:
@@ -310,7 +298,8 @@ class UgImportInventoryList(models.TransientModel):
     _description = "Products list"
     _order = 'name'
 
-    wizard_id = fields.Many2one('ug.distrib.import.inventory', ondelete='cascade')
+    wizard_id = fields.Many2one(
+        'ug.distrib.import.inventory', ondelete='cascade')
     product_id = fields.Many2one(
         comodel_name='product.product',
         string="Product")

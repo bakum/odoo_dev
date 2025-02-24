@@ -1,9 +1,7 @@
-from datetime import timedelta
-from dateutil.relativedelta import relativedelta
-
-from odoo import models, fields, api
-from odoo.osv import expression
 from odoo.tools import create_index
+from odoo.osv import expression
+from odoo import models, fields, api
+from datetime import timedelta
 
 
 class DistributorQuantHistory(models.Model):
@@ -59,9 +57,9 @@ class DistributorQuantHistory(models.Model):
         store=True, readonly=False, required=True, precompute=True)
     rate = fields.Float(compute='_compute_current_rate', string='Current Cross-Rate', digits=0, store=True,
                         precompute=True, help='The rate of the currency to the currency of accounting')
-    
+
     valid_rec = fields.Boolean(
-        'Record is valid', readonly=True, required=True, default=True)
+        'Record is valid', readonly=True, required=True, default=False)
 
     def init(self):
         create_index(self._cr, 'distrib_quant_history_date_idx', 'distrib_quant_history',
@@ -241,15 +239,21 @@ class DistributorQuantHistory(models.Model):
                 })
 
     def _validate_totals(self, product_id, distrib_id, from_date):
+        result = False
         totals = self.env['distrib.quant.totals'].sudo()
-        strategy_order = 'distrib_id,product_id,date'
+        all_totals = totals.search_count([])
+        if all_totals == 0:
+            return True
+        strategy_order = 'distrib_id,product_id, date desc'
         domain = [('product_id', '=', product_id.id), ('distrib_id', '=',
-                                                       distrib_id.id), ('date', '>', from_date.strftime("%Y-%m-01 00:00:00"))]
+                                                       distrib_id.id), ('date', '>=', from_date.strftime("%Y-%m-01 00:00:00"))]
         quants = totals.search(domain, order=strategy_order)
         for quant in quants:
-            quant.write({'valid_rec': False})
+            result = quant.write({'valid_rec': False})
 
-    def _recalculate_results(self, product_id=None, distrib_id=None, from_date=None):
+        return result
+
+    def _recalculate_results(self, product_id=None, distrib_id=None, from_date=None, with_validate=True):
         self = self.sudo()
 
         domain = []
@@ -266,21 +270,23 @@ class DistributorQuantHistory(models.Model):
         for counter, quant in enumerate(quants):
             if counter == 0:
                 begining_next_step = quant.quantity_end
+                quant.write({'valid_rec': with_validate, })
                 continue
             quant.write({
                 'quantity_begin': begining_next_step,
                 'quantity_end': begining_next_step + quant.quantity_income - quant.quantity_outcome,
+                'valid_rec': with_validate,
             })
             begining_next_step = begining_next_step + \
                 quant.quantity_income - quant.quantity_outcome
 
-        self._validate_totals(product_id, distrib_id, from_date)
+        # self._validate_totals(product_id, distrib_id, from_date)
 
     @api.model
     def _update_available_quantity(self, product_id, quantity, distrib_id, in_out='inc', in_date=None):
         self = self.sudo()
         context = dict(self.env.context or {})
-        with_all_days = context.get('with_all_days', True)
+        recalc_totals = context.get('recalc_totals', False)
         quants = self._gather(product_id, distrib_id=distrib_id, date=in_date)
         quant = None
         if quants:
@@ -296,11 +302,15 @@ class DistributorQuantHistory(models.Model):
         if in_date:
             dt = fields.Datetime.context_timestamp(self, in_date)
 
+        was_valid = not self._validate_totals(
+            product_id, distrib_id, in_date)
+
         if quant:
             quant.write({
                 'quantity_income': quant.quantity_income + quantity if in_out == 'inc' else quant.quantity_income,
                 'quantity_outcome': quant.quantity_outcome - quantity if in_out == 'out' else quant.quantity_outcome,
                 'date': dt.strftime("%Y-%m-%d 00:00:00") if in_date else fields.Datetime.today,
+                'valid_rec': was_valid,
             })
         else:
             self.create({
@@ -309,11 +319,14 @@ class DistributorQuantHistory(models.Model):
                 'quantity_outcome': -quantity if in_out == 'out' else 0.0,
                 'distrib_id': distrib_id and distrib_id.id,
                 'date': dt.strftime("%Y-%m-%d 00:00:00") if in_date else fields.Datetime.today,
+                'valid_rec': was_valid,
             })
-        if with_all_days:
-            self._quants_for_all_days(distrib_id, product_id, in_date)
-        self._recalculate_results(
-            product_id=product_id, distrib_id=distrib_id, from_date=in_date)
+
+        # if with_all_days:
+        #     self._quants_for_all_days(distrib_id, product_id, in_date)
+        if not recalc_totals:
+            self._recalculate_results(
+            product_id=product_id, distrib_id=distrib_id, from_date=in_date, with_validate=False)   
 
     def balance_product_on_date(self, product_id, distrib_id, on_date=None):
         self = self.sudo()
@@ -355,6 +368,8 @@ class DistributorQuantHistory(models.Model):
                                         DATE
                                     FROM
                                         distrib_quant_history
+                                    WHERE
+			                            NOT VALID_REC
                                     ORDER BY
                                         DISTRIB_ID,
                                         PRODUCT_ID,

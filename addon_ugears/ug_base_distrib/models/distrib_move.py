@@ -2,6 +2,12 @@ from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 from odoo.tools import create_index
 
+import time
+import threading
+
+import logging
+_logger = logging.getLogger(__name__)
+
 LOCKED_FIELD_STATES = {
     state: [('readonly', True)] for state in {'done', 'cancel'}
 }
@@ -13,7 +19,8 @@ class DistributorMove(models.Model):
     _order = 'date_order desc, id desc'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    name = fields.Char('Ref', required=True, copy=False, readonly=True, default=lambda self: _('New'))
+    name = fields.Char('Ref', required=True, copy=False,
+                       readonly=True, default=lambda self: _('New'))
     distrib_id = fields.Many2one(
         'distrib.distributors', 'Distributor',
         default=lambda self: self.env.user.distrib_id.id,
@@ -76,8 +83,10 @@ class DistributorMove(models.Model):
         related='distrib_id.pricelist_id.currency_id',
         store=True, index=True, precompute=True)
 
-    amount_untaxed = fields.Monetary(string="Amount", store=True, compute='_compute_amounts')
-    amount_qty = fields.Float(string="Total quantity", store=True, compute='_compute_quantity_amount')
+    amount_untaxed = fields.Monetary(
+        string="Amount", store=True, compute='_compute_amounts')
+    amount_qty = fields.Float(string="Total quantity",
+                              store=True, compute='_compute_quantity_amount')
     is_inventory = fields.Boolean('Inventory', default=False)
     is_manager = fields.Boolean(compute='_compute_is_manager')
     rate = fields.Float(compute='_compute_current_rate', string='Current Cross-Rate', digits=0, store=True,
@@ -98,13 +107,15 @@ class DistributorMove(models.Model):
             return False
         if currency_from_code == currency_to_code:
             return 1.0
-        Currency = self.env["res.currency"].with_context({"active_test": False})
+        Currency = self.env["res.currency"].with_context(
+            {"active_test": False})
         currency_from = Currency.search([("name", "=", currency_from_code)])
         currency_to = Currency.search([("name", "=", currency_to_code)])
         if not currency_from or not currency_to:
             return 1.0
         company = self.env.company
-        date = fields.Date.from_string(date) if date else fields.Date.context_today(self)
+        date = fields.Date.from_string(
+            date) if date else fields.Date.context_today(self)
         return Currency._get_conversion_rate(currency_from, currency_to, company, date)
 
     @api.depends('currency_id', 'date_order', 'currency_id.rate_ids')
@@ -115,7 +126,8 @@ class DistributorMove(models.Model):
             if int(currency_to) == 0:
                 currency.rate = 1.0
             else:
-                currency_to = self.env['res.currency'].sudo().search([('id', '=', int(currency_to))])
+                currency_to = self.env['res.currency'].sudo().search(
+                    [('id', '=', int(currency_to))])
                 if currency_to:
                     currency.rate = self._get_rate_for_move(currency.currency_id.display_name, currency_to.display_name,
                                                             date=currency.date_order)
@@ -132,7 +144,8 @@ class DistributorMove(models.Model):
     @api.depends_context('uid')
     @api.depends('operation', 'distrib_id')
     def _compute_is_manager(self):
-        self.is_manager = self.env.user.has_group("ug_base_distrib.group_distrib_manager")
+        self.is_manager = self.env.user.has_group(
+            "ug_base_distrib.group_distrib_manager")
 
     def init(self):
         create_index(self._cr, 'distrib_move_date_order_id_idx', 'distrib_distributors_move',
@@ -143,11 +156,14 @@ class DistributorMove(models.Model):
         for vals in vals_list:
             if 'operation' in list(vals.keys()):
                 if 'is_inventory' in list(vals.keys()) and vals['is_inventory']:
-                    vals['name'] = self.env['ir.sequence'].next_by_code('distrib.distributors.move.adj')
+                    vals['name'] = self.env['ir.sequence'].next_by_code(
+                        'distrib.distributors.move.adj')
                 elif vals['operation'] == 'inc':
-                    vals['name'] = self.env['ir.sequence'].next_by_code('distrib.distributors.move.in')
+                    vals['name'] = self.env['ir.sequence'].next_by_code(
+                        'distrib.distributors.move.in')
                 else:
-                    vals['name'] = self.env['ir.sequence'].next_by_code('distrib.distributors.move.out')
+                    vals['name'] = self.env['ir.sequence'].next_by_code(
+                        'distrib.distributors.move.out')
             # if 'channel_id' in list(vals.keys()):
             #     mls = vals['move_line'][0][2]
             #     if 'channel_id' in mls:
@@ -157,7 +173,7 @@ class DistributorMove(models.Model):
 
     def write(self, vals):
         context = dict(self.env.context or {})
-        with_all_days = context.get('with_all_days', True)
+        recalc_totals = context.get('recalc_totals', False)
         if 'state' in vals:
             mls = self.move_line
             for ml in mls:
@@ -169,12 +185,13 @@ class DistributorMove(models.Model):
                         # in_date = None
                         # available_qty, in_date = Quant._update_available_quantity(ml.product_id, quantity,
                         #                                                           distrib_id=ml.distrib_id)
-                        Quant._update_available_quantity(ml.product_id, quantity, distrib_id=ml.distrib_id)
+                        Quant._update_available_quantity(
+                            ml.product_id, quantity, distrib_id=ml.distrib_id)
                         # Quant._update_available_quantity(ml.product_id, quantity, distrib_id=ml.distrib_id, in_date=in_date)
                         QuantHistory = self.env['distrib.quant.history']
-                        QuantHistory.with_context(with_all_days=with_all_days)._update_available_quantity(ml.product_id, quantity, distrib_id=ml.distrib_id,
-                                                                in_out=ml.operation,
-                                                                in_date=ml.date)
+                        QuantHistory.with_context(recalc_totals=recalc_totals)._update_available_quantity(ml.product_id, quantity, distrib_id=ml.distrib_id,
+                                                                                                          in_out=ml.operation,
+                                                                                                          in_date=ml.date)
                 elif vals['state'] == 'cancel':
                     if ml.product_id.type != 'service':
                         Quant = self.env['distrib.quant']
@@ -183,24 +200,24 @@ class DistributorMove(models.Model):
                         # in_date = None
                         # available_qty, in_date = Quant._update_available_quantity(ml.product_id, quantity,
                         #                                                           distrib_id=ml.distrib_id)
-                        Quant._update_available_quantity(ml.product_id, -quantity, distrib_id=ml.distrib_id)
+                        Quant._update_available_quantity(
+                            ml.product_id, -quantity, distrib_id=ml.distrib_id)
                         # Quant._update_available_quantity(ml.product_id, quantity, distrib_id=ml.distrib_id, in_date=in_date)
                         QuantHistory = self.env['distrib.quant.history']
-                        QuantHistory.with_context(with_all_days=with_all_days)._update_available_quantity(ml.product_id, -quantity, distrib_id=ml.distrib_id,
-                                                                in_out=ml.operation,
-                                                                in_date=ml.date)
+                        QuantHistory.with_context(recalc_totals=recalc_totals)._update_available_quantity(ml.product_id, -quantity, distrib_id=ml.distrib_id,
+                                                                                                          in_out=ml.operation,
+                                                                                                          in_date=ml.date)
 
         if 'channel_id' in vals:
             mls = self.move_line
             for ml in mls:
                 if not ml.channel_id and vals['channel_id']:
                     ml.channel_id = vals['channel_id']
-        # if 'move_line' in vals:
-        #     mls = vals['move_line'][0][2]
-        #     if 'channel_id' in mls:
-        #         if not mls['channel_id'] and self.channel_id:
-        #             mls['channel_id'] = self.channel_id.id
+        
         res = super(DistributorMove, self).write(vals)
+        if recalc_totals:
+            threaded_calculation = threading.Thread(target=self._run_recalculate_job)
+            threaded_calculation.start()
 
         return res
 
@@ -231,7 +248,7 @@ class DistributorMove(models.Model):
         self.write({'state': 'draft'})
 
     def action_repost(self):
-        moves= []
+        moves = []
         for order in self:
             if order.state == 'done':
                 res = order.write({'state': 'cancel'})
@@ -261,7 +278,6 @@ class DistributorMove(models.Model):
                 }
             }
 
-
     @api.depends('move_line.price_total')
     def _compute_amounts(self):
         for order in self:
@@ -270,3 +286,25 @@ class DistributorMove(models.Model):
             amount_untaxed = sum(order_lines.mapped('price_total'))
 
             order.amount_untaxed = amount_untaxed
+
+    def _run_recalculate_job(self):
+        time.sleep(3)
+        with api.Environment.manage():
+            new_cr = self.pool.cursor()
+            self = self.with_env(self.env(cr=new_cr))
+            by_days = self.env['distrib.quant.history'].with_env(
+                self.env(cr=new_cr)).sudo()
+            _logger.info("job %s starting", 'by_days')
+            by_days._recalculate_totals_by_days()
+            _logger.info("job %s updated and released", 'by_days')
+            # print("job %s updated and released", 'by_days')
+            by_months = self.env['distrib.quant.totals'].with_env(
+                self.env(cr=new_cr)).sudo()
+            _logger.info("job %s starting", 'by_months')
+            by_months._recalculate_totals_by_monts()
+            _logger.info("job %s updated and released", 'by_months')
+            # print("job %s updated and released", 'by_months')
+            new_cr.commit()
+            # IMPORTANT to close the cursor
+            new_cr.close()
+            return {}
