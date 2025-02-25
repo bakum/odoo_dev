@@ -39,6 +39,8 @@
                        filter_domain="['|','|',('product_id.name', 'ilike', self),('product_id.barcode', 'ilike', self),('product_id.default_code', 'ilike', self)]"/>
                 <field name="distrib_id"/>
 <!--                <field name="product_id" filter_domain="[('product_id.name', 'ilike', self)]"/>-->
+                <separator/>
+                <filter string="On Hand" name="on_hand" domain="[('quantity', '&gt;', 0)]"/>
             </search>
         </field>
     </record>

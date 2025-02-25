@@ -13,7 +13,7 @@ class DistributorQuantHistory(models.Model):
         'product.product', 'Product',
         domain="[('type', '!=', 'service')]",
         ondelete='restrict', required=True, index=True)
-    
+
     product_uom_id = fields.Many2one(
         'uom.uom', 'Unit of Measure',
         readonly=True, related='product_id.uom_id')
@@ -54,7 +54,7 @@ class DistributorQuantHistory(models.Model):
         store=True, readonly=False, required=True, precompute=True)
     rate = fields.Float(compute='_compute_current_rate', string='Current Cross-Rate', digits=0, store=True,
                         precompute=True, help='The rate of the currency to the currency of accounting')
-    
+
     @api.model
     def _get_rate_for_move(self, currency_from_code, currency_to_code, date=None):
         if not currency_from_code or not currency_to_code:
@@ -87,6 +87,7 @@ class DistributorQuantHistory(models.Model):
                                                             date=currency.date)
                 else:
                     currency.rate = 1.0
+
     @api.depends('product_id')
     def _compute_pricelist_item_id(self):
         for line in self:
@@ -171,7 +172,7 @@ class DistributorQuantHistory(models.Model):
         curr_date = start_date
         while curr_date <= end_date:
             yield curr_date
-            curr_date += timedelta(days=1)                
+            curr_date += timedelta(days=1)
 
     def init(self):
         create_index(self._cr, 'distrib_quant_totals_date_idx', 'distrib_quant_totals',
@@ -214,8 +215,12 @@ class DistributorQuantHistory(models.Model):
             start_history_date = start_history.date.strftime("%Y-%m-01")
             back_number = start_totals_date != start_history_date
 
+        products_set_totals = self.read_group(
+            [], fields=['product_id'], groupby=['product_id'])
+        ids = list(entry['product_id'][0] for entry in products_set_totals)
+        div = history.read_group([('product_id', 'not in', ids)], fields=['product_id'], groupby=['product_id'])
         all_totals = self.search_count([])
-        if all_totals == 0 or back_number:
+        if all_totals == 0 or back_number or len(div) > 0:
             quants = None
             self._cr.execute("""
                             SELECT

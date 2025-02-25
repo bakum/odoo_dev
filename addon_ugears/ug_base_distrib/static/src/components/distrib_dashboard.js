@@ -3,6 +3,7 @@
 import {registry} from "@web/core/registry"
 import {KpiCard} from "./kpi_card/kpi_card"
 import {ChartRenderer} from "./chart_renderer/chart_renderer"
+import { TotalRenderer } from "./total_renderer/total_renderer"
 
 const {Component, onWillStart, useRef, onWillDestroy, onUnMounted, useState} = owl
 import {useService} from "@web/core/utils/hooks"
@@ -29,11 +30,21 @@ export class OwlDistribDashboard extends Component {
         this.state.distributors = data
     }
 
+    async getTotals(){
+        let domain = [['valid_rec', '=', false]]
+        const data = await this.orm.searchCount("distrib.quant.history", domain)
+            // data1 = await this.orm.searchCount("distrib.quant.totals", domain)
+        this.state.total_by_days = data == 0 ? true : false
+        this.state.total_by_month = data == 0 ? true : false
+    }
+
     async setup() {
         this.state = useState({
             period: 30,
             distributor: 0,
             restricted: true,
+            total_by_days: true,
+            total_by_month: true,
         })
         this.orm = useService("orm")
         this.actionService = useService("action")
@@ -58,9 +69,18 @@ export class OwlDistribDashboard extends Component {
             return
         }
 
+        this.refreshIntervalId = setInterval(async () => {
+            await this.getTotals()
+        }, 5000)
+
         onWillStart(async () => {
             this.getDates()
             await this.getDistributors()
+            await this.getTotals()
+        })
+
+        onWillDestroy(()=>{
+            clearInterval(this.refreshIntervalId)
         })
     }
     async onRecalculate() {
@@ -89,5 +109,5 @@ export class OwlDistribDashboard extends Component {
 }
 
 OwlDistribDashboard.template = "owl.OwlSalesDashboard"
-OwlDistribDashboard.components = {KpiCard, ChartRenderer}
+OwlDistribDashboard.components = {KpiCard, ChartRenderer, TotalRenderer}
 registry.category("actions").add("owl.sales_dashboard", OwlDistribDashboard)

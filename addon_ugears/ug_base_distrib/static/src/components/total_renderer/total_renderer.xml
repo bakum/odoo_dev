@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="owl.TotalRenderer" owl="1">
+        <div class="col m-0 p-0">
+            <div class="shadow-sm border m-2 p-4 bg-white">
+                <div class="d-flex align-items-center ">
+                    <div class="btn-group m-0 p-0" role="group">
+                        <button t-if="!props.total_by_days" type="button" class="btn btn-outline-danger me-2">Totals by Days</button> 
+                        <button t-else="" type="button" class="btn btn-outline-success me-2" disabled="">Totals by Days</button>
+                        <button t-if="!props.total_by_month" type="button" class="btn btn-outline-danger me-2">Totals by Months</button>  
+                        <button t-else="" type="button" class="btn btn-outline-success me-2" disabled="">Totals by Months</button>
+                     </div>
+                                    <!-- <h2><span class="badge bg-secondary bg-success me-2">Success</span></h2>
+                                    <h2><span class="badge bg-secondary bg-danger me-2">Danger</span></h2> -->
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>
