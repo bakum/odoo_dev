@@ -218,8 +218,10 @@ class DistributorQuantHistory(models.Model):
         products_set_totals = self.read_group(
             [], fields=['product_id'], groupby=['product_id'])
         ids = list(entry['product_id'][0] for entry in products_set_totals)
-        div = history.read_group([('product_id', 'not in', ids)], fields=['product_id'], groupby=['product_id'])
+        div = history.read_group([('product_id', 'not in', ids)], fields=[
+                                 'product_id'], groupby=['product_id'])
         all_totals = self.search_count([])
+        # there were no records or they were retroactive or there was no product(s) in the totals
         if all_totals == 0 or back_number or len(div) > 0:
             quants = None
             self._cr.execute("""
@@ -248,12 +250,12 @@ class DistributorQuantHistory(models.Model):
             # quants
             if stock_quant_result:
                 for quant in stock_quant_result:
-                    quants = self._gather(
-                        quant['product_id'], distrib_id=quant['distrib_id'], date=quant['date'])
-                    if quants and not quants.valid_rec:
-                        quants.write(quant)
-                    elif not quants:
-                        quants.create(quant)
+                    # quants = self._gather(
+                    #     quant['product_id'], distrib_id=quant['distrib_id'], date=quant['date'])
+                    # if quants and not quants.valid_rec:
+                    #     quants.write(quant)
+                    # elif not quants:
+                    quants.create(quant)
             return
 
         not_valid_totals = self.search(

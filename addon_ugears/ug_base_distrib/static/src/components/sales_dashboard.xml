@@ -27,13 +27,11 @@
                                             </t>
                                         </select>
                                     </div>
+                                    <div t-if="!state.restricted">
+                                        <TotalRenderer total_by_days="state.total_by_days"/>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div t-if="!state.restricted">
-                        <div class="row">
-                            <TotalRenderer total_by_days="state.total_by_days" total_by_month="state.total_by_month"/>
                         </div>
                     </div>
                     <div class="row">

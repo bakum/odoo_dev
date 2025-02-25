@@ -35,7 +35,7 @@ export class OwlDistribDashboard extends Component {
         const data = await this.orm.searchCount("distrib.quant.history", domain)
             // data1 = await this.orm.searchCount("distrib.quant.totals", domain)
         this.state.total_by_days = data == 0 ? true : false
-        this.state.total_by_month = data == 0 ? true : false
+        // this.state.total_by_month = data == 0 ? true : false
     }
 
     async setup() {
@@ -44,7 +44,7 @@ export class OwlDistribDashboard extends Component {
             distributor: 0,
             restricted: true,
             total_by_days: true,
-            total_by_month: true,
+            // total_by_month: true,
         })
         this.orm = useService("orm")
         this.actionService = useService("action")
