@@ -55,7 +55,7 @@
                 <filter string="Previous Month" name="last_month"
                         domain="[('date','=', (context_today() - datetime.timedelta(days=context_today().day + 1)).strftime('%Y-%m-01'))]"/>
                 <separator/>
-                <filter string="On Hand" name="on_hand" domain="['|',('start_product_qty', '&gt;', 0),('product_qty', '&gt;', 0)]"/>        
+                <filter string="On Hand" name="on_hand" domain="['|',('start_product_qty', '!=', 0),('product_qty', '!=', 0)]"/>        
 <!--                <filter string="Current Year" name="year"-->
 <!--                        domain="[('date','&gt;=', (context_today()).strftime('%Y-01-01')),-->
 <!--                        ('date','&lt;=', context_today().strftime('%Y-%m-%d'))]"/>-->
