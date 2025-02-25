@@ -1,5 +1,5 @@
 import base64
-import threading
+# import threading
 
 import xlrd
 
@@ -239,9 +239,10 @@ class UgImportInventory(models.TransientModel):
             res.move_line = move_out
             res.action_done()
 
-        threaded_calculation = threading.Thread(
-            target=moves._run_recalculate_job)
-        threaded_calculation.start()
+        # threaded_calculation = threading.Thread(
+        #     target=moves._run_recalculate_job)
+        # threaded_calculation.start()
+        moves._run_recalculate_job()
 
     def save_inventory(self):
         date_in_the_past = self.date.date() < fields.Datetime.today().date()

@@ -213,11 +213,10 @@ class DistributorMove(models.Model):
             for ml in mls:
                 if not ml.channel_id and vals['channel_id']:
                     ml.channel_id = vals['channel_id']
-        
+
         res = super(DistributorMove, self).write(vals)
         if recalc_totals:
-            threaded_calculation = threading.Thread(target=self._run_recalculate_job)
-            threaded_calculation.start()
+            self._run_recalculate_job(thread=True)
 
         return res
 
@@ -287,7 +286,7 @@ class DistributorMove(models.Model):
 
             order.amount_untaxed = amount_untaxed
 
-    def _run_recalculate_job(self):
+    def _recalculate_thread_job(self):
         time.sleep(3)
         with api.Environment.manage():
             new_cr = self.pool.cursor()
@@ -307,4 +306,20 @@ class DistributorMove(models.Model):
             new_cr.commit()
             # IMPORTANT to close the cursor
             new_cr.close()
+            return {}
+
+    def _run_recalculate_job(self, thread=True):
+        if thread:
+            threaded_calculation = threading.Thread(target=self._recalculate_thread_job)
+            threaded_calculation.start()
+        else:
+            by_days = self.env['distrib.quant.history']
+            by_months = self.env['distrib.quant.totals']
+            _logger.info("posting %s starting", 'by_days')
+            by_days._recalculate_totals_by_days()
+            _logger.info("posting %s updated and released", 'by_days')
+
+            _logger.info("posting %s starting", 'by_months')
+            by_months._recalculate_totals_by_monts()
+            _logger.info("posting %s updated and released", 'by_months')
             return {}
