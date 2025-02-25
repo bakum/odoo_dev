@@ -23,7 +23,9 @@
                                                 t-on-change="onChangeDistributor">
                                             <option value="0">Select Distributor</option>
                                             <t t-foreach="state.distributors" t-as="item" t-key="item.id">
-                                            <option t-att-value="item.id"><t t-esc="item.name"/></option>
+                                                <option t-att-value="item.id">
+                                                    <t t-esc="item.name"/>
+                                                </option>
                                             </t>
                                         </select>
                                     </div>
@@ -35,9 +37,9 @@
                         </div>
                     </div>
                     <div class="row">
-<!--                        <KpiCard name="'Quotations'" value="10" percentage="6"/>-->
+                        <!--                        <KpiCard name="'Quotations'" value="10" percentage="6"/>-->
                         <KpiCard name="'Orders'" value="20" percentage="20"/>
-<!--                        <KpiCard name="'Revenues'" value="'30.50K'" percentage="-3"/>-->
+                        <!--                        <KpiCard name="'Revenues'" value="'30.50K'" percentage="-3"/>-->
                         <KpiCard name="'Average Order'" value="'2.5K'" percentage="-10"/>
                     </div>
                     <div class="row">
