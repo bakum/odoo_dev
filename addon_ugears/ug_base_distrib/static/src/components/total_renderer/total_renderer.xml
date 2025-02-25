@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates>
     <t t-name="owl.TotalRenderer" owl="1">
-        <button t-if="!props.total_by_days" type="button" class="btn btn-danger me-2" disabled="">Totals</button> 
-        <button t-else="" type="button" class="btn btn-success me-2" disabled="">Totals</button>
+        <button t-if="!props.total_by_days" type="button" class="btn btn-danger me-2" disabled="">Balances need recalculation</button> 
+        <button t-else="" type="button" class="btn btn-success me-2" disabled="">Balances recalculated</button>
     </t>
 </templates>
