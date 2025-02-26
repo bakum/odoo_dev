@@ -220,10 +220,11 @@ class UgImportInventory(models.TransientModel):
                   ('product_id', 'not in', product_ids)]
         quants_so = Quants.search(domain)
         move_out = []
+        move_in = []
         for quant in quants_so:
             qtt_on_date = QuantHistory.balance_product_on_date(
                 quant.product_id, self.distrib_id, self.date)
-            if qtt_on_date != 0:
+            if float_compare(qtt_on_date, 0, precision_rounding=0.01) > 0:
                 move_out.append((0, 0, {
                     'product_id': quant.product_id.id,
                     'name': quant.product_id.get_product_multiline_description_sale(),
@@ -232,12 +233,26 @@ class UgImportInventory(models.TransientModel):
                     'product_uom_qty': qtt_on_date,
                     'operation': 'out',
                 }))
+            elif float_compare(qtt_on_date, 0, precision_rounding=0.01) < 0:
+                move_in.append((0, 0, {
+                    'product_id': quant.product_id.id,
+                    'name': quant.product_id.get_product_multiline_description_sale(),
+                    # 'product_uom_id': product_uom_id.id,
+                    'distrib_id': self.distrib_id.id,
+                    'product_uom_qty': -qtt_on_date,
+                    'operation': 'inc',
+                }))    
         if len(move_out) > 0:
             move_vals = self._get_inventory_move_values(
                 out=True, date=self.date)
             res = moves.with_context(inventory_mode=False).create(move_vals)
             res.move_line = move_out
             res.action_done()
+        if len(move_in) > 0:
+            move_vals = self._get_inventory_move_values(date=self.date)
+            res = moves.with_context(inventory_mode=False).create(move_vals)
+            res.move_line = move_in
+            res.action_done()    
 
         # threaded_calculation = threading.Thread(
         #     target=moves._run_recalculate_job)

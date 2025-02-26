@@ -15,6 +15,7 @@
         'views/actions.xml',
         'views/menu.xml',
         'views/distrib_move.xml',
+        'views/distrib_move_line.xml',
         'views/distrib.xml',
         'views/statistic.xml',
         'views/quants.xml',
