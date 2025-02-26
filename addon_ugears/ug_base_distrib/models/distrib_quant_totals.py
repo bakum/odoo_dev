@@ -222,7 +222,7 @@ class DistributorQuantHistory(models.Model):
                                  'product_id'], groupby=['product_id'])
         all_totals = self.search_count([])
         # there were no records or they were retroactive or there was no product(s) in the totals
-        if all_totals == 0 or back_number or len(div) > 0:
+        if all_totals == 0 or back_number or len(div) > 0 or True:
             quants = None
             self._cr.execute("""
                             SELECT
