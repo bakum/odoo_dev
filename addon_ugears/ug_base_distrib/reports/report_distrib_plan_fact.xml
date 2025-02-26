@@ -12,6 +12,7 @@
                 <field name="distrib_id" type="row"/>
                 <field name="product_category_id" type="row"/>
                 <field name="product_id" type="row"/>
+                <!-- <field name="percentage" type="row"/> -->
             </pivot>
         </field>
     </record>

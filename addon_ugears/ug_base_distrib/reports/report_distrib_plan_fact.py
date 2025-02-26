@@ -1,4 +1,4 @@
-from odoo import models, fields, tools
+from odoo import api, models, fields, tools
 
 
 class ReportDistribPlanFact(models.Model):
@@ -43,6 +43,15 @@ class ReportDistribPlanFact(models.Model):
     #                       help="International Article Number used for product identification.")
     barcode = fields.Char(string='EAN', readonly=True)
     default_code = fields.Char(related='product_id.default_code', depends=['product_id'])
+    # percentage = fields.Float(string='Variation, %', readonly=True)
+    
+    # @api.depends('product_qty_plan', 'product_qty_fact')
+    # def _compute_percentage(self):
+    #     for record in self:
+    #         if record.product_qty_plan != 0:
+    #             record.percentage = (record.product_qty_fact * 100 / record.product_qty_plan) * 100
+    #         else:
+    #             record.percentage = 0.0
 
     def init(self):
         tools.drop_view_if_exists(self._cr, 'report_distrib_plan_fact')
