@@ -250,8 +250,8 @@ class DistributorQuantHistory(models.Model):
             # quants
             if stock_quant_result:
                 for quant in stock_quant_result:
-                    # quants = self._gather(
-                    #     quant['product_id'], distrib_id=quant['distrib_id'], date=quant['date'])
+                    quants = self._gather(
+                        quant['product_id'], distrib_id=quant['distrib_id'], date=quant['date'])
                     # if quants and not quants.valid_rec:
                     #     quants.write(quant)
                     # elif not quants:
