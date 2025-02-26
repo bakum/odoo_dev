@@ -246,7 +246,7 @@ class DistributorQuantHistory(models.Model):
                                 DATE_TRUNC('MONTH', DATE)
                             """)
             stock_quant_result = self._cr.dictfetchall()
-            self.unlink()
+            self.search([]).unlink()
             # quants
             if stock_quant_result:
                 for quant in stock_quant_result:
