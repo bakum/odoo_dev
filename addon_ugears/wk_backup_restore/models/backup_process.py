@@ -12,7 +12,7 @@ from odoo.exceptions import UserError
 from odoo.modules.module import get_module_resource
 from odoo.tools.config import config
 
-from models.lib import manage_backup_crons, saas_client_backup
+from lib import manage_backup_crons, saas_client_backup
 from datetime import datetime
 import subprocess
 import os
