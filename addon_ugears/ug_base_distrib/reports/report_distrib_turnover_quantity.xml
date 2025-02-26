@@ -13,7 +13,7 @@
                 <!--                <field name="price_total" type="measure"/>-->
                 <!--                <field name="price_total_acc" type="measure"/>-->
                 <field name="distrib_id" type="row"/>
-<!--                <field name="categ_id" type="row"/>-->
+               <field name="categ_id" type="row"/>
                 <field name="product_id" type="row"/>
 <!--                <field name="product_qty" type="row"/>-->
 <!--                <field name="start_product_qty" type="row"/>-->
@@ -77,7 +77,7 @@
         <field name="domain">[('period', '=', 'month')]</field>
         <field name="context">{'search_default_month': 1}</field>
         <!--        <field name="context">{'search_default_month': 1, 'group_by': ['distrib_id','currency_id']}</field>-->
-        <field name="view_mode">tree,pivot</field>
+        <field name="view_mode">pivot,tree</field>
     </record>
 
     <menuitem
