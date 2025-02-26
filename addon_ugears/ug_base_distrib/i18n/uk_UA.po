@@ -215,7 +215,7 @@ msgstr "Корегування залишків"
 #: code:addons/ug_base_distrib/static/src/components/total_renderer/total_renderer.xml:0
 #, python-format
 msgid "Balances need recalculation"
-msgstr "Потребен перерахунок"
+msgstr "Потрібен перерахунок"
 
 #. module: ug_base_distrib
 #. odoo-javascript
