@@ -361,7 +361,6 @@ class DistributorQuantHistory(models.Model):
                     quants.create(quant)
                     relevance._set_relevance(
                         quant['distrib_id'], quant['product_id'])
-            # return
 
         else:
             sql = """
@@ -386,7 +385,7 @@ class DistributorQuantHistory(models.Model):
                                 PRODUCT_ID,
                                 DATE_TRUNC('MONTH', DATE)
                             """
-            history = self.env['distrib.quant.history'].sudo()
+            
             all_relevance = relevance._get_relevance_point()
             for quants in all_relevance:
                 sql1 = sql % (quants.product_id.id, quants.distrib_id.id, quants.date.strftime("%Y-%m-01"))
@@ -399,14 +398,7 @@ class DistributorQuantHistory(models.Model):
                     for quant in stock_quant_result:
                         self.create(quant)
                 relevance._set_relevance(quants.distrib_id.id, quants.product_id.id)  
-                # sql1 = ""      
-
-                # balance = history.balance_product_on_date(
-                #     quants.product_id, quants.distrib_id, quants.date)
-                # self._recalculate_results(
-                #     product_id=quants.product_id, distrib_id=quants.distrib_id, from_date=quants.date, begining_balance=balance)
-                # relevance._set_relevance(quants.distrib_id.id, quants.product_id.id)
-
+                
     def _recalculate_totals_by_monts(self):
         return self._recalculate_totals()
         self = self.sudo()
