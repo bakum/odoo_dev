@@ -207,6 +207,14 @@ class DistributorQuantHistory(models.Model):
             yield curr_date
             curr_date += timedelta(days=1)
 
+    def _month_range_list(self, start_date, end_date):
+        # Return generator for a list datetime.date objects (inclusive) between start_date and end_date (inclusive).
+        curr_date = start_date.replace(day=1, hour=0, minute=0, second=0)
+        end_date = end_date.replace(day=1, hour=0, minute=0, second=0)
+        while curr_date <= end_date:
+            yield curr_date
+            curr_date = (curr_date + timedelta(days=31)).replace(day=1, hour=0, minute=0, second=0)        
+
     def _gather(self, product_id, distrib_id, date):
         removal_strategy_order = 'date DESC'
 
@@ -223,12 +231,16 @@ class DistributorQuantHistory(models.Model):
         #                                                                  default='12')
         # new_date = fields.Datetime.now() + relativedelta(months=int(report_period))
         # date_range = self._date_range_list(from_date, new_date)
-        date_range = self._date_range_list(from_date, fields.Datetime.now())
+        # date_range = self._date_range_list(from_date, fields.Datetime.today())
+        date_range = self._month_range_list(from_date, fields.Datetime.today())
         strategy_order = 'distrib_id,product_id,date'
         for date in date_range:
+            # domain = [('product_id', '=', product_id.id), ('distrib_id', '=', distrib_id.id),
+            #           ('date', '=', date.strftime("%Y-%m-%d 00:00:00"))]
             domain = [('product_id', '=', product_id.id), ('distrib_id', '=', distrib_id.id),
-                      ('date', '=', date.strftime("%Y-%m-%d 00:00:00"))]
-            quants = self.search(domain, order=strategy_order)
+                      ('date', '>=', date.strftime("%Y-%m-01 00:00:00"))]
+            # quants = self.search(domain, order=strategy_order)
+            quants = self.search(domain, order=strategy_order, limit=1)
             if not quants:
                 quants.create({
                     'product_id': product_id.id,
@@ -239,6 +251,8 @@ class DistributorQuantHistory(models.Model):
                 })
 
     def _validate_totals(self, product_id, distrib_id, from_date):
+        relevance = self.env['distrib.point.relevance'].sudo()
+        relevance._set_relevance_point(distrib_id, product_id, from_date)
         result = False
         totals = self.env['distrib.quant.totals'].sudo()
         all_totals = totals.search_count([])
@@ -353,8 +367,11 @@ class DistributorQuantHistory(models.Model):
             return quant.quantity_end
 
         return 0.0
+    
+    def recalculate_totals_by_days(self, for_all=False):
+        self._recalculate_totals_by_days(for_all)
 
-    def _recalculate_totals_by_days(self):
+    def _recalculate_totals_by_days(self, for_all=False):
         self = self.sudo()
         quants = None
         self._cr.execute("""
@@ -368,8 +385,7 @@ class DistributorQuantHistory(models.Model):
                                         DATE
                                     FROM
                                         distrib_quant_history
-                                    WHERE
-			                            NOT VALID_REC
+                                    %s
                                     ORDER BY
                                         DISTRIB_ID,
                                         PRODUCT_ID,
@@ -379,7 +395,7 @@ class DistributorQuantHistory(models.Model):
                             GROUP BY
                                 DISTRIB_ID,
                                 PRODUCT_ID
-                         """)
+                         """ % ('WHERE NOT VALID_REC' if not for_all else ''))
         stock_quant_result = self._cr.fetchall()
         if stock_quant_result:
             for quant in stock_quant_result:

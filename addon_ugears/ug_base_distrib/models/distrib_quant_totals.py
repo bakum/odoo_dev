@@ -204,7 +204,211 @@ class DistributorQuantHistory(models.Model):
 
         return self.search(domain, order=removal_strategy_order)
 
+    def _month_range_list(self, start_date, end_date):
+        # Return generator for a list datetime.date objects (inclusive) between start_date and end_date (inclusive).
+        curr_date = start_date.replace(day=1, hour=0, minute=0, second=0)
+        end_date = end_date.replace(day=1, hour=0, minute=0, second=0)
+        while curr_date <= end_date:
+            yield curr_date
+            curr_date = (curr_date + timedelta(days=31)
+                         ).replace(day=1, hour=0, minute=0, second=0)
+
+    def _recalc_results(self, product_id=None, distrib_id=None, from_date=None, with_validate=True, begining_balance=0.0):
+        self = self.sudo()
+
+        domain = []
+        strategy_order = 'distrib_id,product_id,date'
+        if product_id:
+            domain.append(('product_id', '=', product_id.id))
+        if distrib_id:
+            domain.append(('distrib_id', '=', distrib_id.id))
+        begining_next_step = begining_balance
+        date_range = self._month_range_list(from_date, fields.Datetime.today())
+        for date in date_range:
+            doma = domain.copy()
+            doma.append(
+                ('date', '=', date.strftime("%Y-%m-01 00:00:00")))
+            quants = self.search(domain, order=strategy_order, limit=1)
+            turnover = self._get_turnover_by_month(
+                product_id, distrib_id, date)
+            if not quants:
+                turnover = self._get_turnover_by_month(
+                    product_id, distrib_id, date)
+                self.create({
+                    'product_id': product_id.id,
+                    'date': date,
+                    'distrib_id': distrib_id.id,
+                    'quantity_begin': begining_next_step,
+                    'quantity_income': turnover['quantity_income'],
+                    'quantity_outcome': turnover['quantity_outcome'],
+                    'quantity_end': begining_next_step + turnover['quantity_income'] - turnover['quantity_outcome'],
+                    'valid_rec': with_validate,
+                })
+                begining_next_step = begining_next_step + \
+                    turnover['quantity_income'] - turnover['quantity_outcome']
+            else:
+                quants.write({
+                    'quantity_begin': begining_next_step,
+                    'quantity_income': turnover['quantity_income'],
+                    'quantity_outcome': turnover['quantity_outcome'],
+                    'quantity_end': begining_next_step + turnover['quantity_income'] - turnover['quantity_outcome'],
+                    'valid_rec': with_validate,
+                })
+                begining_next_step = begining_next_step + \
+                    turnover['quantity_income'] - turnover['quantity_outcome']
+            doma = []
+
+    def _recalculate_results(self, product_id=None, distrib_id=None, from_date=None, with_validate=True, begining_balance=0.0):
+        return self._recalc_results(product_id=product_id, distrib_id=distrib_id, from_date=from_date, begining_balance=begining_balance)
+        self = self.sudo()
+
+        domain = []
+        strategy_order = 'distrib_id,product_id,date'
+        if product_id:
+            domain.append(('product_id', '=', product_id.id))
+        if distrib_id:
+            domain.append(('distrib_id', '=', distrib_id.id))
+        if from_date:
+            domain.append(
+                ('date', '>=', from_date.strftime("%Y-%m-01 00:00:00")))
+        quants = self.search(domain, order=strategy_order)
+        begining_next_step = begining_balance
+        date_range = self._month_range_list(from_date, fields.Datetime.today())
+        if not quants:
+            for date in date_range:
+                turnover = self._get_turnover_by_month(
+                    product_id, distrib_id, date)
+                self.create({
+                    'product_id': product_id.id,
+                    'date': date,
+                    'distrib_id': distrib_id.id,
+                    'quantity_begin': begining_next_step,
+                    'quantity_income': turnover['quantity_income'],
+                    'quantity_outcome': turnover['quantity_outcome'],
+                    'quantity_end': begining_next_step + turnover['quantity_income'] - turnover['quantity_outcome'],
+                    'valid_rec': with_validate,
+                })
+                begining_next_step = begining_next_step + \
+                    turnover['quantity_income'] - turnover['quantity_outcome']
+        for quant in quants:
+            turnover = self._get_turnover_by_month(
+                product_id, distrib_id, quant.date)
+            quant.write({
+                'quantity_begin': begining_next_step,
+                'quantity_income': turnover['quantity_income'],
+                'quantity_outcome': turnover['quantity_outcome'],
+                'quantity_end': begining_next_step + turnover['quantity_income'] - turnover['quantity_outcome'],
+                'valid_rec': with_validate,
+            })
+            begining_next_step = begining_next_step + \
+                turnover['quantity_income'] - turnover['quantity_outcome']
+
+    def _get_turnover_by_month(self, product_id, distrib_id, date):
+        history = self.env['distrib.quant.history'].sudo()
+        sql = "select id from DISTRIB_QUANT_HISTORY where product_id=%s and distrib_id=%s and date_trunc('month',date)::date='%s'" % (
+            product_id.id, distrib_id.id, date.strftime("%Y-%m-01"))
+        self._cr.execute(sql)
+        stock_quant_result = self._cr.fetchall()
+        if stock_quant_result:
+            domain = [('id', 'in', list(entry[0]
+                       for entry in stock_quant_result))]
+            turnover = history.read_group(domain, [
+                                          'product_id', 'distrib_id', 'quantity_income:sum', 'quantity_outcome:sum'], ['product_id', 'distrib_id'])
+            if len(turnover) > 0:
+                return {
+                    'quantity_income': turnover[0]['quantity_income'],
+                    'quantity_outcome': turnover[0]['quantity_outcome']
+                }
+
+            return {
+                'quantity_income': 0.0,
+                'quantity_outcome': 0.0
+            }
+
+    def _recalculate_totals(self):
+        self = self.sudo()
+        relevance = self.env['distrib.point.relevance'].sudo()
+        all_totals = self.search_count([])
+        if all_totals == 0:
+            quants = None
+            self._cr.execute("""
+                            SELECT
+                                DISTRIB_ID,
+                                PRODUCT_ID,
+                                DATE_TRUNC('MONTH', DATE) AS DATE,
+                                FIRST (QUANTITY_BEGIN) QUANTITY_BEGIN,
+                                SUM(QUANTITY_INCOME) QUANTITY_INCOME,
+                                SUM(QUANTITY_OUTCOME) QUANTITY_OUTCOME,
+                                LAST (QUANTITY_END) QUANTITY_END,
+                                TRUE as valid_rec
+                            FROM
+                                DISTRIB_QUANT_HISTORY
+                            GROUP BY
+                                DISTRIB_ID,
+                                PRODUCT_ID,
+                                DATE_TRUNC('MONTH', DATE)
+                            ORDER BY
+                                DISTRIB_ID,
+                                PRODUCT_ID,
+                                DATE_TRUNC('MONTH', DATE)
+                            """)
+            stock_quant_result = self._cr.dictfetchall()
+            self.search([]).unlink()
+            if stock_quant_result:
+                for quant in stock_quant_result:
+                    quants = self._gather(
+                        quant['product_id'], distrib_id=quant['distrib_id'], date=quant['date'])
+                    quants.create(quant)
+                    relevance._set_relevance(
+                        quant['distrib_id'], quant['product_id'])
+            # return
+
+        else:
+            sql = """
+                            SELECT
+                                DISTRIB_ID,
+                                PRODUCT_ID,
+                                DATE_TRUNC('MONTH', DATE) AS DATE,
+                                FIRST (QUANTITY_BEGIN) QUANTITY_BEGIN,
+                                SUM(QUANTITY_INCOME) QUANTITY_INCOME,
+                                SUM(QUANTITY_OUTCOME) QUANTITY_OUTCOME,
+                                LAST (QUANTITY_END) QUANTITY_END,
+                                TRUE as valid_rec
+                            FROM
+                                DISTRIB_QUANT_HISTORY
+                            where product_id=%s and DISTRIB_ID = %s and DATE_TRUNC('MONTH', date)::date >= '%s'
+                            GROUP BY
+                                DISTRIB_ID,
+                                PRODUCT_ID,
+                                DATE_TRUNC('MONTH', DATE)
+                            ORDER BY
+                                DISTRIB_ID,
+                                PRODUCT_ID,
+                                DATE_TRUNC('MONTH', DATE)
+                            """
+            history = self.env['distrib.quant.history'].sudo()
+            all_relevance = relevance._get_relevance_point()
+            for quants in all_relevance:
+                sql1 = sql % (quants.product_id.id, quants.distrib_id.id, quants.date.strftime("%Y-%m-01"))
+                domain = [('product_id', '=', quants.product_id.id),('distrib_id', '=', quants.distrib_id.id),('date', '>=', quants.date.strftime("%Y-%m-01"))]
+                strategy_order = 'distrib_id,product_id,date'
+                self.search(domain,order=strategy_order).unlink()
+                self._cr.execute(sql1)
+                stock_quant_result = self._cr.dictfetchall()
+                if stock_quant_result:
+                    for quant in stock_quant_result:
+                        self.create(quant)
+                relevance._set_relevance(quants.distrib_id.id, quants.product_id.id)  
+                # sql1 = ""      
+
+                # balance = history.balance_product_on_date(
+                #     quants.product_id, quants.distrib_id, quants.date)
+                # self._recalculate_results(
+                #     product_id=quants.product_id, distrib_id=quants.distrib_id, from_date=quants.date, begining_balance=balance)
+                # relevance._set_relevance(quants.distrib_id.id, quants.product_id.id)
+
     def _recalculate_totals_by_monts(self):
+        return self._recalculate_totals()
         self = self.sudo()
         start_totals = self.search([], limit=1, order='date')
         history = self.env['distrib.quant.history'].sudo()
@@ -256,6 +460,9 @@ class DistributorQuantHistory(models.Model):
                     #     quants.write(quant)
                     # elif not quants:
                     quants.create(quant)
+                    relevance = self.env['distrib.point.relevance'].sudo()
+                    relevance._set_relevance(
+                        quant['distrib_id'], quant['product_id'])
             return
 
         not_valid_totals = self.search(

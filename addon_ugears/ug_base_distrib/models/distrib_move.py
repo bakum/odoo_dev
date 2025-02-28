@@ -307,6 +307,9 @@ class DistributorMove(models.Model):
             # IMPORTANT to close the cursor
             new_cr.close()
             return {}
+        
+    def run_recalculate_job(self, thread=True): 
+        self._run_recalculate_job(thread)   
 
     def _run_recalculate_job(self, thread=True):
         if thread:

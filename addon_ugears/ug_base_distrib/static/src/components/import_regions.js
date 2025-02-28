@@ -18,6 +18,7 @@ export class OwlRegionRel extends Component {
         this.file = useRef("file")
         this.rpc = useService("rpc")
         this.actionService = useService("action")
+        this.orm = useService("orm")
         onWillStart(async () => {
             await loadJS("/ug_base_distrib/static/src/lib/filepond/filepond-plugin-file-validate-type.js")
             await loadJS("/ug_base_distrib/static/src/lib/filepond/filepond.min.js")
@@ -61,6 +62,10 @@ export class OwlRegionRel extends Component {
                 allowMultiple: false,
             })
         })
+    }
+
+    async onRecalculate() {
+        return await this.orm.call('distrib.distributors.move', 'run_recalculate_job', [false,false], {})
     }
 
     onImport() {

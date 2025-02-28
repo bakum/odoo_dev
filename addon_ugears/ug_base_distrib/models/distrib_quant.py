@@ -352,7 +352,7 @@ class DistributorQuant(models.Model):
                 self.write({'inventory_diff_quantity': 0})
                 return
         moves = self.env['distrib.distributors.move']
-        res = moves.with_context(inventory_mode=False).create(move_vals)
+        res = moves.with_context(inventory_mode=False, recalc_totals=True).create(move_vals)
         res.action_done()
         self.write({'inventory_quantity': self.quantity, 'user_id': False, 'import_date': False})
         self.write({'inventory_diff_quantity': 0})

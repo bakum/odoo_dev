@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="region.OwlRegionRel" owl="1">
-         <div class="vh-100 overflow-auto bg-muted">
+        <div class="vh-100 overflow-auto bg-muted">
             <div class="row m-3">
                 <div class="col-lg-12">
                     <div class="row">
@@ -13,6 +13,9 @@
                                         <i class="fa fa-download"/>
                                         Download Regions Relations Template
                                     </button>
+                                    <button type="button" t-on-click="onRecalculate" class="btn btn-lg btn-outline-primary">
+                                        Run Recalculations Totals
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -20,19 +23,19 @@
                     <div class="row">
                         <div class="col-lg-6 m-0 p-0">
                             <div class="shadow-sm border m-2 p-4 bg-white text-center">
-<!--                                <div class="h1 fw-bold text-dark" style="font-size: 48px"><span t-esc="props.value"/></div>-->
-<!--                                <div class="h3 text-muted"><span t-esc="props.name"/></div>-->
+                                <!--                                <div class="h1 fw-bold text-dark" style="font-size: 48px"><span t-esc="props.value"/></div>-->
+                                <!--                                <div class="h3 text-muted"><span t-esc="props.name"/></div>-->
                                 <div class="h3 mt-5">
                                     <div class="h1 mb-3">File Uploader</div>
-                                        <div class="mb-3">
-                                            <label class="form-label-me-2">Upload file</label>
-                                        </div>
+                                    <div class="mb-3">
+                                        <label class="form-label-me-2">Upload file</label>
+                                    </div>
                                     <div class="mb-3">
                                         <input class="form-control" type="file"
                                                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                                                t-ref="file"/>
                                     </div>
-<!--                                    <input class="form-control" t-model="state.serverId"/>-->
+                                    <!--                                    <input class="form-control" t-model="state.serverId"/>-->
                                     <t t-if="state.serverId > 0">
                                         <div class="mb-3">
                                             <button type="button" t-on-click="onImport"
@@ -50,13 +53,13 @@
                             <div class="o_content mb-10">
                                 <div class="o_view_nocontent">
                                     <div class="o_nocontent_help">
-                            <p class="o_view_nocontent_smiling_face">
+                                        <p class="o_view_nocontent_smiling_face">
                                 Upload an Excel file to import
                             </p>
-                            <p>
+                                        <p>
                                 Excel files are recommended as formatting is automatic.
                             </p>
-                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -73,6 +76,6 @@
                     </div>
                 </div>
             </div>
-         </div>
+        </div>
     </t>
 </templates>

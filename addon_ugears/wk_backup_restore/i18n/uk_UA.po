@@ -1,0 +1,732 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* wk_backup_restore
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-02-27 14:01+0000\n"
+"PO-Revision-Date: 2025-02-27 14:01+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: wk_backup_restore
+#: model_terms:ir.ui.view,arch_db:wk_backup_restore.backup_process_form_view
+msgid ""
+"<strong attrs=\"{'invisible':[('enable_retention','=',False), "
+"('backup_location', 'in', ['local', 'remote'])]}\">Note:</strong>"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model_terms:ir.ui.view,arch_db:wk_backup_restore.backup_remote_server_form_view
+msgid ""
+"<strong>NOTE:</strong> Kindly ensure the below mentioned points before "
+"configuring the backup remote server:"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_remote_server__active
+msgid "Active"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model_terms:ir.ui.view,arch_db:wk_backup_restore.backup_process_form_view
+msgid ""
+"After enabling Drop Database backup you need to set backup retention count."
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.ui.menu,name:wk_backup_restore.restore_menu
+msgid "Backup"
+msgstr "Резервне копіювання"
+
+#. module: wk_backup_restore
+#: model_terms:ir.ui.view,arch_db:wk_backup_restore.backup_custom_message_wizard_view
+msgid "Backup Custom Message"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model,name:wk_backup_restore.model_backup_custom_message_wizard
+msgid "Backup Custom Message Wizard"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model,name:wk_backup_restore.model_backup_deletion_confirmation
+msgid "Backup Deletion Confirmation Wizard"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__backup_details_ids
+#: model_terms:ir.ui.view,arch_db:wk_backup_restore.backup_process_form_view
+msgid "Backup Details"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.actions.act_window,name:wk_backup_restore.action_backup_deletion_confirmation_wizard
+msgid "Backup Details Deletion Confirmation"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__backup_format
+msgid "Backup Format"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__backup_location
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process_detail__backup_location
+msgid "Backup Location"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.ui.menu,name:wk_backup_restore.backup_root_menu
+msgid "Backup Operation"
+msgstr "Резервне копіювання"
+
+#. module: wk_backup_restore
+#: model:ir.actions.act_window,name:wk_backup_restore.backup_process_action_view
+#: model:ir.model,name:wk_backup_restore.model_backup_process
+#: model:ir.ui.menu,name:wk_backup_restore.menu_backup_process
+msgid "Backup Process"
+msgstr "Процес резервного копіювання"
+
+#. module: wk_backup_restore
+#: model_terms:ir.ui.view,arch_db:wk_backup_restore.backup_deletion_confirmation_wizard_view
+msgid "Backup Process Deletion Confirmation"
+msgstr "Підтвердження видалення процесу резервного копіювання"
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_deletion_confirmation__backup_id
+msgid "Backup Process Detail"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model,name:wk_backup_restore.model_backup_process_detail
+msgid "Backup Process Details"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.actions.server,name:wk_backup_restore.backup_file_remove_cron_ir_actions_server
+#: model:ir.cron,cron_name:wk_backup_restore.backup_file_remove_cron
+msgid "Backup Process File Remove Cron"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process_detail__backup_process_id
+msgid "Backup Process Id"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.actions.server,name:wk_backup_restore.backup_process_ignite_crone_ir_actions_server
+#: model:ir.cron,cron_name:wk_backup_restore.backup_process_ignite_crone
+msgid "Backup Process Ignite Cron"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.actions.act_window,name:wk_backup_restore.backup_remote_server_action_view
+#: model:ir.model,name:wk_backup_restore.model_backup_remote_server
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__remote_server_id
+msgid "Backup Remote Server"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__retention
+msgid "Backup Retention Count"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__backup_starting_time
+msgid "Backup Starting Time"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process_detail__backup_date_time
+msgid "Backup Time"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields.selection,name:wk_backup_restore.selection__backup_process__state__cancel
+#: model_terms:ir.ui.view,arch_db:wk_backup_restore.backup_deletion_confirmation_wizard_view
+#: model_terms:ir.ui.view,arch_db:wk_backup_restore.backup_process_form_view
+msgid "Cancel"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model_terms:ir.ui.view,arch_db:wk_backup_restore.backup_process_form_view
+msgid "Cancel Process"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_process__enable_retention
+msgid "Check if you want to drop old backups stored on the server."
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_process__update_requested
+msgid "Checked if any backup is requested in the database backup."
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.ui.menu,name:wk_backup_restore.backup_configuration_menu
+msgid "Configuration"
+msgstr "Налаштування"
+
+#. module: wk_backup_restore
+#: model:ir.model.fields.selection,name:wk_backup_restore.selection__backup_process__state__confirm
+#: model_terms:ir.ui.view,arch_db:wk_backup_restore.backup_process_form_view
+msgid "Confirm"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_process__retention
+msgid ""
+"Count of recent backups that will be retained after dropping old backups on "
+"server."
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_custom_message_wizard__create_uid
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_deletion_confirmation__create_uid
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__create_uid
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process_detail__create_uid
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_remote_server__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_custom_message_wizard__create_date
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_deletion_confirmation__create_date
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__create_date
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process_detail__create_date
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_remote_server__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_process__state
+msgid "Current state of the backup process."
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields.selection,name:wk_backup_restore.selection__backup_process__frequency_cycle__daily
+msgid "Daily"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__db_name
+msgid "Database Name"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_process__db_name
+msgid "Database used for the creating the backup."
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_remote_server__def_backup_dir
+msgid "Default Remote Backup Directory"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model_terms:ir.ui.view,arch_db:wk_backup_restore.backup_deletion_confirmation_wizard_view
+#: model_terms:ir.ui.view,arch_db:wk_backup_restore.backup_process_form_view
+msgid "Delete"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_process__backup_details_ids
+msgid "Details of the database backups that has been created."
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_custom_message_wizard__display_name
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_deletion_confirmation__display_name
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__display_name
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process_detail__display_name
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_remote_server__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_process__name
+msgid "Display name for the backup process."
+msgstr ""
+
+#. module: wk_backup_restore
+#: model_terms:ir.ui.view,arch_db:wk_backup_restore.backup_process_form_view
+msgid "Download"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields.selection,name:wk_backup_restore.selection__backup_process__state__draft
+#: model:ir.model.fields.selection,name:wk_backup_restore.selection__backup_remote_server__state__draft
+msgid "Draft"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__enable_retention
+msgid "Drop Old Backups"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process_detail__file_name
+msgid "File Name"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process_detail__file_path
+msgid "File Path"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_process__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__frequency
+msgid "Frequency"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__frequency_cycle
+msgid "Frequency Cycle"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_process__frequency
+msgid "Frequency for backuping the database."
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_custom_message_wizard__id
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_deletion_confirmation__id
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__id
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process_detail__id
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_remote_server__id
+msgid "ID"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_process__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_process__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_process__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_custom_message_wizard____last_update
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_deletion_confirmation____last_update
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process____last_update
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process_detail____last_update
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_remote_server____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_custom_message_wizard__write_uid
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_deletion_confirmation__write_uid
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__write_uid
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process_detail__write_uid
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_remote_server__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_custom_message_wizard__write_date
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_deletion_confirmation__write_date
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__write_date
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process_detail__write_date
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_remote_server__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields.selection,name:wk_backup_restore.selection__backup_process__backup_location__local
+msgid "Local"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__message_main_attachment_id
+msgid "Main Attachment"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.actions.act_window,name:wk_backup_restore.action_backup_custom_message_wizard
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_custom_message_wizard__message
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_deletion_confirmation__message
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process_detail__message
+msgid "Message"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields.selection,name:wk_backup_restore.selection__backup_process__frequency_cycle__monthly
+msgid "Monthly"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process_detail__name
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_remote_server__name
+#: model_terms:ir.ui.view,arch_db:wk_backup_restore.backup_process_form_view
+#: model_terms:ir.ui.view,arch_db:wk_backup_restore.backup_remote_server_form_view
+msgid "Name"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_remote_server__name
+msgid "Name of the backup remote server"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_process__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_process__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model_terms:ir.ui.view,arch_db:wk_backup_restore.backup_custom_message_wizard_view
+msgid "OK"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_remote_server__sftp_password
+msgid "Password"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__name
+msgid "Process Name"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields.selection,name:wk_backup_restore.selection__backup_process__backup_location__remote
+msgid "Remote Server"
+msgstr "Віддалений сервер"
+
+#. module: wk_backup_restore
+#: model:ir.ui.menu,name:wk_backup_restore.backup_remote_server_menu
+msgid "Remote Servers"
+msgstr "Віддалені сервера"
+
+#. module: wk_backup_restore
+#: model_terms:ir.ui.view,arch_db:wk_backup_restore.backup_remote_server_form_view
+msgid "Reset to draft"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__activity_user_id
+msgid "Responsible User"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields.selection,name:wk_backup_restore.selection__backup_process__state__running
+msgid "Running"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model_terms:ir.ui.view,arch_db:wk_backup_restore.backup_remote_server_form_view
+msgid "SFTP Details"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_remote_server__sftp_host
+msgid "SFTP Host"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_remote_server__sftp_port
+msgid "SFTP Port"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_remote_server__sftp_host
+msgid "SFTP host for establishing connection to the backup remote server"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_remote_server__sftp_password
+msgid "SFTP password for establishing connection to the backup remote server"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_remote_server__sftp_port
+msgid "SFTP port for establishing connection to the backup remote server"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_remote_server__sftp_user
+msgid "SFTP user for establishing connection to the backup remote server"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_process__frequency_cycle
+msgid "Select frequency cycle of Database Backup."
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_process__backup_format
+msgid "Select the file format of the data backup file."
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_process__backup_location
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_process_detail__backup_location
+msgid "Server where the backup file will be stored."
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_process__backup_starting_time
+msgid "Set Database Backup start date and time."
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__state
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_remote_server__state
+msgid "State"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_remote_server__state
+msgid "State of the backup remote server"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process_detail__status
+msgid "Status"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_process__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__storage_path
+msgid "Storage Path"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_remote_server__temp_backup_dir
+msgid "Temporary Backup Directory"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model_terms:ir.ui.view,arch_db:wk_backup_restore.backup_process_form_view
+#: model_terms:ir.ui.view,arch_db:wk_backup_restore.backup_remote_server_form_view
+msgid "Test Connection"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model_terms:ir.ui.view,arch_db:wk_backup_restore.backup_process_form_view
+msgid "The Backup Retention Count is the number of backups you wish to keep."
+msgstr ""
+
+#. module: wk_backup_restore
+#: model_terms:ir.ui.view,arch_db:wk_backup_restore.backup_remote_server_form_view
+msgid ""
+"The SFTP user must have the permissions and ownership of the default remote "
+"backup directory."
+msgstr ""
+
+#. module: wk_backup_restore
+#: model_terms:ir.ui.view,arch_db:wk_backup_restore.backup_remote_server_form_view
+msgid "The SFTP user must have the ssh access to the remote server."
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_remote_server__def_backup_dir
+msgid ""
+"The default directory path on the remote server where the backups of the "
+"saas client instances will be stored. The directory must have appropriate "
+"permissions."
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_process__storage_path
+msgid "The directory path where the backup files will be stored on server."
+msgstr ""
+
+#. module: wk_backup_restore
+#: model_terms:ir.ui.view,arch_db:wk_backup_restore.backup_remote_server_form_view
+msgid ""
+"The temporary backup directory must be present on the main server along with"
+" the appropriate permissions for odoo user."
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_remote_server__temp_backup_dir
+msgid ""
+"The temporary backup path where the backups are stored before moving to the "
+"remote server. The temporary backup directory must be present on the main "
+"server along with the appropriate permissions."
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields.selection,name:wk_backup_restore.selection__backup_process__frequency_cycle__half_day
+msgid "Twice a day"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,help:wk_backup_restore.field_backup_process__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process__update_requested
+msgid "Update Requested"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_process_detail__url
+msgid "Url"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields,field_description:wk_backup_restore.field_backup_remote_server__sftp_user
+msgid "User"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model_terms:ir.ui.view,arch_db:wk_backup_restore.backup_remote_server_form_view
+msgid "Validate"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields.selection,name:wk_backup_restore.selection__backup_remote_server__state__validated
+msgid "Validated"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields.selection,name:wk_backup_restore.selection__backup_process__frequency_cycle__weekly
+msgid "Weekly"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields.selection,name:wk_backup_restore.selection__backup_process__frequency_cycle__yearly
+msgid "Yearly"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields.selection,name:wk_backup_restore.selection__backup_process__backup_format__dump
+msgid "pg_dump custom format (without filestore)"
+msgstr ""
+
+#. module: wk_backup_restore
+#: model:ir.model.fields.selection,name:wk_backup_restore.selection__backup_process__backup_format__zip
+msgid "zip (includes filestore)"
+msgstr ""
