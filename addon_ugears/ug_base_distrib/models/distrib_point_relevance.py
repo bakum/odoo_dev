@@ -23,7 +23,7 @@ class DistributoPointOfRelevance(models.Model):
                      ["distrib_id, product_id, date"])
         
     def _get_relevance_point(self):
-        domain = [('date', '<', fields.Datetime.today().strftime("%Y-%m-%d"))]
+        domain = [('date', '<=', fields.Datetime.today().strftime("%Y-%m-%d"))]
         return self.search(domain, order='date asc')   
 
     def _set_relevance_point(self, distrib_id, product_id, in_date):

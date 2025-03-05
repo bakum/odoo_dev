@@ -404,3 +404,33 @@ class DistributorQuantHistory(models.Model):
                     quants.distrib_id, quants.product_id, quants.date)
                 self._recalculate_results(
                     product_id=quants.product_id, distrib_id=quants.distrib_id, from_date=quants.date)
+                
+    def _invalidate_last_records(self):
+        self = self.sudo()
+        quants = None
+        self._cr.execute("""
+                         SELECT FIRST (ID) AS ID
+                            FROM
+                                (
+                                    SELECT
+                                        ID,
+                                        DISTRIB_ID,
+                                        PRODUCT_ID,
+                                        DATE
+                                    FROM
+                                        distrib_quant_history
+                                    ORDER BY
+                                        DISTRIB_ID,
+                                        PRODUCT_ID,
+                                        DATE DESC
+                                    FOR NO KEY UPDATE SKIP LOCKED
+                                ) AS MAIN
+                            GROUP BY
+                                DISTRIB_ID,
+                                PRODUCT_ID
+                         """)
+        stock_quant_result = self._cr.fetchall()
+        if stock_quant_result:
+            for quant in stock_quant_result:
+                quants = self.browse(quant)   
+                quants.write({'valid_rec' : False})         
