@@ -38,7 +38,7 @@
         <field name="doall" eval="False"/>
     </record>
 
-    <record id="recalculate_totals_by_days_cron" model="ir.cron">
+    <!-- <record id="recalculate_totals_by_days_cron" model="ir.cron">
         <field name="name">Recalculate Totals By Days Cron Job</field>
         <field name="model_id" ref="model_distrib_quant_history"/>
         <field name="state">code</field>
@@ -55,6 +55,18 @@
         <field name="model_id" ref="model_distrib_quant_totals"/>
         <field name="state">code</field>
         <field name="code">model._recalculate_totals_by_monts()</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name='interval_number'>1</field>
+        <field name='interval_type'>days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+    </record> -->
+
+    <record id="recalculate_job_cron" model="ir.cron">
+        <field name="name">Recalculate Totals Cron Job</field>
+        <field name="model_id" ref="model_distrib_distributors_move"/>
+        <field name="state">code</field>
+        <field name="code">model._run_recalculate_job_no_thread()</field>
         <field name="user_id" ref="base.user_root"/>
         <field name='interval_number'>1</field>
         <field name='interval_type'>days</field>

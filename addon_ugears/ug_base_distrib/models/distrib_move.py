@@ -308,25 +308,29 @@ class DistributorMove(models.Model):
             # IMPORTANT to close the cursor
             new_cr.close()
             return {}
-        
-    def run_recalculate_job(self, thread=True): 
-        self._run_recalculate_job(thread)   
+
+    def run_recalculate_job(self, thread=True):
+        self._run_recalculate_job(thread)
 
     def _run_recalculate_job(self, thread=True):
         if thread:
-            threaded_calculation = threading.Thread(target=self._recalculate_thread_job)
+            threaded_calculation = threading.Thread(
+                target=self._recalculate_thread_job)
             threaded_calculation.start()
         else:
-            by_days = self.env['distrib.quant.history']
-            by_months = self.env['distrib.quant.totals']
-            _logger.info("posting %s starting", 'by_days')
-            by_days._invalidate_last_records()
-            self._cr.commit()
-            by_days._recalculate_totals_by_days()
-            _logger.info("posting %s updated and released", 'by_days')
-            self._cr.commit()
+            self._run_recalculate_job_no_thread()
 
-            _logger.info("posting %s starting", 'by_months')
-            by_months._recalculate_totals_by_monts()
-            _logger.info("posting %s updated and released", 'by_months')
-            return {}
+    def _run_recalculate_job_no_thread(self):
+        by_days = self.env['distrib.quant.history']
+        by_months = self.env['distrib.quant.totals']
+        _logger.info("posting %s starting", 'by_days')
+        by_days._invalidate_last_records()
+        self._cr.commit()
+        by_days._recalculate_totals_by_days()
+        _logger.info("posting %s updated and released", 'by_days')
+        self._cr.commit()
+
+        _logger.info("posting %s starting", 'by_months')
+        by_months._recalculate_totals_by_monts()
+        _logger.info("posting %s updated and released", 'by_months')
+        return {}
