@@ -271,6 +271,7 @@ class Website(models.Model):
         :returns: list of product.pricelist ids
         :rtype: list
         """
+        distrib_user = not request.env.user.has_group('ug_base_distrib.group_distrib_manager') and request.env.user.has_group('ug_base_distrib.group_distrib_user')
         self.ensure_one()
         pricelists = self.env['product.pricelist']
         pricelist_distrib = request.env.user.distrib_id.pricelist_id
@@ -314,6 +315,8 @@ class Website(models.Model):
             if pricelist_distrib:
                 pricelists |= pricelist_distrib
 
+        if distrib_user:
+            pricelists &= pricelist_distrib
         # This method is cached, must not return records! See also #8795
         # sudo is needed to ensure no records rules are applied during the sorted call,
         # we only want to reorder the records on hand, not filter them.
