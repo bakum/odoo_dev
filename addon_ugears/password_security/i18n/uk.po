@@ -313,7 +313,7 @@ msgstr ""
 #. module: password_security
 #: model_terms:ir.ui.view,arch_db:password_security.res_config_settings_view_form
 msgid "User can change password in"
-msgstr "Користувач може змінити пароль у"
+msgstr "Користувач може змінити пароль через"
 
 #. module: password_security
 #: model_terms:ir.ui.view,arch_db:password_security.res_config_settings_view_form
@@ -328,4 +328,4 @@ msgstr "годин знову."
 #. module: password_security
 #: model_terms:ir.ui.view,arch_db:password_security.res_config_settings_view_form
 msgid "previous passwords."
-msgstr "попередні паролі."
+msgstr "попередніх паролів."
