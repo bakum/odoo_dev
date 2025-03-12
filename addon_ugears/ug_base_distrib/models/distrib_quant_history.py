@@ -398,12 +398,20 @@ class DistributorQuantHistory(models.Model):
                          """ % ('WHERE NOT VALID_REC' if not for_all else ''))
         stock_quant_result = self._cr.fetchall()
         if stock_quant_result:
-            for quant in stock_quant_result:
-                quants = self.browse(quant)
+            ids = [t[0] for t in stock_quant_result]
+            quants = self.browse(ids)
+            for quant in quants:
                 self._quants_for_all_days(
-                    quants.distrib_id, quants.product_id, quants.date)
+                    quant.distrib_id, quant.product_id, quant.date)
                 self._recalculate_results(
-                    product_id=quants.product_id, distrib_id=quants.distrib_id, from_date=quants.date)
+                    product_id=quant.product_id, distrib_id=quant.distrib_id, from_date=quant.date)
+
+            # for quant in stock_quant_result:
+            #     quants = self.browse(quant)
+            #     self._quants_for_all_days(
+            #         quants.distrib_id, quants.product_id, quants.date)
+            #     self._recalculate_results(
+            #         product_id=quants.product_id, distrib_id=quants.distrib_id, from_date=quants.date)
                 
     def _invalidate_last_records(self):
         self = self.sudo()
@@ -431,6 +439,10 @@ class DistributorQuantHistory(models.Model):
                          """)
         stock_quant_result = self._cr.fetchall()
         if stock_quant_result:
-            for quant in stock_quant_result:
-                quants = self.browse(quant)   
-                quants.write({'valid_rec' : False})         
+            ids = [t[0] for t in stock_quant_result]
+            quants = self.browse(ids)
+            for quant in quants:
+                quant.write({'valid_rec' : False})
+            # for quant in stock_quant_result:
+            #     quants = self.browse(quant)   
+            #     quants.write({'valid_rec' : False})         
