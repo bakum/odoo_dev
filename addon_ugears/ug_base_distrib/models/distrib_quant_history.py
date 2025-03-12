@@ -213,7 +213,8 @@ class DistributorQuantHistory(models.Model):
         end_date = end_date.replace(day=1, hour=0, minute=0, second=0)
         while curr_date <= end_date:
             yield curr_date
-            curr_date = (curr_date + timedelta(days=31)).replace(day=1, hour=0, minute=0, second=0)        
+            curr_date = (curr_date + timedelta(days=31)
+                         ).replace(day=1, hour=0, minute=0, second=0)
 
     def _gather(self, product_id, distrib_id, date):
         removal_strategy_order = 'date DESC'
@@ -340,7 +341,7 @@ class DistributorQuantHistory(models.Model):
         #     self._quants_for_all_days(distrib_id, product_id, in_date)
         if not recalc_totals:
             self._recalculate_results(
-            product_id=product_id, distrib_id=distrib_id, from_date=in_date, with_validate=False)   
+                product_id=product_id, distrib_id=distrib_id, from_date=in_date, with_validate=False)
 
     def balance_product_on_date(self, product_id, distrib_id, on_date=None):
         self = self.sudo()
@@ -367,7 +368,7 @@ class DistributorQuantHistory(models.Model):
             return quant.quantity_end
 
         return 0.0
-    
+
     def recalculate_totals_by_days(self, for_all=False):
         self._recalculate_totals_by_days(for_all)
 
@@ -406,13 +407,6 @@ class DistributorQuantHistory(models.Model):
                 self._recalculate_results(
                     product_id=quant.product_id, distrib_id=quant.distrib_id, from_date=quant.date)
 
-            # for quant in stock_quant_result:
-            #     quants = self.browse(quant)
-            #     self._quants_for_all_days(
-            #         quants.distrib_id, quants.product_id, quants.date)
-            #     self._recalculate_results(
-            #         product_id=quants.product_id, distrib_id=quants.distrib_id, from_date=quants.date)
-                
     def _invalidate_last_records(self):
         self = self.sudo()
         quants = None
@@ -442,7 +436,4 @@ class DistributorQuantHistory(models.Model):
             ids = [t[0] for t in stock_quant_result]
             quants = self.browse(ids)
             for quant in quants:
-                quant.write({'valid_rec' : False})
-            # for quant in stock_quant_result:
-            #     quants = self.browse(quant)   
-            #     quants.write({'valid_rec' : False})         
+                quant.write({'valid_rec': False})
