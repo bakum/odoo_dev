@@ -206,6 +206,19 @@ class WebsiteWholeSale(WebsiteSale):
                 layout_mode = 'grid'
             request.session['website_sale_shop_layout_mode'] = layout_mode
 
+        order_enabled = post.get('order', '')
+        if order_enabled and 'list_price' in order_enabled:
+            all_products_prices = search_product._get_sales_prices(pricelist)
+            if 'asc' in order_enabled:
+                output = dict(sorted(all_products_prices.items(), key=lambda item: item[1]['price_reduce']))
+            else:
+                output = dict(
+                    sorted(all_products_prices.items(), key=lambda item: item[1]['price_reduce'], reverse=True))
+
+            product_ids = list(output.keys())
+            search_product = request.env['product.template'].browse(product_ids)
+            products = search_product[offset:offset + ppg]
+
         products_prices = lazy(lambda: products._get_sales_prices(pricelist))
 
         fiscal_position_id = website._get_current_fiscal_position_id(request.env.user.partner_id)
