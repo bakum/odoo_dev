@@ -41,6 +41,9 @@
 <!--                <field name="product_id" filter_domain="[('product_id.name', 'ilike', self)]"/>-->
                 <separator/>
                 <filter string="On Hand" name="on_hand" domain="[('quantity', '!=', 0)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Distributor" name="distrib" domain="[]" context="{'group_by':'distrib_id'}"/>
+                </group>
             </search>
         </field>
     </record>
@@ -48,6 +51,7 @@
     <record id="action_distrib_quants" model="ir.actions.act_window">
         <field name="name">Balance adjustment</field>
         <field name="res_model">distrib.quant</field>
+        <field name="context">{'search_default_distrib': 1, 'search_default_on_hand': 1}</field>
         <field name="view_mode">tree</field>
     </record>
 
