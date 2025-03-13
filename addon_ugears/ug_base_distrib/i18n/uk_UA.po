@@ -1384,14 +1384,14 @@ msgstr "Імпортувати рухи"
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_move_in
 #, python-format
 msgid "Income"
-msgstr "Прибуття"
+msgstr "Прихід"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__in_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant_history__date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant_totals__date
 msgid "Incoming Date"
-msgstr "Дата прибуття"
+msgstr "Дата приходу"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_product_product__incoming_qty_dist
@@ -2673,7 +2673,7 @@ msgstr ""
 #: code:addons/ug_base_distrib/static/src/views/import_distrib_move_button.xml:0
 #, python-format
 msgid "Template Incoming Move"
-msgstr "Шаблон прибуття"
+msgstr "Шаблон приходу"
 
 #. module: ug_base_distrib
 #. odoo-javascript
