@@ -828,6 +828,15 @@
         </xpath>
     </template>
 
+    <template id="reduction_code_promotion" inherit_id="website_sale.total" name="Promo Code">
+        <xpath expr="//div[@id='cart_total']//table/tr[last()]" position="replace">
+            <tr t-if="not hide_promotions">
+                <td colspan="3" class="text-center text-xl-end border-0">
+                </td>
+            </tr>
+        </xpath>
+    </template>
+
 <!--    <template-->
 <!--        inherit_id="website_sale.products_categories"-->
 <!--        id="hide_categories_recursive_helper"-->
