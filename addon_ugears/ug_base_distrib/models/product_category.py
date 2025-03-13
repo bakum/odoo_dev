@@ -58,6 +58,53 @@ class PublicProduct(models.Model):
         return [(template.id, '%s' % (template.name))
                 for template in self]
 
+    def _compute_item_count(self):
+        is_manager = self.env.user.has_group("ug_base_distrib.group_distrib_manager")
+        is_user = self.env.user.has_group("ug_base_distrib.group_distrib_user")
+        user = is_user and not is_manager
+
+        for template in self:
+            # Pricelist item count counts the rules applicable on current template or on its variants.
+            if user:
+                template.pricelist_item_count = template.env['product.pricelist.item'].search_count([
+                    '&', ('pricelist_id', '=', self.env.user.distrib_id.pricelist_id.id), '|', ('product_tmpl_id', '=', template.id), ('product_id', 'in', template.product_variant_ids.ids)])
+            else:
+                template.pricelist_item_count = template.env['product.pricelist.item'].search_count([
+                    '|', ('product_tmpl_id', '=', template.id), ('product_id', 'in', template.product_variant_ids.ids)])
+
+    def open_pricelist_rules(self):
+        self.ensure_one()
+        is_manager = self.env.user.has_group("ug_base_distrib.group_distrib_manager")
+        is_user = self.env.user.has_group("ug_base_distrib.group_distrib_user")
+        user = is_user and not is_manager
+        domain = ['|',
+                  ('product_tmpl_id', '=', self.id),
+                  ('product_id', 'in', self.product_variant_ids.ids)]
+        if user:
+            context = {
+                    'default_product_tmpl_id': self.id,
+                    'default_applied_on': '1_product',
+                    'default_pricelist_id': self.env.user.distrib_id.pricelist_id.id,
+                    'product_without_variants': self.product_variant_count == 1,
+                }
+        else:
+            context = {
+                'default_product_tmpl_id': self.id,
+                'default_applied_on': '1_product',
+                'product_without_variants': self.product_variant_count == 1,
+            }
+
+        return {
+            'name': _('Price Rules'),
+            'view_mode': 'tree,form',
+            'views': [(self.env.ref('product.product_pricelist_item_tree_view_from_product').id, 'tree')],
+            'res_model': 'product.pricelist.item',
+            'type': 'ir.actions.act_window',
+            'target': 'current',
+            'domain': domain,
+            'context': context,
+        }
+
 
 class PublicProductDistrib(models.Model):
     _inherit = "product.product"
