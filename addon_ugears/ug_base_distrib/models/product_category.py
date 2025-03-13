@@ -77,22 +77,15 @@ class PublicProduct(models.Model):
         is_manager = self.env.user.has_group("ug_base_distrib.group_distrib_manager")
         is_user = self.env.user.has_group("ug_base_distrib.group_distrib_user")
         user = is_user and not is_manager
-        domain = ['|',
-                  ('product_tmpl_id', '=', self.id),
-                  ('product_id', 'in', self.product_variant_ids.ids)]
         if user:
-            context = {
-                    'default_product_tmpl_id': self.id,
-                    'default_applied_on': '1_product',
-                    'default_pricelist_id': self.env.user.distrib_id.pricelist_id.id,
-                    'product_without_variants': self.product_variant_count == 1,
-                }
+            domain = [
+                    '&', ('pricelist_id', '=', self.env.user.distrib_id.pricelist_id.id),
+                    '|', ('product_tmpl_id', '=', self.id),
+                    ('product_id', 'in', self.product_variant_ids.ids)]
         else:
-            context = {
-                'default_product_tmpl_id': self.id,
-                'default_applied_on': '1_product',
-                'product_without_variants': self.product_variant_count == 1,
-            }
+            domain = ['|',
+                      ('product_tmpl_id', '=', self.id),
+                      ('product_id', 'in', self.product_variant_ids.ids)]
 
         return {
             'name': _('Price Rules'),
@@ -102,7 +95,11 @@ class PublicProduct(models.Model):
             'type': 'ir.actions.act_window',
             'target': 'current',
             'domain': domain,
-            'context': context,
+            'context': {
+                'default_product_tmpl_id': self.id,
+                'default_applied_on': '1_product',
+                'product_without_variants': self.product_variant_count == 1,
+            },
         }
 
 
