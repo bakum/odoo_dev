@@ -172,7 +172,7 @@ class Website(models.Model):
         self.ensure_one()
         domain = [('type_of', '=', 'pallet')]
 
-        return self.env['distrib.packages.sizes'].search(domain)
+        return self.env['distrib.packages.sizes'].search(domain, order='width asc, height asc, depth asc')
 
     def get_current_palette(self):
         ProductPalette = self.env['distrib.packages.sizes']
