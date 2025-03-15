@@ -69,6 +69,6 @@
             name="Packages"
             parent="menu_distrib_packages"
             action="action_distrib_package"
-            groups="ug_base_distrib.group_distrib_manager,ug_base_distrib.group_distrib_user"
+            groups="ug_base_distrib.group_distrib_manager"
             sequence="13"/>
 </odoo>

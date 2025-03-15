@@ -51,7 +51,7 @@
             name="Product categories"
             parent="menu_distrib_settings_product"
             action="product.product_category_action_form"
-            groups="ug_base_distrib.group_distrib_manager,ug_base_distrib.group_distrib_user"
+            groups="ug_base_distrib.group_distrib_manager"
             sequence="10"/>
     <menuitem
             id="menu_distrib_price"
