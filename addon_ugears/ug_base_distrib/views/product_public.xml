@@ -60,6 +60,12 @@
             <field name="inherit_id" ref="product.product_template_tree_view"/>
             <field name="arch" type="xml">
                 <data>
+                    <xpath expr="//field[@name='list_price']" position="attributes">
+                        <attribute name="groups">ug_base_distrib.group_distrib_technical</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='standard_price']" position="attributes">
+                        <attribute name="groups">ug_base_distrib.group_distrib_technical</attribute>
+                    </xpath>
                     <xpath expr="//field[@name='standard_price']" position="after">
                         <field name="guid" readonly="1" optional="hide"/>
                         <field name="qty_available_dist" readonly="1" optional="hide"/>
