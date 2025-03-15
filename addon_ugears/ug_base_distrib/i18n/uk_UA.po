@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-01 07:40+0000\n"
-"PO-Revision-Date: 2025-03-01 07:40+0000\n"
+"POT-Creation-Date: 2025-03-15 09:08+0000\n"
+"PO-Revision-Date: 2025-03-15 09:08+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -39,8 +39,8 @@ msgstr ""
 #. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.res_config_settings_view_form
 msgid ""
-"<span class=\"o_form_label\">Currency of multi-currency accounting of "
-"distributors.</span>"
+"<span class=\"o_form_label\">Currency of multi-currency accounting of distributors.\n"
+"                                    </span>"
 msgstr ""
 "<span class=\"o_form_label\">Валюта мультивалютного обліку "
 "дистриб'юторів.</span>"
@@ -156,6 +156,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_quants_tree
 msgid "Apply"
 msgstr "Застосувати"
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.res_config_settings_view_form
+msgid ""
+"Apply manual discounts on sales order lines or display discounts computed "
+"from pricelists (option to activate in the pricelist configuration)."
+msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty4
@@ -405,6 +412,11 @@ msgstr "В наявності"
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_form
 msgid "Country"
 msgstr "Країна"
+
+#. module: ug_base_distrib
+#: model_terms:ir.actions.act_window,help:ug_base_distrib.partner_template_action_distrib
+msgid "Create a new partner"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model_terms:ir.actions.act_window,help:ug_base_distrib.product_template_action_distrib
@@ -717,6 +729,7 @@ msgstr "Дистрибуція"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__distrib_id
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_qtt_view_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_turnover_view_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_quants_search
 msgid "Distributor"
 msgstr "Дистриб'ютор"
 
@@ -1103,8 +1116,14 @@ msgid "Forecasted Stock"
 msgstr "Прогнозований запас"
 
 #. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.res_config_settings_view_form
+msgid "Grant discounts on sales order lines"
+msgstr "Надавати знижки на рядки замовлень"
+
+#. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_qtt_view_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_turnover_view_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_quants_search
 msgid "Group By"
 msgstr "Групувати за"
 
@@ -2095,6 +2114,7 @@ msgid "Partner Orders"
 msgstr "Замовлення партнерів"
 
 #. module: ug_base_distrib
+#: model:ir.actions.act_window,name:ug_base_distrib.partner_template_action_distrib
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_partner
 msgid "Partners"
 msgstr "Партнери"
@@ -2184,6 +2204,13 @@ msgstr "Попередній рік"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_plan_fact__price_unit
 msgid "Price"
 msgstr "Ціна"
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/product_category.py:0
+#, python-format
+msgid "Price Rules"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model,name:ug_base_distrib.model_product_pricelist
@@ -2384,15 +2411,9 @@ msgid "Quants Totals"
 msgstr ""
 
 #. module: ug_base_distrib
-#: model:ir.actions.server,name:ug_base_distrib.recalculate_totals_by_days_cron_ir_actions_server
-#: model:ir.cron,cron_name:ug_base_distrib.recalculate_totals_by_days_cron
-msgid "Recalculate Totals By Days Cron Job"
-msgstr ""
-
-#. module: ug_base_distrib
-#: model:ir.actions.server,name:ug_base_distrib.recalculate_totals_by_month_cron_ir_actions_server
-#: model:ir.cron,cron_name:ug_base_distrib.recalculate_totals_by_month_cron
-msgid "Recalculate Totals By Month Cron Job"
+#: model:ir.actions.server,name:ug_base_distrib.recalculate_job_cron_ir_actions_server
+#: model:ir.cron,cron_name:ug_base_distrib.recalculate_job_cron
+msgid "Recalculate Totals Cron Job"
 msgstr ""
 
 #. module: ug_base_distrib

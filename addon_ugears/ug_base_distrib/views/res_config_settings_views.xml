@@ -22,8 +22,10 @@
                                     <div class="text-muted content-group mt16">
                                         <field name="accounting_currency_id"/>
                                     </div>
+                                    <div class="text-muted">
                                     <span class="o_form_label">Currency of multi-currency accounting of distributors.
                                     </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12 col-lg-6 o_setting_box">
@@ -32,7 +34,9 @@
                                     <div class="text-muted content-group mt16">
                                         <field name="report_period"/>
                                     </div>
-                                    <span class="o_form_label">Period in Months for reports.</span>
+                                    <div class="text-muted">
+                                        <span class="o_form_label">Period in Months for reports.</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12 col-lg-6 o_setting_box" id="discount_sale_order_lines"
