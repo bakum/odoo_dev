@@ -20,18 +20,31 @@
                                 <div class="o_setting_right_pane">
                                     <span class="o_form_label">Distributor accounting currency</span>
                                     <div class="text-muted content-group mt16">
-                                        <field name="accounting_currency_id" />
+                                        <field name="accounting_currency_id"/>
                                     </div>
-                                    <span class="o_form_label">Currency of multi-currency accounting of distributors.</span>
+                                    <span class="o_form_label">Currency of multi-currency accounting of distributors.
+                                    </span>
                                 </div>
                             </div>
                             <div class="col-12 col-lg-6 o_setting_box">
                                 <div class="o_setting_right_pane">
                                     <span class="o_form_label">Distributor accounting report period</span>
                                     <div class="text-muted content-group mt16">
-                                        <field name="report_period" />
+                                        <field name="report_period"/>
                                     </div>
                                     <span class="o_form_label">Period in Months for reports.</span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box" id="discount_sale_order_lines"
+                                 title="Apply manual discounts on sales order lines or display discounts computed from pricelists (option to activate in the pricelist configuration).">
+                                <div class="o_setting_left_pane">
+                                    <field name="group_discount_per_so_line"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="group_discount_per_so_line"/>
+                                    <div class="text-muted">
+                                        Grant discounts on sales order lines
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -50,7 +63,7 @@
         </record>
 
         <menuitem id="distrib_config_settings_menu" name="Settings"
-            parent="ug_base_distrib.menu_distrib_settings" sequence="0" action="distrib_config_settings_action"
-            groups="base.group_system"/>
+                  parent="ug_base_distrib.menu_distrib_settings" sequence="0" action="distrib_config_settings_action"
+                  groups="base.group_system"/>
     </data>
 </odoo>
