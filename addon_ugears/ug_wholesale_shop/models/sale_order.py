@@ -38,6 +38,13 @@ class SaleOrder(models.Model):
         search='_search_distrib_ids',
         copy=False)
 
+    def _get_confirmation_template(self):
+        """ Get the mail template sent on SO confirmation (or for confirmed SO's).
+
+        :return: `mail.template` record or None if default template wasn't found
+        """
+        return self.env.ref('ug_wholesale_shop.mail_template_sale_confirmation', raise_if_not_found=False)
+
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
