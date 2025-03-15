@@ -40,6 +40,9 @@
                     <xpath expr="//tree/field[@name='product_template_id']" position="attributes">
                         <attribute name="attrs">{'readonly': [('parent.can_full_access', '=' ,False)]}</attribute>
                     </xpath>
+                    <xpath expr="//tree/field[@name='tax_id']" position="attributes">
+                        <attribute name="attrs">{'readonly': [('parent.can_full_access', '=' ,False)]}</attribute>
+                    </xpath>
                     <xpath expr="//tree/field[@name='discount']" position="attributes">
                         <attribute name="attrs">{'readonly': [('parent.can_full_access', '=' ,False)]}</attribute>
                     </xpath>
