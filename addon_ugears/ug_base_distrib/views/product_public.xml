@@ -47,7 +47,9 @@
                     <attribute name="groups">ug_base_distrib.group_distrib_technical</attribute>
                 </xpath>
                 <xpath expr="//div[@name='product_lst_price']" position="after">
-                    <field name="barcode"/>
+                    <div name="product_barcode" class="mt-1">
+                        <field name="barcode"/>
+                    </div>
                 </xpath>
             </field>
         </record>
