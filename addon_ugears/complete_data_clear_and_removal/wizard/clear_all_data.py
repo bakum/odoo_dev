@@ -4,29 +4,43 @@
 
 from odoo import models, fields, api, _
 
+
 class ClearDataWizard(models.TransientModel):
     _name = 'clear.data.wizard'
     _description = 'Clear Data Wizard'
 
-    #all Data
-    all_data_clear = fields.Boolean(string="All Data",help="this will clear/delete all data")
-    #sale
-    sale = fields.Boolean(string="Sale",help="this will clear/delete sales")
-    sale_and_transfer = fields.Boolean(string="Sale & All Transfers",help="this will clear/delete all sales and its transaction")
-    #purchase
-    purchase = fields.Boolean(string="Purchase",help="this will clear/delete purchase ")
-    purchase_and_transfer = fields.Boolean(string="Purchase & All Transfers",help="this will clear/delete all purchase and its transfers")
-    #inventory
-    inventory_only_transfer = fields.Boolean(string="Only Transfers",help="this will clear/delete/delete only transfers")
-    #project
-    project_tasks_timesheets = fields.Boolean(string="Project, Tasks & Timesheets",help="this will clear/delete all the project, tasks and timesheets")
-    only_task_timesheets = fields.Boolean(string="Only Task and Timesheets",help="this will clear/delete only task and timesheets")
-    #contacts
-    customers_vendors = fields.Boolean(string='Customers & Vendors',help="this will clear/delete all customers and vendors")
-    #manufacturing
-    bom_manufacturing_orders = fields.Boolean(string="BOM & Manufacturing Orders",help="this will clear/delete all the BOM and Manufacturing orders")
-    only_manufacturing_orders = fields.Boolean(string="Only Manufacturing Orders",help="this will only clear/delete manufacturing orders")
-    #accounting
+    # all Data
+    all_data_clear = fields.Boolean(string="All Data", help="this will clear/delete all data")
+    # sale
+    sale = fields.Boolean(string="All Orders", help="this will clear/delete sales")
+    sale_and_transfer = fields.Boolean(string="All Orders & All Transfers",
+                                       help="this will clear/delete all sales and its transaction")
+    sale_and_invoices = fields.Boolean(string="All Orders & All Invoices",
+                                       help="this will clear/delete all sales and its invoices")
+
+    distrib = fields.Boolean(string="All Distributor Moves", help="this will clear/delete Distributor Moves")
+    distrib_install = fields.Boolean(string="Distributors_invisible")
+    # purchase
+    purchase = fields.Boolean(string="Purchase", help="this will clear/delete purchase ")
+    purchase_and_transfer = fields.Boolean(string="Purchase & All Transfers",
+                                           help="this will clear/delete all purchase and its transfers")
+    # inventory
+    inventory_only_transfer = fields.Boolean(string="Only Transfers",
+                                             help="this will clear/delete/delete only transfers")
+    # project
+    project_tasks_timesheets = fields.Boolean(string="Project, Tasks & Timesheets",
+                                              help="this will clear/delete all the project, tasks and timesheets")
+    only_task_timesheets = fields.Boolean(string="Only Task and Timesheets",
+                                          help="this will clear/delete only task and timesheets")
+    # contacts
+    customers_vendors = fields.Boolean(string='Customers & Vendors',
+                                       help="this will clear/delete all customers and vendors")
+    # manufacturing
+    bom_manufacturing_orders = fields.Boolean(string="BOM & Manufacturing Orders",
+                                              help="this will clear/delete all the BOM and Manufacturing orders")
+    only_manufacturing_orders = fields.Boolean(string="Only Manufacturing Orders",
+                                               help="this will only clear/delete manufacturing orders")
+    # accounting
     # invoicing_payments_journalentries = fields.Boolean(string="All Invoicing, Payments & Journal Entries",help="this will clear/delete all invoicing, payments and journal entries")
     # only_journal_entries = fields.Boolean(string="Only Journal Entries",help="this will only clear/delete journal entries")
 
@@ -38,17 +52,22 @@ class ClearDataWizard(models.TransientModel):
     project_tasks_timesheets_install = fields.Boolean(string="Project_invisible")
     bom_manufacturing_orders_install = fields.Boolean(string="Manufacturing_invisible")
     invoicing_cust_and_vend_install = fields.Boolean(string="Accounting_invisible")
+    invoicing_cust_sales_install = fields.Boolean(string="Accounting_Sale_invisible")
 
     def open_wizard_action(self):
+        distrib_install = bool(self.env['ir.module.module'].search([
+            ('state', '=', 'installed'),
+            ('name', '=', 'ug_base_distrib')
+        ]))
         # Check if the 'sale_management' module is installed
         sale_install = bool(self.env['ir.module.module'].search([
             ('state', '=', 'installed'),
-            ('name', '=', 'sale_management')
+            ('name', '=', 'sale')
         ]))
         # Check if the 'sale_management' and 'stock' module is installed
         sale_and_transfer_install = bool(self.env['ir.module.module'].search([
             ('state', '=', 'installed'),
-            ('name', '=', 'sale_management')
+            ('name', '=', 'sale')
         ])) and bool(self.env['ir.module.module'].search([
             ('state', '=', 'installed'),
             ('name', '=', 'stock')
@@ -85,15 +104,22 @@ class ClearDataWizard(models.TransientModel):
         invoicing_cust_and_vend_install = bool(self.env['ir.module.module'].search([
             ('state', '=', 'installed'),
             ('name', '=', 'account')
-        ]))and bool(self.env['ir.module.module'].search([
+        ])) and bool(self.env['ir.module.module'].search([
             ('state', '=', 'installed'),
-            ('name', '=', 'sale_management')
-        ]))and bool(self.env['ir.module.module'].search([
+            ('name', '=', 'sale')
+        ])) and bool(self.env['ir.module.module'].search([
             ('state', '=', 'installed'),
             ('name', '=', 'purchase')
-        ]))and bool(self.env['ir.module.module'].search([
+        ])) and bool(self.env['ir.module.module'].search([
             ('state', '=', 'installed'),
             ('name', '=', 'stock')
+        ]))
+        invoicing_cust_sales_install = bool(self.env['ir.module.module'].search([
+            ('state', '=', 'installed'),
+            ('name', '=', 'account')
+        ])) and bool(self.env['ir.module.module'].search([
+            ('state', '=', 'installed'),
+            ('name', '=', 'sale')
         ]))
         return {
             'type': 'ir.actions.act_window',
@@ -102,6 +128,7 @@ class ClearDataWizard(models.TransientModel):
             'target': 'new',
             'context': {
                 'default_sale_install': sale_install,
+                'default_distrib_install': distrib_install,
                 'default_sale_and_transfer_install': sale_and_transfer_install,
                 'default_purchase_install': purchase_install,
                 'default_purchase_and_transfer_install': purchase_and_transfer_install,
@@ -109,6 +136,7 @@ class ClearDataWizard(models.TransientModel):
                 'default_project_tasks_timesheets_install': project_tasks_timesheets_install,
                 'default_bom_manufacturing_orders_install': bom_manufacturing_orders_install,
                 'default_invoicing_cust_and_vend_install': invoicing_cust_and_vend_install,
+                'default_invoicing_cust_sales_install': invoicing_cust_sales_install,
             }
         }
 
@@ -118,19 +146,50 @@ class ClearDataWizard(models.TransientModel):
     @api.onchange('all_data_clear')
     def all_data_clear_click(self):
         if self.all_data_clear:
-            self.sale,self.sale_and_transfer,self.purchase,self.purchase_and_transfer,self.inventory_only_transfer,self.project_tasks_timesheets,self.only_task_timesheets,self.customers_vendors,self.bom_manufacturing_orders,self.only_manufacturing_orders = True,True,True,True,True,True,True,True,True,True
-        else :
-            self.sale,self.sale_and_transfer,self.purchase,self.purchase_and_transfer,self.inventory_only_transfer,self.project_tasks_timesheets,self.only_task_timesheets,self.customers_vendors,self.bom_manufacturing_orders,self.only_manufacturing_orders = False,False,False,False,False,False,False,False,False,False
+            self.sale, self.distrib, self.sale_and_transfer, self.sale_and_invoices, self.purchase, self.purchase_and_transfer, self.inventory_only_transfer, self.project_tasks_timesheets, self.only_task_timesheets, self.customers_vendors, self.bom_manufacturing_orders, self.only_manufacturing_orders = True, True, True, True, True, True, True, True, True, True, True, True
+        else:
+            self.sale, self.distrib, self.sale_and_transfer, self.sale_and_invoices, self.purchase, self.purchase_and_transfer, self.inventory_only_transfer, self.project_tasks_timesheets, self.only_task_timesheets, self.customers_vendors, self.bom_manufacturing_orders, self.only_manufacturing_orders = False, False, False, False, False, False, False, False, False, False, False, False
 
     def clear_data(self):
-        #sale-->sale
+        # sale-->sale
         if self.sale:
             sale_orders = self.env['sale.order'].search([])
             for order in sale_orders:
                 if order.state not in ['cancel']:
                     order.write({'state': 'cancel'})
             sale_orders.unlink()
-        #sale-->sale_and_all_transfers
+        if self.sale_and_invoices:
+            self.env.cr.execute("""
+                            DELETE FROM account_move;
+                        """)
+            self.env.cr.execute("""
+                            DELETE FROM account_move_line;
+                        """)
+            self.env.cr.commit()
+            sale_orders = self.env['sale.order'].search([])
+            for order in sale_orders:
+                if order.state not in ['cancel']:
+                    order.write({'state': 'cancel'})
+            sale_orders.unlink()
+        if self.distrib:
+            moves = self.env['distrib.distributors.move'].search([])
+            for move in moves:
+                if move.state not in ['cancel']:
+                    move.write({'state': 'cancel'})
+            moves.unlink()
+            self.env.cr.execute("""
+                            DELETE FROM DISTRIB_POINT_RELEVANCE;
+                        """)
+            self.env.cr.execute("""
+                            DELETE FROM DISTRIB_QUANT_TOTALS;
+                        """)
+            self.env.cr.execute("""
+                            DELETE FROM DISTRIB_QUANT_HISTORY;
+                        """)
+            self.env.cr.execute("""
+                            DELETE FROM DISTRIB_QUANT;
+                        """)
+        # sale-->sale_and_all_transfers
         if self.sale_and_transfer:
             sale_orders = self.env['sale.order'].search([])
             for order in sale_orders:
@@ -147,14 +206,14 @@ class ClearDataWizard(models.TransientModel):
                 DELETE FROM stock_picking WHERE origin LIKE 'S0%';
             """)
             self.env.cr.commit();
-        #purchase-->purchase
+        # purchase-->purchase
         if self.purchase_and_transfer:
             purchase_orders = self.env['purchase.order'].search([])
             for order in purchase_orders:
                 if order.state not in ['cancel']:
                     order.write({'state': 'cancel'})
             purchase_orders.unlink()
-        #purchase-->purchase_and_all_transfers
+        # purchase-->purchase_and_all_transfers
         if self.purchase_and_transfer:
             purchase_orders = self.env['purchase.order'].search([])
             for order in purchase_orders:
@@ -172,7 +231,7 @@ class ClearDataWizard(models.TransientModel):
                 DELETE FROM stock_picking WHERE origin LIKE 'P0%';
             """)
             self.env.cr.commit()
-        #inventory-->inventory_only_transfer
+        # inventory-->inventory_only_transfer
         if self.inventory_only_transfer:
             self.env.cr.execute("""
                     DELETE FROM stock_move_line;
@@ -186,7 +245,7 @@ class ClearDataWizard(models.TransientModel):
                 if picking.state not in ['draft']:
                     picking.write({'state': 'draft'})
             stock_pickings.unlink()
-        #project-->project_tasks_timesheets
+        # project-->project_tasks_timesheets
         if self.project_tasks_timesheets:
             timesheets = self.env['account.analytic.line'].search([])
             timesheets.unlink()
@@ -196,15 +255,15 @@ class ClearDataWizard(models.TransientModel):
             projects_updates.unlink()
             projects = self.env['project.project'].search([])
             projects.unlink()
-        #project-->only_task_timesheets
+        # project-->only_task_timesheets
         if self.only_task_timesheets:
             timesheets = self.env['account.analytic.line'].search([])
             timesheets.unlink()
             tasks = self.env['project.task'].search([])
             tasks.unlink()
-        #customer-->vendor&customer
+        # customer-->vendor&customer
         if self.customers_vendors:
-            #for customer
+            # for customer
             sale_orders = self.env['sale.order'].search([])
             for order in sale_orders:
                 if order.state not in ['cancel']:
@@ -220,7 +279,7 @@ class ClearDataWizard(models.TransientModel):
                 DELETE FROM stock_picking WHERE origin LIKE 'S0%';
             """)
             self.env.cr.commit();
-            #for vendor
+            # for vendor
             purchase_orders = self.env['purchase.order'].search([])
             for order in purchase_orders:
                 if order.state not in ['cancel']:
@@ -256,14 +315,14 @@ class ClearDataWizard(models.TransientModel):
                     order.write({'state': 'cancel'})
             manufacturing_orders.unlink()
             bom_records.unlink()
-        #manufacturing-->only_manufacturing_orders
+        # manufacturing-->only_manufacturing_orders
         if self.only_manufacturing_orders:
             manufacturing_orders = self.env['mrp.production'].search([])
             for order in manufacturing_orders:
                 if order.state not in ['cancel']:
                     order.write({'state': 'cancel'})
             manufacturing_orders.unlink()
-        #accounting-->invoicing_payments_journalentries
+        # accounting-->invoicing_payments_journalentries
         # if self.invoicing_payments_journalentries:
         #     #to delete invoices and journal entries
         #     cust_invoice = self.env['account.move'].search([])
@@ -275,11 +334,10 @@ class ClearDataWizard(models.TransientModel):
         #     #to delete payments
         #     payments = self.env['account.payment'].search([])
         #     payments.unlink()
-        #accounting-->only_journal_entries
+        # accounting-->only_journal_entries
         # if self.only_journal_entries:
         #     cust_invoice = self.env['account.move'].search([])
         #     for cust in cust_invoice:
         #         if cust.state not in ['draft']:
         #             cust.button_draft()
         #     cust_invoice.unlink()
-

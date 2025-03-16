@@ -9,6 +9,7 @@
                 <sheet>
                     <group>
                         <field name="sale_install" invisible="1"/>
+                        <field name="distrib_install" invisible="1"/>
                         <field name="sale_and_transfer_install" invisible="1"/>
                         <field name="purchase_install" invisible="1"/>
                         <field name="purchase_and_transfer_install" invisible="1"/>
@@ -16,6 +17,7 @@
                         <field name="project_tasks_timesheets_install" invisible="1"/>
                         <field name="bom_manufacturing_orders_install" invisible="1"/>
                         <field name="invoicing_cust_and_vend_install" invisible="1"/>
+                        <field name="invoicing_cust_sales_install" invisible="1"/>
 
                     </group>
                     <group string="All Data">
@@ -24,12 +26,18 @@
                     <group>
                         <group string="Sales" attrs="{'invisible': [('sale_install', '=', False)]}">
                             <field name="sale" attrs="{'invisible': [('sale_and_transfer_install', '=', True)]}"/>
+                            <field name="sale_and_invoices" attrs="{'invisible': [('invoicing_cust_sales_install', '=', False)]}"/>
                             <field name="sale_and_transfer" attrs="{'invisible': [('sale_and_transfer_install', '=', False)]}"/>
                         </group>
                         <group string="Purchases" attrs="{'invisible': [('purchase_install', '=', False)]}">
                             <field name="purchase" attrs="{'invisible': [('purchase_and_transfer_install', '=', True)]}"/>
                             <field name="purchase_and_transfer" attrs="{'invisible': [('purchase_and_transfer_install', '=', False)]}"/>
                         </group>
+                    </group>
+                        <group string="Distributors Managements" attrs="{'invisible': [('distrib_install', '=', False)]}">
+                            <field name="distrib" attrs="{'invisible': [('distrib_install', '=', False)]}"/>
+                        </group>
+                    <group>
                     </group>
                     <group>
                         <group string="Inventory" attrs="{'invisible': [('inventory_only_transfer_install', '=', False)]}">
