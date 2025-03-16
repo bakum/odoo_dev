@@ -49,7 +49,6 @@ export class StartShop extends Component {
             this.env.services.messaging.modelManager.messagingCreatedPromise.then(() => {
                 this.env.services.messaging.modelManager.messaging.update({isWebsitePreviewOpen: false});
             });
-            // this.websiteService.context.showAceEditor = false;
             const {pathname, search, hash} = this.iframe.el.contentWindow.location;
             this.websiteService.lastUrl = `${pathname}${search}${hash}`;
             this.websiteService.currentWebsiteId = null;
@@ -77,20 +76,6 @@ export class StartShop extends Component {
     }
 
     _onPageLoaded(ev) {
-        // FIX Chrome-only. If you have the backend in a language A but the
-        // website in English only, you can 1) modify a record's (event,
-        // product...) name in language A (say "New Name").
-        // 2) visit the page `/new-name-11` => the server will redirect you to
-        // the English page `/origin-11`, which is the only one existing.
-        // Chrome caches the redirection.
-        // 3) give the same name in English as in language A, try to visit
-        // => the server now wants to access `/new-name-11`
-        // => Chrome uses the cache to redirect `/new-name-11` to `/origin-11`,
-        // => the server tries to redirect to `/new-name-11` => loop.
-        // Chrome injects a "Too many redirects" layout in the iframe, which in
-        // turn raises a CORS error when the app tries to update the iframe.
-        // If we detect that behavior, we reload the iframe with a new query
-        // parameter, so that it's not cached for Chrome.
         if (
             navigator.userAgent.toLowerCase().includes("chrome")
             && !this.iframe.el.src.includes("iframe_reload")
