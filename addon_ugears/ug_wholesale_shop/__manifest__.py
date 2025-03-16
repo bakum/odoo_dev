@@ -25,12 +25,12 @@
         'views/import_order.xml',
         'views/sales_order.xml',
         'views/distrib_move.xml',
+        'views/start_shop.xml',
 
         'report/order_distrib_template.xml',
         'report/order_distrib_action.xml',
         'report/report_distrib_quantity.xml',
         'views/mail_template_data.xml',
-        'views/start_shop.xml',
     ],
     'assets': {
         'web.assets_frontend': [
