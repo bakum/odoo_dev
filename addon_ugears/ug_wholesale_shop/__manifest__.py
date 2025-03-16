@@ -30,6 +30,7 @@
         'report/order_distrib_action.xml',
         'report/report_distrib_quantity.xml',
         'views/mail_template_data.xml',
+        'views/start_shop.xml',
     ],
     'assets': {
         'web.assets_frontend': [
@@ -44,6 +45,8 @@
             'ug_wholesale_shop/static/src/views/import_order_controller.js',
             'ug_wholesale_shop/static/src/views/import_order_view.js',
             'ug_wholesale_shop/static/src/views/import_order_button.xml',
+            'ug_wholesale_shop/static/src/js/start_shop_tmpl.xml',
+            'ug_wholesale_shop/static/src/js/start_shop.js',
         ],
     },
     "external_dependencies": {

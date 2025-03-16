@@ -279,10 +279,18 @@ class SaleOrder(models.Model):
         url = '/shop/calculator?order=%s' % (
             self.id
         )
+        # action = {
+        #     'type': 'ir.actions.act_url',
+        #     'target': 'self',
+        #     'url': url,
+        # }
         action = {
-            'type': 'ir.actions.act_url',
-            'target': 'self',
-            'url': url,
+            'type': 'ir.actions.client',
+            'name': 'Wholesale shop',
+            'tag': 'start_shop',
+            'params' : {
+                'url': url,
+            }
         }
         # last_order_id = request.session.get('order_for_calculate', 0)
         request.session['order_for_calculate'] = self.id

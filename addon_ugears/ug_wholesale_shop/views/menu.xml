@@ -11,7 +11,7 @@
             id="menu_distrib_shop"
             name="Wholesale shop"
             parent="ug_base_distrib.menu_distrib_root"
-            action="ug_wholesale_shop.shop_action_distrib"
+            action="ug_wholesale_shop.action_start_shop"
             groups="ug_base_distrib.group_distrib_manager,ug_base_distrib.group_distrib_user"
             sequence="1"/>
 

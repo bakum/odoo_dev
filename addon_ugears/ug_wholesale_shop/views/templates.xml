@@ -31,21 +31,7 @@
             </div>
         </div>
         <t t-if="not_card_mode">
-            <div class="alert alert-info alert-dismissible rounded-0 fade show d-print-none css_editable_mode_hidden">
-                <!--            <t t-set="backend_url" t-value="'/web#model=sale.order&amp;id=' + str(website_sale_order.id) + '&amp;view_type=form'"/>-->
-                <t t-set="backend_url"
-                   t-value="'/web#model=sale.order&amp;id=%s&amp;view_type=form&amp;action=%s' % (website_sale_order.id, 'ug_wholesale_shop.action_orders_wholesale_shop')"/>
-                <div class="container">
-                    <div class="text-center">
-                        This is a packaging calculator.
-                        <a t-att-href="backend_url"
-                           t-attf-class="fa fa-arrow-right me-1" aria-hidden="true">
-                            <span>Order#</span>
-                            <em t-field="website_sale_order.name"></em>
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <t t-call="ug_wholesale_shop.action_to_order_from_calculator"/>
         </t>
     </template>
 
@@ -630,22 +616,8 @@
                     <div class="row">
                         <div class="col-12 col-xl">
                              <t t-if="not_card_mode">
-                            <div class="alert alert-info alert-dismissible rounded-0 fade show d-print-none css_editable_mode_hidden">
-                                <!--            <t t-set="backend_url" t-value="'/web#model=sale.order&amp;id=' + str(website_sale_order.id) + '&amp;view_type=form'"/>-->
-                                <t t-set="backend_url"
-                                   t-value="'/web#model=sale.order&amp;id=%s&amp;view_type=form&amp;action=%s' % (order.id, 'ug_wholesale_shop.action_orders_wholesale_shop')"/>
-                                <div class="container">
-                                    <div class="text-center">
-                                        This is a packaging calculator.
-                                        <a t-att-href="backend_url"
-                                           t-attf-class="fa fa-arrow-right me-1" aria-hidden="true">
-                                            <span>Order#</span>
-                                            <em t-field="order.name"></em>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </t>
+                                 <t t-call="ug_wholesale_shop.action_to_order_from_calculator"/>
+                            </t>
                             <div class="oe_cart">
                                 <div class="mb16">
                                     <t t-call="ug_wholesale_shop.palettes_list_total">
@@ -836,6 +808,24 @@
             </tr>
         </xpath>
     </template>
+
+    <template id="action_to_order_from_calculator" name="Order from Calculator">
+<!--        <div class="alert alert-info alert-dismissible rounded-0 fade show d-print-none css_editable_mode_hidden">-->
+<!--            <t t-set="backend_url"-->
+<!--               t-value="'/web#model=sale.order&amp;id=%s&amp;view_type=form&amp;action=%s' % (order.id, 'ug_wholesale_shop.action_orders_wholesale_shop')"/>-->
+<!--            <div class="container">-->
+<!--                <div class="text-center">-->
+<!--                    This is a packaging calculator.-->
+<!--                    <a t-att-href="backend_url"-->
+<!--                       t-attf-class="fa fa-arrow-right me-1" aria-hidden="true">-->
+<!--                        <span>Order#</span>-->
+<!--                        <em t-field="order.name"></em>-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+    </template>
+
 
 <!--    <template-->
 <!--        inherit_id="website_sale.products_categories"-->
