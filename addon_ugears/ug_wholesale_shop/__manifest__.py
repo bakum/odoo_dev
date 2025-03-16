@@ -16,6 +16,7 @@
         'views/templates.xml',
         'views/product_public.xml',
         'views/actions.xml',
+        'views/start_shop.xml',
         'views/menu.xml',
         'security/wholesale_security.xml',
         'security/ir.model.access.csv',
@@ -25,7 +26,6 @@
         'views/import_order.xml',
         'views/sales_order.xml',
         'views/distrib_move.xml',
-        'views/start_shop.xml',
 
         'report/order_distrib_template.xml',
         'report/order_distrib_action.xml',
