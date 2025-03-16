@@ -11,7 +11,12 @@
         <div class="o_shop_preview" t-ref="container">
             <BlockShop t-if="this.blockedState.showLoader"/>
             <div class="o_iframe_container">
-                <iframe t-att-src="initialUrl" width="100%" height="800"></iframe>
+                <iframe
+                        t-att-src="initialUrl"
+                        t-ref="iframe"
+                        t-on-load="_onPageLoaded"
+                        width="100%" height="800">
+                </iframe>
             </div>
         </div>
     </t>
