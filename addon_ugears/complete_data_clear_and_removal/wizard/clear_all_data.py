@@ -172,23 +172,35 @@ class ClearDataWizard(models.TransientModel):
                     order.write({'state': 'cancel'})
             sale_orders.unlink()
         if self.distrib:
-            moves = self.env['distrib.distributors.move'].search([])
-            for move in moves:
-                if move.state not in ['cancel']:
-                    move.write({'state': 'cancel'})
-            moves.unlink()
+            # moves = self.env['distrib.distributors.move'].search([])
+            # for move in moves:
+            #     if move.state not in ['cancel']:
+            #         move.write({'state': 'cancel'})
+            # moves.unlink()
+            self.env.cr.execute("""
+                            DELETE FROM distrib_distributors_move_line;
+                                """)
+            self.env.cr.commit()
+            self.env.cr.execute("""
+                            DELETE FROM distrib_distributors_move;
+                                """)
+            self.env.cr.commit()
             self.env.cr.execute("""
                             DELETE FROM DISTRIB_POINT_RELEVANCE;
                         """)
+            self.env.cr.commit()
             self.env.cr.execute("""
                             DELETE FROM DISTRIB_QUANT_TOTALS;
                         """)
+            self.env.cr.commit()
             self.env.cr.execute("""
                             DELETE FROM DISTRIB_QUANT_HISTORY;
                         """)
+            self.env.cr.commit()
             self.env.cr.execute("""
                             DELETE FROM DISTRIB_QUANT;
                         """)
+            self.env.cr.commit()
         # sale-->sale_and_all_transfers
         if self.sale_and_transfer:
             sale_orders = self.env['sale.order'].search([])
@@ -205,7 +217,7 @@ class ClearDataWizard(models.TransientModel):
             self.env.cr.execute("""
                 DELETE FROM stock_picking WHERE origin LIKE 'S0%';
             """)
-            self.env.cr.commit();
+            self.env.cr.commit()
         # purchase-->purchase
         if self.purchase_and_transfer:
             purchase_orders = self.env['purchase.order'].search([])
