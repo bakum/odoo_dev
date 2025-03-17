@@ -47,6 +47,7 @@
         'views/import_region.xml',
         'views/import_budget.xml',
         'views/inventory_history.xml',
+        'views/terms_action.xml',
     ],
     'assets': {
         'web.assets_backend': [
@@ -55,6 +56,7 @@
             'ug_base_distrib/static/src/components/**/*.scss',
             'ug_base_distrib/static/src/views/**/*.js',
             'ug_base_distrib/static/src/views/**/*.xml',
+            'ug_base_distrib/static/src/terms/**/*.js',
         ],
     },
     'depends': [
