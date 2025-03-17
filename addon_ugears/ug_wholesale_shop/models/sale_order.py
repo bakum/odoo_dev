@@ -832,3 +832,21 @@ class SaleOrder(models.Model):
             'all_weight': 0,
             'all_boxes': 0
         }
+
+    def _apply_discount_if_needed(self):
+        self.ensure_one()
+        discount_setting = self.env.user.has_group('product.group_discount_per_so_line')
+        if not discount_setting:
+            return
+        distrib_ids = self.partner_id.distrib_ids
+        if not distrib_ids:
+            return
+        distrib_id = distrib_ids[0]
+        if not distrib_id.discount_available:
+            return
+        if self.price_total_no_discount < distrib_id.discount_after:
+            self.order_line.update({'discount' : 0})
+        else:
+            self.order_line.update({'discount' : distrib_id.discount_value})
+
+        pass

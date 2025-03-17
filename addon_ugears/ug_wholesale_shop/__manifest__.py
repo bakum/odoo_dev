@@ -10,7 +10,7 @@
     'application': True,
     'depends': [
         'ug_base_distrib',
-        'website_sale'
+        'website_sale',
     ],
     'data': [
         'views/templates.xml',

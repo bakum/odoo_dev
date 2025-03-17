@@ -83,6 +83,7 @@ class Website(models.Model):
             request.session['website_sale_cart_quantity'] = sale_order_sudo.cart_quantity
             # The order was created with SUPERUSER_ID, revert back to request user.
             sale_order_sudo = sale_order_sudo.with_user(self.env.user).sudo()
+            sale_order_sudo._apply_discount_if_needed()
             return sale_order_sudo
 
         # Existing Cart:
@@ -127,7 +128,7 @@ class Website(models.Model):
             request.session['website_sale_current_pl'] = pricelist_id
             sale_order_sudo.write({'pricelist_id': pricelist_id})
             sale_order_sudo._recompute_prices()
-
+        sale_order_sudo._apply_discount_if_needed()
         return sale_order_sudo
 
     def _prepare_sale_order_values(self, partner_sudo):

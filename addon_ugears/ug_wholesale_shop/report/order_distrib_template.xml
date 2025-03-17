@@ -76,6 +76,9 @@
                         <th name="th_pieces">Pieces of boxes in box</th>
                         <th name="th_boxes">Number of boxes</th>
                         <th name="th_price"><span t-raw="price_title"/></th>
+                        <t t-if="doc.discount_total &gt;0">
+                            <th name="th_discount">Discount, %</th>
+                        </t>
                         <th name="th_subtotal"><span t-raw="price_total_title"/></th>
                     </tr>
                 </thead>
@@ -120,6 +123,11 @@
                              <td name="td_price" class="text-end">
                                 <span style="font-size: 0.8em;" t-field="line.price_unit"/>
                             </td>
+                            <t t-if="doc.discount_total &gt;0">
+                                <td name="td_discount" class="text-end">
+                                    <span style="font-size: 0.8em;" t-field="line.discount"/>
+                                </td>
+                            </t>
                              <td name="td_subtotal" class="text-end o_list_monetary">
                                 <span style="font-size: 0.8em;" t-field="line.price_total"/>
                             </td>
@@ -143,16 +151,31 @@
                             <span t-raw="all_boxes"/>
                         </td>
                         <td/>
+                        <t t-if="doc.discount_total &gt;0">
+                            <td/>
+                        </t>
                         <td class="text-end">
                             <span class="text-nowrap">
-                                <span class="oe_currency_value" t-raw="doc.amount_total"/></span>
-
+                                <span class="oe_currency_value" t-raw="doc.amount_total"/>
+                            </span>
                         </td>
                     </tr>
                 </tfoot>
             </table>
             <table class="table table-sm table-borderless mt-4">
                 <tbody>
+                    <tr t-if="doc.discount_total &gt;0">
+                        <td class="text-end">Subtotal Without Discount:</td>
+                        <td class="text-center">
+                            <span t-field="doc.price_total_no_discount"/>
+                        </td>
+                    </tr>
+                    <tr t-if="doc.discount_total &gt;0">
+                        <td class="text-end">Discount Subtotal:</td>
+                        <td class="text-center">
+                            <span t-field="doc.discount_total"/>
+                        </td>
+                    </tr>
                     <tr>
                         <td class="text-end">Gross / Net weight of Shipment (kg):</td>
 <!--                        <td t-if="palettes_list and palettes_list['palettes']" class="text-center">-->

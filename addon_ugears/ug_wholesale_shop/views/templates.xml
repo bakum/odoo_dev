@@ -802,10 +802,24 @@
 
     <template id="reduction_code_promotion" inherit_id="website_sale.total" name="Promo Code">
         <xpath expr="//div[@id='cart_total']//table/tr[last()]" position="replace">
-            <tr t-if="not hide_promotions">
-                <td colspan="3" class="text-center text-xl-end border-0">
-                </td>
-            </tr>
+<!--            <tr t-if="not hide_promotions">-->
+<!--                <td colspan="3" class="text-center text-xl-end border-0">-->
+<!--                </td>-->
+<!--            </tr>-->
+            <t t-if="website_sale_order.discount_total &gt;0">
+                <tr>
+                    <td class="text-end border-0">Subtotal Without Discount:</td>
+                    <td class="text-center text-xl-end border-0">
+                        <span t-field="website_sale_order.price_total_no_discount"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-end border-0">Discount Subtotal:</td>
+                    <td class="text-center text-xl-end border-0">
+                        <span t-field="website_sale_order.discount_total"/>
+                    </td>
+                </tr>
+            </t>
         </xpath>
     </template>
 

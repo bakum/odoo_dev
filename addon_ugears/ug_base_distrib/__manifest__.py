@@ -60,5 +60,6 @@
     'depends': [
         'base',
         'product',
+        'sale_discount_display_amount',
     ],
 }

@@ -160,10 +160,10 @@ class ClearDataWizard(models.TransientModel):
             sale_orders.unlink()
         if self.sale_and_invoices:
             self.env.cr.execute("""
-                            DELETE FROM account_move;
+                            DELETE FROM account_move_line;
                         """)
             self.env.cr.execute("""
-                            DELETE FROM account_move_line;
+                            DELETE FROM account_move;
                         """)
             self.env.cr.commit()
             sale_orders = self.env['sale.order'].search([])

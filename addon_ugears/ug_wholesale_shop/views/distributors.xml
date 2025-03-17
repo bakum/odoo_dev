@@ -13,6 +13,20 @@
                                    domain="[('type_of', '=', 'pallet')]"/>
                         </group>
                     </xpath>
+                    <xpath expr="//field[@name='region_id']" position="after">
+                        <field name="discount_available" groups="ug_base_distrib.group_distrib_manager"/>
+                    </xpath>
+                    <xpath expr="//page[@name='distrib_additional']" position="after">
+                        <page name="discount" string="Discount Configuration" groups="ug_base_distrib.group_distrib_manager"
+                            attrs="{'invisible': [('discount_available', '=', False)]}">
+                            <group>
+                                <field name="discount_after" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                            <group>
+                                <field name="discount_value"/>
+                            </group>
+                        </page>
+                    </xpath>
                 </data>
             </field>
         </record>
