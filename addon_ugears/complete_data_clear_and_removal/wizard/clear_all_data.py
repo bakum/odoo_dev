@@ -179,11 +179,11 @@ class ClearDataWizard(models.TransientModel):
             # moves.unlink()
             self.env.cr.execute("""
                             DELETE FROM distrib_distributors_move_line;
-                                """)
+                        """)
             self.env.cr.commit()
             self.env.cr.execute("""
                             DELETE FROM distrib_distributors_move;
-                                """)
+                        """)
             self.env.cr.commit()
             self.env.cr.execute("""
                             DELETE FROM DISTRIB_POINT_RELEVANCE;
