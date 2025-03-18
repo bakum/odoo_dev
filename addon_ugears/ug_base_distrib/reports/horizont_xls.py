@@ -45,7 +45,10 @@ class HorizontXlsx(models.AbstractModel):
                 else:
                     sheet.write(line_counter, 0, '', cell_format)
                 sheet.write(line_counter, 1, line.product_uom_qty, cell_format)
-                sheet.write(line_counter, 2, line.price_unit, cell_format)
+                if line.discount > 0:
+                    sheet.write(line_counter, 2, round(line.price_total/line.product_uom_qty, 3), cell_format)
+                else:
+                    sheet.write(line_counter, 2, line.price_unit, cell_format)
                 line_counter += 1
 
 
@@ -115,7 +118,10 @@ class OrderToXlsx(models.AbstractModel):
                 boxes = 0 if line.product_id.qty_in_cartoon == 0 else line.product_uom_qty//line.product_id.qty_in_cartoon
                 all_boxes += boxes
                 sheet.write(row_n, 8, boxes, txt)
-                sheet.write(row_n, 9, line.price_unit, txt)
+                if line.discount > 0:
+                    sheet.write(row_n, 9, round(line.price_total/line.product_uom_qty, 3), txt)
+                else:
+                    sheet.write(row_n, 9, line.price_unit, txt)
                 sheet.write(row_n, 10, line.price_total, txt)
 
             row_n += 1
@@ -123,6 +129,14 @@ class OrderToXlsx(models.AbstractModel):
             sheet.write(row_n, 5, all_qtt, bold_head)
             sheet.write(row_n, 8, all_boxes, bold_head)
             sheet.write(row_n, 10, obj.amount_total, bold_head)
+
+            if obj.discount_total > 0:
+                row_n += 1
+                sheet.write(row_n, 8, 'Discount', bold)
+                sheet.write(row_n, 10, obj.discount_total, bold)
+                row_n += 1
+                sheet.write(row_n, 8, 'Subtotal without discount', bold)
+                sheet.write(row_n, 10, obj.price_total_no_discount, bold)
 
             row_n += 2
             sheet.write(row_n, 4, 'Gross / Net weight of Shipment (kg):', bold)
