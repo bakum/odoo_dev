@@ -29,6 +29,7 @@ class SaleOrder(models.Model):
             'product_uom_id': self.product_uom.id,
             'product_uom_qty': self.qty_to_distrib_deliver,
             'price_unit': self.price_unit,
+            'discount': self.discount,
             'sale_line_ids': [Command.link(self.id)],
         }
         if optional_values:

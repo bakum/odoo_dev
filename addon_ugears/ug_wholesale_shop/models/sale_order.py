@@ -848,5 +848,3 @@ class SaleOrder(models.Model):
             self.order_line.update({'discount' : 0})
         else:
             self.order_line.update({'discount' : distrib_id.discount_value})
-
-        pass

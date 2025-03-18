@@ -65,26 +65,31 @@
                                     <field name="product_uom_category_id" invisible="1"/>
                                     <field name="product_uom" string="UoM" groups="uom.group_uom" optional="show"
                                            options="{'no_create': True, 'no_open': True}"/>
+                                    <field name="discount" readonly="1" optional="hide" attrs="{'invisible': [('operation', '=', 'out')]}" groups="product.group_discount_per_so_line" widget="sol_discount"/>
                                     <field name="price_total" optional="show" readonly="1"/>
                                     <field name="channel_id" force_save="1" optional="hide"
                                            attrs="{'invisible': [('operation', '=', 'inc')],'required' : [('operation', '=', 'out')]}"/>
 
                                     <field name="display_type" force_save="1" invisible="1"/>
-                                    <!-- /l10n_in_edi.test_edi_json -->
-                                    <!-- required for @api.onchange('product_id') -->
-                                    <!--<field name="product_uom" invisible="1"/> -->
                                 </tree>
                             </field>
+                            <div class="float-end d-flex gap-1 mb-2 ms-1"
+                                 name="so_button_below_order_lines" attrs="{'invisible': [('operation', '=', 'out')]}">
+                                <button string="Apply discount if available"
+                                        name="apply_discount_if_needed"
+                                        type="object"
+                                        class="btn btn-secondary"
+                                        groups="product.group_discount_per_so_line"/>
+                            </div>
                             <group name="note_group" col="6" class="mt-2 mt-md-0">
-                                <!--                                <group colspan="4">-->
-                                <!--                                    <field colspan="2" name="amount_qty"/>-->
-                                <!--                                </group>-->
                                 <group class="oe_subtotal_footer oe_right" colspan="2">
                                     <field name="currency_id" invisible="1"/>
                                     <field name="amount_untaxed" decoration-bf="amount_untaxed >= 0" colspan="2"
                                            readonly="1"/>
                                     <field name="amount_qty" decoration-bf="amount_qty >= 0" colspan="2"
                                            readonly="1"/>
+                                    <field name="price_total_no_discount" attrs="{'invisible': [('operation', '=', 'out')]}" groups="product.group_discount_per_so_line"/>
+                                    <field name="discount_total" attrs="{'invisible': [('operation', '=', 'out')]}" groups="product.group_discount_per_so_line"/>
                                 </group>
                                 <div class="clearfix"/>
                             </group>

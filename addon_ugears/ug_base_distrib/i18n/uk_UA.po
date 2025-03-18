@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-15 09:08+0000\n"
-"PO-Revision-Date: 2025-03-15 09:08+0000\n"
+"POT-Creation-Date: 2025-03-18 15:03+0000\n"
+"PO-Revision-Date: 2025-03-18 15:03+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -156,6 +156,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_quants_tree
 msgid "Apply"
 msgstr "Застосувати"
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_form
+msgid "Apply discount if available"
+msgstr "Застосувати знижку, якщо доступна"
 
 #. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.res_config_settings_view_form
@@ -634,6 +639,17 @@ msgstr "Опис"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__inventory_diff_quantity
 msgid "Difference"
 msgstr "Різниця"
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__discount
+msgid "Discount (%)"
+msgstr "Зниж.%"
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__discount_total
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__discount_total
+msgid "Discount Subtotal"
+msgstr "Знижка"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__display_name
@@ -2667,6 +2683,12 @@ msgid "Street2"
 msgstr "Вулиця"
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__price_total_no_discount
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__price_total_no_discount
+msgid "Subtotal Without Discount"
+msgstr "Разом без знижки"
+
+#. module: ug_base_distrib
 #. odoo-python
 #: code:addons/ug_base_distrib/models/distrib_move.py:0
 #: code:addons/ug_base_distrib/models/res_currency.py:0
@@ -2702,6 +2724,13 @@ msgstr "Шаблон приходу"
 #, python-format
 msgid "Template Sales Move"
 msgstr "Шаблон продажів"
+
+#. module: ug_base_distrib
+#: model:ir.actions.client,name:ug_base_distrib.action_terms_conditions
+#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_terms
+#: model:res.groups,name:ug_base_distrib.group_distrib_terms
+msgid "Terms and Conditions"
+msgstr "Загальні положення та умови"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_quant__inventory_quantity

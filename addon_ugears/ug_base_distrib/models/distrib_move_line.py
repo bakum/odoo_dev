@@ -145,6 +145,56 @@ class DistributorMoveLines(models.Model):
         store=True, precompute=True)
     rate = fields.Float(related='move_id.rate', string="Current Rate", store=True, precompute=True)
 
+    discount = fields.Float(
+        string="Discount (%)",
+        compute='_compute_discount',
+        digits='Discount',
+        store=True, readonly=False, precompute=True)
+
+    discount_total = fields.Monetary(
+        compute="_compute_amount",
+        string="Discount Subtotal",
+        store=True,
+        precompute=True,
+    )
+    price_total_no_discount = fields.Monetary(
+        compute="_compute_amount",
+        string="Subtotal Without Discount",
+        store=True,
+        precompute=True,
+    )
+
+    @api.depends('product_id', 'product_uom', 'product_uom_qty')
+    def _compute_discount(self):
+        for line in self:
+            if not line.product_id or line.display_type:
+                line.discount = 0.0
+
+            # if not (
+            #         line.order_id.pricelist_id
+            #         and line.order_id.pricelist_id.discount_policy == 'without_discount'
+            # ):
+            #     continue
+
+            line.discount = 0.0
+
+            if not line.pricelist_item_id:
+                # No pricelist rule was found for the product
+                # therefore, the pricelist didn't apply any discount/change
+                # to the existing sales price.
+                continue
+
+            # line = line.with_company(line.company_id)
+            pricelist_price = line._get_pricelist_price()
+            base_price = line._get_pricelist_price_before_discount()
+
+            if base_price != 0:  # Avoid division by zero
+                discount = (base_price - pricelist_price) / base_price * 100
+                if (discount > 0 and base_price > 0) or (discount < 0 and base_price < 0):
+                    # only show negative discounts if price is negative
+                    # otherwise it's a surcharge which shouldn't be shown to the customer
+                    line.discount = discount
+
     @api.depends('product_uom_id.category_id', 'product_id.uom_id.category_id', 'product_id.uom_id')
     def _compute_product_uom_id(self):
         for line in self:
@@ -367,7 +417,27 @@ class DistributorMoveLines(models.Model):
                 #     product_currency=line.currency_id
                 # )
 
-    @api.depends('product_uom_qty', 'price_unit')
+    def _update_discount_display_fields(self):
+        for line in self:
+            line.price_total_no_discount = 0
+            line.discount_total = 0
+            if not line.discount:
+                line.price_total_no_discount = line.price_total
+                continue
+            price = line.price_unit
+
+            price_total_no_discount = price * line.product_uom_qty
+            discount_total = price_total_no_discount - line.price_total
+
+            line.update(
+                {
+                    "discount_total": discount_total,
+                    "price_total_no_discount": price_total_no_discount,
+                }
+            )
+
+    @api.depends('product_uom_qty', 'discount', 'price_unit')
     def _compute_amount(self):
         for line in self:
-            line.price_total = line.price_unit * line.product_uom_qty
+            line.price_total = line.price_unit * line.product_uom_qty * (1.0 - line.discount / 100.0)
+        self._update_discount_display_fields()

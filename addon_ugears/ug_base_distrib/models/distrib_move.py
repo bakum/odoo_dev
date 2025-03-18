@@ -92,6 +92,52 @@ class DistributorMove(models.Model):
     rate = fields.Float(compute='_compute_current_rate', string='Current Cross-Rate', digits=0, store=True,
                         precompute=True, help='The rate of the currency to the currency of accounting')
 
+    discount_total = fields.Monetary(
+        compute="_compute_discount_total",
+        string="Discount Subtotal",
+        currency_field="currency_id",
+        store=True,
+    )
+    price_total_no_discount = fields.Monetary(
+        compute="_compute_discount_total",
+        string="Subtotal Without Discount",
+        currency_field="currency_id",
+        store=True,
+    )
+
+    def apply_discount_if_needed(self):
+        self._apply_discount_if_needed()
+
+    def _apply_discount_if_needed(self):
+        self.ensure_one()
+        if self.operation == 'out':
+            return
+        discount_setting = self.env.user.has_group('product.group_discount_per_so_line')
+        if not discount_setting:
+            return
+
+        distrib_id = self.distrib_id
+        if not distrib_id.discount_available:
+            return
+        if self.price_total_no_discount < distrib_id.discount_after:
+            self.move_line.update({'discount' : 0})
+        else:
+            self.move_line.update({'discount' : distrib_id.discount_value})
+
+    @api.depends("move_line.discount_total", "move_line.price_total_no_discount")
+    def _compute_discount_total(self):
+        for order in self:
+            discount_total = sum(order.move_line.mapped("discount_total"))
+            price_total_no_discount = sum(
+                order.move_line.mapped("price_total_no_discount")
+            )
+            order.update(
+                {
+                    "discount_total": discount_total,
+                    "price_total_no_discount": price_total_no_discount,
+                }
+            )
+
     @api.depends('move_line.product_uom_qty')
     def _compute_quantity_amount(self):
         for order in self:
@@ -238,6 +284,7 @@ class DistributorMove(models.Model):
         return super().name_get()
 
     def action_done(self):
+        self._apply_discount_if_needed()
         self.write({'state': 'done'})
 
     def action_cancel(self):
