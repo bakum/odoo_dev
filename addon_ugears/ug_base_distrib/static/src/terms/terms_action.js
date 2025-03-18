@@ -12,7 +12,7 @@ async function termsAction(env, action) {
             distrib_rec = await env.services.orm.searchRead('distrib.distributors', [['id', '=', d_id]], ['currency_id'])
         }
     }
-    if (distrib_rec) {
+    if (Array.isArray(distrib_rec) && distrib_rec.length > 0) {
         let currency = distrib_rec[0].currency_id
         let cur_str = currency[1].toLowerCase()
         let url = `/ug_base_distrib/static/terms/${cur_str}/Ugears_TnC_2025_${cur_str}.pdf`
