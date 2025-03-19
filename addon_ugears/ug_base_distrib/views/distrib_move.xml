@@ -51,14 +51,17 @@
                                 <tree editable="bottom" string="Journal Items" default_order="sequence, id">
                                     <control>
                                         <create name="add_line_control" string="Add a line"/>
+                                        <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
+                                        <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/>
                                         <!--    <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
                                             <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/> -->
                                     </control>
+                                    <field name="display_type" force_save="1" invisible="1"/>
                                     <field name="operation" invisible="1"/>
                                     <field name="sequence" widget="handle"/>
-                                    <field name="product_id" optional="show"
-                                           options="{'no_create': True, 'no_open': True}"/>
-                                    <field name="name" widget="section_and_note_text" optional="show" readonly="1"/>
+                                    <field name="product_id" optional="show" force_save="1"
+                                           options="{'no_create': True, 'no_open': True}" attrs="{'required': [('display_type', '=', 'product')]}"/>
+                                    <field name="name" widget="section_and_note_text" optional="show"/>
                                     <field name="product_uom_qty" optional="show"/>
                                     <field name="price_unit" optional="show" readonly="1"/>
                                     <field name="currency_id" optional="show" invisible="1"/>
@@ -69,8 +72,6 @@
                                     <field name="price_total" optional="show" readonly="1"/>
                                     <field name="channel_id" force_save="1" optional="hide"
                                            attrs="{'invisible': [('operation', '=', 'inc')],'required' : [('operation', '=', 'out')]}"/>
-
-                                    <field name="display_type" force_save="1" invisible="1"/>
                                 </tree>
                             </field>
                             <div class="float-end d-flex gap-1 mb-2 ms-1"

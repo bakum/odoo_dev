@@ -1,6 +1,7 @@
 from email.policy import default
 
 from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
 
 
 class DistributorMoveLines(models.Model):
@@ -9,9 +10,9 @@ class DistributorMoveLines(models.Model):
     _rec_names_search = ['name', 'move_id.name']
     _order = 'move_id, distrib_id asc, id'
 
-    _sql_constraints = [
-        ('quantity_check', 'CHECK(product_uom_qty>0)', 'Minimum 1 quantity allow')
-    ]
+    # _sql_constraints = [
+    #     ('quantity_check', 'CHECK(product_id IS NULL and product_uom_qty>0)', 'Minimum 1 quantity allow')
+    # ]
 
     def _default_channel(self):
         return self.move_id.channel_id.id
@@ -66,7 +67,7 @@ class DistributorMoveLines(models.Model):
             ('line_section', "Section"),
             ('line_note', "Note"),
         ],
-        default=False)
+        default='product')
     name = fields.Text(
         string="Description",
         compute='_compute_name',
@@ -77,7 +78,6 @@ class DistributorMoveLines(models.Model):
         comodel_name='product.product',
         string="Product",
         change_default=True, ondelete='restrict', index='btree_not_null',
-        required=True,
         domain="[('sale_ok', '=', True)]")
 
     product_template_id = fields.Many2one(
@@ -103,11 +103,10 @@ class DistributorMoveLines(models.Model):
         comodel_name='uom.uom',
         string="Unit of Measure",
         compute='_compute_product_uom',
-        required=True,
         store=True, readonly=False, precompute=True, ondelete='restrict',
         domain="[('category_id', '=', product_uom_category_id)]")
     product_uom_id = fields.Many2one(
-        'uom.uom', 'Unit of Measure', required=True, domain="[('category_id', '=', product_uom_category_id)]",
+        'uom.uom', 'Unit of Measure', domain="[('category_id', '=', product_uom_category_id)]",
         compute="_compute_product_uom_id", store=True, readonly=False, precompute=True,
     )
     product_no_variant_attribute_value_ids = fields.Many2many(
@@ -163,6 +162,12 @@ class DistributorMoveLines(models.Model):
         store=True,
         precompute=True,
     )
+
+    @api.constrains('product_uom_qty')
+    def _check_product_uom_qty(self):
+        for rec in self:
+            if rec.product_id and rec.product_uom_qty == 0 and rec.display_type == 'product':
+                raise ValidationError(_("Minimum 1 quantity allow"))
 
     @api.depends('product_id', 'product_uom', 'product_uom_qty')
     def _compute_discount(self):
