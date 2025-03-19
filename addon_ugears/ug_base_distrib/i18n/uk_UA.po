@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-18 15:03+0000\n"
-"PO-Revision-Date: 2025-03-18 15:03+0000\n"
+"POT-Creation-Date: 2025-03-19 16:36+0000\n"
+"PO-Revision-Date: 2025-03-19 16:36+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -74,6 +74,7 @@ msgid "Action Needed"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules__active
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__active
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_product_theme__active
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_regions__active
@@ -116,6 +117,7 @@ msgid "Activity Type Icon"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_discount_rules_form
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_expenses_form
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_form
 msgid "Add a line"
@@ -176,6 +178,8 @@ msgid "April"
 msgstr "Квітень"
 
 #. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_discount_rules_form
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_discount_rules_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_sales_channels_form
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_sales_channels_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_theme_form
@@ -324,6 +328,11 @@ msgid "Category"
 msgstr "Категорія"
 
 #. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_discount_rules_form
+msgid "Category Items"
+msgstr ""
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__channel_id
 msgid "Channel"
 msgstr "Канал"
@@ -431,6 +440,8 @@ msgstr "Створити новий продукт"
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__create_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules__create_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules_line__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__create_uid
@@ -459,6 +470,8 @@ msgstr ""
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__create_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules__create_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules_line__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__create_date
@@ -646,14 +659,27 @@ msgid "Discount (%)"
 msgstr "Зниж.%"
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules_line__move_id
+msgid "Discount Rule Reference"
+msgstr ""
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__discount_total
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__discount_total
 msgid "Discount Subtotal"
 msgstr "Знижка"
 
 #. module: ug_base_distrib
+#: model:ir.actions.act_window,name:ug_base_distrib.action_discount_rules
+#: model:ir.ui.menu,name:ug_base_distrib.menu_discount_rule
+msgid "Discount rules"
+msgstr "Правила знижок"
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules_line__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__display_name
@@ -873,6 +899,23 @@ msgid "Distributors Stock"
 msgstr "Залишки дистриб'юторів"
 
 #. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_distrib_discount_rules
+msgid "Distributors generic discounts rules"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_distrib_discount_rules_line
+msgid "Distributors generic discounts rules lines"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/discount_rules.py:0
+#, python-format
+msgid "Distributors generic discounts rules should be unique"
+msgstr ""
+
+#. module: ug_base_distrib
 #: model:ir.model,name:ug_base_distrib.model_distrib_distributors
 msgid "Distributors records"
 msgstr "Дистриб'ютори"
@@ -981,6 +1024,11 @@ msgstr "Файл Excel"
 msgid "Excel files are recommended as formatting is automatic."
 msgstr ""
 "Файли Excel рекомендується, оскільки форматування відбувається автоматично."
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_discount_rules_form
+msgid "Excluded from discount"
+msgstr "Виключено зі знижки"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses_line__display_type__expense
@@ -1179,6 +1227,8 @@ msgstr "Історія"
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules_line__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__id
@@ -1620,6 +1670,8 @@ msgstr "Дата останньої інвентаризації"
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules_line____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line____last_update
@@ -1655,6 +1707,8 @@ msgstr ""
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__write_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules__write_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules_line__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__write_uid
@@ -1683,6 +1737,8 @@ msgstr ""
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__write_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules__write_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules_line__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__write_date
@@ -1770,6 +1826,11 @@ msgstr "Виконано"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__message_main_attachment_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__message_main_attachment_id
 msgid "Main Attachment"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules__main_req
+msgid "Main Rule"
 msgstr ""
 
 #. module: ug_base_distrib
@@ -1962,6 +2023,7 @@ msgstr "Назва"
 
 #. module: ug_base_distrib
 #. odoo-python
+#: code:addons/ug_base_distrib/models/discount_rules.py:0
 #: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
 #: code:addons/ug_base_distrib/models/distrib_move.py:0
 #: code:addons/ug_base_distrib/models/distrib_sales_budget.py:0
@@ -2247,6 +2309,7 @@ msgstr ""
 #. module: ug_base_distrib
 #: model:ir.model,name:ug_base_distrib.model_product_template
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules_line__product_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__product_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_statistic__product_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_move_channels_statistic__product_id
@@ -2269,6 +2332,7 @@ msgstr "Товар"
 #. module: ug_base_distrib
 #: model:ir.model,name:ug_base_distrib.model_product_category
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_category_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules_line__categ_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__product_category_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__product_categ_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant_history__product_categ_id
@@ -2303,6 +2367,7 @@ msgstr "Кількість товару оновлено"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_template_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules_line__product_template_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__product_template_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant__product_tmpl_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant_history__product_tmpl_id
@@ -2440,6 +2505,7 @@ msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules__name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_marketing_expenses__name
 msgid "Ref"
@@ -2485,6 +2551,11 @@ msgstr ""
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_review
 msgid "Review"
 msgstr "Огляд"
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules__move_line
+msgid "Rule Lines"
+msgstr ""
 
 #. module: ug_base_distrib
 #. odoo-javascript

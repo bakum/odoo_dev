@@ -106,7 +106,8 @@ class DistributorMove(models.Model):
     )
 
     def apply_discount_if_needed(self):
-        self._apply_discount_if_needed()
+        if self.state != 'done':
+            self._apply_discount_if_needed()
 
     def _apply_discount_if_needed(self):
         self.ensure_one()
@@ -122,7 +123,14 @@ class DistributorMove(models.Model):
         if self.price_total_no_discount < distrib_id.discount_after:
             self.move_line.update({'discount' : 0})
         else:
-            self.move_line.update({'discount' : distrib_id.discount_value})
+            for line in self.move_line:
+                Rules = self.env['distrib.discount.rules']
+                excluded = Rules._excluded_position(line)
+                if excluded:
+                    line.update({'discount': 0})
+                    continue
+                line.update({'discount': distrib_id.discount_value})
+            # self.move_line.update({'discount' : distrib_id.discount_value})
 
     @api.depends("move_line.discount_total", "move_line.price_total_no_discount")
     def _compute_discount_total(self):

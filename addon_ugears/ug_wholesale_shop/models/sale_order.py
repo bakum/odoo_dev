@@ -468,7 +468,7 @@ class SaleOrder(models.Model):
             raise UserError(_(
                 "The given product does not have a price therefore it cannot be added to cart.",
             ))
-
+        self._apply_discount_if_needed()
         return {
             'line_id': order_line.id,
             # 'pack_id': pack_line.id,
@@ -847,4 +847,11 @@ class SaleOrder(models.Model):
         if self.price_total_no_discount < distrib_id.discount_after:
             self.order_line.update({'discount' : 0})
         else:
-            self.order_line.update({'discount' : distrib_id.discount_value})
+            for line in self.order_line:
+                Rules = self.env['distrib.discount.rules']
+                excluded = Rules._excluded_position(line)
+                if excluded:
+                    line.update({'discount': 0})
+                    continue
+                line.update({'discount': distrib_id.discount_value})
+            # self.order_line.update({'discount' : distrib_id.discount_value})

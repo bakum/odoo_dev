@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_discount_rules_form" model="ir.ui.view">
+        <field name="name">distrib.discount.rules.form</field>
+        <field name="model">distrib.discount.rules</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box"/>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                    <div class="oe_title mb24">
+                        <field name="active" invisible="1"/>
+                        <h1>
+                            <field id="company" class="text-break" name="name" default_focus="1"/>
+                        </h1>
+                    </div>
+                    <notebook>
+                        <page id="categ_tab" name="move_tab" string="Excluded from discount">
+                            <field name="move_line" widget="section_and_note_one2many" mode="tree">
+                                <tree editable="bottom" string="Category Items" default_order="id">
+                                    <control>
+                                        <create name="add_line_control" string="Add a line"/>
+                                    </control>
+                                    <field name="categ_id" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('product_id', '!=', False)]}"/>
+                                    <field name="product_id" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('categ_id', '!=', False)]}"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_discount_rules_tree" model="ir.ui.view">
+        <field name="name">distrib.discount.rules.tree</field>
+        <field name="model">distrib.discount.rules</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_discount_rules_search" model="ir.ui.view">
+        <field name="name">distrib.discount.rules.search</field>
+        <field name="model">distrib.discount.rules</field>
+        <field name="arch" type="xml">
+            <search>
+                <filter name="filter_archived" string="Archived" domain="[('active','=',False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_discount_rules" model="ir.actions.act_window">
+        <field name="name">Discount rules</field>
+        <field name="res_model">distrib.discount.rules</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+            id="menu_discount_rule"
+            name="Discount rules"
+            parent="menu_distrib_settings_distrib"
+            action="action_discount_rules"
+            groups="ug_base_distrib.group_distrib_manager"
+            sequence="14"/>
+</odoo>

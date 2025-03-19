@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-17 14:23+0000\n"
-"PO-Revision-Date: 2025-03-17 14:23+0000\n"
+"POT-Creation-Date: 2025-03-19 18:36+0000\n"
+"PO-Revision-Date: 2025-03-19 18:36+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -608,17 +608,11 @@ msgid "Discount After"
 msgstr "Гранична сума"
 
 #. module: ug_wholesale_shop
-#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_distributors__discount_available
-msgid "Discount Available"
-msgstr "Надати знижку"
-
-#. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.view_form_inherit_distributors
 msgid "Discount Configuration"
 msgstr "Налаштування знижки"
 
 #. module: ug_wholesale_shop
-#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.reduction_code_promotion
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
 msgid "Discount Subtotal:"
 msgstr "Знижка:"
@@ -1245,6 +1239,16 @@ msgstr "Не вдалося знайти дистриб'ютора для дос
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
 msgid "Unit"
 msgstr "Од."
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_distributors__discount_available
+msgid "Volume discount"
+msgstr "Знижка на обсяг"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.reduction_code_promotion
+msgid "Volume discount:"
+msgstr "Знижка на обсяг:"
 
 #. module: ug_wholesale_shop
 #. odoo-python

@@ -48,6 +48,7 @@
         'views/import_budget.xml',
         'views/inventory_history.xml',
         'views/terms_action.xml',
+        'views/discount_rules.xml',
     ],
     'assets': {
         'web.assets_backend': [

@@ -814,7 +814,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="text-end border-0">Discount Subtotal:</td>
+                    <td class="text-end border-0">Volume discount:</td>
                     <td class="text-center text-xl-end border-0">
                         <span t-field="website_sale_order.discount_total"/>
                     </td>
