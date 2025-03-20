@@ -15,19 +15,30 @@
                                 <span class="o_stat_text">Calculator</span>
                                 <span class="o_stat_text">Preview</span>
                             </div>
-<!--                             <field name="incoming_count" widget="statinfo" string="incoming"/>-->
                         </button>
                         <button name="action_view_incomes" type="object" class="oe_stat_button"
                                 icon="fa-inbox" attrs="{'invisible': [('incoming_count', '=', 0)]}">
                             <field name="incoming_count" widget="statinfo" string="Delivery"/>
                         </button>
                     </div>
-<!--                    <xpath expr="//button[@name='create']" position="attributes">-->
-<!--                        <attribute name="groups">base.group_system</attribute>-->
-<!--                    </xpath>-->
+                    <xpath expr="//button[@name='action_draft']" position="attributes">
+                        <attribute name="groups">ug_base_distrib.group_distrib_manager</attribute>
+                    </xpath>
+                    <xpath expr="//button[@name='action_cancel']" position="attributes">
+                        <attribute name="groups">ug_base_distrib.group_distrib_manager</attribute>
+                    </xpath>
+                    <xpath expr="//button[@name='action_confirm']" position="attributes">
+                        <attribute name="groups">ug_base_distrib.group_distrib_manager</attribute>
+                    </xpath>
+                    <xpath expr="//button[@name='action_quotation_send']" position="attributes">
+                        <attribute name="groups">ug_base_distrib.group_distrib_manager</attribute>
+                    </xpath>
+                    <xpath expr="//button[@id='create_invoice']" position="attributes">
+                        <attribute name="groups">ug_base_distrib.group_distrib_manager</attribute>
+                    </xpath>
                     <xpath expr="//button[@name='action_draft']" position="before">
                         <field name="incoming_count" invisible="1"/>
-                        <button name="create_distrib_move_inc" string="Deliver"
+                        <button name="create_distrib_move_inc" groups="ug_base_distrib.group_distrib_manager" string="Deliver"
                                 type="object" class="btn btn-outline-primary"
                                 attrs="{'invisible': ['|', ('state', 'not in', ['sale']), ('id', '=', False), ('incoming_count', '=', 0)]}"/>
                     </xpath>

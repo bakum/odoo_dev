@@ -22,6 +22,12 @@ async function termsAction(env, action) {
             'target': 'new'
         }
         env.services.action.doAction(url_action)
+        return
     }
+    let notification = {
+        type: 'info',
+        sticky: true,
+    }
+    env.services.notification.add('Nothing to show', notification)
 }
 registry.category("actions").add("term_action", termsAction)
