@@ -923,7 +923,7 @@ msgstr ""
 #: code:addons/ug_base_distrib/models/discount_rules.py:0
 #, python-format
 msgid "Distributors generic discounts rules should be unique"
-msgstr ""
+msgstr "Загальні правила знижок для дистриб’юторів мають бути унікальними"
 
 #. module: ug_base_distrib
 #: model:ir.model,name:ug_base_distrib.model_distrib_distributors
