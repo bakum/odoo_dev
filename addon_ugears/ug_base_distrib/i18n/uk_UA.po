@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-19 16:36+0000\n"
-"PO-Revision-Date: 2025-03-19 16:36+0000\n"
+"POT-Creation-Date: 2025-03-20 07:16+0000\n"
+"PO-Revision-Date: 2025-03-20 07:16+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -122,6 +122,16 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_form
 msgid "Add a line"
 msgstr "Додати рядок"
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_form
+msgid "Add a note"
+msgstr "Додати примітку"
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_form
+msgid "Add a section"
+msgstr "Додати розділ"
 
 #. module: ug_base_distrib
 #: model:res.groups,name:ug_base_distrib.group_distrib_manager
@@ -1933,9 +1943,11 @@ msgid "Messages"
 msgstr ""
 
 #. module: ug_base_distrib
-#: model:ir.model.constraint,message:ug_base_distrib.constraint_distrib_distributors_move_line_quantity_check
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_move_line.py:0
+#, python-format
 msgid "Minimum 1 quantity allow"
-msgstr "Кількість повинна буди не менше 1"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__mobile
