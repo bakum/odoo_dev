@@ -21,7 +21,7 @@ class DiscountRules(models.Model):
     @api.constrains('main_req')
     def _check_main_req(self):
         for rec in self:
-            domain = [('main_req', '=', rec.main_req)]
+            domain = ['|', ('active','=',True),  ('active','=',False)]
             count = self.sudo().search_count(domain)
             if count > 1:
                 raise ValidationError(_("Distributors generic discounts rules should be unique"))
