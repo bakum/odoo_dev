@@ -35,8 +35,6 @@ class DiscountRules(models.Model):
     def unlink(self):
         return super(DiscountRules, self).unlink()
 
-    def _excluded_enabled(self):
-        pass
 
     def _excluded_position(self, product_rec):
         current = self.sudo().search([])[:1]
