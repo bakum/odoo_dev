@@ -80,6 +80,8 @@ def apply_pricelist_from_request(search_criterias, guid):
         items = []
         for x in price_items:
             apply_id_from_ext_id(x)
+            if not 'product_tmpl_id' in x:
+                continue
             if "date_end" in x and not x['date_end']:
                 del x['date_end']
             items.append((0, 0, x))
