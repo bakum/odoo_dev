@@ -49,6 +49,7 @@
         'views/inventory_history.xml',
         'views/terms_action.xml',
         'views/discount_rules.xml',
+        'data/mail_template_data.xml'
     ],
     'assets': {
         'web.assets_backend': [
