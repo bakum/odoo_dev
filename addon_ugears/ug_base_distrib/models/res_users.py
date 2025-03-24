@@ -51,7 +51,6 @@ class UsersDistrib(models.Model):
             if not user.email:
                 raise UserError(_("Cannot send email: user %s has no email address.", user.name))
             email_values['email_to'] = user.email
-            # TDE FIXME: make this template technical (qweb)
             with self.env.cr.savepoint():
                 force_send = not (self.env.context.get('import_file', False))
                 template.send_mail(user.id, force_send=force_send, raise_exception=True, email_values=email_values)
