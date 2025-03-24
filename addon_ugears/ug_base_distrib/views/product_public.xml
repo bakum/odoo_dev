@@ -99,6 +99,9 @@
                     <separator/>
                     <filter string="On Hand" name="on_hand" domain="[('qty_available_dist', '&gt;', 0)]"/>
                 </xpath>
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="guid" string="GUID" filter_domain="[('guid', 'ilike', self)]"/>
+                </xpath>
             </field>
         </record>
     </data>
