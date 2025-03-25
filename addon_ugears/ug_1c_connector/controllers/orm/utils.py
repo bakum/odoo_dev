@@ -330,5 +330,5 @@ def update_ids(rec, ids):
                     not_found = True
                     break
             if not_found:
-                break
+                continue
             rec[key] = ids[key]
