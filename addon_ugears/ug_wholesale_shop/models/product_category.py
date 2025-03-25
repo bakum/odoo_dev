@@ -1,5 +1,6 @@
 from odoo import models, fields, tools, api, _
 from odoo.addons.http_routing.models.ir_http import slug, unslug
+from odoo.osv import expression
 
 
 class Product(models.Model):
@@ -99,6 +100,7 @@ class Product(models.Model):
     def _get_package_detail_with_cartoon(self):
         return _('Brutto weight ') + str(self.cartoon_weight_with_model) + _(' gram')
 
+
 class ProductPublicCategory(models.Model):
     _inherit = 'product.public.category'
     guid = fields.Char(string='Guid 1C:Enterprise')
@@ -120,3 +122,14 @@ class ProductPublicCategory(models.Model):
 
     def unlink(self):
         return super(ProductPublicCategory, self).unlink()
+
+    def write(self, vals):
+        res = super().write(vals)
+        if 'active' in vals:
+            active_domain = expression.AND([
+                [('public_categ_ids', 'in', self.ids)],
+                ['|', ('active', '=', True), ('active', '=', False)]
+            ])
+            products = self.env['product.template'].search(active_domain)
+            products.write({'active': vals['active']})
+        return res
