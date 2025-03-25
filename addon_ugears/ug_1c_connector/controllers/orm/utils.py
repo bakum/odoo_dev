@@ -93,14 +93,15 @@ def apply_pricelist_from_request(search_criterias, guid):
     except Exception as e:
         return {"success": False, 'error': str(e)}
 
+
 def get_active_field_present(modelname):
-    fld = http.request.env[modelname]._fields
-    return True if 'active' in fld else False
+    return 'active' in http.request.env[modelname]._fields
+
 
 def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=None, ids=None):
     apply_id_from_ext_id(search_criterias)
     active_present = get_active_field_present(modelname)
-    active_domain = ['|',('active', '=', True),('active', '=', False)]
+    active_domain = ['|', ('active', '=', True), ('active', '=', False)]
     try:
         if guid:
             ext_id = http.request.env['ir.model.data'].sudo().search([('name', '=', guid)], limit=1)
@@ -322,13 +323,6 @@ def get_ids_from_request(kw):
 
 def update_ids(rec, ids):
     if isinstance(ids, dict):
-        for key in ids:
-            # rec[key].unlink()
-            not_found = False
-            for x in ids[key]:
-                if not x[1]:
-                    not_found = True
-                    break
-            if not_found:
-                continue
-            rec[key] = ids[key]
+        for key, values in ids.items():
+            if all(x[1] for x in values):
+                rec[key] = values
