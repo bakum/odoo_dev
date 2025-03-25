@@ -1,6 +1,7 @@
 import json
 
 from odoo import http
+from odoo.osv import expression
 
 
 def get_id_from_ext_id(ext_id):
@@ -92,9 +93,14 @@ def apply_pricelist_from_request(search_criterias, guid):
     except Exception as e:
         return {"success": False, 'error': str(e)}
 
+def get_active_field_present(modelname):
+    fld = http.request.env[modelname]._fields
+    return True if 'active' in fld else False
 
 def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=None, ids=None):
     apply_id_from_ext_id(search_criterias)
+    active_present = get_active_field_present(modelname)
+    active_domain = ['|',('active', '=', True),('active', '=', False)]
     try:
         if guid:
             ext_id = http.request.env['ir.model.data'].sudo().search([('name', '=', guid)], limit=1)
@@ -107,9 +113,17 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=
                         moves = http.request.env[modelname].sudo().search([('id', '=', id)], limit=1)
             else:
                 if http.request.httprequest.method == 'GET':
-                    moves = http.request.env[modelname].sudo().search_read([('guid', '=', guid)], limit=1)
+                    if active_present:
+                        active_domain = expression.AND([[('guid', '=', guid)], active_domain])
+                        moves = http.request.env[modelname].sudo().search_read(active_domain, limit=1)
+                    else:
+                        moves = http.request.env[modelname].sudo().search_read([('guid', '=', guid)], limit=1)
                 else:
-                    moves = http.request.env[modelname].sudo().search([('guid', '=', guid)], limit=1)
+                    if active_present:
+                        active_domain = expression.AND([[('guid', '=', guid)], active_domain])
+                        moves = http.request.env[modelname].sudo().search(active_domain, limit=1)
+                    else:
+                        moves = http.request.env[modelname].sudo().search([('guid', '=', guid)], limit=1)
         else:
             moves = http.request.env[modelname].sudo().search_read(kw)
     except Exception as e:
@@ -129,7 +143,10 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=
                 mod = {"success": written}
                 for model in moves:
                     translate_field(model, trans)
-                    update_ids(model, ids)
+                    try:
+                        update_ids(model, ids)
+                    except Exception as e:
+                        pass
                     new_dict = model.read(list(set(http.request.env[modelname]._fields)))
                     mod['result'] = new_dict
                     # print(new_dict)
@@ -149,7 +166,10 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=
                 mod = {"success": False}
                 for model in written:
                     translate_field(model, trans)
-                    update_ids(model, ids)
+                    try:
+                        update_ids(model, ids)
+                    except Exception as e:
+                        pass
                     new_dict = model.read(list(set(http.request.env[modelname]._fields)))
                     mod['result'] = new_dict
                     mod['success'] = True
@@ -172,7 +192,10 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=
                 written = moves[0].write(search_criterias)
                 for model in moves:
                     translate_field(model, trans)
-                    update_ids(model, ids)
+                    try:
+                        update_ids(model, ids)
+                    except Exception as e:
+                        pass
                     new_dict = model.read(list(set(http.request.env[modelname]._fields)))
                     mod['result'] = new_dict
                     mod['success'] = written
@@ -301,4 +324,11 @@ def update_ids(rec, ids):
     if isinstance(ids, dict):
         for key in ids:
             # rec[key].unlink()
+            not_found = False
+            for x in ids[key]:
+                if not x[1]:
+                    not_found = True
+                    break
+            if not_found:
+                break
             rec[key] = ids[key]
