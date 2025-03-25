@@ -260,24 +260,13 @@ def parse_data_from_request(kw=None):
 
 def get_search_criterias(kw):
     search_criterias = []
-    for key in kw:
-        new_key = key
+    for key, value in kw.items():
         if key == 'operator':
-            search_criterias.insert(0, kw[key])
+            search_criterias.insert(0, value)
             continue
-        sent = kw[key]
-        operator = '='
-        arg = kw[key]
-        try:
-            operator = sent['operator']
-        except:
-            pass
-        try:
-            arg = sent['arg']
-        except:
-            pass
-        if key == 'date_begin' or key == 'date_end':
-            new_key = 'date'
+        operator = value.get('operator', '=')
+        arg = value.get('arg', value)
+        new_key = 'date' if key in ['date_begin', 'date_end'] else key
         search_criterias.append((new_key, operator, arg))
     return search_criterias
 
@@ -299,24 +288,18 @@ def get_trans_from_request(kw):
 
 
 def get_ids_from_request(kw):
-    # ids = []
     many2many = {}
     keys_for_delete = []
+
     for key in kw:
         if 'ids' in key:
-            ids = []
-            rs = get_recordset_from_ext_id(kw[key])[:1]
-            # warnings.simplefilter(action='ignore', category=UserWarning)
-            if isinstance(rs, str):
-                # if rs == kw[key]:
-                continue
-            ids.append((4, rs.id))
-            many2many[key] = ids
-            # kw[key] = ids
-            keys_for_delete.append(key)
+            rs = get_recordset_from_ext_id(kw[key])
+            if rs and not isinstance(rs, str):
+                many2many[key] = [(4, rs.id)]
+                keys_for_delete.append(key)
 
-    for i in keys_for_delete:
-        del kw[i]
+    for key in keys_for_delete:
+        del kw[key]
 
     return many2many
 
