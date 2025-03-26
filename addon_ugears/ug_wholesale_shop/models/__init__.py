@@ -9,3 +9,4 @@ from . import sale_order
 from . import sale_order_line
 from . import distributors
 from . import import_order
+from . import res_partner

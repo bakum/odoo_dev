@@ -40,6 +40,31 @@ def apply_id_from_ext_id(ext_id_dict):
     for x in key_for_del:
         del ext_id_dict[x]
 
+def apply_distrib_from_request(search_criterias, guid, pricelist_guid):
+    partner_sudo = http.request.env['res.partner'].sudo()
+    try:
+        if guid:
+            partner_sudo = partner_sudo.search([('guid', '=', guid)])[:1]
+            if partner_sudo:
+                if pricelist_guid:
+                    pricelist = http.request.env['product.pricelist'].sudo().search([('guid', '=', pricelist_guid)])[:1]
+                    if pricelist:
+                        partner_sudo.create_distributor(pricelist.id)
+                    else:
+                        partner_sudo.create_distributor()
+                else:
+                    partner_sudo.create_distributor()
+        else:
+            return {"success": False, 'error': 'No guid provided'}
+
+        if partner_sudo:
+            new_dict = partner_sudo.read(list(set(http.request.env['res.partner']._fields)))
+            return {"success": True, 'result': new_dict}
+        else:
+            return {"success": False, 'error': 'Partner not found'}
+
+    except Exception as e:
+        return {"success": False, 'error': str(e)}
 
 def apply_pricelist_from_request(search_criterias, guid):
     pricelist_sudo = http.request.env['product.pricelist'].sudo()

@@ -3,7 +3,7 @@ import json
 from odoo import http
 from odoo.tools import date_utils
 from .orm.utils import parse_data_from_request, get_trans_from_request, apply_update_from_request, get_ids_from_request, \
-    apply_pricelist_from_request
+    apply_pricelist_from_request, apply_distrib_from_request
 
 
 class DictionariesController(http.Controller):
@@ -32,13 +32,25 @@ class DictionariesController(http.Controller):
 
         return json.dumps(result_dict, default=date_utils.json_default)
 
-
     @http.route(['/api/v2/pricelist/<string:guid>'],
                 auth='bearer_api_key', website=False, cors="*", csrf=False,
                 methods=['POST'])
     def put_pricelist(self, guid=None, **kw):
         data_for_edit, sk = parse_data_from_request(kw)
         result_dict = apply_pricelist_from_request(data_for_edit, guid)
+
+        if type(result_dict) is dict:
+            return json.dumps(result_dict, default=date_utils.json_default)
+
+        return json.dumps(result_dict, default=date_utils.json_default)
+
+    @http.route(['/api/v2/archive/<string:guid>/create_distrib',
+                 '/api/v2/archive/<string:guid>/create_distrib/<string:pricelist_guid>'],
+                auth='bearer_api_key', website=False, cors="*", csrf=False,
+                methods=['POST'])
+    def create_distrib(self, guid, pricelist_guid=None, **kw):
+        data_for_edit, sk = parse_data_from_request(kw)
+        result_dict = apply_distrib_from_request(data_for_edit, guid, pricelist_guid)
 
         if type(result_dict) is dict:
             return json.dumps(result_dict, default=date_utils.json_default)
