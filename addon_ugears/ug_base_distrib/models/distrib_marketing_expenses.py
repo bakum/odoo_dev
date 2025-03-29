@@ -147,6 +147,16 @@ class MarketingExpenses(models.Model):
             vals['name'] = self.env['ir.sequence'].next_by_code('distrib.marketing.exp')
         return super(MarketingExpenses, self).create(vals_list)
 
+    def write(self, vals):
+        restrict_date = fields.Datetime.from_string(
+            self.env['ir.config_parameter'].sudo().get_param('distrib.restrict_date', default='1970-01-01 00:00:00')
+        )
+        for record in self:
+            if 'state' in vals and vals['state'] in ('done', 'cancel') and self.date_order <= restrict_date:
+                raise UserError(
+                    _('You cannot change the state if the date is before the restriction date.'))
+        return super(MarketingExpenses, self).write(vals)
+
     @api.depends('date_order')
     def _compute_year(self):
         for order in self:

@@ -226,12 +226,16 @@ class DistributorMove(models.Model):
         return super(DistributorMove, self).create(vals_list)
 
     def write(self, vals):
+        restrict_date_str = self.env['ir.config_parameter'].sudo().get_param('distrib.restrict_date', default='1970-01-01 00:00:00')
+        restrict_date = fields.Datetime.from_string(restrict_date_str)
         context = dict(self.env.context or {})
         recalc_totals = context.get('recalc_totals', False)
         if 'state' in vals:
             mls = self.move_line
             for ml in mls:
                 if vals['state'] == 'done':
+                    if self.date_order <= restrict_date:
+                        raise UserError(_('You cannot change the state if the date is before the restriction date.'))
                     if ml.product_id.type != 'service':
                         Quant = self.env['distrib.quant']
                         quantity = ml.product_uom_id._compute_quantity(ml.balance, ml.product_id.uom_id,
@@ -247,6 +251,8 @@ class DistributorMove(models.Model):
                                                                                                           in_out=ml.operation,
                                                                                                           in_date=ml.date)
                 elif vals['state'] == 'cancel':
+                    if self.date_order <= restrict_date:
+                        raise UserError(_('You cannot change the state if the date is before the restriction date.'))
                     if ml.product_id.type != 'service':
                         Quant = self.env['distrib.quant']
                         quantity = ml.product_uom_id._compute_quantity(ml.balance, ml.product_id.uom_id,

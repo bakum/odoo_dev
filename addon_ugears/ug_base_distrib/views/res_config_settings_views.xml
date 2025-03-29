@@ -51,6 +51,17 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_right_pane">
+                                    <span class="o_form_label">Date of prohibition of data editing</span>
+                                    <div class="text-muted content-group mt16">
+                                        <field name="restrict_date"/>
+                                    </div>
+                                    <div class="text-muted">
+                                        <span class="o_form_label">Changes to data before this date inclusive are prohibited.</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </xpath>

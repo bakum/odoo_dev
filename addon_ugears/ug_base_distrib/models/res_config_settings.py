@@ -15,3 +15,8 @@ class ResConfigSettings(models.TransientModel):
         config_parameter='distrib.report_distrib_quantity_period',
         help="Period in Months for reports.",
     )
+    restrict_date = fields.Datetime(
+        string='Date of prohibition of data editing',
+        config_parameter='distrib.restrict_date',
+        help="Changes to data before this date inclusive are prohibited.",
+    )

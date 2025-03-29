@@ -1,7 +1,16 @@
 import json
+# import pytz
 
-from odoo import http
+from odoo import http, fields, SUPERUSER_ID
 from odoo.osv import expression
+
+CHANNEL_MAP = {
+    'qtt_Channel_0001': 'Channel_0001',
+    'qtt_Channel_0002': 'Channel_0002',
+    'qtt_Channel_0003': 'Channel_0003',
+    'qtt_Channel_0004': 'Channel_0004',
+    'qtt_Channel_0005': 'Channel_0005',
+}
 
 
 def get_id_from_ext_id(ext_id):
@@ -40,6 +49,7 @@ def apply_id_from_ext_id(ext_id_dict):
     for x in key_for_del:
         del ext_id_dict[x]
 
+
 def apply_distrib_from_request(search_criterias, guid, pricelist_guid):
     partner_sudo = http.request.env['res.partner'].sudo()
     try:
@@ -65,6 +75,7 @@ def apply_distrib_from_request(search_criterias, guid, pricelist_guid):
 
     except Exception as e:
         return {"success": False, 'error': str(e)}
+
 
 def apply_pricelist_from_request(search_criterias, guid):
     pricelist_sudo = http.request.env['product.pricelist'].sudo()
@@ -334,3 +345,99 @@ def update_ids(rec, ids):
         for key, values in ids.items():
             if all(x[1] for x in values):
                 rec[key] = values
+
+
+def prepare_move_value(self):
+    values = {
+        'operation': self.operation,
+        'distrib_id': self.distrib_id.id,
+        'user_id': self.env.user.id,
+        'date_order': self.date_order,
+    }
+    return values
+
+
+def apply_moves_from_request(data_for_edit, partner_guid):
+    # timezone_str = "Europe/Kiev"
+    domain = expression.AND([[('guid', '=', partner_guid)], ['|', ('active', '=', True), ('active', '=', False)]])
+    partner_sudo = http.request.env['res.partner'].sudo().search(domain)[:1]
+    date_order = fields.Datetime.from_string(data_for_edit['date_order'])
+    # timezone = pytz.timezone(timezone_str)
+    # localized_date = timezone.localize(date_order)
+    if not partner_sudo:
+        return {"success": False, 'error': 'Partner not found'}
+
+    domain = expression.AND(
+        [[('partner_id', '=', partner_sudo.id)], ['|', ('active', '=', True), ('active', '=', False)]])
+    existing_distributor = http.request.env['distrib.distributors'].search(domain, limit=1)
+    if not existing_distributor:
+        return {"success": False, 'error': 'Distributor not found'}
+
+    move_in, move_out, move_out_inventory, move_in_inventory = [], [], [], []
+    for move in data_for_edit['moves']:
+        domain = expression.AND(
+            [[('guid', '=', move['product_guid'])], ['|', ('active', '=', True), ('active', '=', False)]])
+        product_sudo = http.request.env['product.template'].sudo().search(domain)[:1]
+        if not product_sudo:
+            continue
+        for row in move:
+            if 'Channel' in row and move[row] != 0:
+                channel_id = get_id_from_ext_id(CHANNEL_MAP[row])
+                move_out.append((0, 0, {
+                    'product_id': product_sudo.id,
+                    'price_unit': move.get('price_unit', 0),
+                    'name': product_sudo.display_name,
+                    'display_type': 'product',
+                    'product_uom_qty': move[row],
+                    'channel_id': channel_id,
+                }))
+        if move['qtt_in'] > 0:
+            move_in.append((0, 0, {
+                'product_id': product_sudo.id,
+                'price_unit': move.get('price_unit', 0),
+                'name': product_sudo.display_name,
+                'display_type': 'product',
+                'product_uom_qty': move['qtt_in'],
+            }))
+        if move['qtt_inventory'] > 0:
+            move_out_inventory.append((0, 0, {
+                'product_id': product_sudo.id,
+                'price_unit': move.get('price_unit', 0),
+                'name': product_sudo.display_name,
+                'display_type': 'product',
+                'product_uom_qty': move['qtt_inventory'],
+            }))
+        elif move['qtt_inventory'] < 0:
+            move_in_inventory.append((0, 0, {
+                'product_id': product_sudo.id,
+                'price_unit': move.get('price_unit', 0),
+                'name': product_sudo.display_name,
+                'display_type': 'product',
+                'product_uom_qty': -move['qtt_inventory'],
+            }))
+    move_values = {
+        'distrib_id': existing_distributor.id,
+        'date_order': date_order,
+    }
+    DistribMove = http.request.env['distrib.distributors.move'].sudo()
+    if len(move_out) > 0:
+        so_val = move_values.copy()
+        so_val.update({'operation': 'out', 'channel_id': move_out[0][2]['channel_id']})
+        move_sudo = DistribMove.with_user(SUPERUSER_ID).create(so_val)
+        move_sudo.move_line = move_out
+    if len(move_in) > 0:
+        so_val = move_values.copy()
+        so_val.update({'operation': 'inc'})
+        move_sudo = DistribMove.with_user(SUPERUSER_ID).create(so_val)
+        move_sudo.move_line = move_in
+    if len(move_out_inventory) > 0:
+        so_val = move_values.copy()
+        so_val.update({'operation': 'out', 'is_inventory': True})
+        move_sudo = DistribMove.with_user(SUPERUSER_ID).create(so_val)
+        move_sudo.move_line = move_out_inventory
+    if len(move_in_inventory) > 0:
+        so_val = move_values.copy()
+        so_val.update({'operation': 'inc', 'is_inventory': True})
+        move_sudo = DistribMove.with_user(SUPERUSER_ID).create(so_val)
+        move_sudo.move_line = move_in_inventory
+    return {"success": True}

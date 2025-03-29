@@ -163,6 +163,9 @@
                 <filter name="filter_done" string="Complete" domain="[('state','=','done')]"/>
                 <separator/>
                 <filter name="no_inventory" string="Not inventory" domain="[('is_inventory','=',False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Distributor" name="distrib" domain="[]" context="{'group_by':'distrib_id'}"/>
+                </group>
             </search>
         </field>
     </record>

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-20 07:16+0000\n"
-"PO-Revision-Date: 2025-03-20 07:16+0000\n"
+"POT-Creation-Date: 2025-03-29 15:44+0000\n"
+"PO-Revision-Date: 2025-03-29 15:44+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -39,11 +39,25 @@ msgstr ""
 #. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.res_config_settings_view_form
 msgid ""
+"<span class=\"o_form_label\">Changes to data before this date inclusive are "
+"prohibited.</span>"
+msgstr ""
+"<span class=\"o_form_label\">Зміни даних до цієї дати включно "
+"заборонені.</span>"
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.res_config_settings_view_form
+msgid ""
 "<span class=\"o_form_label\">Currency of multi-currency accounting of distributors.\n"
 "                                    </span>"
 msgstr ""
 "<span class=\"o_form_label\">Валюта мультивалютного обліку "
 "дистриб'юторів.</span>"
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.res_config_settings_view_form
+msgid "<span class=\"o_form_label\">Date of prohibition of data editing</span>"
+msgstr "<span class=\"o_form_label\">Дата заборони редагування даних</span>"
 
 #. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.res_config_settings_view_form
@@ -64,6 +78,65 @@ msgstr "<span class=\"o_form_label\">Період у місяцях для зв�
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_product_public_form_inherit
 msgid "<span class=\"o_stat_text\">Distributors</span>"
 msgstr "<span class=\"o_stat_text\">Дистриб'ютори</span>"
+
+#. module: ug_base_distrib
+#: model:mail.template,body_html:ug_base_distrib.set_password_email
+msgid ""
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: 16px; background-color: #FFFFFF; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;\"><tr><td align=\"center\">\n"
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"padding: 16px; background-color: #FFFFFF; color: #454748; border-collapse:separate;\">\n"
+"<tbody>\n"
+"    <!-- HEADER -->\n"
+"    <!-- CONTENT -->\n"
+"    <tr>\n"
+"        <td align=\"center\" style=\"min-width: 590px;\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                <tr><td valign=\"top\" style=\"font-size: 13px;\">\n"
+"                    <div>\n"
+"                        Dear <t t-out=\"object.name or ''\">Marc Demo</t>,<br><br>\n"
+"                        The Ugears Distribution Team has invited you to join the Ugears Distributor Portal via this invitation email.\n"
+"                        <div style=\"margin: 16px 0px 16px 0px;\">\n"
+"                            <a t-att-href=\"object.signup_url\" style=\"background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;\">\n"
+"                                Accept invitation\n"
+"                            </a>\n"
+"                        </div>\n"
+"                        <t t-set=\"website_url\" t-value=\"object.get_base_url()\"></t>\n"
+"                        Your Odoo domain is: <b><a t-att-href=\"website_url\" t-out=\"website_url or ''\">http://yourcompany.odoo.com</a></b><br>\n"
+"                        Your sign in email is: <b><a t-attf-href=\"/web/login?login={{ object.email }}\" target=\"_blank\" t-out=\"object.email or ''\">mark.brown23@example.com</a></b><br><br>\n"
+"                        <br><br>\n"
+"                        We look forward to collaborating with you on a new level of efficiency and usability!\n"
+"                    </div>\n"
+"                </td></tr>\n"
+"                <tr><td style=\"text-align:center;\">\n"
+"                  <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\">\n"
+"                </td></tr>\n"
+"            </table>\n"
+"        </td>\n"
+"    </tr>\n"
+"    <!-- FOOTER -->\n"
+"    <tr>\n"
+"        <td align=\"center\" style=\"min-width: 590px;\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                <tr><td valign=\"middle\" align=\"left\">\n"
+"                    <t t-out=\"object.company_id.name or ''\">YourCompany</t>\n"
+"                </td></tr>\n"
+"                <tr><td valign=\"middle\" align=\"left\" style=\"opacity: 0.7;\">\n"
+"                    <t t-out=\"object.company_id.phone or ''\">+1 650-123-4567</t>\n"
+"                    <t t-if=\"object.company_id.email\">\n"
+"                        | <a t-att-href=\"'mailto:%s' % object.company_id.email\" style=\"text-decoration:none; color: #454748;\" t-out=\"object.company_id.email or ''\">info@yourcompany.com</a>\n"
+"                    </t>\n"
+"                    <t t-if=\"object.company_id.website\">\n"
+"                        | <a t-att-href=\"'%s' % object.company_id.website\" style=\"text-decoration:none; color: #454748;\" t-out=\"object.company_id.website or ''\">http://www.example.com</a>\n"
+"                    </t>\n"
+"                </td></tr>\n"
+"            </table>\n"
+"        </td>\n"
+"    </tr>\n"
+"</tbody>\n"
+"</table>\n"
+"</td></tr>\n"
+"<!-- POWERED BY -->\n"
+"</table>"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__message_needaction
@@ -157,7 +230,7 @@ msgstr "Дозволений дистриб'ютор"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__price_total
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_expenses__amount_untaxed
 msgid "Amount"
-msgstr ""
+msgstr "Разом"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__price_total_acc
@@ -326,6 +399,13 @@ msgstr ""
 "Оберіть інший продукт або дистриб'ютора"
 
 #. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/res_users.py:0
+#, python-format
+msgid "Cannot send email: user %s has no email address."
+msgstr "Неможливо надіслати електронний лист: користувач %s не має електронної адреси."
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_category_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__product_uom_category_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_statistic__product_category_id
@@ -341,6 +421,11 @@ msgstr "Категорія"
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_discount_rules_form
 msgid "Category Items"
 msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_res_config_settings__restrict_date
+msgid "Changes to data before this date inclusive are prohibited."
+msgstr "Зміни даних до цієї дати включно заборонені."
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__channel_id
@@ -611,6 +696,11 @@ msgid "Date Import"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_res_config_settings__restrict_date
+msgid "Date of prohibition of data editing"
+msgstr "Дата заборони редагування даних"
+
+#. module: ug_base_distrib
 #: model:ir.model.fields.selection,name:ug_base_distrib.selection__report_distrib_turnover_quantity__period__days
 msgid "Days"
 msgstr ""
@@ -781,6 +871,7 @@ msgstr "Дистрибуція"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__distrib_id
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_qtt_view_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_turnover_view_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_quants_search
 msgid "Distributor"
 msgstr "Дистриб'ютор"
@@ -1190,6 +1281,11 @@ msgid "Forecasted Stock"
 msgstr "Прогнозований запас"
 
 #. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_product_search
+msgid "GUID"
+msgstr ""
+
+#. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.res_config_settings_view_form
 msgid "Grant discounts on sales order lines"
 msgstr "Надавати знижки на рядки замовлень"
@@ -1197,6 +1293,7 @@ msgstr "Надавати знижки на рядки замовлень"
 #. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_qtt_view_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_turnover_view_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_quants_search
 msgid "Group By"
 msgstr "Групувати за"
@@ -1580,6 +1677,11 @@ msgstr "Кількість встановлена"
 #, python-format
 msgid "Inventory at Date"
 msgstr "Запаси на дату"
+
+#. module: ug_base_distrib
+#: model:mail.template,subject:ug_base_distrib.set_password_email
+msgid "Invitation to Join Ugears Distributor Portal"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__message_is_follower
@@ -2678,6 +2780,11 @@ msgid "Sell-in Plan"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:mail.template,description:ug_base_distrib.set_password_email
+msgid "Sent to new user after you invited them"
+msgstr ""
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_qty9
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_budget_list__product_uom_qty9
 msgid "September"
@@ -2695,6 +2802,11 @@ msgstr ""
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_settings
 msgid "Settings"
 msgstr "Налаштування"
+
+#. module: ug_base_distrib
+#: model:mail.template,name:ug_base_distrib.set_password_email
+msgid "Settings: New Portal Signup"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_expenses__expense_total
@@ -3234,6 +3346,17 @@ msgstr ""
 
 #. module: ug_base_distrib
 #. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#: code:addons/ug_base_distrib/models/distrib_move.py:0
+#: code:addons/ug_base_distrib/models/distrib_move.py:0
+#, python-format
+msgid ""
+"You cannot change the state if the date is before the restriction date."
+msgstr ""
+"Ви не можете змінити стан, в забороненому періоді."
+
+#. module: ug_base_distrib
+#. odoo-python
 #: code:addons/ug_base_distrib/models/distrib_sales_channels.py:0
 #, python-format
 msgid ""
@@ -3256,6 +3379,13 @@ msgid ""
 "(%s)\n"
 ", they are used in other product(s):\n"
 "%s"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/res_users.py:0
+#, python-format
+msgid "You cannot perform this action on an archived user."
 msgstr ""
 
 #. module: ug_base_distrib

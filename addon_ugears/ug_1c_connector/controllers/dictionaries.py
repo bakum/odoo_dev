@@ -3,7 +3,7 @@ import json
 from odoo import http
 from odoo.tools import date_utils
 from .orm.utils import parse_data_from_request, get_trans_from_request, apply_update_from_request, get_ids_from_request, \
-    apply_pricelist_from_request, apply_distrib_from_request
+    apply_pricelist_from_request, apply_distrib_from_request, apply_moves_from_request
 
 
 class DictionariesController(http.Controller):
@@ -51,6 +51,18 @@ class DictionariesController(http.Controller):
     def create_distrib(self, guid, pricelist_guid=None, **kw):
         data_for_edit, sk = parse_data_from_request(kw)
         result_dict = apply_distrib_from_request(data_for_edit, guid, pricelist_guid)
+
+        if type(result_dict) is dict:
+            return json.dumps(result_dict, default=date_utils.json_default)
+
+        return json.dumps(result_dict, default=date_utils.json_default)
+
+    @http.route(['/api/v2/moves/<string:partner_guid>/create_moves'],
+                auth='bearer_api_key', website=False, cors="*", csrf=False,
+                methods=['POST'])
+    def create_moves(self, partner_guid, **kw):
+        data_for_edit, sk = parse_data_from_request(kw)
+        result_dict = apply_moves_from_request(data_for_edit, partner_guid)
 
         if type(result_dict) is dict:
             return json.dumps(result_dict, default=date_utils.json_default)
