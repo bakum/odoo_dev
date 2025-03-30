@@ -2,7 +2,7 @@ import json
 
 from odoo import http
 from odoo.tools import date_utils
-from .orm.utils import parse_data_from_request, get_trans_from_request, apply_update_from_request, get_ids_from_request,   apply_pricelist_from_request, apply_distrib_from_request, apply_moves_from_request
+from .orm.utils import parse_data_from_request, get_trans_from_request, apply_update_from_request, get_ids_from_request, apply_pricelist_from_request, apply_distrib_from_request, apply_moves_from_request
 
 
 class DictionariesController(http.Controller):
