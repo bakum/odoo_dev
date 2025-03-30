@@ -3,6 +3,7 @@ import json
 
 from odoo import http, fields, SUPERUSER_ID
 from odoo.osv import expression
+from ug_wholesale_shop.models.distrib_move import DistribMove
 
 CHANNEL_MAP = {
     'qtt_Channel_0001': 'Channel_0001',
@@ -372,6 +373,10 @@ def apply_moves_from_request(data_for_edit, partner_guid):
     existing_distributor = http.request.env['distrib.distributors'].search(domain, limit=1)
     if not existing_distributor:
         return {"success": False, 'error': 'Distributor not found'}
+
+    DistribMove = http.request.env['distrib.distributors.move'].sudo().search(['&', ('distrib_id', '=', existing_distributor.id), ('date_order', '=', date_order)])
+    if DistribMove:
+        return {"success": False, 'error': 'Distributor move already exists'}
 
     move_in, move_out, move_out_inventory, move_in_inventory = [], [], [], []
     for move in data_for_edit['moves']:
