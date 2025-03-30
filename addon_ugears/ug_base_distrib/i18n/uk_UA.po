@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-29 15:44+0000\n"
-"PO-Revision-Date: 2025-03-29 15:44+0000\n"
+"POT-Creation-Date: 2025-03-30 08:35+0000\n"
+"PO-Revision-Date: 2025-03-30 08:35+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -137,6 +137,11 @@ msgid ""
 "<!-- POWERED BY -->\n"
 "</table>"
 msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.actions.server,name:ug_base_distrib.action_accept_move
+msgid "Accept moves"
+msgstr "Підтвердити переміщення"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__message_needaction
@@ -382,6 +387,11 @@ msgid "Cancel"
 msgstr "Відміна"
 
 #. module: ug_base_distrib
+#: model:ir.actions.server,name:ug_base_distrib.action_cancel_move
+msgid "Cancel moves"
+msgstr "Скасувати переміщення"
+
+#. module: ug_base_distrib
 #: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_budget_move__state__cancel
 #: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_distributors_move__state__cancel
 #: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_marketing_expenses__state__cancel
@@ -403,7 +413,9 @@ msgstr ""
 #: code:addons/ug_base_distrib/models/res_users.py:0
 #, python-format
 msgid "Cannot send email: user %s has no email address."
-msgstr "Неможливо надіслати електронний лист: користувач %s не має електронної адреси."
+msgstr ""
+"Неможливо надіслати електронний лист: користувач %s не має електронної "
+"адреси."
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__product_uom_category_id
@@ -1093,6 +1105,14 @@ msgstr "Ending Stock, pcs"
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__product_qty
 msgid "Ending Stock, pcs"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_move.py:0
+#: code:addons/ug_base_distrib/models/distrib_move.py:0
+#, python-format
+msgid "Error occurred while accepting the move!"
 msgstr ""
 
 #. module: ug_base_distrib
@@ -2107,6 +2127,14 @@ msgstr "Статус"
 #. module: ug_base_distrib
 #. odoo-python
 #: code:addons/ug_base_distrib/models/distrib_move.py:0
+#: code:addons/ug_base_distrib/models/distrib_move.py:0
+#, python-format
+msgid "Move successfully accepted!"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_move.py:0
 #, python-format
 msgid "Move successfully reposted!"
 msgstr "Переміщення перепроведено!"
@@ -2886,6 +2914,8 @@ msgstr "Разом без знижки"
 #. module: ug_base_distrib
 #. odoo-python
 #: code:addons/ug_base_distrib/models/distrib_move.py:0
+#: code:addons/ug_base_distrib/models/distrib_move.py:0
+#: code:addons/ug_base_distrib/models/distrib_move.py:0
 #: code:addons/ug_base_distrib/models/res_currency.py:0
 #, python-format
 msgid "Success!"
@@ -3250,6 +3280,8 @@ msgstr ""
 #. module: ug_base_distrib
 #. odoo-python
 #: code:addons/ug_base_distrib/models/distrib_move.py:0
+#: code:addons/ug_base_distrib/models/distrib_move.py:0
+#: code:addons/ug_base_distrib/models/distrib_move.py:0
 #: code:addons/ug_base_distrib/models/res_currency.py:0
 #: code:addons/ug_base_distrib/models/res_currency.py:0
 #, python-format
@@ -3352,8 +3384,7 @@ msgstr ""
 #, python-format
 msgid ""
 "You cannot change the state if the date is before the restriction date."
-msgstr ""
-"Ви не можете змінити стан, в забороненому періоді."
+msgstr "Ви не можете змінити стан, в забороненому періоді."
 
 #. module: ug_base_distrib
 #. odoo-python

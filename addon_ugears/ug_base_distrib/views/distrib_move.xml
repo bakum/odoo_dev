@@ -224,9 +224,32 @@
         <field name="name">Repost moves</field>
         <field name="model_id" ref="model_distrib_distributors_move"/>
         <field name="binding_model_id" ref="model_distrib_distributors_move"/>
+        <field name="groups_id" eval="[(4, ref('ug_base_distrib.group_distrib_manager'))]"/>
         <field name="state">code</field>
         <field name="code">
             action = records.action_repost()
+        </field>
+    </record>
+
+    <record model="ir.actions.server" id="action_accept_move">
+        <field name="name">Accept moves</field>
+        <field name="model_id" ref="model_distrib_distributors_move"/>
+        <field name="binding_model_id" ref="model_distrib_distributors_move"/>
+        <field name="groups_id" eval="[(4, ref('base.group_system'))]"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.action_done_multi()
+        </field>
+    </record>
+
+    <record model="ir.actions.server" id="action_cancel_move">
+        <field name="name">Cancel moves</field>
+        <field name="model_id" ref="model_distrib_distributors_move"/>
+        <field name="binding_model_id" ref="model_distrib_distributors_move"/>
+        <field name="groups_id" eval="[(4, ref('base.group_system'))]"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.action_cancel_multi()
         </field>
     </record>
 
