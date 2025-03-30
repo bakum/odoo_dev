@@ -3,7 +3,6 @@ import json
 
 from odoo import http, fields, SUPERUSER_ID
 from odoo.osv import expression
-from ug_wholesale_shop.models.distrib_move import DistribMove
 
 CHANNEL_MAP = {
     'qtt_Channel_0001': 'Channel_0001',
