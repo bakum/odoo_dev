@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-31 04:12+0000\n"
-"PO-Revision-Date: 2025-03-31 04:12+0000\n"
+"POT-Creation-Date: 2025-04-01 15:45+0000\n"
+"PO-Revision-Date: 2025-04-01 15:45+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -137,6 +137,11 @@ msgid ""
 "<!-- POWERED BY -->\n"
 "</table>"
 msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.actions.server,name:ug_base_distrib.action_accept_expenses
+msgid "Accept expenses"
+msgstr "Підтвердити витрати"
 
 #. module: ug_base_distrib
 #: model:ir.actions.server,name:ug_base_distrib.action_accept_move
@@ -385,6 +390,11 @@ msgstr "Планування"
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_form
 msgid "Cancel"
 msgstr "Відміна"
+
+#. module: ug_base_distrib
+#: model:ir.actions.server,name:ug_base_distrib.action_cancel_expenses
+msgid "Cancel expenses"
+msgstr "Скасувати витрати"
 
 #. module: ug_base_distrib
 #: model:ir.actions.server,name:ug_base_distrib.action_cancel_move
@@ -883,6 +893,7 @@ msgstr "Дистрибуція"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__distrib_id
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_qtt_view_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_turnover_view_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_expenses_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_quants_search
 msgid "Distributor"
@@ -1109,6 +1120,14 @@ msgstr ""
 
 #. module: ug_base_distrib
 #. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#, python-format
+msgid "Error occurred while accepting the expense!"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
 #: code:addons/ug_base_distrib/models/distrib_move.py:0
 #: code:addons/ug_base_distrib/models/distrib_move.py:0
 #, python-format
@@ -1209,6 +1228,14 @@ msgstr "Сума витрат не може дорівнювати нулю"
 #. module: ug_base_distrib
 #: model:ir.model,name:ug_base_distrib.model_ug_distrib_import_expenses_list
 msgid "Expenses list"
+msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#, python-format
+msgid "Expenses successfully accepted!"
 msgstr ""
 
 #. module: ug_base_distrib
@@ -1313,6 +1340,7 @@ msgstr "Надавати знижки на рядки замовлень"
 #. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_qtt_view_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_turnover_view_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_expenses_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_quants_search
 msgid "Group By"
@@ -2914,6 +2942,8 @@ msgstr "Разом без знижки"
 
 #. module: ug_base_distrib
 #. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
 #: code:addons/ug_base_distrib/models/distrib_move.py:0
 #: code:addons/ug_base_distrib/models/distrib_move.py:0
 #: code:addons/ug_base_distrib/models/distrib_move.py:0
@@ -3280,6 +3310,8 @@ msgstr ""
 
 #. module: ug_base_distrib
 #. odoo-python
+#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
+#: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
 #: code:addons/ug_base_distrib/models/distrib_move.py:0
 #: code:addons/ug_base_distrib/models/distrib_move.py:0
 #: code:addons/ug_base_distrib/models/distrib_move.py:0
