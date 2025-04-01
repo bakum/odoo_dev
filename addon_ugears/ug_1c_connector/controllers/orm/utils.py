@@ -436,3 +436,44 @@ def apply_moves_from_request(data_for_edit, partner_guid):
         move_sudo = DistribMove.with_user(SUPERUSER_ID).create(so_val)
         move_sudo.move_line = move_in_inventory
     return {"success": True}
+
+def apply_expenses_from_request(data_for_edit, partner_guid):
+    domain = expression.AND([[('guid', '=', partner_guid)], ['|', ('active', '=', True), ('active', '=', False)]])
+    partner_sudo = http.request.env['res.partner'].sudo().search(domain)[:1]
+    date_order = fields.Datetime.from_string(data_for_edit['date_order'])
+    if not partner_sudo:
+        return {"success": False, 'error': 'Partner not found'}
+
+    domain = expression.AND(
+        [[('partner_id', '=', partner_sudo.id)], ['|', ('active', '=', True), ('active', '=', False)]])
+    existing_distributor = http.request.env['distrib.distributors'].search(domain, limit=1)
+    if not existing_distributor:
+        return {"success": False, 'error': 'Distributor not found'}
+
+    DistribExpenses = http.request.env['distrib.marketing.expenses'].sudo().search(
+        ['&', ('distrib_id', '=', existing_distributor.id), ('date_order', '=', date_order)])
+    if DistribExpenses:
+        return {"success": False, 'error': 'Distributor move already exists'}
+
+    expenses = []
+    for move in data_for_edit['expenses']:
+        expense_id = get_id_from_ext_id(move['expense_id'])
+        expense = http.request.env['distrib.types.marketings'].browse(expense_id)
+        expenses.append((0, 0, {
+            'expense_id': expense.id,
+            'name': expense.name,
+            'expense_total': move['expense_total'],
+            'display_type': 'expense',
+            'descr': expense.desc,
+        }))
+
+    move_values = {
+        'distrib_id': existing_distributor.id,
+        'date_order': date_order,
+    }
+    Expense = http.request.env['distrib.marketing.expenses'].sudo()
+    if len(expenses) > 0:
+        move_sudo = Expense.with_user(SUPERUSER_ID).create(move_values)
+        move_sudo.move_line = expenses
+
+    return {"success": True}

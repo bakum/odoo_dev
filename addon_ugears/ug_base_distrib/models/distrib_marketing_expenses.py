@@ -183,3 +183,70 @@ class MarketingExpenses(models.Model):
 
     def action_draft(self):
         self.write({'state': 'draft'})
+
+    def action_done_multi(self):
+        moves = []
+        # context = dict(self.env.context or {})
+        # recalc_totals = context.get('recalc_totals', False)
+        for order in self:
+            if order.state == 'draft':
+                res = order.write({'state': 'done'})
+                if res:
+                    moves.append(order)
+
+        if len(moves) > 0:
+            # if not recalc_totals:
+            #     self._run_recalculate_job(thread=True)
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'title': _('Success!'),
+                    'message': _('Expenses successfully accepted!'),
+                    'sticky': False,
+                }
+            }
+        else:
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'type': 'warning',
+                    'title': _('Warning!'),
+                    'message': _('Error occurred while accepting the expense!'),
+                    'sticky': False,
+                }
+            }
+    def action_cancel_multi(self):
+        moves = []
+        # context = dict(self.env.context or {})
+        # recalc_totals = context.get('recalc_totals', False)
+        for order in self:
+            if order.state == 'done':
+                res = order.write({'state': 'cancel'})
+                if res:
+                    moves.append(order)
+
+        if len(moves) > 0:
+            # if not recalc_totals:
+            #     self._run_recalculate_job(thread=True)
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'title': _('Success!'),
+                    'message': _('Expenses successfully accepted!'),
+                    'sticky': False,
+                }
+            }
+        else:
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'type': 'warning',
+                    'title': _('Warning!'),
+                    'message': _('Error occurred while accepting the expense!'),
+                    'sticky': False,
+                }
+            }
