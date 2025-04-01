@@ -347,16 +347,6 @@ def update_ids(rec, ids):
                 rec[key] = values
 
 
-def prepare_move_value(self):
-    values = {
-        'operation': self.operation,
-        'distrib_id': self.distrib_id.id,
-        'user_id': self.env.user.id,
-        'date_order': self.date_order,
-    }
-    return values
-
-
 def apply_moves_from_request(data_for_edit, partner_guid):
     # timezone_str = "Europe/Kiev"
     domain = expression.AND([[('guid', '=', partner_guid)], ['|', ('active', '=', True), ('active', '=', False)]])
@@ -373,7 +363,8 @@ def apply_moves_from_request(data_for_edit, partner_guid):
     if not existing_distributor:
         return {"success": False, 'error': 'Distributor not found'}
 
-    DistribMove = http.request.env['distrib.distributors.move'].sudo().search(['&', ('distrib_id', '=', existing_distributor.id), ('date_order', '=', date_order)])
+    DistribMove = http.request.env['distrib.distributors.move'].sudo().search(
+        ['&', ('distrib_id', '=', existing_distributor.id), ('date_order', '=', date_order)])
     if DistribMove:
         return {"success": False, 'error': 'Distributor move already exists'}
 
