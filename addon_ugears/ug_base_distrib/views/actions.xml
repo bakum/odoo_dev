@@ -69,7 +69,20 @@
         <field name="code">model._run_recalculate_job_no_thread()</field>
         <field name="user_id" ref="base.user_root"/>
         <field name='interval_number'>1</field>
+        <field name="nextcall" eval="(DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d 00:00:00')" />
         <field name='interval_type'>days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+    </record>
+
+    <record id="recalculate_by_month_job_cron" model="ir.cron">
+        <field name="name">Recalculate Totals By Month Cron Job</field>
+        <field name="model_id" ref="model_distrib_distributors_move"/>
+        <field name="state">code</field>
+        <field name="code">model._run_recalculate_job_no_thread_once_by_month()</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name='interval_number'>1</field>
+        <field name='interval_type'>months</field>
         <field name="numbercall">-1</field>
         <field name="doall" eval="False"/>
     </record>

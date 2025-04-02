@@ -16,6 +16,9 @@
                                     <button type="button" t-on-click="onRecalculate" class="btn btn-lg btn-outline-primary">
                                         Run Recalculations Totals
                                     </button>
+                                    <button type="button" t-on-click="onRecalculateOnceByMonth" class="btn btn-lg btn-outline-primary">
+                                        Run Recalculations Totals (Once by Month)
+                                    </button>
                                 </div>
                             </div>
                         </div>

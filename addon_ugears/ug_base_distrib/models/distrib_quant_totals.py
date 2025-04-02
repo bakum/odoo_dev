@@ -325,7 +325,7 @@ class DistributorQuantHistory(models.Model):
                 'quantity_outcome': 0.0
             }
 
-    def _recalculate_totals(self):
+    def _recalculate_totals(self, begin_of_month=False):
         self = self.sudo()
         relevance = self.env['distrib.point.relevance'].sudo()
         all_totals = self.search_count([])
@@ -386,7 +386,7 @@ class DistributorQuantHistory(models.Model):
                                 DATE_TRUNC('MONTH', DATE)
                             """
             
-            all_relevance = relevance._get_relevance_point()
+            all_relevance = relevance._get_relevance_point(begin_of_month)
             for quants in all_relevance:
                 sql1 = sql % (quants.product_id.id, quants.distrib_id.id, quants.date.strftime("%Y-%m-01"))
                 domain = [('product_id', '=', quants.product_id.id),('distrib_id', '=', quants.distrib_id.id),('date', '>=', quants.date.strftime("%Y-%m-01"))]
@@ -399,8 +399,8 @@ class DistributorQuantHistory(models.Model):
                         self.create(quant)
                 relevance._set_relevance(quants.distrib_id.id, quants.product_id.id)  
                 
-    def _recalculate_totals_by_monts(self):
-        return self._recalculate_totals()
+    def _recalculate_totals_by_monts(self, begin_of_month=False):
+        return self._recalculate_totals(begin_of_month)
         self = self.sudo()
         start_totals = self.search([], limit=1, order='date')
         history = self.env['distrib.quant.history'].sudo()
