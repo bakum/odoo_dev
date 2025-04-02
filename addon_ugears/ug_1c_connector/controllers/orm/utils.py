@@ -366,6 +366,11 @@ def apply_moves_from_request(data_for_edit, partner_guid):
     DistribMove = http.request.env['distrib.distributors.move'].sudo().search(
         ['&', ('distrib_id', '=', existing_distributor.id), ('date_order', '=', date_order)])
     if DistribMove:
+        for move in DistribMove:
+            if move.state == 'draft':
+                res = move.write({'state': 'done'})
+                # if res:
+                #     move._run_recalculate_job(thread=False)
         return {"success": False, 'error': 'Distributor move already exists'}
 
     move_in, move_out, move_out_inventory, move_in_inventory = [], [], [], []
