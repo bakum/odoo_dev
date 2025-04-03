@@ -1,7 +1,15 @@
-from email.policy import default
+import calendar
+from datetime import datetime, timedelta
 
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
+
+
+def get_last_day_of_month(date):
+    year = date.year
+    month = date.month
+    last_day = calendar.monthrange(year, month)[1]
+    return datetime(year, month, last_day)
 
 
 class DistributorMoveLines(models.Model):
@@ -162,6 +170,57 @@ class DistributorMoveLines(models.Model):
         store=True,
         precompute=True,
     )
+    beginning_stock = fields.Float(string='Beginning stock, pcs', compute='_compute_beginning_stock', store=True,
+                                   precompute=True)
+    ending_stock = fields.Float(string='Ending stock, pcs', compute='_compute_beginning_stock', store=True,
+                                precompute=True)
+    sell_in = fields.Float(string='UGmodels Sell-In. pcs', compute='_compute_beginning_stock', store=True,
+                           precompute=True)
+
+    full_name = fields.Char(string='Product Full Name', compute='_compute_product_template_id', store=True,
+                            precompute=True)
+    barcode = fields.Char(string='EAN', related='product_id.barcode', depends=['product_id'], store=True,
+                          precompute=True)
+    default_code = fields.Char(related='product_id.default_code', depends=['product_id'], store=True, precompute=True)
+
+    def _recompute_related_beginning_stock(self):
+        for line in self:
+            date = fields.Date.from_string(line.date.strftime("%Y-%m-01 00:00:00"))
+            related_lines = self.search(
+                ['&', '&', '&', ('product_id', '=', line.product_id.id), ('distrib_id', '=', line.distrib_id.id),
+                 ('date', '>=', date), ('state', '=', 'done')], order='date')
+            related_lines._compute_beginning_stock()
+
+    # @api.depends('product_id', 'date', 'distrib_id')
+    def _compute_beginning_stock(self):
+        for line in self:
+            QuantHistory = self.env['distrib.quant.history'].sudo()
+            if line.product_id and line.date and line.distrib_id and line.move_id.state in ['done', 'cancel']:
+                first_day_of_current_month = line.date.replace(day=1, hour=0, minute=0, second=0)
+                last_day_of_previous_month = first_day_of_current_month - timedelta(days=1)
+
+                date = fields.Date.from_string(line.date.strftime("%Y-%m-01 00:00:00"))
+                last_date = get_last_day_of_month(date)
+                res_beginning = QuantHistory.balance_product_on_date(line.product_id, line.distrib_id, last_day_of_previous_month)
+                # res_beginning = line.product_id._compute_quantities_dict_dist(line.distrib_id.id, to_date=date)
+                res_ending = QuantHistory.balance_product_on_date(line.product_id, line.distrib_id, last_date)
+                if line.operation == 'out' and not line.is_inventory:
+                    res_sell_in = QuantHistory.incoming_quantity_by_period(line.product_id, line.distrib_id, date, last_date)
+                    # res_sell_in = line.product_id._compute_quantities_dict_dist(line.distrib_id.id, from_date=date,
+                    #                                                             to_date=last_date, no_inventory=True)
+                    # line.sell_in = 0.0 if not res_sell_in else res_sell_in[line.product_id.id]['incoming_qty_dist']
+                    line.sell_in = res_sell_in
+                else:
+                    line.sell_in = 0.0
+
+                # line.beginning_stock = 0.0 if not res_beginning else res_beginning[line.product_id.id]['qty_available_dist']
+                # line.ending_stock = 0.0 if not res_ending else res_ending[line.product_id.id]['qty_available_dist']
+                line.beginning_stock = res_beginning
+                line.ending_stock = res_ending
+
+            else:
+                line.beginning_stock = 0.0
+                line.sell_in = 0.0
 
     @api.constrains('product_uom_qty')
     def _check_product_uom_qty(self):
@@ -236,6 +295,14 @@ class DistributorMoveLines(models.Model):
     def _compute_product_template_id(self):
         for line in self:
             line.product_template_id = line.product_id.product_tmpl_id
+            if line.product_id.barcode and line.product_id.default_code:
+                line.full_name = f'{line.product_id.name}/{line.product_id.barcode}/{line.product_id.default_code}'
+            elif line.product_id.barcode:
+                line.full_name = f'{line.product_id.name}/{line.product_id.barcode}'
+            elif line.product_id.default_code:
+                line.full_name = f'{line.product_id.name}/{line.product_id.default_code}'
+            else:
+                line.full_name = f'{line.product_id.name}'
 
     def _search_product_template_id(self, operator, value):
         return [('product_id.product_tmpl_id', operator, value)]

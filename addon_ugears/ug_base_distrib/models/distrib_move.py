@@ -249,7 +249,7 @@ class DistributorMove(models.Model):
                         QuantHistory = self.env['distrib.quant.history']
                         QuantHistory.with_context(recalc_totals=recalc_totals)._update_available_quantity(ml.product_id, quantity, distrib_id=ml.distrib_id,
                                                                                                           in_out=ml.operation,
-                                                                                                          in_date=ml.date)
+                                                                                                          in_date=ml.date, is_inventory=ml.is_inventory)
                 elif vals['state'] == 'cancel':
                     if self.date_order <= restrict_date:
                         raise UserError(_('You cannot change the state if the date is before the restriction date.'))
@@ -266,15 +266,21 @@ class DistributorMove(models.Model):
                         QuantHistory = self.env['distrib.quant.history']
                         QuantHistory.with_context(recalc_totals=recalc_totals)._update_available_quantity(ml.product_id, -quantity, distrib_id=ml.distrib_id,
                                                                                                           in_out=ml.operation,
-                                                                                                          in_date=ml.date)
-
+                                                                                                          in_date=ml.date, is_inventory=ml.is_inventory)
+            # if vals['state'] in ['done','cancel']:
+            #     if self.date_order <= restrict_date:
+            #         raise UserError(_('You cannot change the state if the date is before the restriction date.'))
+            #     mls._recompute_related_beginning_stock()
         if 'channel_id' in vals:
+            if self.date_order <= restrict_date:
+                raise UserError(_('You cannot change the state if the date is before the restriction date.'))
             mls = self.move_line
             for ml in mls:
                 if not ml.channel_id and vals['channel_id']:
                     ml.channel_id = vals['channel_id']
 
         res = super(DistributorMove, self).write(vals)
+
         if recalc_totals:
             self._run_recalculate_job(thread=True)
 

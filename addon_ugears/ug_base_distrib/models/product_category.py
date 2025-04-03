@@ -198,7 +198,7 @@ class PublicProductDistrib(models.Model):
         services.outgoing_qty_dist = 0.0
         services.virtual_available_dist = 0.0
 
-    def _compute_quantities_dict_dist(self, distrib_id, from_date=False, to_date=False):
+    def _compute_quantities_dict_dist(self, distrib_id, from_date=False, to_date=False, no_inventory=False):
         dates_in_the_past = False
         # only to_date as to_date will correspond to qty_available
         to_date = fields.Datetime.to_datetime(to_date)
@@ -209,6 +209,8 @@ class PublicProductDistrib(models.Model):
         domain_move_in = [('product_id', 'in', self.ids)]
         domain_move_in += [('operation', '=', 'inc')]
         domain_move_in += [('state', '=', 'done')]
+        if no_inventory:
+            domain_move_in += [('is_inventory', '=', False)]
         domain_move_out = [('product_id', 'in', self.ids)]
         domain_move_out += [('operation', '=', 'out')]
         domain_move_out += [('state', '=', 'done')]

@@ -1,4 +1,5 @@
 from odoo import fields, models
+from odoo.osv.expression import expression
 from odoo.tools import create_index
 
 
@@ -23,10 +24,16 @@ class DistributoPointOfRelevance(models.Model):
                      ["distrib_id, product_id, date"])
         
     def _get_relevance_point(self, begin_of_month=False):
+        restrict_date_str = self.env['ir.config_parameter'].sudo().get_param('distrib.danger_limit',
+                                                                             default=0)
+
+        danger = int(restrict_date_str) > 0
         if begin_of_month:
             domain = [('date', '<=', fields.Datetime.today().strftime("%Y-%m-%d"))]
         else:
             domain = [('date', '<', fields.Datetime.today().strftime("%Y-%m-%d"))]
+        if danger:
+            return self.search(domain, order='date asc', limit=int(restrict_date_str))
         return self.search(domain, order='date asc')   
 
     def _set_relevance_point(self, distrib_id, product_id, in_date):

@@ -1,8 +1,14 @@
 from odoo.tools import create_index
 from odoo.osv import expression
 from odoo import models, fields, api
-from datetime import timedelta
+from datetime import timedelta, datetime
+import calendar
 
+def get_last_day_of_month(date):
+    year = date.year
+    month = date.month
+    last_day = calendar.monthrange(year, month)[1]
+    return datetime(year, month, last_day)
 
 class DistributorQuantHistory(models.Model):
     _name = 'distrib.quant.history'
@@ -35,6 +41,9 @@ class DistributorQuantHistory(models.Model):
     quantity_begin = fields.Float(
         'Beginning Quantity',
         readonly=True, compute='_compute_quantity_begin', store=True, precompute=True)
+    quantity_sell_in = fields.Float(
+        'Incoming Sell-In Quantity',
+        readonly=True)
     quantity_income = fields.Float(
         'Incoming Quantity',
         readonly=True)
@@ -236,10 +245,11 @@ class DistributorQuantHistory(models.Model):
         date_range = self._month_range_list(from_date, fields.Datetime.today())
         strategy_order = 'distrib_id,product_id,date'
         for date in date_range:
+            last_day = get_last_day_of_month(date)
             # domain = [('product_id', '=', product_id.id), ('distrib_id', '=', distrib_id.id),
             #           ('date', '=', date.strftime("%Y-%m-%d 00:00:00"))]
             domain = [('product_id', '=', product_id.id), ('distrib_id', '=', distrib_id.id),
-                      ('date', '>=', date.strftime("%Y-%m-01 00:00:00"))]
+                      ('date', '>=', date.strftime("%Y-%m-01 00:00:00")), ('date', '<=', last_day.strftime("%Y-%m-%d 00:00:00"))]
             # quants = self.search(domain, order=strategy_order)
             quants = self.search(domain, order=strategy_order, limit=1)
             if not quants:
@@ -298,7 +308,7 @@ class DistributorQuantHistory(models.Model):
         # self._validate_totals(product_id, distrib_id, from_date)
 
     @api.model
-    def _update_available_quantity(self, product_id, quantity, distrib_id, in_out='inc', in_date=None):
+    def _update_available_quantity(self, product_id, quantity, distrib_id, in_out='inc', in_date=None, is_inventory=False):
         self = self.sudo()
         context = dict(self.env.context or {})
         recalc_totals = context.get('recalc_totals', False)
@@ -322,6 +332,7 @@ class DistributorQuantHistory(models.Model):
 
         if quant:
             quant.write({
+                'quantity_sell_in' : quant.quantity_sell_in + quantity if in_out == 'inc' and not is_inventory else 0.0,
                 'quantity_income': quant.quantity_income + quantity if in_out == 'inc' else quant.quantity_income,
                 'quantity_outcome': quant.quantity_outcome - quantity if in_out == 'out' else quant.quantity_outcome,
                 'date': dt.strftime("%Y-%m-%d 00:00:00") if in_date else fields.Datetime.today,
@@ -332,6 +343,7 @@ class DistributorQuantHistory(models.Model):
                 'product_id': product_id.id,
                 'quantity_income': quantity if in_out == 'inc' else 0.0,
                 'quantity_outcome': -quantity if in_out == 'out' else 0.0,
+                'quantity_sell_in': quantity if in_out == 'inc' and not is_inventory else 0.0,
                 'distrib_id': distrib_id and distrib_id.id,
                 'date': dt.strftime("%Y-%m-%d 00:00:00") if in_date else fields.Datetime.today,
                 'valid_rec': was_valid,
@@ -342,6 +354,20 @@ class DistributorQuantHistory(models.Model):
         if not recalc_totals:
             self._recalculate_results(
                 product_id=product_id, distrib_id=distrib_id, from_date=in_date, with_validate=False)
+
+    def incoming_quantity_by_period(self, product_id, distrib_id, from_date, to_date):
+        self = self.sudo()
+        domain = [
+            ('product_id', '=', product_id.id),
+            ('distrib_id', '=', distrib_id.id),
+            # ('is_inventory', '=', False),
+            # ('state', '=', 'done'),
+            # ('operation', '=', 'inc'),
+            ('date', '<=', to_date.strftime("%Y-%m-%d 00:00:00")),
+            ('date', '>=', from_date.strftime("%Y-%m-%d 00:00:00"))
+        ]
+        quants = self.search(domain, order='distrib_id,product_id,date')
+        return sum(quant.quantity_sell_in for quant in quants) if quants else 0.0
 
     def balance_product_on_date(self, product_id, distrib_id, on_date=None):
         self = self.sudo()

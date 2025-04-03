@@ -20,3 +20,8 @@ class ResConfigSettings(models.TransientModel):
         config_parameter='distrib.restrict_date',
         help="Changes to data before this date inclusive are prohibited.",
     )
+    danger_limit = fields.Integer(
+        string='Limit for execution of dangerous operations',
+        config_parameter='distrib.danger_limit',
+        help="Set null to disable the limit.",
+    )
