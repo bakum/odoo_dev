@@ -3,12 +3,12 @@
 import {registry} from "@web/core/registry"
 import {KpiCard} from "./kpi_card/kpi_card"
 import {ChartRenderer} from "./chart_renderer/chart_renderer"
-import { TotalRenderer } from "./total_renderer/total_renderer"
-
-const {Component, onWillStart, useRef, onWillDestroy, onUnMounted, useState} = owl
+import {TotalRenderer} from "./total_renderer/total_renderer"
 import {useService} from "@web/core/utils/hooks"
 import {browser} from "@web/core/browser/browser"
 import {routeToUrl} from "@web/core/browser/router_service"
+
+const {Component, onWillStart, useRef, onWillDestroy, onUnMounted, useState} = owl
 
 export class OwlDistribDashboard extends Component {
     async getDistributors() {
@@ -32,9 +32,10 @@ export class OwlDistribDashboard extends Component {
 
     async getTotals(){
         let domain = [['valid_rec', '=', false]]
-        const data = await this.orm.searchCount("distrib.quant.history", domain)
+        // const data = await this.orm.searchCount("distrib.quant.history", domain)
             // data1 = await this.orm.searchCount("distrib.quant.totals", domain)
-        this.state.total_by_days = data == 0 ? true : false
+        // this.state.total_by_days = data == 0 ? true : false
+        this.state.total_by_days = await this.orm.call("distrib.point.relevance", "get_relevance_point", [false])
         // this.state.total_by_month = data == 0 ? true : false
     }
 

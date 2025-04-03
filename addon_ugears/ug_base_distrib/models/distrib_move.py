@@ -460,8 +460,8 @@ class DistributorMove(models.Model):
         by_days = self.env['distrib.quant.history']
         by_months = self.env['distrib.quant.totals']
         _logger.info("posting %s starting", 'by_days')
-        by_days._invalidate_last_records()
-        self._cr.commit()
+        # by_days._invalidate_last_records()
+        # self._cr.commit()
 
         by_days._recalculate_totals_by_days()
         _logger.info("posting %s updated and released", 'by_days')
@@ -476,8 +476,8 @@ class DistributorMove(models.Model):
         by_days = self.env['distrib.quant.history']
         by_months = self.env['distrib.quant.totals']
         _logger.info("posting %s starting", 'by_days')
-        by_days._invalidate_last_records()
-        self._cr.commit()
+        # by_days._invalidate_last_records()
+        # self._cr.commit()
 
         by_days._recalculate_totals_by_days()
         _logger.info("posting %s updated and released", 'by_days')

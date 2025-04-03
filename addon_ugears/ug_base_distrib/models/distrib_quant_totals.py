@@ -396,7 +396,8 @@ class DistributorQuantHistory(models.Model):
                             """
             
             all_relevance = relevance._get_relevance_point(begin_of_month)
-            self._recalculate_sale(all_relevance)
+            if not begin_of_month:
+                self._recalculate_sale(all_relevance)
             for quants in all_relevance:
                 sql1 = sql % (quants.product_id.id, quants.distrib_id.id, quants.date.strftime("%Y-%m-01"))
                 domain = [('product_id', '=', quants.product_id.id),('distrib_id', '=', quants.distrib_id.id),('date', '>=', quants.date.strftime("%Y-%m-01"))]

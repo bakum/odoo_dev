@@ -22,6 +22,9 @@ class DistributoPointOfRelevance(models.Model):
     def init(self):
         create_index(self._cr, 'distrib_relevance_date_idx', 'distrib_point_relevance',
                      ["distrib_id, product_id, date"])
+
+    def get_relevance_point(self):
+        return False if self._get_relevance_point() else True
         
     def _get_relevance_point(self, begin_of_month=False):
         restrict_date_str = self.env['ir.config_parameter'].sudo().get_param('distrib.danger_limit',
