@@ -478,18 +478,32 @@ class DistributorMove(models.Model):
         _logger.info("posting %s updated and released", 'by_months')
         return {}
 
+    def run_recalculate_job_no_thread_once_by_month(self):
+        threaded_calculation = threading.Thread(
+            target=self._run_recalculate_job_no_thread_once_by_month)
+        threaded_calculation.start()
+
     def _run_recalculate_job_no_thread_once_by_month(self):
-        by_days = self.env['distrib.quant.history']
-        by_months = self.env['distrib.quant.totals']
+        new_cr = self.pool.cursor()
+        new_env = api.Environment(new_cr, self.env.uid, self.env.context)
+        self = self.with_env(new_env)
+
+        by_days = self.env['distrib.quant.history'].with_env(
+            self.env(cr=new_cr)).sudo()
+        by_months = self.env['distrib.quant.totals'].with_env(
+            self.env(cr=new_cr)).sudo()
         _logger.info("posting %s starting", 'by_days')
         by_days._invalidate_last_records()
-        self._cr.commit()
+        new_cr.commit()
 
-        by_days._recalculate_totals_by_days()
+        by_days._recalculate_totals_by_days(in_transaction=True)
         _logger.info("posting %s updated and released", 'by_days')
-        self._cr.commit()
+        new_cr.commit()
 
         _logger.info("posting %s starting", 'by_months')
-        by_months._recalculate_totals_by_monts(begin_of_month=True)
+        by_months._recalculate_totals_by_monts(begin_of_month=True, in_transaction=True)
         _logger.info("posting %s updated and released", 'by_months')
+        new_cr.commit()
+
+        new_cr.close()
         return {}
