@@ -4,7 +4,7 @@
         <div class="shadow-sm border m-2 p-4 bg-white text-center">
             <h4>Not Valid Records:  <span t-esc="props.total_by_days"/></h4>
             <h4>Not Relevant Records:  <span t-esc="props.total_by_month"/></h4>
-            <h6>Time:  <span t-esc="props.diff_moments"/> sec.</h6>
+            <h6>Elapsed Time:  <span t-esc="props.diff_moments"/> sec.</h6>
         </div>
     </t>
 </templates>
