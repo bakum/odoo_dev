@@ -282,7 +282,7 @@ class DistributorMove(models.Model):
         res = super(DistributorMove, self).write(vals)
 
         if recalc_totals:
-            self._run_recalculate_job(thread=True)
+            self._run_recalculate_job(thread=True, distrib_id=self.distrib_id.id)
 
         return res
 
@@ -420,27 +420,29 @@ class DistributorMove(models.Model):
 
             order.amount_untaxed = amount_untaxed
 
-    def _recalculate_thread_job(self):
+    def _recalculate_thread_job(self, distrib_id=None):
         time.sleep(3)
-        with api.Environment.manage():
-            new_cr = self.pool.cursor()
-            self = self.with_env(self.env(cr=new_cr))
-            by_days = self.env['distrib.quant.history'].with_env(
-                self.env(cr=new_cr)).sudo()
-            _logger.info("job %s starting", 'by_days')
-            by_days._recalculate_totals_by_days()
-            _logger.info("job %s updated and released", 'by_days')
-            new_cr.commit()
-           
-            by_months = self.env['distrib.quant.totals'].with_env(
-                self.env(cr=new_cr)).sudo()
-            _logger.info("job %s starting", 'by_months')
-            by_months._recalculate_totals_by_monts()
-            _logger.info("job %s updated and released", 'by_months')
-            new_cr.commit()
-            
-            new_cr.close()
-            return {}
+        # with api.Environment.manage():
+        new_cr = self.pool.cursor()
+        new_env = api.Environment(new_cr, self.env.uid, self.env.context)
+        self = self.with_env(new_env)
+        # self = self.with_env(self.env(cr=new_cr))
+        by_days = self.env['distrib.quant.history'].with_env(
+            self.env(cr=new_cr)).sudo()
+        _logger.info("job %s starting", 'by_days')
+        by_days._recalculate_totals_by_days(distrib_id=distrib_id, in_transaction=True)
+        _logger.info("job %s updated and released", 'by_days')
+        new_cr.commit()
+
+        by_months = self.env['distrib.quant.totals'].with_env(
+            self.env(cr=new_cr)).sudo()
+        _logger.info("job %s starting", 'by_months')
+        by_months._recalculate_totals_by_monts(distrib_id=distrib_id, in_transaction=True)
+        _logger.info("job %s updated and released", 'by_months')
+        new_cr.commit()
+
+        new_cr.close()
+        return {}
 
     def run_recalculate_job(self, thread=True):
         self._run_recalculate_job(thread)
@@ -448,27 +450,31 @@ class DistributorMove(models.Model):
     def run_recalculate_job_once_month(self):
         self._run_recalculate_job_no_thread_once_by_month()
 
-    def _run_recalculate_job(self, thread=True):
+    def _run_recalculate_job(self, thread=True, distrib_id=None):
         if thread:
-            threaded_calculation = threading.Thread(
-                target=self._recalculate_thread_job)
+            if distrib_id is None:
+                threaded_calculation = threading.Thread(
+                    target=self._recalculate_thread_job)
+            else:
+                threaded_calculation = threading.Thread(
+                    target=self._recalculate_thread_job, args=(distrib_id,))
             threaded_calculation.start()
         else:
-            self._run_recalculate_job_no_thread()
+            self._run_recalculate_job_no_thread(distrib_id)
 
-    def _run_recalculate_job_no_thread(self):
+    def _run_recalculate_job_no_thread(self, distrib_id=None):
         by_days = self.env['distrib.quant.history']
         by_months = self.env['distrib.quant.totals']
         _logger.info("posting %s starting", 'by_days')
         # by_days._invalidate_last_records()
         # self._cr.commit()
 
-        by_days._recalculate_totals_by_days()
+        by_days._recalculate_totals_by_days(distrib_id=distrib_id, in_transaction=True)
         _logger.info("posting %s updated and released", 'by_days')
         self._cr.commit()
 
         _logger.info("posting %s starting", 'by_months')
-        by_months._recalculate_totals_by_monts()
+        by_months._recalculate_totals_by_monts(distrib_id=distrib_id, in_transaction=True)
         _logger.info("posting %s updated and released", 'by_months')
         return {}
 
@@ -476,8 +482,8 @@ class DistributorMove(models.Model):
         by_days = self.env['distrib.quant.history']
         by_months = self.env['distrib.quant.totals']
         _logger.info("posting %s starting", 'by_days')
-        # by_days._invalidate_last_records()
-        # self._cr.commit()
+        by_days._invalidate_last_records()
+        self._cr.commit()
 
         by_days._recalculate_totals_by_days()
         _logger.info("posting %s updated and released", 'by_days')

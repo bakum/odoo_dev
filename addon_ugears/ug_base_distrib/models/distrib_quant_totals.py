@@ -334,7 +334,7 @@ class DistributorQuantHistory(models.Model):
                  ('date', '>=', date), ('state', '=', 'done')], order='date')
             related_lines._recompute_related_beginning_stock()
 
-    def _recalculate_totals(self, begin_of_month=False):
+    def _recalculate_totals(self, begin_of_month=False, distrib_id=None, in_transaction=False):
         self = self.sudo()
         relevance = self.env['distrib.point.relevance'].sudo()
         all_totals = self.search_count([])
@@ -395,9 +395,11 @@ class DistributorQuantHistory(models.Model):
                                 DATE_TRUNC('MONTH', DATE)
                             """
             
-            all_relevance = relevance._get_relevance_point(begin_of_month)
+            all_relevance = relevance._get_relevance_point(begin_of_month, distrib_id)
             if not begin_of_month:
                 self._recalculate_sale(all_relevance)
+                if in_transaction:
+                    self._cr.commit()
             for quants in all_relevance:
                 sql1 = sql % (quants.product_id.id, quants.distrib_id.id, quants.date.strftime("%Y-%m-01"))
                 domain = [('product_id', '=', quants.product_id.id),('distrib_id', '=', quants.distrib_id.id),('date', '>=', quants.date.strftime("%Y-%m-01"))]
@@ -408,10 +410,12 @@ class DistributorQuantHistory(models.Model):
                 if stock_quant_result:
                     for quant in stock_quant_result:
                         self.create(quant)
-                relevance._set_relevance(quants.distrib_id.id, quants.product_id.id)  
+                relevance._set_relevance(quants.distrib_id.id, quants.product_id.id)
+                if in_transaction:
+                    self._cr.commit()
                 
-    def _recalculate_totals_by_monts(self, begin_of_month=False):
-        return self._recalculate_totals(begin_of_month)
+    def _recalculate_totals_by_monts(self, begin_of_month=False, distrib_id=None, in_transaction=False):
+        return self._recalculate_totals(begin_of_month, distrib_id, in_transaction)
         self = self.sudo()
         start_totals = self.search([], limit=1, order='date')
         history = self.env['distrib.quant.history'].sudo()

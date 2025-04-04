@@ -398,12 +398,20 @@ class DistributorQuantHistory(models.Model):
     def recalculate_totals_by_days(self, for_all=False):
         self._recalculate_totals_by_days(for_all)
 
-    def _recalculate_totals_by_days(self, for_all=False):
+    def _recalculate_totals_by_days(self, for_all=False, distrib_id=None, in_transaction=False):
         self = self.sudo()
         quants = None
         restrict_date_str = self.env['ir.config_parameter'].sudo().get_param('distrib.danger_limit',
                                                                              default=0)
         danger = int(restrict_date_str) > 0
+        if not for_all:
+            where = 'WHERE NOT VALID_REC'
+            if distrib_id is not None:
+                where += ' AND DISTRIB_ID = %s' % distrib_id
+        elif distrib_id is not None:
+            where = 'WHERE DISTRIB_ID = %s' % distrib_id
+        else:
+            where = ''
         sql = """
                          SELECT FIRST (ID) AS ID
                             FROM
@@ -426,7 +434,7 @@ class DistributorQuantHistory(models.Model):
                             GROUP BY
                                 DISTRIB_ID,
                                 PRODUCT_ID
-                         """ % ('WHERE NOT VALID_REC' if not for_all else '',f'LIMIT {restrict_date_str}' if danger else '')
+                         """ % (where, f'LIMIT {restrict_date_str}' if danger else '')
 
         self._cr.execute(sql)
         stock_quant_result = self._cr.fetchall()
@@ -438,6 +446,8 @@ class DistributorQuantHistory(models.Model):
                     quant.distrib_id, quant.product_id, quant.date)
                 self._recalculate_results(
                     product_id=quant.product_id, distrib_id=quant.distrib_id, from_date=quant.date)
+                if in_transaction:
+                    self._cr.commit()
 
     def _invalidate_last_records(self):
         self = self.sudo()

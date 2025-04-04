@@ -25,6 +25,7 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-6 m-0 p-0">
+                            <RecordsRenderer total_by_days="state.total_by_days" total_by_month="state.total_by_month" diff_moments="state.diff_moments"/>
                             <div class="shadow-sm border m-2 p-4 bg-white text-center">
                                 <!--                                <div class="h1 fw-bold text-dark" style="font-size: 48px"><span t-esc="props.value"/></div>-->
                                 <!--                                <div class="h3 text-muted"><span t-esc="props.name"/></div>-->
@@ -67,6 +68,9 @@
                             </div>
                         </div>
                         <div class="col-lg-6 m-0 p-0">
+                            <t t-if="!state.exportStopped">
+                            <ProgressRenderer progress_days="state.progress_days" progress_month="state.progress_month"/>
+                            </t>
                             <t t-if="!state.logIsEmpty">
                                 <t t-if="'Partner' in state.log">
                                     <LogRenderer identity="'Partners'" name="'Partners Log'" log="state.log.Partner"/>

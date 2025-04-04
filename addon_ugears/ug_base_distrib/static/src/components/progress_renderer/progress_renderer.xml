@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="owl.ProgressRenderer" owl="1">
+        <div class="shadow-sm border m-2 p-4 bg-white text-center">
+            <div class="progress m-3" style="height: 30px;">
+                <div class="progress-bar" role="progressbar"
+                     t-att-aria-valuenow="props.progress_days" aria-valuemin="0"
+                     t-att-style="`width: ${props.progress_days}%;`"
+                     aria-valuemax="100"><span t-esc="`${props.progress_days}%`"/></div>
+            </div>
+            <div class="progress m-3" style="height: 30px;">
+                <div class="progress-bar" role="progressbar"
+                     t-att-aria-valuenow="props.progress_month" aria-valuemin="0"
+                     t-att-style="`width: ${props.progress_month}%;`"
+                     aria-valuemax="100"><span t-esc="`${props.progress_month}%`"/></div>
+            </div>
+        </div>
+    </t>
+</templates>
