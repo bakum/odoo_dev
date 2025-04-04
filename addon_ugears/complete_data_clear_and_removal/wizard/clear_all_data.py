@@ -178,27 +178,23 @@ class ClearDataWizard(models.TransientModel):
             #         move.write({'state': 'cancel'})
             # moves.unlink()
             self.env.cr.execute("""
-                            DELETE FROM distrib_distributors_move_line;
+                            truncate DISTRIB_DISTRIBUTORS_MOVE restart identity cascade;
                         """)
             self.env.cr.commit()
             self.env.cr.execute("""
-                            DELETE FROM distrib_distributors_move;
+                            truncate DISTRIB_POINT_RELEVANCE restart identity;
                         """)
             self.env.cr.commit()
             self.env.cr.execute("""
-                            DELETE FROM DISTRIB_POINT_RELEVANCE;
+                            truncate DISTRIB_QUANT_TOTALS restart identity;
                         """)
             self.env.cr.commit()
             self.env.cr.execute("""
-                            DELETE FROM DISTRIB_QUANT_TOTALS;
+                            truncate DISTRIB_QUANT_HISTORY restart identity;
                         """)
             self.env.cr.commit()
             self.env.cr.execute("""
-                            DELETE FROM DISTRIB_QUANT_HISTORY;
-                        """)
-            self.env.cr.commit()
-            self.env.cr.execute("""
-                            DELETE FROM DISTRIB_QUANT;
+                            truncate DISTRIB_QUANT restart identity;
                         """)
             self.env.cr.commit()
         # sale-->sale_and_all_transfers
