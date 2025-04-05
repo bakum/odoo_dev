@@ -170,12 +170,9 @@ class DistributorMoveLines(models.Model):
         store=True,
         precompute=True,
     )
-    beginning_stock = fields.Float(string='Beginning stock, pcs', compute='_compute_beginning_stock', store=True,
-                                   precompute=True)
-    ending_stock = fields.Float(string='Ending stock, pcs', compute='_compute_beginning_stock', store=True,
-                                precompute=True)
-    sell_in = fields.Float(string='UGmodels Sell-In. pcs', compute='_compute_beginning_stock', store=True,
-                           precompute=True)
+    beginning_stock = fields.Float(string='Beginning stock, pcs')
+    ending_stock = fields.Float(string='Ending stock, pcs')
+    sell_in = fields.Float(string='UGmodels Sell-In. pcs')
 
     full_name = fields.Char(string='Product Full Name', compute='_compute_product_template_id', store=True,
                             precompute=True)
