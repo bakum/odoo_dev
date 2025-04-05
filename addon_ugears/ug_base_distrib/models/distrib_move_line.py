@@ -222,9 +222,15 @@ class DistributorMoveLines(models.Model):
                 line.beginning_stock = res_beginning
                 line.ending_stock = res_ending
 
+                line.price_total_acc = line.price_total * line.rate
+                line.sell_in_curr = line.sell_in * line.price_unit
+                line.sell_in_acc = line.sell_in_curr * line.rate
+
             else:
                 line.beginning_stock = 0.0
                 line.sell_in = 0.0
+                line.sell_in_curr = line.sell_in * line.price_unit
+                line.sell_in_acc = line.sell_in_curr * line.rate
 
     @api.constrains('product_uom_qty')
     def _check_product_uom_qty(self):
