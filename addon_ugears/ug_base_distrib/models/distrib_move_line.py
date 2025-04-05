@@ -173,9 +173,9 @@ class DistributorMoveLines(models.Model):
     price_total_acc = fields.Float(string='Amount (acc)', compute='_compute_amount', store=True,
                                    precompute=True, groups="ug_base_distrib.group_distrib_manager")
 
-    beginning_stock = fields.Float(string='Beginning stock, pcs')
-    ending_stock = fields.Float(string='Ending stock, pcs')
-    sell_in = fields.Float(string='UGmodels Sell-In. pcs')
+    beginning_stock = fields.Float(string='Beginning stock, pcs', default=0.0)
+    ending_stock = fields.Float(string='Ending stock, pcs', default=0.0)
+    sell_in = fields.Float(string='UGmodels Sell-In. pcs', default=0.0)
     sell_in_curr = fields.Float(string='UGmodels Sell-In', compute='_compute_amount', store=True, precompute=True)
     sell_in_acc = fields.Float(string='UGmodels Sell-In, (acc)', compute='_compute_amount', store=True, precompute=True,
                                groups="ug_base_distrib.group_distrib_manager")
