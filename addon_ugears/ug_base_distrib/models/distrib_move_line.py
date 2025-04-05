@@ -170,9 +170,15 @@ class DistributorMoveLines(models.Model):
         store=True,
         precompute=True,
     )
+    price_total_acc = fields.Float(string='Amount (acc)', compute='_compute_amount', store=True,
+                                   precompute=True, groups="ug_base_distrib.group_distrib_manager")
+
     beginning_stock = fields.Float(string='Beginning stock, pcs')
     ending_stock = fields.Float(string='Ending stock, pcs')
     sell_in = fields.Float(string='UGmodels Sell-In. pcs')
+    sell_in_curr = fields.Float(string='UGmodels Sell-In', compute='_compute_amount', store=True, precompute=True)
+    sell_in_acc = fields.Float(string='UGmodels Sell-In, (acc)', compute='_compute_amount', store=True, precompute=True,
+                               groups="ug_base_distrib.group_distrib_manager")
 
     full_name = fields.Char(string='Product Full Name', compute='_compute_product_template_id', store=True,
                             precompute=True)
@@ -180,6 +186,7 @@ class DistributorMoveLines(models.Model):
                           precompute=True)
     default_code = fields.Char(related='product_id.default_code', depends=['product_id'], store=True, precompute=True)
 
+    # @api.depends('product_id', 'distrib_id')
     def _recompute_related_beginning_stock(self):
         for line in self:
             date = fields.Date.from_string(line.date.strftime("%Y-%m-01 00:00:00"))
@@ -509,4 +516,7 @@ class DistributorMoveLines(models.Model):
     def _compute_amount(self):
         for line in self:
             line.price_total = line.price_unit * line.product_uom_qty * (1.0 - line.discount / 100.0)
+            line.price_total_acc = line.price_total * line.rate
+            line.sell_in_curr = line.sell_in * line.price_unit
+            line.sell_in_acc = line.sell_in_curr * line.rate
         self._update_discount_display_fields()
