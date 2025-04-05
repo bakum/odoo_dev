@@ -331,9 +331,10 @@ class DistributorQuantHistory(models.Model):
         for quants in all_relevance:
             date = fields.Date.from_string(quants.date.strftime("%Y-%m-01 00:00:00"))
             related_lines = DistribMoveLine.search(
-                ['&', '&', '&', ('product_id', '=', quants.product_id.id), ('distrib_id', '=', quants.distrib_id.id),
-                 ('date', '>=', date), ('state', '=', 'done')], order='date')
-            related_lines._recompute_related_beginning_stock()
+                ['&', '&', '&', '&', ('product_id', '=', quants.product_id.id), ('distrib_id', '=', quants.distrib_id.id),
+                 ('date', '>=', date), ('state', '=', 'done'), ('is_inventory','=',False)], order='date')
+            if related_lines:
+                related_lines._recompute_related_beginning_stock()
 
     def _recalculate_totals(self, begin_of_month=False, distrib_id=None, in_transaction=False):
         # TODO продумать возможность использовать контекст для отключения пересчета продаж при экспорте
