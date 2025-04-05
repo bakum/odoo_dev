@@ -96,7 +96,8 @@ class MarketingExpenses(models.Model):
     rate = fields.Float(compute='_compute_current_rate', string='Current Cross-Rate', digits=0, store=True,
                         precompute=True, help='The rate of the currency to the currency of accounting')
 
-    @api.depends('currency_id', 'date_order', 'currency_id.rate_ids')
+    # @api.depends('currency_id', 'date_order', 'currency_id.rate_ids')
+    @api.depends('currency_id', 'date_order')
     def _compute_current_rate(self):
         currency_to = self.env['ir.config_parameter'].sudo().get_param('ug_base_distrib.default_currency_accounting',
                                                                        default='0')

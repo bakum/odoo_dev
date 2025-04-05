@@ -72,7 +72,8 @@ class DistributorQuantHistory(models.Model):
             date) if date else fields.Date.context_today(self)
         return Currency._get_conversion_rate(currency_from, currency_to, company, date)
 
-    @api.depends('currency_id', 'date', 'currency_id.rate_ids')
+    # @api.depends('currency_id', 'date', 'currency_id.rate_ids')
+    @api.depends('currency_id', 'date')
     def _compute_current_rate(self):
         currency_to = self.env['ir.config_parameter'].sudo().get_param('ug_base_distrib.default_currency_accounting',
                                                                        default='0')
