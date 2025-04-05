@@ -124,7 +124,7 @@ export class OwlRegionRel extends Component {
         return await this.orm.call('distrib.distributors.move', 'run_recalculate_job', [false,true], {})
     }
     async onRecalculateOnceByMonth() {
-        return await this.orm.call('distrib.distributors.move', 'run_recalculate_job_once_month', [false], {})
+        return await this.orm.call('distrib.distributors.move', 'run_recalculate_job_no_thread_once_by_month', [false], {})
     }
 
     onImport() {
