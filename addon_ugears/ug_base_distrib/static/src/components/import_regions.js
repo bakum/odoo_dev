@@ -17,6 +17,7 @@ export class OwlRegionRel extends Component {
             log: {},
             logIsEmpty: true,
             exportStopped: true,
+            recalc_not_pressed: true,
             begins_by_days: 0,
             begins_by_month: 0,
             total_by_days: 0,
@@ -108,6 +109,7 @@ export class OwlRegionRel extends Component {
             this.state.begins_by_month = 0
             this.state.progress_days = 0
             this.state.progress_month = 0
+            this.state.recalc_not_pressed = true
             if (this.start) this.start = 0
         }
 
@@ -115,6 +117,7 @@ export class OwlRegionRel extends Component {
 
     async onRecalculate() {
         this.state.exportStopped = false
+        this.state.recalc_not_pressed = false
         this.state.diff_moments = 0
         this.start = moment()
         await this.getBeginsTotals()
@@ -124,6 +127,7 @@ export class OwlRegionRel extends Component {
         return await this.orm.call('distrib.distributors.move', 'run_recalculate_job', [false,true], {})
     }
     async onRecalculateOnceByMonth() {
+        this.state.recalc_not_pressed = false
         return await this.orm.call('distrib.distributors.move', 'run_recalculate_job_no_thread_once_by_month', [false], {})
     }
 

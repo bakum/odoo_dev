@@ -13,12 +13,22 @@
                                         <i class="fa fa-download"/>
                                         Download Regions Relations Template
                                     </button>
-                                    <button type="button" t-on-click="onRecalculate" class="btn btn-lg btn-outline-primary">
-                                        Run Recalculations Totals
-                                    </button>
-                                    <button type="button" t-on-click="onRecalculateOnceByMonth" class="btn btn-lg btn-outline-primary">
-                                        Run Recalculations Totals (Once by Month)
-                                    </button>
+                                    <t t-if="state.recalc_not_pressed">
+                                        <button type="button" t-on-click="onRecalculate" class="btn btn-lg btn-outline-primary">
+                                            Run Recalculations Totals
+                                        </button>
+                                        <button type="button" t-on-click="onRecalculateOnceByMonth" class="btn btn-lg btn-outline-primary">
+                                            Run Recalculations Totals (Once by Month)
+                                        </button>
+                                    </t>
+                                    <t t-else="">
+                                        <button type="button" t-on-click="onRecalculate" class="btn btn-lg btn-outline-primary" disabled="">
+                                            Run Recalculations Totals
+                                        </button>
+                                        <button type="button" t-on-click="onRecalculateOnceByMonth" class="btn btn-lg btn-outline-primary" disabled="">
+                                            Run Recalculations Totals (Once by Month)
+                                        </button>
+                                    </t>
                                 </div>
                             </div>
                         </div>
