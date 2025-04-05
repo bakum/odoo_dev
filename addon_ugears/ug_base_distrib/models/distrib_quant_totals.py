@@ -336,6 +336,10 @@ class DistributorQuantHistory(models.Model):
             related_lines._recompute_related_beginning_stock()
 
     def _recalculate_totals(self, begin_of_month=False, distrib_id=None, in_transaction=False):
+        # TODO продумать возможность использовать контекст для отключения пересчета продаж при экспорте
+        context = dict(self.env.context or {})
+        recalc_sales = context.get('recalc_sales', True)
+
         self = self.sudo()
         relevance = self.env['distrib.point.relevance'].sudo()
         all_totals = self.search_count([])
@@ -397,7 +401,7 @@ class DistributorQuantHistory(models.Model):
                             """
             
             all_relevance = relevance._get_relevance_point(begin_of_month, distrib_id)
-            if not begin_of_month:
+            if not begin_of_month and recalc_sales:
                 self._recalculate_sale(all_relevance)
                 if in_transaction:
                     self._cr.commit()
