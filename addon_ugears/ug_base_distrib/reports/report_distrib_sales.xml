@@ -57,9 +57,9 @@
                 <filter string="Previous Year" name="last_year"
                         domain="[('date','&gt;=', (context_today()- datetime.timedelta(days=365)).strftime('%Y-01-01')),
                         ('date','&lt;', context_today().strftime('%Y-01-01'))]"/>
-<!--                <group expand="0" string="Group By">-->
-<!--                    <filter string="Distributor" name="distrib" domain="[]" context="{'group_by':'distrib_id'}"/>-->
-<!--                </group>-->
+                <group expand="0" string="Group By">
+                    <filter string="Distributor" name="distrib" domain="[]" context="{'group_by':'distrib_id'}"/>
+                </group>
             </search>
         </field>
     </record>
@@ -69,7 +69,7 @@
         <field name="res_model">report.distrib.sales</field>
         <field name="search_view_id" ref="distrib_report_sales_view_search"/>
         <field name="domain">[]</field>
-        <field name="context">{'search_default_month': 1}</field>
+        <field name="context">{'search_default_month': 1, 'search_default_distrib': 1}</field>
 <!--        <field name="context">{'search_default_month': 1, 'group_by': ['distrib_id','currency_id']}</field>-->
         <field name="view_mode">pivot</field>
     </record>
