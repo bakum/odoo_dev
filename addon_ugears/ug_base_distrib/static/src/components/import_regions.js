@@ -25,6 +25,7 @@ export class OwlRegionRel extends Component {
             progress_days: 0,
             progress_month: 0,
             diff_moments: 0,
+            remaining_time: 0,
         })
         this.file = useRef("file")
         this.rpc = useService("rpc")
@@ -101,8 +102,13 @@ export class OwlRegionRel extends Component {
         this.state.total_by_days = await this.orm.searchCount("distrib.quant.history", domain)
         this.state.progress_days = this.state.begins_by_days === 0 ? 0 : Math.round((1 - (this.state.total_by_days / this.state.begins_by_days )) * 100)
         this.state.progress_month = this.state.begins_by_month === 0 ? 0 : Math.round((1 - (this.state.total_by_month / this.state.begins_by_month)) * 100)
-        if (this.start && this.start > 0)
-            this.state.diff_moments = Math.round((stop - this.start)/1000)
+        let speed = this.state.progress_days + this.state.progress_month
+        if (this.start && this.start > 0) {
+            this.state.diff_moments = Math.round((stop - this.start) / 1000)
+            let speed = this.state.diff_moments === 0 ? 0 : (this.state.progress_days + this.state.progress_month)/this.state.diff_moments
+            this.state.remaining_time = Math.round(speed === 0 ? 0 : (200 - this.state.progress_days - this.state.progress_month) / speed)
+        }
+
         if (this.state.total_by_days === 0 && this.state.total_by_month === 0) {
             this.state.exportStopped = true
             this.state.begins_by_days = 0
