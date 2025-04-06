@@ -352,6 +352,7 @@ def apply_moves_from_request(data_for_edit, partner_guid):
     domain = expression.AND([[('guid', '=', partner_guid)], ['|', ('active', '=', True), ('active', '=', False)]])
     partner_sudo = http.request.env['res.partner'].sudo().search(domain)[:1]
     date_order = fields.Datetime.from_string(data_for_edit['date_order'])
+    allow_cancel_done = data_for_edit.get('allow_cancel_done', False)
     # timezone = pytz.timezone(timezone_str)
     # localized_date = timezone.localize(date_order)
     if not partner_sudo:
@@ -369,8 +370,8 @@ def apply_moves_from_request(data_for_edit, partner_guid):
         for move in DistribMove:
             if move.state == 'draft':
                 res = move.write({'state': 'done'})
-            # if move.state == 'done':
-            #     res = move.write({'state': 'cancel'})
+            if move.state == 'done' and allow_cancel_done:
+                res = move.write({'state': 'cancel'})
                 # if res:
                 #     move._run_recalculate_job(thread=False)
         return {"success": False, 'error': 'Distributor move already exists'}
