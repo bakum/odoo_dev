@@ -60,6 +60,12 @@
                 <group expand="0" string="Group By">
                     <filter string="Distributor" name="distrib" domain="[]" context="{'group_by':'distrib_id'}"/>
                 </group>
+                <group expand="0" string="Group By">
+                    <filter string="Category" name="category" domain="[]" context="{'group_by':'product_category_id'}"/>
+                </group>
+                <group expand="0" string="Group By">
+                    <filter string="Product" name="product" domain="[]" context="{'group_by':'product_id'}"/>
+                </group>
             </search>
         </field>
     </record>
