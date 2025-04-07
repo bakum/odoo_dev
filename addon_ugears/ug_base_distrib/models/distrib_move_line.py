@@ -201,7 +201,9 @@ class DistributorMoveLines(models.Model):
             date = fields.Date.from_string(move.date.strftime("%Y-%m-01 00:00:00"))
             last_date = get_last_day_of_month(date)
             sell_in = move._incoming_quantity_by_period(move.product_id, move.distrib_id, date, last_date)
-            move.write({'sell_in': sell_in})
+            sell_in_curr = sell_in * move.price_unit
+            sell_in_acc = sell_in_curr * move.rate
+            move.write({'sell_in': sell_in, 'sell_in_curr': sell_in_curr, 'sell_in_acc': sell_in_acc})
             new_cr.commit()
             _logger.info("record %s updated", move.id)
         _logger.info("job %s updated and released", 'Recalculate Sell-In for all')
