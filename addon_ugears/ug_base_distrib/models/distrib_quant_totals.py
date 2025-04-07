@@ -192,7 +192,7 @@ class DistributorQuantHistory(models.Model):
             rec = prev.search(domain, order='date desc', limit=1)
             record.quantity_begin = 0.0 if not rec else rec.quantity_end
             record.quantity_end = record.quantity_begin + \
-                record.quantity_income - record.quantity_outcome
+                                  record.quantity_income - record.quantity_outcome
 
     def _gather(self, product_id, distrib_id, date, valid=False):
         removal_strategy_order = 'date DESC'
@@ -214,7 +214,8 @@ class DistributorQuantHistory(models.Model):
             curr_date = (curr_date + timedelta(days=31)
                          ).replace(day=1, hour=0, minute=0, second=0)
 
-    def _recalc_results(self, product_id=None, distrib_id=None, from_date=None, with_validate=True, begining_balance=0.0):
+    def _recalc_results(self, product_id=None, distrib_id=None, from_date=None, with_validate=True,
+                        begining_balance=0.0):
         self = self.sudo()
 
         domain = []
@@ -246,7 +247,7 @@ class DistributorQuantHistory(models.Model):
                     'valid_rec': with_validate,
                 })
                 begining_next_step = begining_next_step + \
-                    turnover['quantity_income'] - turnover['quantity_outcome']
+                                     turnover['quantity_income'] - turnover['quantity_outcome']
             else:
                 quants.write({
                     'quantity_begin': begining_next_step,
@@ -256,11 +257,13 @@ class DistributorQuantHistory(models.Model):
                     'valid_rec': with_validate,
                 })
                 begining_next_step = begining_next_step + \
-                    turnover['quantity_income'] - turnover['quantity_outcome']
+                                     turnover['quantity_income'] - turnover['quantity_outcome']
             doma = []
 
-    def _recalculate_results(self, product_id=None, distrib_id=None, from_date=None, with_validate=True, begining_balance=0.0):
-        return self._recalc_results(product_id=product_id, distrib_id=distrib_id, from_date=from_date, begining_balance=begining_balance)
+    def _recalculate_results(self, product_id=None, distrib_id=None, from_date=None, with_validate=True,
+                             begining_balance=0.0):
+        return self._recalc_results(product_id=product_id, distrib_id=distrib_id, from_date=from_date,
+                                    begining_balance=begining_balance)
         self = self.sudo()
 
         domain = []
@@ -290,7 +293,7 @@ class DistributorQuantHistory(models.Model):
                     'valid_rec': with_validate,
                 })
                 begining_next_step = begining_next_step + \
-                    turnover['quantity_income'] - turnover['quantity_outcome']
+                                     turnover['quantity_income'] - turnover['quantity_outcome']
         for quant in quants:
             turnover = self._get_turnover_by_month(
                 product_id, distrib_id, quant.date)
@@ -302,7 +305,7 @@ class DistributorQuantHistory(models.Model):
                 'valid_rec': with_validate,
             })
             begining_next_step = begining_next_step + \
-                turnover['quantity_income'] - turnover['quantity_outcome']
+                                 turnover['quantity_income'] - turnover['quantity_outcome']
 
     def _get_turnover_by_month(self, product_id, distrib_id, date):
         history = self.env['distrib.quant.history'].sudo()
@@ -312,9 +315,10 @@ class DistributorQuantHistory(models.Model):
         stock_quant_result = self._cr.fetchall()
         if stock_quant_result:
             domain = [('id', 'in', list(entry[0]
-                       for entry in stock_quant_result))]
+                                        for entry in stock_quant_result))]
             turnover = history.read_group(domain, [
-                                          'product_id', 'distrib_id', 'quantity_income:sum', 'quantity_outcome:sum'], ['product_id', 'distrib_id'])
+                'product_id', 'distrib_id', 'quantity_income:sum', 'quantity_outcome:sum'],
+                                          ['product_id', 'distrib_id'])
             if len(turnover) > 0:
                 return {
                     'quantity_income': turnover[0]['quantity_income'],
@@ -331,10 +335,12 @@ class DistributorQuantHistory(models.Model):
         for quants in all_relevance:
             date = fields.Date.from_string(quants.date.strftime("%Y-%m-01 00:00:00"))
             related_lines = DistribMoveLine.search(
-                ['&', '&', '&', '&', ('product_id', '=', quants.product_id.id), ('distrib_id', '=', quants.distrib_id.id),
-                 ('date', '>=', date), ('state', '=', 'done'), ('is_inventory','=',False)], order='date')
+                ['&', '&', '&', '&', ('product_id', '=', quants.product_id.id),
+                 ('distrib_id', '=', quants.distrib_id.id),
+                 ('date', '>=', date), ('state', '=', 'done'), ('is_inventory', '=', False)], order='date')
             if related_lines:
-                related_lines._recompute_related_beginning_stock()
+                related_lines._compute_beginning_stock()
+            #     related_lines._recompute_related_beginning_stock()
 
     def _recalculate_totals(self, begin_of_month=False, distrib_id=None, in_transaction=False):
         # TODO продумать возможность использовать контекст для отключения пересчета продаж при экспорте
@@ -376,6 +382,8 @@ class DistributorQuantHistory(models.Model):
                     quants.create(quant)
                     relevance._set_relevance(
                         quant['distrib_id'], quant['product_id'])
+                    if in_transaction:
+                        self._cr.commit()
 
         else:
             sql = """
@@ -400,7 +408,7 @@ class DistributorQuantHistory(models.Model):
                                 PRODUCT_ID,
                                 DATE_TRUNC('MONTH', DATE)
                             """
-            
+
             all_relevance = relevance._get_relevance_point(begin_of_month, distrib_id)
             if not begin_of_month and recalc_sales:
                 self._recalculate_sale(all_relevance)
@@ -408,9 +416,10 @@ class DistributorQuantHistory(models.Model):
                     self._cr.commit()
             for quants in all_relevance:
                 sql1 = sql % (quants.product_id.id, quants.distrib_id.id, quants.date.strftime("%Y-%m-01"))
-                domain = [('product_id', '=', quants.product_id.id),('distrib_id', '=', quants.distrib_id.id),('date', '>=', quants.date.strftime("%Y-%m-01"))]
+                domain = [('product_id', '=', quants.product_id.id), ('distrib_id', '=', quants.distrib_id.id),
+                          ('date', '>=', quants.date.strftime("%Y-%m-01"))]
                 strategy_order = 'distrib_id,product_id,date'
-                self.search(domain,order=strategy_order).unlink()
+                self.search(domain, order=strategy_order).unlink()
                 self._cr.execute(sql1)
                 stock_quant_result = self._cr.dictfetchall()
                 if stock_quant_result:
@@ -419,7 +428,7 @@ class DistributorQuantHistory(models.Model):
                 relevance._set_relevance(quants.distrib_id.id, quants.product_id.id)
                 if in_transaction:
                     self._cr.commit()
-                
+
     def _recalculate_totals_by_monts(self, begin_of_month=False, distrib_id=None, in_transaction=False):
         return self._recalculate_totals(begin_of_month, distrib_id, in_transaction)
         self = self.sudo()
@@ -436,7 +445,7 @@ class DistributorQuantHistory(models.Model):
             [], fields=['product_id'], groupby=['product_id'])
         ids = list(entry['product_id'][0] for entry in products_set_totals)
         div = history.read_group([('product_id', 'not in', ids)], fields=[
-                                 'product_id'], groupby=['product_id'])
+            'product_id'], groupby=['product_id'])
         all_totals = self.search_count([])
         # there were no records or they were retroactive or there was no product(s) in the totals
         if all_totals == 0 or back_number or len(div) > 0 or True:
@@ -489,14 +498,15 @@ class DistributorQuantHistory(models.Model):
             stock_quant_result = self._cr.fetchall()
             if stock_quant_result:
                 domain = [('id', 'in', list(entry[0]
-                           for entry in stock_quant_result))]
+                                            for entry in stock_quant_result))]
 
                 turnover = history.read_group(domain, [
-                                              'product_id', 'distrib_id', 'quantity_income:sum', 'quantity_outcome:sum'], ['product_id', 'distrib_id'])
+                    'product_id', 'distrib_id', 'quantity_income:sum', 'quantity_outcome:sum'],
+                                              ['product_id', 'distrib_id'])
                 if len(turnover) > 0:
                     end_ost = begin_ost + \
-                        turnover[0]['quantity_income'] - \
-                        turnover[0]['quantity_outcome']
+                              turnover[0]['quantity_income'] - \
+                              turnover[0]['quantity_outcome']
                     tot.write({
                         'quantity_begin': begin_ost,
                         'quantity_income': turnover[0]['quantity_income'],
