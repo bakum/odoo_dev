@@ -370,7 +370,7 @@ def apply_moves_from_request(data_for_edit, partner_guid):
         for move in DistribMove:
             if move.state == 'draft':
                 res = move.write({'state': 'done'})
-            if move.state == 'done' and allow_cancel_done:
+            elif move.state == 'done' and allow_cancel_done:
                 res = move.write({'state': 'cancel'})
                 # if res:
                 #     move._run_recalculate_job(thread=False)
