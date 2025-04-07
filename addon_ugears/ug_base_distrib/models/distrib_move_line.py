@@ -196,7 +196,7 @@ class DistributorMoveLines(models.Model):
         self = self.with_env(new_env)
         _logger.info("job %s starting", 'Recalculate Sell-In for all')
         Moves = self.env['distrib.distributors.move.line'].with_env(
-            self.env(cr=new_cr)).sudo().search([('state', '=', 'done'),('operation', '=', 'out'),('is_inventory', '=', False)])
+            self.env(cr=new_cr)).sudo().search([('state', '=', 'done'),('operation', '=', 'out'),('is_inventory', '=', False)], order='date,id')
         for move in Moves:
             date = fields.Date.from_string(move.date.strftime("%Y-%m-01 00:00:00"))
             last_date = get_last_day_of_month(date)
