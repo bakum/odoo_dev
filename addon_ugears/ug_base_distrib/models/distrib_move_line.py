@@ -3,6 +3,10 @@ from datetime import datetime, timedelta
 
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
+import threading
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 def get_last_day_of_month(date):
@@ -186,7 +190,31 @@ class DistributorMoveLines(models.Model):
                           precompute=True)
     default_code = fields.Char(related='product_id.default_code', depends=['product_id'], store=True, precompute=True)
 
+    def _recalculate_sell_in_for_all(self):
+        new_cr = self.pool.cursor()
+        new_env = api.Environment(new_cr, self.env.uid, self.env.context)
+        self = self.with_env(new_env)
+        _logger.info("job %s starting", 'Recalculate Sell-In for all')
+        Moves = self.env['distrib.distributors.move.line'].with_env(
+            self.env(cr=new_cr)).sudo().search([('state', '=', 'done'),('operation', '=', 'out'),('is_inventory', '=', False)])
+        for move in Moves:
+            date = fields.Date.from_string(move.date.strftime("%Y-%m-01 00:00:00"))
+            last_date = get_last_day_of_month(date)
+            sell_in = move._incoming_quantity_by_period(move.product_id, move.distrib_id, date, last_date)
+            move.write({'sell_in': sell_in})
+            new_cr.commit()
+            _logger.info("record %s updated", move.id)
+        _logger.info("job %s updated and released", 'Recalculate Sell-In for all')
+        new_cr.close()
+        return {}
+
+    def recalculate_sell_in_for_all(self):
+        threaded_calculation = threading.Thread(
+            target=self._recalculate_sell_in_for_all)
+        threaded_calculation.start()
+
     def _incoming_quantity_by_period(self, product_id, distrib_id, from_date, to_date):
+        self.ensure_one()
         domain = [
             ('product_id', '=', product_id.id),
             ('distrib_id', '=', distrib_id.id),
@@ -229,7 +257,7 @@ class DistributorMoveLines(models.Model):
                     # res_sell_in = QuantHistory.incoming_quantity_by_period(line.product_id, line.distrib_id, date,
                     #                                                        last_date)
                     res_sell_in1 = line._incoming_quantity_by_period(line.product_id, line.distrib_id, date,
-                                                                           last_date)
+                                                                     last_date)
                     # res_sell_in = line.product_id._compute_quantities_dict_dist(line.distrib_id.id, from_date=date,
                     #                                                             to_date=last_date, no_inventory=True)
                     # line.sell_in = 0.0 if not res_sell_in else res_sell_in[line.product_id.id]['incoming_qty_dist']

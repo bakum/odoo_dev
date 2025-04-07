@@ -86,4 +86,17 @@
         <field name="numbercall">-1</field>
         <field name="doall" eval="False"/>
     </record>
+
+    <record id="recalculate_sell_in_job_cron" model="ir.cron">
+        <field name="name">Recalculate Sell-In for all Cron Job</field>
+        <field name="model_id" ref="model_distrib_distributors_move_line"/>
+        <field name="state">code</field>
+        <field name="code">model.recalculate_sell_in_for_all()</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name='interval_number'>1</field>
+        <field name='interval_type'>months</field>
+        <field name="numbercall">1</field>
+        <field name="active">False</field>
+        <field name="doall" eval="False"/>
+    </record>
 </odoo>
