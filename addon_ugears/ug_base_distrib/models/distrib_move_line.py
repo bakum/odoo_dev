@@ -186,6 +186,22 @@ class DistributorMoveLines(models.Model):
                           precompute=True)
     default_code = fields.Char(related='product_id.default_code', depends=['product_id'], store=True, precompute=True)
 
+    def _incoming_quantity_by_period(self, product_id, distrib_id, from_date, to_date):
+        domain = [
+            ('product_id', '=', product_id.id),
+            ('distrib_id', '=', distrib_id.id),
+            ('is_inventory', '=', False),
+            ('state', '=', 'done'),
+            ('operation', '=', 'inc'),
+            ('date', '<=', to_date),
+            ('date', '>=', from_date)
+        ]
+        products_set_totals = self.read_group(
+            domain, fields=['product_id', 'distrib_id', 'balance:sum'], groupby=['product_id', 'distrib_id'])
+        if len(products_set_totals) > 0:
+            return dict(products_set_totals[0]).get('balance', 0.0)
+        return 0.0
+
     # @api.depends('product_id', 'distrib_id')
     def _recompute_related_beginning_stock(self):
         for line in self:
@@ -205,15 +221,19 @@ class DistributorMoveLines(models.Model):
 
                 date = fields.Date.from_string(line.date.strftime("%Y-%m-01 00:00:00"))
                 last_date = get_last_day_of_month(date)
-                res_beginning = QuantHistory.balance_product_on_date(line.product_id, line.distrib_id, last_day_of_previous_month)
+                res_beginning = QuantHistory.balance_product_on_date(line.product_id, line.distrib_id,
+                                                                     last_day_of_previous_month)
                 # res_beginning = line.product_id._compute_quantities_dict_dist(line.distrib_id.id, to_date=date)
                 res_ending = QuantHistory.balance_product_on_date(line.product_id, line.distrib_id, last_date)
                 if line.operation == 'out' and not line.is_inventory:
-                    res_sell_in = QuantHistory.incoming_quantity_by_period(line.product_id, line.distrib_id, date, last_date)
+                    # res_sell_in = QuantHistory.incoming_quantity_by_period(line.product_id, line.distrib_id, date,
+                    #                                                        last_date)
+                    res_sell_in1 = line._incoming_quantity_by_period(line.product_id, line.distrib_id, date,
+                                                                           last_date)
                     # res_sell_in = line.product_id._compute_quantities_dict_dist(line.distrib_id.id, from_date=date,
                     #                                                             to_date=last_date, no_inventory=True)
                     # line.sell_in = 0.0 if not res_sell_in else res_sell_in[line.product_id.id]['incoming_qty_dist']
-                    line.sell_in = res_sell_in
+                    line.sell_in = res_sell_in1
                 else:
                     line.sell_in = 0.0
 
