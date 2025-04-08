@@ -4,6 +4,8 @@ import json
 from odoo import http, fields, SUPERUSER_ID
 from odoo.osv import expression
 from odoo.tools import float_compare
+import logging
+_logger = logging.getLogger(__name__)
 
 CHANNEL_MAP = {
     'qtt_Channel_0001': 'Channel_0001',
@@ -547,6 +549,7 @@ def apply_inventory_from_request(data_for_edit, partner_guid):
             [[('guid', '=', move['product_guid'])], ['|', ('active', '=', True), ('active', '=', False)]])
         product_sudo = http.request.env['product.template'].sudo().search(domain)[:1]
         if not product_sudo:
+            _logger.info("Product not found %s", move['product_guid'])
             continue
         move['product_id']  = product_sudo
         product_ids.append(product_sudo.id)
