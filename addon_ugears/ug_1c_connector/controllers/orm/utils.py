@@ -488,7 +488,7 @@ def apply_expenses_from_request(data_for_edit, partner_guid):
     return {"success": True}
 
 
-def get_inventory_move_values(self, out=False, date=None):
+def get_inventory_move_values(distrib_id, out=False, date=None):
     # self.ensure_one()
     # if fields.Float.is_zero(qty, 0, precision_rounding=0.01):
     #     name = _('Product Quantity Confirmed')
@@ -496,8 +496,8 @@ def get_inventory_move_values(self, out=False, date=None):
     #     name = _('Product Quantity Updated')
 
     return {
-        'name': self.env.context.get('inventory_name'),
-        'distrib_id': self.distrib_id.id,
+        'name': http.request.env.context.get('inventory_name'),
+        'distrib_id': distrib_id.id,
         'state': 'draft',
         'is_inventory': True,
         'operation': 'out' if out else 'inc',
@@ -559,8 +559,11 @@ def apply_inventory_from_request(data_for_edit, partner_guid):
                 #     self._get_inventory_move_values(product_id=products.product_id, qty=qtt, date=self.date))
                 move_in.append((0, 0, {
                     'product_id': product_sudo.id,
-                    'name': product_sudo.get_product_multiline_description_sale(),
+                    # 'name': product_sudo.get_product_multiline_description_sale(),
+                    'name': product_sudo.display_name,
+                    'display_type': 'product',
                     # 'product_uom_id': product_uom_id.id,
+                    'price_unit': move.get('price_unit', 0),
                     'distrib_id': existing_distributor.id,
                     'product_uom_qty': qtt,
                     'operation': 'inc',
@@ -570,9 +573,12 @@ def apply_inventory_from_request(data_for_edit, partner_guid):
                 #                                                  date=self.date))
                 move_out.append((0, 0, {
                     'product_id': product_sudo.id,
-                    'name': product_sudo.get_product_multiline_description_sale(),
+                    # 'name': product_sudo.get_product_multiline_description_sale(),
+                    'name': product_sudo.display_name,
                     # 'product_uom_id': product_uom_id.id,
+                    'display_type': 'product',
                     'distrib_id': existing_distributor.id,
+                    'price_unit': move.get('price_unit', 0),
                     'product_uom_qty': -qtt,
                     'operation': 'out',
                 }))
@@ -580,13 +586,13 @@ def apply_inventory_from_request(data_for_edit, partner_guid):
                 return {"success": True}
     moves = http.request.env['distrib.distributors.move']
     if len(move_out) > 0:
-        move_vals = get_inventory_move_values(
+        move_vals = get_inventory_move_values(existing_distributor,
             out=True, date=date_order)
         res = moves.with_context(inventory_mode=False).create(move_vals)
         res.move_line = move_out
         # res.action_done()
     if len(move_in) > 0:
-        move_vals = get_inventory_move_values(date=date_order)
+        move_vals = get_inventory_move_values(existing_distributor,date=date_order)
         res = moves.with_context(inventory_mode=False).create(move_vals)
         res.move_line = move_in
         # res.action_done()
@@ -594,6 +600,8 @@ def apply_inventory_from_request(data_for_edit, partner_guid):
     domain = ['&', ('distrib_id', '=', existing_distributor.id),
               ('product_id', 'not in', product_ids)]
     quants_so = Quants.search(domain)
+    if not quants_so:
+        return {"success": True}
     move_out = []
     move_in = []
     for quant in quants_so:
@@ -602,8 +610,10 @@ def apply_inventory_from_request(data_for_edit, partner_guid):
         if float_compare(qtt_on_date, 0, precision_rounding=0.01) > 0:
             move_out.append((0, 0, {
                 'product_id': quant.product_id.id,
-                'name': quant.product_id.get_product_multiline_description_sale(),
+                # 'name': quant.product_id.get_product_multiline_description_sale(),
+                'name': product_sudo.display_name,
                 # 'product_uom_id': product_uom_id.id,
+                'display_type': 'product',
                 'distrib_id': existing_distributor.id,
                 'product_uom_qty': qtt_on_date,
                 'operation': 'out',
@@ -611,20 +621,22 @@ def apply_inventory_from_request(data_for_edit, partner_guid):
         elif float_compare(qtt_on_date, 0, precision_rounding=0.01) < 0:
             move_in.append((0, 0, {
                 'product_id': quant.product_id.id,
-                'name': quant.product_id.get_product_multiline_description_sale(),
+                # 'name': quant.product_id.get_product_multiline_description_sale(),
+                'name': product_sudo.display_name,
                 # 'product_uom_id': product_uom_id.id,
+                'display_type': 'product',
                 'distrib_id': existing_distributor.id,
                 'product_uom_qty': -qtt_on_date,
                 'operation': 'inc',
             }))
     if len(move_out) > 0:
-        move_vals = get_inventory_move_values(
+        move_vals = get_inventory_move_values(existing_distributor,
             out=True, date=date_order)
         res = moves.with_context(inventory_mode=False).create(move_vals)
         res.move_line = move_out
         # res.action_done()
     if len(move_in) > 0:
-        move_vals = get_inventory_move_values(date=date_order)
+        move_vals = get_inventory_move_values(existing_distributor,date=date_order)
         res = moves.with_context(inventory_mode=False).create(move_vals)
         res.move_line = move_in
         # res.action_done()
