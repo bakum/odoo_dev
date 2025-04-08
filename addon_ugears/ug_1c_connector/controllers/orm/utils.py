@@ -3,6 +3,7 @@ import json
 
 from odoo import http, fields, SUPERUSER_ID
 from odoo.osv import expression
+from odoo.tools import float_compare
 
 CHANNEL_MAP = {
     'qtt_Channel_0001': 'Channel_0001',
@@ -484,4 +485,151 @@ def apply_expenses_from_request(data_for_edit, partner_guid):
         move_sudo = Expense.with_user(SUPERUSER_ID).create(move_values)
         move_sudo.move_line = expenses
 
+    return {"success": True}
+
+
+def get_inventory_move_values(self, out=False, date=None):
+    # self.ensure_one()
+    # if fields.Float.is_zero(qty, 0, precision_rounding=0.01):
+    #     name = _('Product Quantity Confirmed')
+    # else:
+    #     name = _('Product Quantity Updated')
+
+    return {
+        'name': self.env.context.get('inventory_name'),
+        'distrib_id': self.distrib_id.id,
+        'state': 'draft',
+        'is_inventory': True,
+        'operation': 'out' if out else 'inc',
+        'date_order': date if date else fields.Datetime.now(),
+        # 'move_line': [(0, 0, {
+        #     'product_id': product_id.id,
+        #     # 'product_uom_id': product_uom_id.id,
+        #     'distrib_id': self.distrib_id.id,
+        #     'product_uom_qty': qty,
+        #     'operation': 'out' if out else 'inc',
+        # })]
+    }
+
+def apply_inventory_from_request(data_for_edit, partner_guid):
+    domain = expression.AND([[('guid', '=', partner_guid)], ['|', ('active', '=', True), ('active', '=', False)]])
+    partner_sudo = http.request.env['res.partner'].sudo().search(domain)[:1]
+    date_order = fields.Datetime.from_string(data_for_edit['date_order'])
+    allow_cancel_done = data_for_edit.get('allow_cancel_done', False)
+
+    if not partner_sudo:
+        return {"success": False, 'error': 'Partner not found'}
+
+    domain = expression.AND(
+        [[('partner_id', '=', partner_sudo.id)], ['|', ('active', '=', True), ('active', '=', False)]])
+    existing_distributor = http.request.env['distrib.distributors'].search(domain, limit=1)
+    if not existing_distributor:
+        return {"success": False, 'error': 'Distributor not found'}
+
+    DistribMove = http.request.env['distrib.distributors.move'].sudo().search(
+        ['&', ('distrib_id', '=', existing_distributor.id), ('date_order', '=', date_order)])
+    if DistribMove:
+        for move in DistribMove:
+            if move.state == 'draft':
+                res = move.write({'state': 'done'})
+            elif move.state == 'done' and allow_cancel_done:
+                res = move.write({'state': 'cancel'})
+                # if res:
+                #     move._run_recalculate_job(thread=False)
+        return {"success": False, 'error': 'Distributor move already exists'}
+
+    QuantHistory = http.request.env['distrib.quant.history'].sudo()
+    move_out = []
+    move_in = []
+    product_ids = []
+    for move in data_for_edit['moves']:
+        domain = expression.AND(
+            [[('guid', '=', move['product_guid'])], ['|', ('active', '=', True), ('active', '=', False)]])
+        product_sudo = http.request.env['product.template'].sudo().search(domain)[:1]
+        if not product_sudo:
+            continue
+        move['product_id']  = product_sudo
+        product_ids.append(product_sudo.id)
+        qtt_on_date = QuantHistory.balance_product_on_date(
+            product_sudo, existing_distributor, date_order)
+        if move['qtt'] != qtt_on_date:
+            qtt = move['qtt'] - qtt_on_date
+            if float_compare(qtt, 0, precision_rounding=0.01) > 0:
+                # move_vals.append(
+                #     self._get_inventory_move_values(product_id=products.product_id, qty=qtt, date=self.date))
+                move_in.append((0, 0, {
+                    'product_id': product_sudo.id,
+                    'name': product_sudo.get_product_multiline_description_sale(),
+                    # 'product_uom_id': product_uom_id.id,
+                    'distrib_id': existing_distributor.id,
+                    'product_uom_qty': qtt,
+                    'operation': 'inc',
+                }))
+            elif float_compare(qtt, 0, precision_rounding=0.01) < 0:
+                # move_vals.append(self._get_inventory_move_values(product_id=products.product_id, qty=-qtt, out=True,
+                #                                                  date=self.date))
+                move_out.append((0, 0, {
+                    'product_id': product_sudo.id,
+                    'name': product_sudo.get_product_multiline_description_sale(),
+                    # 'product_uom_id': product_uom_id.id,
+                    'distrib_id': existing_distributor.id,
+                    'product_uom_qty': -qtt,
+                    'operation': 'out',
+                }))
+            else:
+                return {"success": True}
+    moves = http.request.env['distrib.distributors.move']
+    if len(move_out) > 0:
+        move_vals = get_inventory_move_values(
+            out=True, date=date_order)
+        res = moves.with_context(inventory_mode=False).create(move_vals)
+        res.move_line = move_out
+        # res.action_done()
+    if len(move_in) > 0:
+        move_vals = get_inventory_move_values(date=date_order)
+        res = moves.with_context(inventory_mode=False).create(move_vals)
+        res.move_line = move_in
+        # res.action_done()
+    Quants = http.request.env['distrib.quant'].sudo()
+    domain = ['&', ('distrib_id', '=', existing_distributor.id),
+              ('product_id', 'not in', product_ids)]
+    quants_so = Quants.search(domain)
+    move_out = []
+    move_in = []
+    for quant in quants_so:
+        qtt_on_date = QuantHistory.balance_product_on_date(
+            quant.product_id, existing_distributor, date_order)
+        if float_compare(qtt_on_date, 0, precision_rounding=0.01) > 0:
+            move_out.append((0, 0, {
+                'product_id': quant.product_id.id,
+                'name': quant.product_id.get_product_multiline_description_sale(),
+                # 'product_uom_id': product_uom_id.id,
+                'distrib_id': existing_distributor.id,
+                'product_uom_qty': qtt_on_date,
+                'operation': 'out',
+            }))
+        elif float_compare(qtt_on_date, 0, precision_rounding=0.01) < 0:
+            move_in.append((0, 0, {
+                'product_id': quant.product_id.id,
+                'name': quant.product_id.get_product_multiline_description_sale(),
+                # 'product_uom_id': product_uom_id.id,
+                'distrib_id': existing_distributor.id,
+                'product_uom_qty': -qtt_on_date,
+                'operation': 'inc',
+            }))
+    if len(move_out) > 0:
+        move_vals = get_inventory_move_values(
+            out=True, date=date_order)
+        res = moves.with_context(inventory_mode=False).create(move_vals)
+        res.move_line = move_out
+        # res.action_done()
+    if len(move_in) > 0:
+        move_vals = get_inventory_move_values(date=date_order)
+        res = moves.with_context(inventory_mode=False).create(move_vals)
+        res.move_line = move_in
+        # res.action_done()
+
+        # threaded_calculation = threading.Thread(
+    #     target=moves._run_recalculate_job)
+    # threaded_calculation.start()
     return {"success": True}
