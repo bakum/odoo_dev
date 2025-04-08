@@ -89,6 +89,7 @@ class DistributorMove(models.Model):
                               store=True, compute='_compute_quantity_amount')
     is_inventory = fields.Boolean('Inventory', default=False)
     is_manager = fields.Boolean(compute='_compute_is_manager')
+    is_admin = fields.Boolean(compute='_compute_is_manager')
     rate = fields.Float(compute='_compute_current_rate', string='Current Cross-Rate', digits=0, store=True,
                         precompute=True, help='The rate of the currency to the currency of accounting')
 
@@ -201,6 +202,8 @@ class DistributorMove(models.Model):
     def _compute_is_manager(self):
         self.is_manager = self.env.user.has_group(
             "ug_base_distrib.group_distrib_manager")
+        self.is_admin = self.env.user.has_group(
+            "base.group_system")
 
     def init(self):
         create_index(self._cr, 'distrib_move_date_order_id_idx', 'distrib_distributors_move',

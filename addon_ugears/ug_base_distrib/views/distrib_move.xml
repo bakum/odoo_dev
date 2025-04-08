@@ -29,6 +29,7 @@
                     <group>
                         <group id="header_left_group">
                             <field name="is_manager" invisible="1"/>
+                            <field name="is_admin" invisible="1"/>
                             <field name="distrib_id" widget="res_partner_many2one"
                                    options="{'no_create': True, 'no_open': True}"/>
                             <field name="operation"
@@ -58,12 +59,13 @@
                                     </control>
                                     <field name="display_type" force_save="1" invisible="1"/>
                                     <field name="operation" invisible="1"/>
+                                    <field name="state" invisible="1"/>
                                     <field name="sequence" widget="handle"/>
                                     <field name="product_id" optional="show" force_save="1"
                                            options="{'no_create': True, 'no_open': True}" attrs="{'required': [('display_type', '=', 'product')]}"/>
                                     <field name="name" widget="section_and_note_text" optional="show"/>
                                     <field name="product_uom_qty" optional="show"/>
-                                    <field name="price_unit" optional="show" readonly="1"/>
+                                    <field name="price_unit" optional="show" attrs="{'readonly':['&amp;',('parent.is_admin','=',False),('state','in',['draft'])]}"/>
                                     <field name="currency_id" optional="show" invisible="1"/>
                                     <field name="product_uom_category_id" invisible="1"/>
                                     <field name="product_uom" string="UoM" groups="uom.group_uom" optional="show"
