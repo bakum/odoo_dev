@@ -19,10 +19,10 @@ class ReportDistribSales(models.Model):
     product_id = fields.Many2one('product.product', string='Product', readonly=True)
     product_tmpl_id = fields.Many2one('product.template', readonly=True, groups="ug_base_distrib.group_distrib_manager")
     product_category_id = fields.Many2one('product.category', readonly=True, string='Category')
-    beginning_stock = fields.Float(string='Beginning stock, pcs', readonly=True, group_operator='avg')
-    sell_in = fields.Float(string='UGmodels Sell-In. pcs', readonly=True, group_operator='avg')
-    sell_in_curr = fields.Float(string='UGmodels Sell-In', readonly=True, group_operator='avg')
-    sell_in_acc = fields.Float(string='UGmodels Sell-In, (acc)', readonly=True, group_operator='avg',
+    beginning_stock = fields.Float(string='Beginning stock, pcs', readonly=True, group_operator='sum')
+    sell_in = fields.Float(string='UGmodels Sell-In. pcs', readonly=True, group_operator='sum')
+    sell_in_curr = fields.Float(string='UGmodels Sell-In', readonly=True, group_operator='sum')
+    sell_in_acc = fields.Float(string='UGmodels Sell-In, (acc)', readonly=True, group_operator='sum',
                                groups="ug_base_distrib.group_distrib_manager")
 
     balance = fields.Float(string='pcs', readonly=True)
@@ -40,10 +40,14 @@ class ReportDistribSales(models.Model):
         tools.drop_view_if_exists(self._cr, 'report_distrib_sales')
         query = """
         CREATE or REPLACE VIEW report_distrib_sales AS (
-           WITH
-        CHANNELS (ID) AS (
+              WITH
+        CHANNELS (ID, ROW_NUM) AS (
             SELECT
-                DSC.ID
+                DSC.ID,
+                ROW_NUMBER() OVER (
+                    ORDER BY
+                        DSC.ID
+                ) AS ROW_NUM
             FROM
                 DISTRIB_SALES_CHANNELS DSC
         ),
@@ -81,10 +85,22 @@ class ReportDistribSales(models.Model):
                 FULL_NAME,
                 PRODUCT_CATEGORY_ID,
                 STATE,
-                BEGINNING_STOCK,
-                SELL_IN,
-                SELL_IN_CURR,
-                SELL_IN_ACC,
+                CASE
+                    WHEN C.ROW_NUM = 1 THEN BEGINNING_STOCK
+                    ELSE NULL
+                END AS BEGINNING_STOCK,
+                CASE
+                    WHEN C.ROW_NUM = 1 THEN SELL_IN
+                    ELSE NULL
+                END AS SELL_IN,
+                CASE
+                    WHEN C.ROW_NUM = 1 THEN SELL_IN_CURR
+                    ELSE NULL
+                END AS SELL_IN_CURR,
+                CASE
+                    WHEN C.ROW_NUM = 1 THEN SELL_IN_ACC
+                    ELSE NULL
+                END AS SELL_IN_ACC,
                 OPERATION,
                 CASE
                     WHEN C.ID = DML.CHANNEL_ID THEN PRICE_TOTAL
@@ -125,7 +141,7 @@ class ReportDistribSales(models.Model):
         SELL_IN_CURR,
         SELL_IN_ACC,
         PRICE_TOTAL,
-        -BALANCE BALANCE,
+        - BALANCE BALANCE,
         PRICE_TOTAL_ACC,
         BEGINNING_STOCK
     FROM
