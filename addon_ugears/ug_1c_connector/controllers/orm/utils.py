@@ -513,7 +513,15 @@ def get_inventory_move_values(distrib_id, out=False, date=None):
         # })]
     }
 
-def apply_inventory_from_request(data_for_edit, partner_guid):
+def copy_structure(original_dict):
+    if isinstance(original_dict, dict):
+        return {key: copy_structure(value) for key, value in original_dict.items()}
+    elif isinstance(original_dict, list):
+        return []
+    else:
+        return None
+
+def apply_inventory_from_request(data_for_edit, partner_guid, verification=False):
     domain = expression.AND([[('guid', '=', partner_guid)], ['|', ('active', '=', True), ('active', '=', False)]])
     partner_sudo = http.request.env['res.partner'].sudo().search(domain)[:1]
     date_order = fields.Datetime.from_string(data_for_edit['date_order'])
@@ -551,12 +559,16 @@ def apply_inventory_from_request(data_for_edit, partner_guid):
         if not product_sudo:
             _logger.info("Product not found %s", move['product_guid'])
             continue
-        move['product_id']  = product_sudo
+        # move['product_id']  = product_sudo
         product_ids.append(product_sudo.id)
         qtt_on_date = QuantHistory.balance_product_on_date(
             product_sudo, existing_distributor, date_order)
+        move['qtt_on_hand'] = qtt_on_date
         if move['qtt'] != qtt_on_date:
             qtt = move['qtt'] - qtt_on_date
+            if verification:
+                continue
+
             if float_compare(qtt, 0, precision_rounding=0.01) > 0:
                 # move_vals.append(
                 #     self._get_inventory_move_values(product_id=products.product_id, qty=qtt, date=self.date))
@@ -607,6 +619,7 @@ def apply_inventory_from_request(data_for_edit, partner_guid):
         return {"success": True}
     move_out = []
     move_in = []
+    new_vals = copy_structure(data_for_edit['moves'][0])
     for quant in quants_so:
         qtt_on_date = QuantHistory.balance_product_on_date(
             quant.product_id, existing_distributor, date_order)
