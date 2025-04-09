@@ -20,6 +20,8 @@ class ClearDataWizard(models.TransientModel):
 
     distrib = fields.Boolean(string="All Distributor Moves", help="this will clear/delete Distributor Moves")
     distrib_expenses = fields.Boolean(string="All Distributor Expenses", help="this will clear/delete Distributor Expenses")
+    distrib_budget = fields.Boolean(string="All Distributor Plans (Budgets)",
+                                      help="this will clear/delete Distributor Plans (Budgets)")
     distrib_install = fields.Boolean(string="Distributors_invisible")
     # purchase
     purchase = fields.Boolean(string="Purchase", help="this will clear/delete purchase ")
@@ -201,6 +203,11 @@ class ClearDataWizard(models.TransientModel):
         if self.distrib_expenses:
             self.env.cr.execute("""
                             truncate distrib_marketing_expenses restart identity cascade;
+                        """)
+            self.env.cr.commit()
+        if self.distrib_budget:
+            self.env.cr.execute("""
+                            truncate distrib_budget_move restart identity cascade;
                         """)
             self.env.cr.commit()
         # sale-->sale_and_all_transfers
