@@ -490,7 +490,7 @@ def apply_expenses_from_request(data_for_edit, partner_guid):
     return {"success": True}
 
 
-def get_inventory_move_values(self, out=False, date=None):
+def get_inventory_move_values(distrib_id, out=False, date=None):
     # self.ensure_one()
     # if fields.Float.is_zero(qty, 0, precision_rounding=0.01):
     #     name = _('Product Quantity Confirmed')
@@ -498,8 +498,8 @@ def get_inventory_move_values(self, out=False, date=None):
     #     name = _('Product Quantity Updated')
 
     return {
-        'name': self.env.context.get('inventory_name'),
-        'distrib_id': self.distrib_id.id,
+        'name': http.request.env.context.get('inventory_name'),
+        'distrib_id': distrib_id.id,
         'state': 'draft',
         'is_inventory': True,
         'operation': 'out' if out else 'inc',
@@ -595,10 +595,8 @@ def apply_inventory_from_request(data_for_edit, partner_guid):
         res.move_line = move_out
         # res.action_done()
     if len(move_in) > 0:
-        move_vals = get_inventory_move_values(date=date_order)
-        res = moves.with_user(SUPERUSER_ID).create(move_vals)
         move_vals = get_inventory_move_values(existing_distributor,date=date_order)
-        res = moves.with_context(inventory_mode=False).create(move_vals)
+        res = moves.with_user(SUPERUSER_ID).create(move_vals)
         res.move_line = move_in
         # res.action_done()
     Quants = http.request.env['distrib.quant'].sudo()
@@ -641,7 +639,7 @@ def apply_inventory_from_request(data_for_edit, partner_guid):
         res.move_line = move_out
         # res.action_done()
     if len(move_in) > 0:
-        move_vals = get_inventory_move_values(date=date_order)
+        move_vals = get_inventory_move_values(existing_distributor,date=date_order)
         res = moves.with_user(SUPERUSER_ID).create(move_vals)
         res.move_line = move_in
         # res.action_done()
