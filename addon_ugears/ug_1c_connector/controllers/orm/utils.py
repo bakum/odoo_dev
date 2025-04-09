@@ -621,6 +621,9 @@ def apply_inventory_from_request(data_for_edit, partner_guid, verification=False
               ('product_id', 'not in', product_ids)]
     quants_so = Quants.search(domain)
     if not quants_so:
+        if verification:
+            data_for_edit['success'] = True
+            return data_for_edit
         return {"success": True}
     move_out = []
     move_in = []
@@ -631,9 +634,11 @@ def apply_inventory_from_request(data_for_edit, partner_guid, verification=False
             quant.product_id, existing_distributor, date_order)
 
         if verification:
-            vals = new_vals.deepcopy()
+            vals = new_vals.copy()
             vals['qtt_on_hand'] = qtt_on_date
             vals['qtt'] = 0
+            vals['date_order'] = date_order
+            vals['price_unit'] = quant.price_unit
             vals['product_guid'] = quant.product_id.guid
             data_for_edit['moves'].append(vals)
             continue
