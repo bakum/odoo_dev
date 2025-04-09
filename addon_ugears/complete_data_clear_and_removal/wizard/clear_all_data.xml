@@ -36,6 +36,7 @@
                     </group>
                         <group string="Distributors Managements" attrs="{'invisible': [('distrib_install', '=', False)]}">
                             <field name="distrib" attrs="{'invisible': [('distrib_install', '=', False)]}"/>
+                            <field name="distrib_expenses" attrs="{'invisible': [('distrib_install', '=', False)]}"/>
                         </group>
                     <group>
                     </group>
