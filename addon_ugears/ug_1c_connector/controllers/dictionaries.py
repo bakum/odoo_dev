@@ -82,7 +82,7 @@ class DictionariesController(http.Controller):
 
         return json.dumps(result_dict, default=date_utils.json_default)
 
-    @http.route(['/api/v2/expenses/<string:partner_guid>/create_inventory'],
+    @http.route(['/api/v2/moves/<string:partner_guid>/create_inventory'],
                 auth='bearer_api_key', website=False, cors="*", csrf=False,
                 methods=['POST'])
     def create_inventory(self, partner_guid, **kw):
