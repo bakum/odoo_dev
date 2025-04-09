@@ -540,17 +540,18 @@ def apply_inventory_from_request(data_for_edit, partner_guid, verification=False
     if not existing_distributor:
         return {"success": False, 'error': 'Distributor not found'}
 
-    DistribMove = http.request.env['distrib.distributors.move'].sudo().search(
-        ['&', ('distrib_id', '=', existing_distributor.id), ('date_order', '=', date_order)])
-    if DistribMove:
-        for move in DistribMove:
-            if move.state == 'draft':
-                res = move.write({'state': 'done'})
-            elif move.state == 'done' and allow_cancel_done:
-                res = move.write({'state': 'cancel'})
-                # if res:
-                #     move._run_recalculate_job(thread=False)
-        return {"success": False, 'error': 'Distributor move already exists'}
+    if not verification:
+        DistribMove = http.request.env['distrib.distributors.move'].sudo().search(
+            ['&', ('distrib_id', '=', existing_distributor.id), ('date_order', '=', date_order)])
+        if DistribMove:
+            for move in DistribMove:
+                if move.state == 'draft':
+                    res = move.write({'state': 'done'})
+                elif move.state == 'done' and allow_cancel_done:
+                    res = move.write({'state': 'cancel'})
+                    # if res:
+                    #     move._run_recalculate_job(thread=False)
+            return {"success": False, 'error': 'Distributor move already exists'}
 
     QuantHistory = http.request.env['distrib.quant.history'].sudo()
     move_out = []
