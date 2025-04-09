@@ -582,12 +582,12 @@ def apply_inventory_from_request(data_for_edit, partner_guid):
     if len(move_out) > 0:
         move_vals = get_inventory_move_values(
             out=True, date=date_order)
-        res = moves.with_context(inventory_mode=False).create(move_vals)
+        res = moves.with_user(SUPERUSER_ID).create(move_vals)
         res.move_line = move_out
         # res.action_done()
     if len(move_in) > 0:
         move_vals = get_inventory_move_values(date=date_order)
-        res = moves.with_context(inventory_mode=False).create(move_vals)
+        res = moves.with_user(SUPERUSER_ID).create(move_vals)
         res.move_line = move_in
         # res.action_done()
     Quants = http.request.env['distrib.quant'].sudo()
@@ -620,12 +620,12 @@ def apply_inventory_from_request(data_for_edit, partner_guid):
     if len(move_out) > 0:
         move_vals = get_inventory_move_values(
             out=True, date=date_order)
-        res = moves.with_context(inventory_mode=False).create(move_vals)
+        res = moves.with_user(SUPERUSER_ID).create(move_vals)
         res.move_line = move_out
         # res.action_done()
     if len(move_in) > 0:
         move_vals = get_inventory_move_values(date=date_order)
-        res = moves.with_context(inventory_mode=False).create(move_vals)
+        res = moves.with_user(SUPERUSER_ID).create(move_vals)
         res.move_line = move_in
         # res.action_done()
 
