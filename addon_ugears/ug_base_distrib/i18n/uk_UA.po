@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-01 15:45+0000\n"
-"PO-Revision-Date: 2025-04-01 15:45+0000\n"
+"POT-Creation-Date: 2025-04-09 17:43+0000\n"
+"PO-Revision-Date: 2025-04-09 17:43+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -71,8 +71,20 @@ msgstr "<span class=\"o_form_label\">Звітний період дистриб'
 
 #. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.res_config_settings_view_form
+msgid ""
+"<span class=\"o_form_label\">Limit for execution of dangerous "
+"operations</span>"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.res_config_settings_view_form
 msgid "<span class=\"o_form_label\">Period in Months for reports.</span>"
 msgstr "<span class=\"o_form_label\">Період у місяцях для звітів.</span>"
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.res_config_settings_view_form
+msgid "<span class=\"o_form_label\">Set null to disable the limit.</span>"
+msgstr ""
 
 #. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_product_public_form_inherit
@@ -137,6 +149,60 @@ msgid ""
 "<!-- POWERED BY -->\n"
 "</table>"
 msgstr ""
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding:16px 0 0 0;box-sizing:border-box;caption-side:bottom;padding-top: 16px; background-color: #FFFFFF; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;\" width=\"100%\"><tbody style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\"><tr style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\"><td align=\"center\" style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"box-sizing: border-box; caption-side: bottom; padding: 16px; background-color: #ffffff; color: #454748; border-collapse: separate; font-family: Verdana, Arial, sans-serif;\">\n"
+"<tbody style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"    \n"
+"    \n"
+"    <tr style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"        <td align=\"center\" style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;min-width: 590px;\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"box-sizing: border-box; caption-side: bottom; min-width: 590px; background-color: white; padding: 0px 8px; border-collapse: separate; color: #454748; font-family: Verdana, Arial, sans-serif;\">\n"
+"                <tbody style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\"><tr style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\"><td valign=\"top\" style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;font-size: 13px;\">\n"
+"                    <div>\n"
+"                        Dear <t t-out=\"object.name or ''\">Marc Demo</t>,<br><br>\n"
+"                        The Ugears Distribution Team has invited you to join the Ugears Distributor Portal via this invitation email.\n"
+"                        <div style=\"margin: 16px 0px 16px 0px;\">\n"
+"                            <a t-att-href=\"object.signup_url\" style=\"box-sizing:border-box;background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;\">\n"
+"                                Accept invitation\n"
+"                            </a>\n"
+"                        </div>\n"
+"                        <t t-set=\"website_url\" t-value=\"object.get_base_url()\"></t>\n"
+"                        Your Odoo domain is: <b style=\"box-sizing:border-box;font-weight:bolder;\"><a t-att-href=\"website_url\" t-out=\"website_url or ''\" style=\"text-decoration: none; box-sizing: border-box; color: #454748;\">http://yourcompany.odoo.com</a></b><br>\n"
+"                        Your sign in email is: <b style=\"box-sizing:border-box;font-weight:bolder;\"><a t-attf-href=\"/web/login?login={{ object.email }}\" target=\"_blank\" t-out=\"object.email or ''\" style=\"text-decoration: none; box-sizing: border-box; color: #454748;\">mark.brown23@example.com</a></b><br><br>\n"
+"                        <br><br>\n"
+"                        We look forward to collaborating with you on a new level of efficiency and usability!\n"
+"                    </div>\n"
+"                </td></tr>\n"
+"                <tr style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\"><td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;text-align:center;\">\n"
+"                  <hr width=\"100%\" style=\"border-style:none;border-left-width:medium;border-bottom-width:medium;border-right-width:medium;border-top-width:medium;box-sizing: border-box; height: 1px; opacity: 0.25; color: #454748; background-color: #cccccc; border: medium none; clear: both; display: block; font-size: 0px; min-height: 1px; line-height: 0; margin: 16px 0px;\">\n"
+"                </td></tr>\n"
+"            </tbody></table>\n"
+"        </td>\n"
+"    </tr>\n"
+"    \n"
+"    <tr style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"        <td align=\"center\" style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;min-width: 590px;\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"box-sizing: border-box; caption-side: bottom; min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px; border-collapse: separate; color: #454748; font-family: Verdana, Arial, sans-serif;\">\n"
+"                <tbody style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\"><tr style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\"><td valign=\"middle\" align=\"left\" style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                    <t t-out=\"object.company_id.name or ''\">YourCompany</t>\n"
+"                </td></tr>\n"
+"                <tr style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\"><td valign=\"middle\" align=\"left\" style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;opacity: 0.7;\">\n"
+"                    <t t-out=\"object.company_id.phone or ''\">+1 650-123-4567</t>\n"
+"                    <t t-if=\"object.company_id.email\">\n"
+"                        | <a t-att-href=\"'mailto:%s' % object.company_id.email\" style=\"box-sizing:border-box;text-decoration:none; color: #454748;\" t-out=\"object.company_id.email or ''\">info@yourcompany.com</a>\n"
+"                    </t>\n"
+"                    <t t-if=\"object.company_id.website\">\n"
+"                        | <a t-att-href=\"'%s' % object.company_id.website\" style=\"box-sizing:border-box;text-decoration:none; color: #454748;\" t-out=\"object.company_id.website or ''\">http://www.example.com</a>\n"
+"                    </t>\n"
+"                </td></tr>\n"
+"            </tbody></table>\n"
+"        </td>\n"
+"    </tr>\n"
+"</tbody>\n"
+"</table>\n"
+"</td></tr>\n"
+"\n"
+"</tbody></table>"
 
 #. module: ug_base_distrib
 #: model:ir.actions.server,name:ug_base_distrib.action_accept_expenses
@@ -243,6 +309,7 @@ msgid "Amount"
 msgstr "Разом"
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__price_total_acc
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__price_total_acc
 msgid "Amount (acc)"
 msgstr ""
@@ -369,6 +436,7 @@ msgid "Beginning Stock, pcs"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__beginning_stock
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__beginning_stock
 msgid "Beginning stock, pcs"
 msgstr "Beginning Stock, pcs"
@@ -436,6 +504,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_quantity__categ_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__product_category_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__categ_id
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_sales_view_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_turnover_view_search
 msgid "Category"
 msgstr "Категорія"
 
@@ -892,6 +962,7 @@ msgstr "Дистрибуція"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__distrib_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__distrib_id
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_qtt_view_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_sales_view_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_turnover_view_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_expenses_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_search
@@ -1086,6 +1157,7 @@ msgid "Draft"
 msgstr "Чернетка"
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__barcode
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_plan_fact__barcode
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__barcode
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__barcode
@@ -1096,6 +1168,13 @@ msgstr "Штрих-код"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__email
 msgid "EMail"
 msgstr "Електронна пошта"
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/records_renderer/records_renderer.xml:0
+#, python-format
+msgid "Elapsed Time/Remaining Time:"
+msgstr "Час, що минув/Час, що залишився:"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__price_total
@@ -1116,6 +1195,11 @@ msgstr "Ending Stock, pcs"
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__product_qty
 msgid "Ending Stock, pcs"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__ending_stock
+msgid "Ending stock, pcs"
 msgstr ""
 
 #. module: ug_base_distrib
@@ -1339,6 +1423,7 @@ msgstr "Надавати знижки на рядки замовлень"
 
 #. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_qtt_view_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_sales_view_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_turnover_view_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distrib_expenses_search
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_search
@@ -1645,6 +1730,11 @@ msgid "Incoming Quantity"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_quant_history__quantity_sell_in
+msgid "Incoming Sell-In Quantity"
+msgstr ""
+
+#. module: ug_base_distrib
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_quant__inventory_diff_quantity
 msgid ""
 "Indicates the gap between the product's theoretical quantity and its counted"
@@ -1663,6 +1753,7 @@ msgid "Informations"
 msgstr "Інформація"
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__default_code
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_plan_fact__default_code
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__default_code
 msgid "Internal Reference"
@@ -1670,6 +1761,7 @@ msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_budget_move_line__barcode
+#: model:ir.model.fields,help:ug_base_distrib.field_distrib_distributors_move_line__barcode
 #: model:ir.model.fields,help:ug_base_distrib.field_distrib_quant__barcode
 msgid "International Article Number used for product identification."
 msgstr ""
@@ -1730,6 +1822,11 @@ msgstr "Запаси на дату"
 #. module: ug_base_distrib
 #: model:mail.template,subject:ug_base_distrib.set_password_email
 msgid "Invitation to Join Ugears Distributor Portal"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__is_admin
+msgid "Is Admin"
 msgstr ""
 
 #. module: ug_base_distrib
@@ -1945,6 +2042,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_inventory__len_products
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move__len_products
 msgid "Len Products"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_res_config_settings__danger_limit
+msgid "Limit for execution of dangerous operations"
 msgstr ""
 
 #. module: ug_base_distrib
@@ -2237,6 +2339,20 @@ msgid "No Errors"
 msgstr "Помилок немає"
 
 #. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/records_renderer/records_renderer.xml:0
+#, python-format
+msgid "Not Relevant Records:"
+msgstr "Нерелевантні записи:"
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/records_renderer/records_renderer.xml:0
+#, python-format
+msgid "Not Valid Records:"
+msgstr "Недійсні записи:"
+
+#. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_move_search
 msgid "Not inventory"
 msgstr "Не інвентаризація"
@@ -2497,6 +2613,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_base_distrib.field_ug_distrib_import_move_list__product_id
 #: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_budget_move_line__display_type__product
 #: model:ir.model.fields.selection,name:ug_base_distrib.selection__distrib_distributors_move_line__display_type__product
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_sales_view_search
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.distrib_report_turnover_view_search
 msgid "Product"
 msgstr "Товар"
 
@@ -2516,6 +2634,7 @@ msgid "Product Code"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__full_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_plan_fact__full_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__full_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_turnover_quantity__full_name
@@ -2663,6 +2782,18 @@ msgid "Quants Totals"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.actions.server,name:ug_base_distrib.recalculate_sell_in_job_cron_ir_actions_server
+#: model:ir.cron,cron_name:ug_base_distrib.recalculate_sell_in_job_cron
+msgid "Recalculate Sell-In for all Cron Job"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.actions.server,name:ug_base_distrib.recalculate_by_month_job_cron_ir_actions_server
+#: model:ir.cron,cron_name:ug_base_distrib.recalculate_by_month_job_cron
+msgid "Recalculate Totals By Month Cron Job"
+msgstr ""
+
+#. module: ug_base_distrib
 #: model:ir.actions.server,name:ug_base_distrib.recalculate_job_cron_ir_actions_server
 #: model:ir.cron,cron_name:ug_base_distrib.recalculate_job_cron
 msgid "Recalculate Totals Cron Job"
@@ -2731,9 +2862,18 @@ msgstr ""
 #. module: ug_base_distrib
 #. odoo-javascript
 #: code:addons/ug_base_distrib/static/src/components/import_region_rel.xml:0
+#: code:addons/ug_base_distrib/static/src/components/import_region_rel.xml:0
 #, python-format
 msgid "Run Recalculations Totals"
-msgstr ""
+msgstr "Перерахунок підсумків"
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/import_region_rel.xml:0
+#: code:addons/ug_base_distrib/static/src/components/import_region_rel.xml:0
+#, python-format
+msgid "Run Recalculations Totals (Once by Month)"
+msgstr "Перерахунок підсумків (один раз на місяць)"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__message_has_sms_error
@@ -2851,6 +2991,11 @@ msgstr "Вересень"
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__sequence
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__sequence
 msgid "Sequence"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model.fields,help:ug_base_distrib.field_res_config_settings__danger_limit
+msgid "Set null to disable the limit."
 msgstr ""
 
 #. module: ug_base_distrib
@@ -3196,6 +3341,7 @@ msgid "UAH is not the currency of the current organization!"
 msgstr "Гривня не є основною валютою поточної організації!"
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__sell_in_curr
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__sell_in_curr
 msgid "UGmodels Sell-In"
 msgstr ""
@@ -3231,11 +3377,13 @@ msgid "UGmodels Sell-In Plan, pcs"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__sell_in_acc
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__sell_in_acc
 msgid "UGmodels Sell-In, (acc)"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__sell_in
 #: model:ir.model.fields,field_description:ug_base_distrib.field_report_distrib_sales__sell_in
 msgid "UGmodels Sell-In. pcs"
 msgstr ""
@@ -3414,6 +3562,7 @@ msgstr ""
 #: code:addons/ug_base_distrib/models/distrib_marketing_expenses.py:0
 #: code:addons/ug_base_distrib/models/distrib_move.py:0
 #: code:addons/ug_base_distrib/models/distrib_move.py:0
+#: code:addons/ug_base_distrib/models/distrib_move.py:0
 #, python-format
 msgid ""
 "You cannot change the state if the date is before the restriction date."
@@ -3516,6 +3665,13 @@ msgstr ""
 #: model:ir.model,name:ug_base_distrib.model_report_ug_base_distrib_export_order_to_xls
 msgid "report.ug_base_distrib.export_order_to_xls"
 msgstr ""
+
+#. module: ug_base_distrib
+#. odoo-javascript
+#: code:addons/ug_base_distrib/static/src/components/records_renderer/records_renderer.xml:0
+#, python-format
+msgid "sec."
+msgstr "сек."
 
 #. module: ug_base_distrib
 #. odoo-javascript
