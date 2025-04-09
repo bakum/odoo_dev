@@ -111,8 +111,8 @@ class UgImportInventory(models.TransientModel):
                         if row >= 1:
                             row_values = sheet.row_values(row)
                             vals = self._get_product_dict(row_values)
-                            if not vals['qtt']:
-                                continue
+                            # if not vals['qtt']:
+                            #     continue
                             products.append((0, 0, vals))
             except IndexError:
                 pass
