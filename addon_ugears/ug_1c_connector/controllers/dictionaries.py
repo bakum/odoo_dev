@@ -84,10 +84,11 @@ class DictionariesController(http.Controller):
 
     @http.route(['/api/v2/moves/<string:partner_guid>/create_inventory'],
                 auth='bearer_api_key', website=False, cors="*", csrf=False,
-                methods=['POST'])
+                methods=['GET','POST'])
     def create_inventory(self, partner_guid, **kw):
         data_for_edit, sk = parse_data_from_request(kw)
-        result_dict = apply_inventory_from_request(data_for_edit, partner_guid)
+        verification = http.request.httprequest.method == 'GET'
+        result_dict = apply_inventory_from_request(data_for_edit, partner_guid,verification=verification)
 
         if type(result_dict) is dict:
             return json.dumps(result_dict, default=date_utils.json_default)

@@ -518,6 +518,10 @@ def copy_structure(original_dict):
         return {key: copy_structure(value) for key, value in original_dict.items()}
     elif isinstance(original_dict, list):
         return []
+    elif isinstance(original_dict, int):
+        return 0
+    elif isinstance(original_dict, bool):
+        return False
     else:
         return None
 
@@ -563,11 +567,11 @@ def apply_inventory_from_request(data_for_edit, partner_guid, verification=False
         product_ids.append(product_sudo.id)
         qtt_on_date = QuantHistory.balance_product_on_date(
             product_sudo, existing_distributor, date_order)
-        move['qtt_on_hand'] = qtt_on_date
+        if verification:
+            move['qtt_on_hand'] = qtt_on_date
+            continue
         if move['qtt'] != qtt_on_date:
             qtt = move['qtt'] - qtt_on_date
-            if verification:
-                continue
 
             if float_compare(qtt, 0, precision_rounding=0.01) > 0:
                 # move_vals.append(
@@ -621,8 +625,17 @@ def apply_inventory_from_request(data_for_edit, partner_guid, verification=False
     move_in = []
     new_vals = copy_structure(data_for_edit['moves'][0])
     for quant in quants_so:
+
         qtt_on_date = QuantHistory.balance_product_on_date(
             quant.product_id, existing_distributor, date_order)
+
+        if verification:
+            vals = new_vals.deepcopy()
+            vals['qtt_on_hand'] = qtt_on_date
+            vals['qtt'] = 0
+            vals['product_guid'] = quant.product_id.guid
+            data_for_edit['moves'].append(vals)
+            continue
         if float_compare(qtt_on_date, 0, precision_rounding=0.01) > 0:
             move_out.append((0, 0, {
                 'product_id': quant.product_id.id,
@@ -660,4 +673,7 @@ def apply_inventory_from_request(data_for_edit, partner_guid, verification=False
         # threaded_calculation = threading.Thread(
     #     target=moves._run_recalculate_job)
     # threaded_calculation.start()
+    if verification:
+        data_for_edit['success'] = True
+        return data_for_edit
     return {"success": True}
