@@ -41,6 +41,7 @@ class DictionariesController(http.Controller):
         result_dict = apply_pricelist_from_request(data_for_edit, guid)
 
         if type(result_dict) is dict:
+            # del result_dict['result'][0]['item_ids']
             return json.dumps(result_dict, default=date_utils.json_default)
 
         return json.dumps(result_dict, default=date_utils.json_default)

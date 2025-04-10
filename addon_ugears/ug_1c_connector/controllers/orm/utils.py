@@ -1,10 +1,13 @@
 import json
+import threading
+
 # import pytz
 
 from odoo import http, fields, SUPERUSER_ID
 from odoo.osv import expression
 from odoo.tools import float_compare
 import logging
+
 _logger = logging.getLogger(__name__)
 
 CHANNEL_MAP = {
@@ -94,17 +97,18 @@ def apply_pricelist_from_request(search_criterias, guid):
         apply_id_from_ext_id(search_criterias)
 
         if pricelist:
-            written = pricelist.write(search_criterias)
+            written = pricelist.write({'guid': guid})
             mod = {"success": written}
         else:
             pricelist = pricelist.create(search_criterias)
             mod = {"success": False}
 
         for model in pricelist:
-            new_dict = model.read(list(set(http.request.env['product.pricelist']._fields)))
-            mod['result'] = new_dict
+            # new_dict = model.read(list(set(http.request.env['product.pricelist']._fields)))
+            mod['result'] = {'id' : model.id}
             mod['success'] = True
             # print(new_dict)
+        # http.request.env.cr.commit()
         if id_ext:
             found = http.request.env['ir.model.data'].sudo().search_read([('name', '=', id_ext)], limit=1)
             if len(found) == 0:
@@ -116,17 +120,27 @@ def apply_pricelist_from_request(search_criterias, guid):
                     'res_id': pricelist.id
                 })
 
-        pricelist.item_ids.unlink()
+        # pricelist.item_ids.unlink()
         items = []
+        PriceItems = http.request.env['product.pricelist.item'].sudo()
         for x in price_items:
             apply_id_from_ext_id(x)
             if not 'product_tmpl_id' in x:
                 continue
             if "date_end" in x and not x['date_end']:
                 del x['date_end']
-            items.append((0, 0, x))
+            item = PriceItems.search(
+                ['&', '&', ('product_tmpl_id', '=', x['product_tmpl_id']), ('date_start', '=', x['date_start']),
+                 ('pricelist_id', '=', pricelist.id)], limit=1)
+            if item:
+                written = item.write(x)
+            else:
+                x['pricelist_id'] = pricelist.id
+                res = PriceItems.create(x)
+                pass
+            # items.append((0, 0, x))
 
-        pricelist.item_ids = items
+        # pricelist.item_ids = items
         return mod
 
     except Exception as e:
@@ -448,6 +462,7 @@ def apply_moves_from_request(data_for_edit, partner_guid):
         move_sudo.move_line = move_in_inventory
     return {"success": True}
 
+
 def apply_expenses_from_request(data_for_edit, partner_guid):
     domain = expression.AND([[('guid', '=', partner_guid)], ['|', ('active', '=', True), ('active', '=', False)]])
     partner_sudo = http.request.env['res.partner'].sudo().search(domain)[:1]
@@ -513,6 +528,7 @@ def get_inventory_move_values(distrib_id, out=False, date=None):
         # })]
     }
 
+
 def copy_structure(original_dict):
     if isinstance(original_dict, dict):
         return {key: copy_structure(value) for key, value in original_dict.items()}
@@ -524,6 +540,7 @@ def copy_structure(original_dict):
         return False
     else:
         return None
+
 
 def apply_inventory_from_request(data_for_edit, partner_guid, verification=False):
     domain = expression.AND([[('guid', '=', partner_guid)], ['|', ('active', '=', True), ('active', '=', False)]])
@@ -607,12 +624,12 @@ def apply_inventory_from_request(data_for_edit, partner_guid, verification=False
     moves = http.request.env['distrib.distributors.move']
     if len(move_out) > 0:
         move_vals = get_inventory_move_values(existing_distributor,
-            out=True, date=date_order)
+                                              out=True, date=date_order)
         res = moves.with_user(SUPERUSER_ID).create(move_vals)
         res.move_line = move_out
         # res.action_done()
     if len(move_in) > 0:
-        move_vals = get_inventory_move_values(existing_distributor,date=date_order)
+        move_vals = get_inventory_move_values(existing_distributor, date=date_order)
         res = moves.with_user(SUPERUSER_ID).create(move_vals)
         res.move_line = move_in
         # res.action_done()
@@ -666,12 +683,12 @@ def apply_inventory_from_request(data_for_edit, partner_guid, verification=False
             }))
     if len(move_out) > 0:
         move_vals = get_inventory_move_values(existing_distributor,
-            out=True, date=date_order)
+                                              out=True, date=date_order)
         res = moves.with_user(SUPERUSER_ID).create(move_vals)
         res.move_line = move_out
         # res.action_done()
     if len(move_in) > 0:
-        move_vals = get_inventory_move_values(existing_distributor,date=date_order)
+        move_vals = get_inventory_move_values(existing_distributor, date=date_order)
         res = moves.with_user(SUPERUSER_ID).create(move_vals)
         res.move_line = move_in
         # res.action_done()
