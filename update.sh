@@ -7,12 +7,12 @@ select fav in "${options[@]}"; do
     case $fav in
         "Git")
             echo "Update from $fav over pull command!"
-	          git pull origin 17.0
+	          git pull origin 18.0
             ;;
         "GitWithStash")
             echo "Update from $fav over pull command with stash!"
 	          git stash
-	          git pull origin 17.0
+	          git pull origin 18.0
 	          git stash apply --index
             ;;
         "GitResetHard")
