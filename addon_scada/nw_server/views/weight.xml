@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="view_scada_weight_tree" model="ir.ui.view">
-        <field name="name">nw.weight.tree</field>
+        <field name="name">nw.weight.list</field>
         <field name="model">nw.weight</field>
         <field name="arch" type="xml">
-            <tree default_order='write_date desc'>
+            <list default_order='write_date desc'>
                 <field name="moxa_id"/>
                 <field name="write_date"/>
                 <field name="nid"/>
@@ -21,7 +21,7 @@
                 <field name="count"/>
                 <field name="error"/>
                 <field name="message"/>
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -44,7 +44,7 @@
     <record id="action_scada_weight_form" model="ir.actions.act_window">
         <field name="name">Weight values</field>
         <field name="res_model">nw.weight</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <record model="ir.actions.server" id="action_get_monitor_is_running">

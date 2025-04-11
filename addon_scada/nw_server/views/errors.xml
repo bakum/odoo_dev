@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="view_scada_errors_tree" model="ir.ui.view">
-        <field name="name">nw.errors.tree</field>
+        <field name="name">nw.errors.list</field>
         <field name="model">nw.error</field>
         <field name="arch" type="xml">
-            <tree default_order='write_date desc'>
+            <list default_order='write_date desc'>
                 <field name="moxa_id"/>
                 <field name="write_date"/>
                 <field name="nid"/>
@@ -12,7 +12,7 @@
                 <field name="value"/>
                 <field name="error"/>
                 <field name="message"/>
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -35,7 +35,7 @@
     <record id="action_scada_errors_form" model="ir.actions.act_window">
         <field name="name">Errors</field>
         <field name="res_model">nw.error</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <menuitem

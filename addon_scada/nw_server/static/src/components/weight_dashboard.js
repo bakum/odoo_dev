@@ -3,6 +3,7 @@
 import {registry} from "@web/core/registry"
 import {KpiCard} from "./kpi_card/kpi_card"
 import {ChartRenderer} from "./chart_renderer/chart_renderer"
+import { user } from "@web/core/user";
 import {loadJS} from "@web/core/assets"
 
 const {Component, onWillStart, useRef, onWillDestroy, onUnMounted, useState} = owl
@@ -136,7 +137,7 @@ export class OwlWeightDashboard extends Component {
         })
         this.orm = useService("orm")
         this.actionService = useService("action")
-        this.user = useService("user")
+        // this.user = useService("user")
 
         this.refreshIntervalId = setInterval(async () => {
             await this.getWeight()
@@ -145,13 +146,13 @@ export class OwlWeightDashboard extends Component {
         }, 5000)
 
         onWillStart(async () => {
-            // await loadJS("/nw_server/static/src/components/moment/moment.min.js")
+            await loadJS("/nw_server/static/src/components/moment/moment.min.js")
             this.getDates()
             await this.getControllers()
             await this.getWeight()
             await this.getErrors()
             await this.getMonitorStatus()
-            this.state.monitor.allow = await this.user.hasGroup('nw_server.group_scada_manager')
+            this.state.monitor.allow = await user.hasGroup('nw_server.group_scada_manager')
             // console.log(this.state.monitor.alloy)
 
         })

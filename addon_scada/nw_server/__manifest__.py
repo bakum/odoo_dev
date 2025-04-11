@@ -4,7 +4,7 @@
     'website': 'https://optimus.com.ua',
     'summary': 'Provides a network weight SCADA system',
     'category': 'SCADA/NWServer',
-    'version': '17.0.0.1',
+    'version': '18.0.0.1',
     'license': 'LGPL-3',
     'installable': True,
     'application': True,
