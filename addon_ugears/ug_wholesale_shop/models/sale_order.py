@@ -38,6 +38,17 @@ class SaleOrder(models.Model):
         search='_search_distrib_ids',
         copy=False)
 
+    total_product_uom_qty = fields.Float(
+        string="Total Product Quantity",
+        compute="_compute_total_product_uom_qty",
+        store=True
+    )
+
+    @api.depends('order_line.product_uom_qty')
+    def _compute_total_product_uom_qty(self):
+        for order in self:
+            order.total_product_uom_qty = sum(order.order_line.mapped('product_uom_qty'))
+
     def _get_confirmation_template(self):
         """ Get the mail template sent on SO confirmation (or for confirmed SO's).
 
@@ -757,7 +768,8 @@ class SaleOrder(models.Model):
         product_cnt += sum([item['product_cnt'] for item in palettes['palettes']])
         product_weight += sum([item['product_weight'] for item in palettes['palettes']])
 
-        palettes['all_products'] = product_cnt
+        # palettes['all_products'] = product_cnt
+        palettes['all_products'] = self.total_product_uom_qty
         palettes['all_weight'] = product_weight
 
         return palettes
