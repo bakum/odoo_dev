@@ -76,7 +76,7 @@ class ApiRestVersion(models.Model):
             'swagger': '2.0',
             'info': {
                 'version': '{}'.format(self.name),
-                'title': 'API Rest'.format(self.name),
+                'title': 'UGears OpenAPI Rest Interface'.format(self.name),
                 'description': self.get_swagger_description(),
             },
             'host': parsed_url.netloc,
