@@ -43,8 +43,8 @@
                             <field name="version_id" options="{'no_create': True}"/>
                         </h5>
                     </div>
-                    <group string="Description">
-                        <field name="description" nolabel="1"/>
+                    <group>
+                        <field name="description"/>
                     </group>
                     <group>
                         <group string="Additional Information">
