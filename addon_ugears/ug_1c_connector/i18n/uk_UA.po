@@ -42,7 +42,8 @@ msgid ""
 "<span class=\"o_stat_text\">\n"
 "                                    Go to <br/>API Docs</span>"
 msgstr ""
-
+"<span class=\"o_stat_text\">\n"
+"                                    До <br/>API Документації</span>"
 #. module: ug_1c_connector
 #: model_terms:ir.ui.view,arch_db:ug_1c_connector.view_api_rest_version_form
 msgid "API Informations"
@@ -62,7 +63,7 @@ msgstr ""
 #. module: ug_1c_connector
 #: model:ir.model.fields,field_description:ug_1c_connector.field_api_rest_path__version_id
 msgid "API Version"
-msgstr ""
+msgstr "Версія API"
 
 #. module: ug_1c_connector
 #: model:ir.model.fields,field_description:ug_1c_connector.field_api_rest_path__active
@@ -83,7 +84,7 @@ msgstr "Додати домен до результату фільтрації, 
 #. module: ug_1c_connector
 #: model_terms:ir.ui.view,arch_db:ug_1c_connector.view_api_rest_path_form
 msgid "Additional Information"
-msgstr ""
+msgstr "Додаткова інформація"
 
 #. module: ug_1c_connector
 #: model:ir.model,name:ug_1c_connector.model_api_rest_field
@@ -133,7 +134,7 @@ msgstr ""
 #. module: ug_1c_connector
 #: model:ir.ui.menu,name:ug_1c_connector.menu_api_rest_configuration
 msgid "Configuration"
-msgstr ""
+msgstr "Конфігурація"
 
 #. module: ug_1c_connector
 #: model:ir.model.fields.selection,name:ug_1c_connector.selection__api_rest_path__method__post
@@ -179,7 +180,7 @@ msgstr ""
 #. module: ug_1c_connector
 #: model:ir.model.fields,field_description:ug_1c_connector.field_api_rest_path__deprecated
 msgid "Deprecated"
-msgstr ""
+msgstr "Застарілий"
 
 #. module: ug_1c_connector
 #: model:ir.model.fields,field_description:ug_1c_connector.field_api_rest_field__description
@@ -298,7 +299,7 @@ msgstr ""
 #. module: ug_1c_connector
 #: model:ir.model.fields,field_description:ug_1c_connector.field_api_rest_path__filter_domain
 msgid "Filter Domain"
-msgstr ""
+msgstr "Домен фільтрації"
 
 #. module: ug_1c_connector
 #: model:ir.model.fields.selection,name:ug_1c_connector.selection__api_rest_function_parameter__type__float
@@ -323,7 +324,7 @@ msgstr ""
 #. module: ug_1c_connector
 #: model_terms:ir.ui.view,arch_db:ug_1c_connector.view_api_rest_version_form
 msgid "Generate API Key"
-msgstr ""
+msgstr "Генрувати API ключ"
 
 #. module: ug_1c_connector
 #: model:ir.model,name:ug_1c_connector.model_ir_http
@@ -401,7 +402,7 @@ msgstr ""
 #. module: ug_1c_connector
 #: model:ir.model.fields,field_description:ug_1c_connector.field_api_rest_path__limit
 msgid "Limit of results"
-msgstr ""
+msgstr "Обмеження результатів"
 
 #. module: ug_1c_connector
 #. odoo-python
@@ -420,7 +421,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ug_1c_connector.view_api_rest_log_tree
 #: model_terms:ir.ui.view,arch_db:ug_1c_connector.view_api_rest_version_form
 msgid "Logs"
-msgstr ""
+msgstr "Журнали"
 
 #. module: ug_1c_connector
 #. odoo-python
@@ -433,7 +434,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_1c_connector.field_api_rest_path__method
 #: model_terms:ir.ui.view,arch_db:ug_1c_connector.view_api_rest_path_form
 msgid "Method"
-msgstr ""
+msgstr "Метод"
 
 #. module: ug_1c_connector
 #: model:ir.model.fields,field_description:ug_1c_connector.field_api_rest_field__model_id
@@ -441,14 +442,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_1c_connector.field_api_rest_path__model_id
 #: model_terms:ir.ui.view,arch_db:ug_1c_connector.view_api_rest_path_search
 msgid "Model"
-msgstr ""
+msgstr "Модель"
 
 #. module: ug_1c_connector
 #: model:ir.model.fields,field_description:ug_1c_connector.field_api_rest_function_parameter__name
 #: model:ir.model.fields,field_description:ug_1c_connector.field_api_rest_path__name
 #: model:ir.model.fields,field_description:ug_1c_connector.field_api_rest_tag__name
 msgid "Name"
-msgstr ""
+msgstr "Найменування"
 
 #. module: ug_1c_connector
 #. odoo-python
@@ -604,7 +605,7 @@ msgstr ""
 #. module: ug_1c_connector
 #: model_terms:ir.ui.view,arch_db:ug_1c_connector.view_api_rest_version_form
 msgid "Security"
-msgstr ""
+msgstr "Безпека"
 
 #. module: ug_1c_connector
 #: model:ir.model.fields,field_description:ug_1c_connector.field_api_rest_field__sequence
@@ -647,14 +648,14 @@ msgstr ""
 #. module: ug_1c_connector
 #: model:ir.model.fields,field_description:ug_1c_connector.field_api_rest_path__tag_id
 msgid "Tag"
-msgstr ""
+msgstr "Тег"
 
 #. module: ug_1c_connector
 #: model:ir.actions.act_window,name:ug_1c_connector.action_api_rest_tag
 #: model:ir.ui.menu,name:ug_1c_connector.menu_action_api_rest_tag
 #: model_terms:ir.ui.view,arch_db:ug_1c_connector.view_api_rest_tag_tree
 msgid "Tags"
-msgstr ""
+msgstr "Теги"
 
 #. module: ug_1c_connector
 #: model:ir.model.fields,field_description:ug_1c_connector.field_api_rest_function_parameter__type
