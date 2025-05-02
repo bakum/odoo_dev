@@ -43,7 +43,7 @@ msgid ""
 "                                    Go to <br/>API Docs</span>"
 msgstr ""
 "<span class=\"o_stat_text\">\n"
-"                                    До <br/>API Документації</span>"
+"                                    До <br/>API Док.</span>"
 #. module: ug_1c_connector
 #: model_terms:ir.ui.view,arch_db:ug_1c_connector.view_api_rest_version_form
 msgid "API Informations"
