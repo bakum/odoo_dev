@@ -509,7 +509,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ug_1c_connector.view_api_rest_path_tree
 #: model_terms:ir.ui.view,arch_db:ug_1c_connector.view_api_rest_version_form
 msgid "Paths"
-msgstr ""
+msgstr "Маршрути"
 
 #. module: ug_1c_connector
 #: model_terms:ir.ui.view,arch_db:ug_1c_connector.view_api_rest_path_form
