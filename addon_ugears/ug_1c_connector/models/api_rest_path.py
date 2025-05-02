@@ -409,7 +409,7 @@ class ApiRestPath(models.Model):
             'in': type,
             'description': '{} \n\n {}'.format(
                 _('Specific context to method'),
-                _('Example: `{"lang": "fr_FR"}`')),
+                _('Example: `{"lang": "uk_UA"}`')),
             'type': 'string',
             'required': False,
         }
