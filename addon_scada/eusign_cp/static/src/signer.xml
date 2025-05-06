@@ -51,7 +51,7 @@
                                     <div class="align-items-center justify-content-center">
                                         <h5>
                                             <img src="/eusign_cp/static/description/CertificateProcess.png" alt="Logo" width="30" class="d-inline-block align-text-top"/>
-                                            <span>Перевірити підпис</span>
+                                            <span class="m-3">Перевірити підпис</span>
                                         </h5>
                                         <div class="accordion-container mt-2">
                                             <button class="accordion current">Section 1</button>
@@ -77,13 +77,13 @@
                                     <div class="align-items-center justify-content-center">
                                         <h5>
                                             <img src="/eusign_cp/static/description/CertificateCheck.png" alt="Logo" width="30" class="d-inline-block align-text-top"/>
-                                            <span>Підписати документ</span>
+                                            <span class="m-3">Підписати документ</span>
                                         </h5>
                                         <div class="accordion-container mt-2">
                                             <button class="accordion current">
                                                 <div class="d-flex align-items-center">
                                                     <img src="/eusign_cp/static/description/Arrow.png" border="0"/>
-                                                    <h6 class="m-0"><span> 1. Оберіть ЦСК </span></h6>
+                                                    <h6 class="m-0"><span class="m-2">1. Оберіть ЦСК </span></h6>
                                                 </div>
                                             </button>
                                             <div class="panel" style="max-height: 135px;">
@@ -102,7 +102,7 @@
                                                 <div class="input-group custom-file-button">
                                                     <div class="d-flex align-items-center">
                                                         <img src="/eusign_cp/static/description/Arrow.png" border="0"/>
-                                                        <label for="formFileLg" class="form-label m-0"><h6 class="m-0"> 2. Файл ключа</h6>
+                                                        <label for="formFileLg" class="form-label m-0"><h6 class="m-0"><span class="m-2">2. Файл ключа</span></h6>
 
                                                         </label>
                                                     </div>
@@ -142,7 +142,7 @@
                                             <button class="accordion">
                                                 <div class="d-flex align-items-center">
                                                     <img src="/eusign_cp/static/description/Arrow.png" border="0"/>
-                                                    <h6 class="m-0"><span> 3. Параметри підпису </span></h6>
+                                                    <h6 class="m-0"><span class="m-2"> 3. Параметри підпису </span></h6>
                                                 </div>
                                             </button>
                                             <div class="panel">
@@ -169,7 +169,7 @@
                                              <button class="accordion">
                                                  <div class="d-flex align-items-center">
                                                     <img src="/eusign_cp/static/description/Arrow.png" border="0"/>
-                                                    <h6 class="m-0"><span> 4. Підпис файлів </span></h6>
+                                                    <h6 class="m-0"><span class="m-2"> 4. Підпис файлів </span></h6>
                                                 </div>
                                              </button>
                                              <div class="panel">

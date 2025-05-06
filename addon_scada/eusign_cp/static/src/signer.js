@@ -1,7 +1,7 @@
 /** @odoo-module **/
 
-import {loadCSS, loadJS} from "@web/core/assets"
-import {Component, onMounted, useRef, useState, onWillStart} from "@odoo/owl";
+// import {loadCSS, loadJS} from "@web/core/assets"
+import {Component, onMounted, useRef, useState, onWillStart, onWillUnmount} from "@odoo/owl";
 
 export class OwlSigner extends Component {
     static template = "eusign_cp.owl_signer"
@@ -946,9 +946,12 @@ export class OwlSigner extends Component {
                 this.state.loaded = true
             }, 1000)
         })
-        onWillStart(async ()=>{
-            await loadJS("/eusign_cp/static/lib/toastify-js.js")
-            await loadCSS("/eusign_cp/static/lib/toastify.min.css")
+        // onWillStart(async ()=>{
+        //     await loadJS("/eusign_cp/static/lib/toastify-js.js")
+        //     await loadCSS("/eusign_cp/static/lib/toastify.min.css")
+        // })
+        onWillUnmount(()=>{
+            this.onChangeMenuItem()
         })
     }
 }

@@ -1,13 +1,17 @@
 /** @odoo-module **/
 
-import { browser } from "@web/core/browser/browser";
-import { mount, whenReady } from "@odoo/owl";
-import { templates } from "@web/core/assets";
+import {browser} from "@web/core/browser/browser";
+import { _t } from "@web/core/l10n/translation";
+import {mount, whenReady } from "@odoo/owl";
+import {templates} from "@web/core/assets";
 import {OwlSigner} from "./signer";
 
 // Mount the Playground component when the document.body is ready
-whenReady( () => {
-    mount(OwlSigner, document.body, { templates, dev: false, name: "Owl EUSignCP" });
+whenReady(() => {
+    const env = {
+        _t: _t,
+    };
+    mount(OwlSigner, document.body, {templates, dev: false, name: "Owl EUSignCP", env});
 })
 
 /**
@@ -17,7 +21,7 @@ whenReady( () => {
  */
 function logError(ev) {
     ev.preventDefault();
-    let error = ev ?.error || ev.reason;
+    let error = ev?.error || ev.reason;
 
     if (error.seen) {
         // If an error causes the mount to crash, Owl will reject the mount promise and throw the
@@ -35,5 +39,9 @@ function logError(ev) {
     console.error(errorMessage);
 }
 
-browser.addEventListener("error", (ev) => {logError(ev)});
-browser.addEventListener("unhandledrejection", (ev) => {logError(ev)});
+browser.addEventListener("error", (ev) => {
+    logError(ev)
+});
+browser.addEventListener("unhandledrejection", (ev) => {
+    logError(ev)
+});

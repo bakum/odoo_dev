@@ -23,6 +23,14 @@
 /*  content: "\25B2"; !* Unicode character for "minus" sign (-) *!*/
 /*}*/
 
+.key {
+    width: 30px;
+    /*height: 80px;*/
+    background-image: url('/eusign_cp/static/description/CertificateCheck.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
 .accordion.current {
   border: 1px solid #000000;
   /*border-radius: 5px; !* Скругленные углы *!*/
