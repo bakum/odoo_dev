@@ -1,0 +1,32 @@
+<odoo>
+    <data>
+        <template id="eusign_cp.signer" name="Awesome T-Shirt thank you">
+            <html>
+                <head>
+                    <link type="image/x-icon" rel="shortcut icon" href="/web/static/img/favicon.ico"/>
+<!--                    <script type="text/JavaScript" src="/eusign_cp/static/lib/common.js"> </script>-->
+<!--                    <script type="text/JavaScript" src="/eusign_cp/static/lib/euutils.js"> </script>-->
+<!--	                <script type="text/JavaScript" src="/eusign_cp/static/lib/euscpt.js"> </script>-->
+<!--	                <script type="text/JavaScript" src="/eusign_cp/static/lib/euscpm.js"> </script>-->
+<!--	                <script type="text/javascript" src="/eusign_cp/static/lib/euscp.js"> </script>-->
+<!--                    <script type="text/JavaScript" src="/eusign_cp/static/lib/euscptest.js"> </script>-->
+<!--                    <script type="text/javascript" src="/eusign_cp/static/lib/qr/qrcodedecode.js"> </script>-->
+<!--                    <script type="text/javascript" src="/eusign_cp/static/lib/qr/reedsolomon.js"> </script>-->
+<!--                    <script type="text/javascript" src="/eusign_cp/static/lib/fs/Blob.min.js"> </script>-->
+<!--                    <script type="text/javascript" src="/eusign_cp/static/lib/fs/FileSaver.js"> </script>-->
+                    <t t-call-assets="eusign_cp.assets_library"/>
+                    <t t-call-assets="eusign_cp.assets_signer"/>
+                    <title>EUSignCP - ІІТ Користувач ЦСК-1.</title>
+<!--                    <script type="text/JavaScript">-->
+<!--		                function onBodyLoad() {-->
+<!--			                MM_preloadImages('/eusign_cp/static/description/ButtonHover.png', '/eusign_cp/static/description/ButtonHover.png');-->
+<!--			                pageLoaded();-->
+<!--		                }-->
+<!--	                </script>-->
+                </head>
+<!--                <body onload="onBodyLoad();"></body>-->
+                <body> </body>
+            </html>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="eusign_cp.owl_signer">
+        <nav t-attf-class="navbar navbar-expand-lg navbar-light bg-light {{state.loaded ? '' : 'd-none'}}">
+          <div class="container-fluid">
+              <a class="navbar-brand" href="/">
+                <i class="fa fa-home fa-2x" aria-hidden="true"/>
+                <!--                <img src="/eusign_cp/static/description/Keys.png" alt="Logo" width="30" class="d-inline-block align-text-top"/>-->
+            </a>
+<!--              <button class="navbar-toggler" type="button" data-bs-toggle="collapse"-->
+<!--                      data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"-->
+<!--                      aria-label="Toggle navigation">-->
+<!--              <span class="navbar-toggler-icon"> </span>-->
+<!--            </button>-->
+              <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                  <div class="navbar-nav">
+                      <a class="nav-link active" id="sign" t-on-click="toggleMenu" href="#">Підписати документ</a>
+                      <a class="nav-link" id="verify" t-on-click="toggleMenu" href="#">Перевірити підпис</a>
+                  </div>
+                  <span class="navbar-text ms-auto" t-out="state.status_key"/>
+              </div>
+          </div>
+        </nav>
+        <div class="vh-100 overflow-auto bg-muted">
+            <t t-if="!state.loaded">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <img src="/eusign_cp/static/description/LoadingBars.gif" height="80px" alt="Loader"/>
+                        </div>
+                        <h4 class="text-center">Ініціалізація бібліотеки підпису...</h4>
+                    </div>
+                </div>
+            </t>
+            <div t-attf-class="container {{state.loaded ? '' : 'd-none'}}">
+<!--                    <div id="alert" t-ref="alertMessage" t-attf-class="alert {{state.alert_object.class}} alert-dismissible {{state.alert_occurred ? '' : 'd-none'}}" role="alert">-->
+<!--                      <span t-out="state.alert_object.message"/>-->
+<!--                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" t-on-click="onCloseAlert"> </button>-->
+<!--                    </div>-->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <img src="/eusign_cp/static/description/Keys.png" height="122px"
+                                 style="margin-right: 10px;"/>
+                            <h1 class="text-center">Довірчі послуги</h1>
+                        </div>
+                        <p class="text-center">За допомогою форми можна підписувати файли, що знаходяться на файловій системі тощо</p>
+                        <div class="row d-flex align-items-center justify-content-center">
+                            <div t-attf-class="col col-lg-5 m-0 p-0 {{state.signmode ? 'd-none' : ''}}">
+                                <div class="shadow-sm border m-2 p-4 bg-white">
+                                    <div class="align-items-center justify-content-center">
+                                        <h5>
+                                            <img src="/eusign_cp/static/description/CertificateProcess.png" alt="Logo" width="30" class="d-inline-block align-text-top"/>
+                                            <span>Перевірити підпис</span>
+                                        </h5>
+                                        <div class="accordion-container mt-2">
+                                            <button class="accordion current">Section 1</button>
+                                            <div class="panel" style="max-height: 100px;">
+                                              <p class="m-2 p-4">Lorem ipsum...</p>
+                                            </div>
+
+                                            <button class="accordion">Section 2</button>
+                                            <div class="panel">
+                                              <p class="m-2 p-4">Lorem ipsum...</p>
+                                            </div>
+
+                                            <button class="accordion">Section 3</button>
+                                            <div class="panel">
+                                              <p class="m-2 p-4">Lorem ipsum...</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div t-attf-class="col col-lg-5 m-0 p-0 {{state.signmode ? '' : 'd-none'}}">
+                                <div class="shadow-sm border m-2 p-4 bg-white">
+                                    <div class="align-items-center justify-content-center">
+                                        <h5>
+                                            <img src="/eusign_cp/static/description/CertificateCheck.png" alt="Logo" width="30" class="d-inline-block align-text-top"/>
+                                            <span>Підписати документ</span>
+                                        </h5>
+                                        <div class="accordion-container mt-2">
+                                            <button class="accordion current">
+                                                <div class="d-flex align-items-center">
+                                                    <img src="/eusign_cp/static/description/Arrow.png" border="0"/>
+                                                    <h6 class="m-0"><span> 1. Оберіть ЦСК </span></h6>
+                                                </div>
+                                            </button>
+                                            <div class="panel" style="max-height: 135px;">
+                                                <div class="m-2">
+                                                    <small>Оберіть зі списку свого надавача електронних довірчих послуг – суб’єкта, </small>
+                                                    <small>до якого ви зверталися для отримання електронного підпису.</small>
+                                                    <select class="form-select form-select-sm mt-2" t-ref="CAsServersSelect"
+                                                      t-on-change="onchangeCASettings"> </select>
+                                                    <output t-ref="SelectedCertsList" hidden="1"> </output>
+                                                    <br/>
+                                                    <output t-ref="SelectedCRLsList" hidden="1"> </output>
+                                                </div>
+                                            </div>
+
+                                            <button class="accordion">
+                                                <div class="input-group custom-file-button">
+                                                    <div class="d-flex align-items-center">
+                                                        <img src="/eusign_cp/static/description/Arrow.png" border="0"/>
+                                                        <label for="formFileLg" class="form-label m-0"><h6 class="m-0"> 2. Файл ключа</h6>
+
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </button>
+                                            <div class="panel">
+                                              <div class="m-2">
+                                                  <small>(зазвичай його назва "Key-6.dat" або *.pfx, *.pk8, *.zs2, *.jks)</small>
+                                                    <div class="input-group input-group-sm mt-3 mb-3">
+                                                  <input type="text" class="form-control" id="PKeyFileName"
+                                                         placeholder="Особистий ключ" t-ref="PKeyFileName"
+                                                         aria-label="Особистий ключ" readonly="1"
+                                                         onclick="document.getElementById('PKeyFileInput').click();"/>
+                                                    <span class="input-group-text"
+                                                          style="cursor:pointer; pointer-events:auto;"
+                                                          t-ref="PKeySelectFileButton"
+                                                          onclick="document.getElementById('PKeyFileInput').click();">Обрати</span>
+                                                    <input id="PKeyFileInput" t-ref="PKeyFileInput" type="file"
+                                                           multiple="false" hidden="1"
+                                                           t-on-change="selectPrivateKeyFile"/>
+                                                </div>
+
+                                                    <div class="input-group input-group-sm mb-3">
+                                                        <input type="password" id="PKeyPassword" t-ref="PKeyPassword"
+                                                         disabled="state.privateKeyReaded"
+                                                         placeholder="Пароль захисту ключа" class="form-control"
+                                                         aria-label="Пароль захисту ключа:"/>
+                                                      <span class="input-group-text"
+                                                            t-ref="PKeyReadButton"
+                                                            style="cursor:pointer; pointer-events:auto;"
+                                                            t-on-click="readPrivateKeyButtonClick"
+                                                            disabled="state.privateKeyReaded">Зчитати</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <button class="accordion">
+                                                <div class="d-flex align-items-center">
+                                                    <img src="/eusign_cp/static/description/Arrow.png" border="0"/>
+                                                    <h6 class="m-0"><span> 3. Параметри підпису </span></h6>
+                                                </div>
+                                            </button>
+                                            <div class="panel">
+                                                <div class="m-2">
+                                                    <small class="m-0">Алгоритм підпису:</small>
+                                                    <select class="form-select form-select-sm m-2"
+                                                            t-ref="DSAlgTypeSelect"
+                                                            disabled="1">
+                                                        <option value="1" selected="1">ДСТУ-4145</option>
+                                                        <option value="2">RSA</option>
+                                                    </select>
+                                                    <small class="m-0">Формат підпису:</small>
+                                                    <select class="form-select form-select-sm m-2 mb-3"
+                                                            t-ref="DSCAdESTypeSelect" t-on-change="DSCAdESTypeChanged">
+                                                        <option value="0">базовий (CADES_BES)</option>
+                                                        <option value="1">з позначкою часу від ЕЦП (CADES_T)</option>
+                                                        <option value="2">з посиланням на повні дані для перевірки (CADES_C)</option>
+                                                        <option value="3">з повними даними для перевірки (CADES_X_LONG)</option>
+                                                        <option value="4" selected="1">з повними даними ЦСК для перевірки (CADES_X_LONG_TRUSTED)</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                             <button class="accordion">
+                                                 <div class="d-flex align-items-center">
+                                                    <img src="/eusign_cp/static/description/Arrow.png" border="0"/>
+                                                    <h6 class="m-0"><span> 4. Підпис файлів </span></h6>
+                                                </div>
+                                             </button>
+                                             <div class="panel">
+                                                 <div class="m-2">
+                                                    <small>Оберіть файл для підпису (не більше 5 МБ):</small>
+                                                    <div class="input-group input-group-sm mt-3 mb-3">
+                                                      <input type="file" class="form-control" id="FileToSign"
+                                                             t-ref="FileToSign"/>
+                                                    </div>
+                                                    <button type="button"
+                                                            class="btn btn-outline-primary btn-sm"
+                                                            t-on-click="signFile">Підписати</button>
+                                                 </div>
+                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--            </t>-->
+         </div>
+    </t>
+
+</templates>
