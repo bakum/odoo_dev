@@ -24,6 +24,51 @@ export class OwlSigner extends Component {
         }
     }
 
+    handleFilesForVerification(files) {
+        const fileList = document.getElementById('fileList');
+        fileList.innerHTML = ''; // Очистить предыдущий список
+        this.fileWihtSign = null
+        this.fileWihtOutSign = null
+        this.state.filesForVerifyReaded = false
+        if (files.length > 2) {
+            this.setAlert('Виберіть не більше 2-х файлів', 'alert-danger')
+            return
+        }
+        let isSign = false
+        for (const file of files) {
+            if (file.name.endsWith('.p7s') || file.name.endsWith('.asics') || file.name.endsWith('.asice')) {
+                isSign = true
+            }
+        }
+        if (!isSign) {
+            this.setAlert('Виберіть файл з підписом', 'alert-danger')
+            return
+        }
+        for (const file of files) {
+            const li = document.createElement('li');
+            let content
+            if (file.name.endsWith('.p7s') || file.name.endsWith('.asics') || file.name.endsWith('.asice')) {
+                content = 'Файл з підписом : ' + file.name
+                this.fileWihtSign = file
+            } else {
+                content = 'Файл без підпису : ' + file.name
+                this.fileWihtOutSign = file
+            }
+            li.textContent = content;
+            fileList.appendChild(li);
+        }
+        // this.VerificationButton.el.disabled = ''
+        this.state.filesForVerifyReaded = true
+    }
+    onChangeFileToSign(ev) {
+        console.log(ev.target)
+        this.state.file_loaded = ev.target.files.length > 0 && this.euSign.IsPrivateKeyReaded()
+    }
+
+    handleFiles(ev) {
+        this.handleFilesForVerification(ev.target.files)
+    }
+
     setItemsToList(listId, items) {
         var output = [];
         for (var i = 0, item; item = items[i]; i++) {
@@ -42,6 +87,7 @@ export class OwlSigner extends Component {
         const _onError = function (e) {
             // setStatus('');
             // alert(e);
+            self.file_loaded = false
             self.setAlert(e, 'alert-danger')
         };
 
@@ -54,7 +100,7 @@ export class OwlSigner extends Component {
             if (this.PKeyReadButton.el.innerHTML == 'Зчитати') {
                 // setStatus('зчитування ключа');
 
-                var files = this.PKeyFileInput.el.files;
+                const files = this.PKeyFileInput.el.files;
 
                 if (files.length !== 1) {
                     _onError("Виникла помилка при зчитуванні особистого ключа. " +
@@ -93,6 +139,7 @@ export class OwlSigner extends Component {
 
                 this.euSign.ReadFile(files[0], _onFileRead, _onError);
             } else {
+                this.file_loaded = false
                 this.onChangeMenuItem()
             }
         } catch (e) {
@@ -106,6 +153,7 @@ export class OwlSigner extends Component {
         this.euSign.ResetPrivateKey();
         this.privateKeyReaded(false);
         this.PKeyPassword.el.value = "";
+        this.PKeyFileInput.el.value = null
         this.clearPrivateKeyCertificatesList();
         this.state.status_key = "";
     }
@@ -190,74 +238,172 @@ export class OwlSigner extends Component {
 
     }
 
+    getSignTypeString(signType) {
+		switch (signType) {
+			case EU_SIGN_TYPE_CADES_BES:
+				return 'базовий';
+			case EU_SIGN_TYPE_CADES_T:
+				return 'з позначкою часу від ЕЦП';
+			case EU_SIGN_TYPE_CADES_C:
+				return 'з посиланням на повні дані для перевірки';
+			case EU_SIGN_TYPE_CADES_X_LONG:
+				return 'з повними даними для перевірки';
+			case EU_SIGN_TYPE_CADES_X_LONG | EU_SIGN_TYPE_CADES_X_LONG_TRUSTED:
+				return 'з повними даними ЦСК для перевірки';
+			default:
+				return 'невизначено';
+		}
+	}
+
+    verifyFile(ev) {
+        // console.log(this.fileWihtOutSign)
+        // console.log(this.fileWihtSign)
+        if (this.fileWihtSign == null && this.fileWihtOutSign == null) {
+            this.setAlert('Виберіть файли для перевірки', 'alert-danger')
+            return
+        }
+
+        const pThis = this;
+        const files = [],
+            isInternalSign = !(this.fileWihtOutSign != null),
+            isGetSignerInfo = true
+        if (!isInternalSign) {
+            files.push(this.fileWihtOutSign)
+        }
+        files.push(this.fileWihtSign);
+        if ((files[0].size > (Module.MAX_DATA_SIZE + EU_MAX_P7S_CONTAINER_SIZE)) ||
+			(!isInternalSign && (files[1].size > Module.MAX_DATA_SIZE))) {
+			this.setAlert("Розмір файлу для перевірки підпису занадто великий. Оберіть файл меншого розміру", 'alert-warning');
+			return;
+		}
+        const _onSuccess = function (files) {
+            try {
+                var info = "";
+                if (isInternalSign) {
+                    info = pThis.euSign.VerifyDataInternal(files[0].data);
+                } else {
+                    info = pThis.euSign.VerifyData(files[0].data, files[1].data);
+                }
+                var signType = pThis.getSignTypeString(
+                    pThis.euSign.GetSignType(0, files[isInternalSign ? 0 : 1].data));
+
+                var message = "Підпис успішно перевірено";
+
+                if (isGetSignerInfo) {
+                    var ownerInfo = info.GetOwnerInfo();
+                    var timeInfo = info.GetTimeInfo();
+
+                    message += "\n";
+                    message += "Підписувач: " + ownerInfo.GetSubjCN() + "\n" +
+                        "ЦСК: " + ownerInfo.GetIssuerCN() + "\n" +
+                        "Серійний номер: " + ownerInfo.GetSerial() + "\n";
+                    if (timeInfo.IsTimeAvail()) {
+                        message += (timeInfo.IsTimeStamp() ?
+                            "Мітка часу (від даних):" : "Час підпису: ") + timeInfo.GetTime();
+                    } else {
+                        message += "Час підпису відсутній";
+                    }
+
+                    if (timeInfo.IsSignTimeStampAvail()) {
+                        message += "\nМітка часу (від підпису):" + timeInfo.GetSignTimeStamp();
+                    }
+
+                    message += '\nТип підпису: ' + signType;
+                }
+
+                if (isInternalSign) {
+                    saveFile(files[0].name.substring(0,
+                        files[0].name.length - 4), info.GetData());
+                }
+
+                // alert(message);
+                // setStatus('');
+                pThis.setAlert(message, 'alert-success')
+            } catch (e) {
+                // alert(e);
+                pThis.setAlert(e.message, 'alert-danger')
+                // setStatus('');
+            }
+        };
+
+        const _onFail = function (files) {
+            // setStatus('');
+            // alert("Виникла помилка при зчитуванні файлів для перевірки підпису");
+            pThis.setAlert("Виникла помилка при зчитуванні файлів для перевірки підпису", 'alert-danger')
+        };
+
+        // setStatus('перевірка підпису файлів');
+		this.utils.LoadFilesToArray(files, _onSuccess, _onFail);
+    }
+
     signFile() {
         const file = this.FileToSign.el.files[0];
         const self = this;
 
         if (!file) {
-            this.setAlert('Файл для підпису не обрано. Оберіть файл','alert-danger')
+            this.setAlert('Файл для підпису не обрано. Оберіть файл', 'alert-danger')
             return;
         }
 
         if (file.size > Module.MAX_DATA_SIZE) {
-			// alert("Розмір файлу для піпису занадто великий. Оберіть файл меншого розміру");
+            // alert("Розмір файлу для піпису занадто великий. Оберіть файл меншого розміру");
             this.setAlert("Розмір файлу для піпису занадто великий. Оберіть файл меншого розміру", 'alert-warning')
-			return;
-		}
+            return;
+        }
         if (!this.euSign.IsPrivateKeyReaded()) {
             this.setAlert("Особистий ключ не зчитано!", 'alert-danger')
-			return;
+            return;
         }
 
         const fileReader = new FileReader();
 
-        fileReader.onloadend  = (function(fileName) {
-			return function(evt) {
-				if (evt.target.readyState != FileReader.DONE)
-					return;
+        fileReader.onloadend = (function (fileName) {
+            return function (evt) {
+                if (evt.target.readyState != FileReader.DONE)
+                    return;
 
                 const isInternalSign = false;
                 // document.getElementById("InternalSignCheckbox").checked;
                 const isAddCert = false;
                 // var isAddCert = document.getElementById(
-				// 	"AddCertToInternalSignCheckbox").checked;
+                // 	"AddCertToInternalSignCheckbox").checked;
                 const dsAlgType = parseInt(self.DSAlgTypeSelect.el.value);
 
                 var data = new Uint8Array(evt.target.result);
 
-				try {
+                try {
                     let sign;
 
                     if (dsAlgType == 1) {
-						if (isInternalSign)
-							sign = self.euSign.SignDataInternal(isAddCert, data, false);
-						else
-							sign = self.euSign.SignData(data, false);
-					} else {
-						sign = self.euSign.SignDataRSA(data, isAddCert,
-							!isInternalSign, false);
-					}
+                        if (isInternalSign)
+                            sign = self.euSign.SignDataInternal(isAddCert, data, false);
+                        else
+                            sign = self.euSign.SignData(data, false);
+                    } else {
+                        sign = self.euSign.SignDataRSA(data, isAddCert,
+                            !isInternalSign, false);
+                    }
 
-					self.saveFile(fileName + ".p7s", sign);
+                    self.saveFile(fileName + ".p7s", sign);
 
-					// setStatus('');
-					// alert("Файл успішно підписано");
+                    // setStatus('');
+                    // alert("Файл успішно підписано");
                     self.setAlert("Файл успішно підписано", 'alert-success')
-				} catch (e) {
-					// setStatus('');
-					// alert(e);
+                } catch (e) {
+                    // setStatus('');
+                    // alert(e);
                     self.setAlert(e.message, 'alert-danger')
-				}
-			};
-		})(file.name);
+                }
+            };
+        })(file.name);
 
-		// setStatus('підпис файлу');
-		fileReader.readAsArrayBuffer(file);
-	}
+        // setStatus('підпис файлу');
+        fileReader.readAsArrayBuffer(file);
+    }
 
     saveFile(fileName, array) {
-	    var blob = new Blob([array], {type:"application/octet-stream"});
-	    saveAs(blob, fileName);
+        var blob = new Blob([array], {type: "application/octet-stream"});
+        saveAs(blob, fileName);
     }
 
     setDefaultSettings() {
@@ -335,7 +481,7 @@ export class OwlSigner extends Component {
                 // alert("Виникла помилка при імпорті " +
                 //     "завантажених з сервера сертифікатів " +
                 //     "до файлового сховища");
-                 pThis.setAlert("Виникла помилка при імпорті " +
+                pThis.setAlert("Виникла помилка при імпорті " +
                     "завантажених з сервера сертифікатів " +
                     "до файлового сховища", 'alert-danger')
             }
@@ -493,6 +639,42 @@ export class OwlSigner extends Component {
         }
     }
 
+    applyDragDropEvents() {
+        const self = this
+        let dropArea = document.getElementById('drop-area')
+        ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false)
+        })
+
+        function preventDefaults(e) {
+            e.preventDefault()
+            e.stopPropagation()
+        }
+
+        ;['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, highlight, false)
+        })
+        ;['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, unhighlight, false)
+        })
+
+        function highlight(e) {
+            dropArea.classList.add('highlight')
+        }
+
+        function unhighlight(e) {
+            dropArea.classList.remove('highlight')
+        }
+
+        dropArea.addEventListener('drop', handleDrop, false)
+
+        function handleDrop(e) {
+            let dt = e.dataTransfer
+            let files = dt.files
+            self.handleFilesForVerification(files)
+        }
+    }
+
     applyAccordionEvents() {
         const containers = document.querySelectorAll(".accordion-container")
         containers.forEach(container => {
@@ -605,7 +787,7 @@ export class OwlSigner extends Component {
             }
 
             this.privateKeyReaded(true);
-
+            this.file_loaded = this.FileToSign.el.files.length > 0
             // euSignTest.updateCertList();
 
             if (!fromCache)
@@ -864,6 +1046,7 @@ export class OwlSigner extends Component {
     setup() {
         this.state = useState({
             loaded: false,
+            file_loaded: false,
             privateKeyReaded: false,
             signmode: true,
             status_key: '',
@@ -872,7 +1055,10 @@ export class OwlSigner extends Component {
                 message: '',
                 class: '',
             },
+            filesForVerifyReaded: false,
         })
+        this.fileWihtSign = null
+        this.fileWihtOutSign = null
         this.alertStyles = {
             'alert-danger': "linear-gradient(to right, #721c24, #721c24)",
             'alert-warning': "linear-gradient(to right, #721c24, #f8d7da)",
@@ -938,8 +1124,10 @@ export class OwlSigner extends Component {
         this.FileToSign = useRef("FileToSign")
         this.DSAlgTypeSelect = useRef("DSAlgTypeSelect")
         this.alertMessage = useRef("alertMessage")
+        this.VerificationButton = useRef("VerificationButton")
 
         onMounted(async () => {
+            this.applyDragDropEvents()
             this.applyAccordionEvents()
             await this.initialize()
             setTimeout(() => {
@@ -950,7 +1138,7 @@ export class OwlSigner extends Component {
         //     await loadJS("/eusign_cp/static/lib/toastify-js.js")
         //     await loadCSS("/eusign_cp/static/lib/toastify.min.css")
         // })
-        onWillUnmount(()=>{
+        onWillUnmount(() => {
             this.onChangeMenuItem()
         })
     }

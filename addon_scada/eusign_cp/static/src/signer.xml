@@ -53,22 +53,18 @@
                                             <img src="/eusign_cp/static/description/CertificateProcess.png" alt="Logo" width="30" class="d-inline-block align-text-top"/>
                                             <span class="m-3">Перевірити підпис</span>
                                         </h5>
-                                        <div class="accordion-container mt-2">
-                                            <button class="accordion current">Section 1</button>
-                                            <div class="panel" style="max-height: 100px;">
-                                              <p class="m-2 p-4">Lorem ipsum...</p>
-                                            </div>
-
-                                            <button class="accordion">Section 2</button>
-                                            <div class="panel">
-                                              <p class="m-2 p-4">Lorem ipsum...</p>
-                                            </div>
-
-                                            <button class="accordion">Section 3</button>
-                                            <div class="panel">
-                                              <p class="m-2 p-4">Lorem ipsum...</p>
-                                            </div>
+                                        <div class="mt-4 mb-4" id="drop-area">
+                                          <form class="my-form">
+                                              <p class="text-center">
+                                                  <span>Перетягніть сюди підписаний файл</span><br/>
+                                                  <span>або </span><a href="#" class="link-primary" onclick="document.getElementById('fileElem').click();">завантажте його зі свого носія</a>
+                                              </p>
+                                              <p class="text-center"><small>(p7s, pdf, xml, asics або asice)</small></p>
+                                              <input type="file" id="fileElem" multiple="1" t-on-change="handleFiles"/>
+                                              <ul id="fileList"> </ul>
+                                          </form>
                                         </div>
+                                        <label type="button" t-ref="VerificationButton" t-attf-class="btn btn-outline-primary btn-lg {{state.filesForVerifyReaded ? '' : 'disabled'}}" t-on-click="verifyFile">Перевірити</label>
                                     </div>
                                 </div>
                             </div>
@@ -177,10 +173,10 @@
                                                     <small>Оберіть файл для підпису (не більше 5 МБ):</small>
                                                     <div class="input-group input-group-sm mt-3 mb-3">
                                                       <input type="file" class="form-control" id="FileToSign"
-                                                             t-ref="FileToSign"/>
+                                                             t-ref="FileToSign" t-on-change="onChangeFileToSign"/>
                                                     </div>
                                                     <button type="button"
-                                                            class="btn btn-outline-primary btn-sm"
+                                                            t-attf-class="btn btn-outline-primary btn-sm {{state.file_loaded ? '' : 'disabled'}}"
                                                             t-on-click="signFile">Підписати</button>
                                                  </div>
                                              </div>
