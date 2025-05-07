@@ -156,6 +156,7 @@ export class OwlSigner extends Component {
         this.PKeyFileInput.el.value = null
         this.clearPrivateKeyCertificatesList();
         this.state.status_key = "";
+        this.fileElem.el.value = null
     }
 
     clearPrivateKeyCertificatesList() {
@@ -1125,6 +1126,7 @@ export class OwlSigner extends Component {
         this.DSAlgTypeSelect = useRef("DSAlgTypeSelect")
         this.alertMessage = useRef("alertMessage")
         this.VerificationButton = useRef("VerificationButton")
+        this.fileElem = useRef("fileElem")
 
         onMounted(async () => {
             this.applyDragDropEvents()

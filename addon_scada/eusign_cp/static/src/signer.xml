@@ -60,7 +60,7 @@
                                                   <span>або </span><a href="#" class="link-primary" onclick="document.getElementById('fileElem').click();">завантажте його зі свого носія</a>
                                               </p>
                                               <p class="text-center"><small>(p7s, pdf, xml, asics або asice)</small></p>
-                                              <input type="file" id="fileElem" multiple="1" t-on-change="handleFiles"/>
+                                              <input type="file" id="fileElem" t-ref="fileElem" multiple="1" t-on-change="handleFiles"/>
                                               <ul id="fileList"> </ul>
                                           </form>
                                         </div>
