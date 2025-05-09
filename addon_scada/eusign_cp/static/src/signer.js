@@ -60,6 +60,7 @@ export class OwlSigner extends Component {
         // this.VerificationButton.el.disabled = ''
         this.state.filesForVerifyReaded = true
     }
+
     onChangeFileToSign(ev) {
         console.log(ev.target)
         this.state.file_loaded = ev.target.files.length > 0 && this.euSign.IsPrivateKeyReaded()
@@ -240,25 +241,36 @@ export class OwlSigner extends Component {
     }
 
     getSignTypeString(signType) {
-		switch (signType) {
-			case EU_SIGN_TYPE_CADES_BES:
-				return 'базовий';
-			case EU_SIGN_TYPE_CADES_T:
-				return 'з позначкою часу від ЕЦП';
-			case EU_SIGN_TYPE_CADES_C:
-				return 'з посиланням на повні дані для перевірки';
-			case EU_SIGN_TYPE_CADES_X_LONG:
-				return 'з повними даними для перевірки';
-			case EU_SIGN_TYPE_CADES_X_LONG | EU_SIGN_TYPE_CADES_X_LONG_TRUSTED:
-				return 'з повними даними ЦСК для перевірки';
-			default:
-				return 'невизначено';
-		}
-	}
+        switch (signType) {
+            case EU_SIGN_TYPE_CADES_BES:
+                return 'базовий';
+            case EU_SIGN_TYPE_CADES_T:
+                return 'з позначкою часу від ЕЦП';
+            case EU_SIGN_TYPE_CADES_C:
+                return 'з посиланням на повні дані для перевірки';
+            case EU_SIGN_TYPE_CADES_X_LONG:
+                return 'з повними даними для перевірки';
+            case EU_SIGN_TYPE_CADES_X_LONG | EU_SIGN_TYPE_CADES_X_LONG_TRUSTED:
+                return 'з повними даними ЦСК для перевірки';
+            default:
+                return 'невизначено';
+        }
+    }
 
     verifyFile(ev) {
         // console.log(this.fileWihtOutSign)
         // console.log(this.fileWihtSign)
+        if (this.VerificationButton.el.innerHTML == 'Дякую!') {
+            this.VerificationButton.el.innerHTML = 'Перевірити'
+            this.fileWihtOutSign = null
+            this.fileWihtSign = null
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = ''; // Очистить предыдущий список
+            this.state.filesForVerifyReaded = false
+            this.fileElem.el.value = ''
+
+            return
+        }
         if (this.fileWihtSign == null && this.fileWihtOutSign == null) {
             this.setAlert('Виберіть файли для перевірки', 'alert-danger')
             return
@@ -273,10 +285,10 @@ export class OwlSigner extends Component {
         }
         files.push(this.fileWihtSign);
         if ((files[0].size > (Module.MAX_DATA_SIZE + EU_MAX_P7S_CONTAINER_SIZE)) ||
-			(!isInternalSign && (files[1].size > Module.MAX_DATA_SIZE))) {
-			this.setAlert("Розмір файлу для перевірки підпису занадто великий. Оберіть файл меншого розміру", 'alert-warning');
-			return;
-		}
+            (!isInternalSign && (files[1].size > Module.MAX_DATA_SIZE))) {
+            this.setAlert("Розмір файлу для перевірки підпису занадто великий. Оберіть файл меншого розміру", 'alert-warning');
+            return;
+        }
         const _onSuccess = function (files) {
             try {
                 var info = "";
@@ -320,6 +332,7 @@ export class OwlSigner extends Component {
                 // alert(message);
                 // setStatus('');
                 pThis.setAlert(message, 'alert-success')
+                pThis.VerificationButton.el.innerHTML = 'Дякую!'
             } catch (e) {
                 // alert(e);
                 pThis.setAlert(e.message, 'alert-danger')
@@ -334,12 +347,18 @@ export class OwlSigner extends Component {
         };
 
         // setStatus('перевірка підпису файлів');
-		this.utils.LoadFilesToArray(files, _onSuccess, _onFail);
+        this.utils.LoadFilesToArray(files, _onSuccess, _onFail);
     }
 
     signFile() {
         const file = this.FileToSign.el.files[0];
         const self = this;
+        if (this.SignButton.el.innerHTML == 'Дякую!') {
+            this.SignButton.el.innerHTML = 'Підписати'
+            this.FileToSign.el.value = ''
+            this.state.file_loaded = false
+            return
+        }
 
         if (!file) {
             this.setAlert('Файл для підпису не обрано. Оберіть файл', 'alert-danger')
@@ -389,6 +408,7 @@ export class OwlSigner extends Component {
 
                     // setStatus('');
                     // alert("Файл успішно підписано");
+                    self.SignButton.el.innerHTML = 'Дякую!'
                     self.setAlert("Файл успішно підписано", 'alert-success')
                 } catch (e) {
                     // setStatus('');
@@ -1028,7 +1048,7 @@ export class OwlSigner extends Component {
         this.state.alert_object.class = ''
     }
 
-    setAlert(message, className) {
+    setAlert(message, className, closeButton = false) {
         const self = this
         this.state.alert_occurred = true
         this.state.alert_object.message = message
@@ -1036,6 +1056,7 @@ export class OwlSigner extends Component {
         let background = this.alertStyles[className]
         Toastify({
             text: message,
+            close: closeButton,
             style: {
                 background: background,
             },
@@ -1127,6 +1148,7 @@ export class OwlSigner extends Component {
         this.alertMessage = useRef("alertMessage")
         this.VerificationButton = useRef("VerificationButton")
         this.fileElem = useRef("fileElem")
+        this.SignButton = useRef("SignButton")
 
         onMounted(async () => {
             this.applyDragDropEvents()

@@ -14,8 +14,8 @@
 <!--            </button>-->
               <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                   <div class="navbar-nav">
-                      <a class="nav-link active" id="sign" t-on-click="toggleMenu" href="#">Підписати документ</a>
-                      <a class="nav-link" id="verify" t-on-click="toggleMenu" href="#">Перевірити підпис</a>
+                      <a class="nav-link active" id="sign" t-on-click="toggleMenu" href="javascript:void(0);">Підписати документ</a>
+                      <a class="nav-link" id="verify" t-on-click="toggleMenu" href="javascript:void(0);">Перевірити підпис</a>
                   </div>
                   <span class="navbar-text ms-auto" t-out="state.status_key"/>
               </div>
@@ -57,7 +57,7 @@
                                           <form class="my-form">
                                               <p class="text-center">
                                                   <span>Перетягніть сюди підписаний файл</span><br/>
-                                                  <span>або </span><a href="#" class="link-primary" onclick="document.getElementById('fileElem').click();">завантажте його зі свого носія</a>
+                                                  <span>або </span><a href="javascript:void(0);" class="link-primary" onclick="document.getElementById('fileElem').click();">завантажте його зі свого носія</a>
                                               </p>
                                               <p class="text-center"><small>(p7s, pdf, xml, asics або asice)</small></p>
                                               <input type="file" id="fileElem" t-ref="fileElem" multiple="1" t-on-change="handleFiles"/>
@@ -175,7 +175,7 @@
                                                       <input type="file" class="form-control" id="FileToSign"
                                                              t-ref="FileToSign" t-on-change="onChangeFileToSign"/>
                                                     </div>
-                                                    <button type="button"
+                                                    <button type="button" t-ref="SignButton"
                                                             t-attf-class="btn btn-outline-primary btn-sm {{state.file_loaded ? '' : 'disabled'}}"
                                                             t-on-click="signFile">Підписати</button>
                                                  </div>
