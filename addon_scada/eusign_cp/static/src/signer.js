@@ -1,7 +1,7 @@
 /** @odoo-module **/
 
 // import {loadCSS, loadJS} from "@web/core/assets"
-import {Component, onMounted, useRef, useState, onWillStart, onWillUnmount} from "@odoo/owl";
+import {Component, onMounted, useRef, useState, onWillUnmount} from "@odoo/owl";
 
 export class OwlSigner extends Component {
     static template = "eusign_cp.owl_signer"
