@@ -423,7 +423,7 @@ export class OwlSigner extends Component {
     }
 
     saveFile(fileName, array) {
-        var blob = new Blob([array], {type: "application/octet-stream"});
+        const blob = new Blob([array], {type: "application/octet-stream"});
         saveAs(blob, fileName);
     }
 
@@ -474,7 +474,7 @@ export class OwlSigner extends Component {
 
     loadCertsFromServer() {
         const pThis = this;
-        var certificates = this.utils.GetSessionStorageItem(
+        const certificates = this.utils.GetSessionStorageItem(
             this.CACertificatesSessionStorageName, true, false);
         if (certificates != null) {
             try {
@@ -611,8 +611,8 @@ export class OwlSigner extends Component {
     }
 
     privateKeyReaded(isReaded) {
-        var enabled = '';
-        var disabled = 'disabled';
+        let enabled = '';
+        let disabled = 'disabled';
 
         if (!isReaded) {
             enabled = 'disabled';
@@ -861,9 +861,9 @@ export class OwlSigner extends Component {
         // document.getElementById('PKeyFileName').value = keyName;
         // document.getElementById('PKeyPassword').value = password;
         this.PKeyPassword.el.value = password
-        var _readPK = function () {
+        const _readPK = function () {
             self.readPrivateKey(keyName, key, password, null, true);
-        }
+        };
         setTimeout(_readPK, 10);
 
         return;
