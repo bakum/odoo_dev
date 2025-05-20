@@ -11,7 +11,7 @@ export class OwlSigner extends Component {
             this.euSign.RaiseError(EU_ERROR_NOT_SUPPORTED);
 
         if (this.utils.IsFolderExists(localStorageFolder)) {
-            var files = this.utils.GetFiles(localStorageFolder);
+            const files = this.utils.GetFiles(localStorageFolder);
             for (var i = 0; i < files.length; i++) {
                 var file = this.utils.ReadFile(
                     localStorageFolder, files[i]);
@@ -192,7 +192,7 @@ export class OwlSigner extends Component {
         try {
             var files = this.loadFilesFromLocalStorage(
                 this.CertsLocalStorageName,
-                function (fileName, fileData) {
+                 (fileName, fileData) =>{
                     if (fileName.indexOf(".cer") >= 0)
                         this.euSign.SaveCertificate(fileData);
                     else if (fileName.indexOf(".p7b") >= 0)
@@ -216,7 +216,7 @@ export class OwlSigner extends Component {
         try {
             var files = this.loadFilesFromLocalStorage(
                 this.CRLsLocalStorageName,
-                function (fileName, fileData) {
+                (fileName, fileData) => {
                     if (fileName.indexOf(".crl") >= 0) {
                         try {
                             this.euSign.SaveCRL(true, fileData);
@@ -377,8 +377,8 @@ export class OwlSigner extends Component {
 
         const fileReader = new FileReader();
 
-        fileReader.onloadend = (function (fileName) {
-            return function (evt) {
+        fileReader.onloadend = ((fileName) => {
+            return (evt) => {
                 if (evt.target.readyState != FileReader.DONE)
                     return;
 
@@ -431,7 +431,7 @@ export class OwlSigner extends Component {
         try {
             this.euSign.SetXMLHTTPProxyService(this.URL_XML_HTTP_PROXY_SERVICE);
 
-            var settings = this.euSign.CreateFileStoreSettings();
+            let settings = this.euSign.CreateFileStoreSettings();
             settings.SetPath("/certificates");
             settings.SetSaveLoadedCerts(true);
             this.euSign.SetFileStoreSettings(settings);
@@ -455,13 +455,13 @@ export class OwlSigner extends Component {
             settings.SetEnabled(true);
             this.euSign.SetOCSPAccessInfoModeSettings(settings);
 
-            var CAs = this.CAsServers;
+            const CAs = this.CAsServers;
             settings = this.euSign.CreateOCSPAccessInfoSettings();
-            for (var i = 0; i < CAs.length; i++) {
+            for (let i = 0; i < CAs.length; i++) {
                 settings.SetAddress(CAs[i].ocspAccessPointAddress);
                 settings.SetPort(CAs[i].ocspAccessPointPort);
 
-                for (var j = 0; j < CAs[i].issuerCNs.length; j++) {
+                for (let j = 0; j < CAs[i].issuerCNs.length; j++) {
                     settings.SetIssuerCN(CAs[i].issuerCNs[j]);
                     this.euSign.SetOCSPAccessInfoSettings(settings);
                 }
