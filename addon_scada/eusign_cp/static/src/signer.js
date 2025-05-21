@@ -1159,10 +1159,6 @@ export class OwlSigner extends Component {
                 this.state.loaded = true
             }, 1000)
         })
-        // onWillStart(async ()=>{
-        //     await loadJS("/eusign_cp/static/lib/toastify-js.js")
-        //     await loadCSS("/eusign_cp/static/lib/toastify.min.css")
-        // })
         onWillUnmount(() => {
             this.onChangeMenuItem()
         })
