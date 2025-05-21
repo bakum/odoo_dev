@@ -1,6 +1,7 @@
 /** @odoo-module **/
 
 // import {loadCSS, loadJS} from "@web/core/assets"
+import {browser} from "@web/core/browser/browser"
 import {Component, onMounted, useRef, useState, onWillUnmount} from "@odoo/owl";
 
 export class OwlSigner extends Component {
@@ -646,14 +647,20 @@ export class OwlSigner extends Component {
     toggleMenu(ev) {
         const allPanels = document.getElementsByClassName("nav-link"),
             id = ev.target.id
+
+        if (id === "home") {
+            this.onChangeMenuItem()
+            browser.location.href = '/'
+            return
+        }
+
         for (let j = 0; j < allPanels.length; j++) {
             if (allPanels[j].classList.contains("active")) {
                 allPanels[j].classList.remove("active");
             }
         }
-        // console.log(ev.target)
-        // console.log(id)
-        this.state.signmode = id == "sign" ? true : false
+
+        this.state.signmode = id === "sign"
         ev.target.classList.toggle("active")
         if (!this.state.signmode) {
             this.onChangeMenuItem()
@@ -861,8 +868,11 @@ export class OwlSigner extends Component {
         // document.getElementById('PKeyFileName').value = keyName;
         // document.getElementById('PKeyPassword').value = password;
         this.PKeyPassword.el.value = password
-        const _readPK = function () {
-            self.readPrivateKey(keyName, key, password, null, true);
+        const _readPK =  async () => {
+            await self.readPrivateKey(keyName, key, password, null, true);
+            if (self.euSign.IsPrivateKeyReaded()) {
+                self.showOwnerInfo();
+            }
         };
         setTimeout(_readPK, 10);
 
@@ -909,10 +919,10 @@ export class OwlSigner extends Component {
                 // euSignTest.setSelectPKCertificatesEvents();
 
                 if (pThis.utils.IsSessionStorageSupported()) {
-                    // var _readPrivateKeyAsStoredFile = function () {
-                    //     euSignTest.readPrivateKeyAsStoredFile();
-                    // }
-                    // setTimeout(_readPrivateKeyAsStoredFile, 10);
+                    const _readPrivateKeyAsStoredFile =  () => {
+                        pThis.readPrivateKeyAsStoredFile();
+                    };
+                    setTimeout(_readPrivateKeyAsStoredFile, 10);
                 }
                 pThis.DSCAdESTypeChanged()
 

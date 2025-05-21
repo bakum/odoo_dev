@@ -3,8 +3,8 @@
     <t t-name="eusign_cp.owl_signer">
         <nav t-attf-class="navbar navbar-expand-lg navbar-light bg-light {{state.loaded ? '' : 'd-none'}}">
           <div class="container-fluid">
-              <a class="navbar-brand" href="/">
-                <i class="fa fa-home fa-2x" aria-hidden="true"/>
+              <a class="navbar-brand" t-on-click="toggleMenu" href="javascript:void(0);">
+                <i id="home" class="fa fa-home fa-2x" aria-hidden="true"/>
                 <!--                <img src="/eusign_cp/static/description/Keys.png" alt="Logo" width="30" class="d-inline-block align-text-top"/>-->
             </a>
 <!--              <button class="navbar-toggler" type="button" data-bs-toggle="collapse"-->
