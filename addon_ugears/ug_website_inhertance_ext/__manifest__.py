@@ -7,4 +7,7 @@
     "category": "Hidden/Dependency",
     "summary": "Adds more operators for view inheritance",
     "depends": ["base", "website"],
+    "data": [
+        "views/website_views.xml",
+    ],
 }

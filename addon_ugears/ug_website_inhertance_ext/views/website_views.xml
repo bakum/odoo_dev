@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="website.menu_website_analytics"
+            name="Analytics"
+            sequence="10"
+            parent="website.menu_reporting" groups="base.group_system"
+            action="website.ir_actions_server_website_analytics"/>
+    </data>
+</odoo>
