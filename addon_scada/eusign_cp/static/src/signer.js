@@ -757,7 +757,7 @@ export class OwlSigner extends Component {
 
     readPrivateKey(keyName, key, password, certificates, fromCache) {
         const self = this;
-        const _onError = function (e) {
+        const _onError = (e) => {
             // setStatus('');
 
             if (fromCache) {
@@ -778,7 +778,7 @@ export class OwlSigner extends Component {
         };
 
         if (certificates == null) {
-            const _onGetCertificates = function (certs) {
+            const _onGetCertificates = (certs) => {
                 if (certs == null) {
                     _onError(self.euSign.MakeError(EU_ERROR_CERT_NOT_FOUND));
                     return;
