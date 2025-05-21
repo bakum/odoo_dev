@@ -42,7 +42,7 @@
             'eusign_cp/static/lib/euutils.js',
             'eusign_cp/static/lib/euscpt.js',
             'eusign_cp/static/lib/euscpm.js',
-            'eusign_cp/static/lib/euscp.js',
+            'eusign_cp/static/lib/euscp.ex.js',
             # 'eusign_cp/static/lib/euscptest.js',
             'eusign_cp/static/lib/qr/qrcodedecode.js',
             'eusign_cp/static/lib/qr/reedsolomon.js',

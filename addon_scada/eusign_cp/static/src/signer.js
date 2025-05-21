@@ -635,13 +635,8 @@ export class OwlSigner extends Component {
         try {
             this.euSign.SetRuntimeParameter(EU_SIGN_TYPE_PARAMETER, signType);
         } catch (e) {
-            // alert(e);
             this.setAlert(e.message, 'alert-danger')
         }
-
-        // document.getElementById('SignAddCAsCertificatesCheckbox').disabled =
-        // 	((signType & EU_SIGN_TYPE_CADES_X_LONG) ==
-        // 		EU_SIGN_TYPE_CADES_X_LONG) ? '' : 'disabled';
     }
 
     toggleMenu(ev) {
