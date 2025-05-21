@@ -645,25 +645,21 @@ export class OwlSigner extends Component {
     }
 
     toggleMenu(ev) {
-        const allPanels = document.getElementsByClassName("nav-link"),
-            id = ev.target.id
+        const allPanels = document.getElementsByClassName("nav-link");
+        const id = ev.target.id;
 
         if (id === "home") {
-            this.onChangeMenuItem()
-            browser.location.href = '/'
-            return
+            this.onChangeMenuItem();
+            browser.location.href = '/';
+            return;
         }
 
-        for (let j = 0; j < allPanels.length; j++) {
-            if (allPanels[j].classList.contains("active")) {
-                allPanels[j].classList.remove("active");
-            }
-        }
+        Array.from(allPanels).forEach(panel => panel.classList.remove("active"));
 
-        this.state.signmode = id === "sign"
-        ev.target.classList.toggle("active")
+        this.state.signmode = id === "sign";
+        ev.target.classList.toggle("active");
         if (!this.state.signmode) {
-            this.onChangeMenuItem()
+            this.onChangeMenuItem();
         }
     }
 
