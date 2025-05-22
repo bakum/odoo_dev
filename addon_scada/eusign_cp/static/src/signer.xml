@@ -5,13 +5,7 @@
           <div class="container-fluid">
               <a class="navbar-brand" t-on-click="toggleMenu" href="javascript:void(0);">
                 <i id="home" class="fa fa-home fa-2x" aria-hidden="true"/>
-                <!--                <img src="/eusign_cp/static/description/Keys.png" alt="Logo" width="30" class="d-inline-block align-text-top"/>-->
             </a>
-<!--              <button class="navbar-toggler" type="button" data-bs-toggle="collapse"-->
-<!--                      data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"-->
-<!--                      aria-label="Toggle navigation">-->
-<!--              <span class="navbar-toggler-icon"> </span>-->
-<!--            </button>-->
               <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                   <div class="navbar-nav">
                       <a class="nav-link active" id="sign" t-on-click="toggleMenu" href="javascript:void(0);">Підписати документ</a>
@@ -33,10 +27,6 @@
                 </div>
             </t>
             <div t-attf-class="container {{state.loaded ? '' : 'd-none'}}">
-<!--                    <div id="alert" t-ref="alertMessage" t-attf-class="alert {{state.alert_object.class}} alert-dismissible {{state.alert_occurred ? '' : 'd-none'}}" role="alert">-->
-<!--                      <span t-out="state.alert_object.message"/>-->
-<!--                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" t-on-click="onCloseAlert"> </button>-->
-<!--                    </div>-->
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="d-flex align-items-center justify-content-center">
@@ -188,7 +178,6 @@
                     </div>
                 </div>
             </div>
-            <!--            </t>-->
          </div>
     </t>
 
