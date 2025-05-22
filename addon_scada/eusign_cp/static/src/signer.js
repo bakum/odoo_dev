@@ -1012,15 +1012,15 @@ export class OwlSigner extends Component {
     }
 
     loadCAsSettings(onSuccess, onError) {
-        var pThis = this;
+        const pThis = this;
 
-        var _onSuccess = function (casResponse) {
+        const _onSuccess = function (casResponse) {
             try {
-                var servers = JSON.parse(casResponse.replace(/\\'/g, "'"));
+                const servers = JSON.parse(casResponse.replace(/\\'/g, "'"));
 
-                var select = pThis.CAsServersSelect.el;
-                for (var i = 0; i < servers.length; i++) {
-                    var option = document.createElement("option");
+                const select = pThis.CAsServersSelect.el;
+                for (let i = 0; i < servers.length; i++) {
+                    const option = document.createElement("option");
                     option.text = servers[i].issuerCNs[0];
                     select.add(option);
                 }
@@ -1041,9 +1041,6 @@ export class OwlSigner extends Component {
     }
 
     onCloseAlert() {
-        // if (this.lastTimer) {
-        //     clearTimeout(this.lastTimer)
-        // }
         this.state.alert_occurred = false
         this.state.alert_object.message = ''
         this.state.alert_object.class = ''
