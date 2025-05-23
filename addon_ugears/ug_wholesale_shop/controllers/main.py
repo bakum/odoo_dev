@@ -3,7 +3,7 @@ from datetime import datetime
 from werkzeug.exceptions import NotFound
 from werkzeug.urls import url_parse, url_decode, url_encode
 
-from odoo.addons.website_sale.controllers.main import WebsiteSale, TableCompute
+from odoo.addons.website_sale.controllers.main import WebsiteSale, TableCompute, Website
 from odoo import fields, http, tools, _
 from odoo.addons.http_routing.models.ir_http import slug
 from odoo.addons.portal.controllers.portal import _build_url_w_params
@@ -16,6 +16,20 @@ from odoo.tools import lazy
 from odoo.tools.json import scriptsafe as json_scriptsafe
 from odoo.addons.payment import utils as payment_utils
 
+class WebsiteWhole(Website):
+    @http.route()
+    def autocomplete(self, search_type=None, term=None, order=None, limit=5, max_nb_chars=999, options=None):
+        options = options or {}
+        if 'display_currency' not in options:
+            options['display_currency'] = request.website.currency_id
+        try:
+            return super().autocomplete(search_type, term, order, limit, max_nb_chars, options)
+        except Exception:
+            return {
+                'results': [],
+                'results_count': 0,
+                'parts': {},
+            }
 
 class WebsiteWholeSale(WebsiteSale):
     def sitemap_shop(env, rule, qs):
