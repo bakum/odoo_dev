@@ -20,9 +20,6 @@ from odoo.addons.payment import utils as payment_utils
 class WebsiteWhole(Website):
     @http.route()
     def autocomplete(self, search_type=None, term=None, order=None, limit=5, max_nb_chars=999, options=None):
-        options = options or {}
-        if 'display_currency' not in options:
-            options['display_currency'] = request.website.currency_id
         try:
             return super().autocomplete(search_type, term, order, limit, max_nb_chars, options)
         except Exception:
