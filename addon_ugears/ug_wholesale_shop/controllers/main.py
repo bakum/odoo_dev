@@ -16,6 +16,7 @@ from odoo.tools import lazy
 from odoo.tools.json import scriptsafe as json_scriptsafe
 from odoo.addons.payment import utils as payment_utils
 
+
 class WebsiteWhole(Website):
     @http.route()
     def autocomplete(self, search_type=None, term=None, order=None, limit=5, max_nb_chars=999, options=None):
@@ -30,6 +31,7 @@ class WebsiteWhole(Website):
                 'results_count': 0,
                 'parts': {},
             }
+
 
 class WebsiteWholeSale(WebsiteSale):
     def sitemap_shop(env, rule, qs):
