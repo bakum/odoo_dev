@@ -85,19 +85,19 @@ class EUSignerProxyHundler(Controller):
 
             path = urlparse(uriValue).path
             if path == None or path == "":
-                return "";
+                return ""
 
             if path[len(path) - 1] == '/':
-                path = path[:-1];
+                path = path[:-1]
 
             if path == "/services/cmp" or path == '/public/x509/cmp' or path == 'cmp' or path == '/api/PKI/CMP':
-                return "";
+                return ""
             elif path == "/services/ocsp" or path == "/services/ocsp/" or path == "/public/ocsp" or path == "/ocsp" or path == "/ocsp-rsa" or path == "/ocsp-ecdsa" or path == "/OCSPsrv/ocsp" or path == "/queries/ocsp/":
-                return "application/ocsp-request";
+                return "application/ocsp-request"
             elif path == "/services/tsp" or path == "/services/tsp/" or path == "/services/tsp/dstu" or path == "/services/tsp/dstu/" or path == "/services/tsp/rsa" or path == "/services/tsp/rsa/" or path == "/services/tsp/ecdsa" or path == "/services/tsp/ecdsa/" or path == "/public/tsa" or path == "/public/tsp" or path == "/tsp" or path == "/tsp-rsa" or path == "/ecdsa" or path == "/TspHTTPServer/tsp":
-                return "application/timestamp-query";
+                return "application/timestamp-query"
             else:
-                return "";
+                return ""
         except:
             return ""
 
