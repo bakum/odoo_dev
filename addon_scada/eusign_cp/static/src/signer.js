@@ -26,6 +26,9 @@ export class OwlSigner extends Component {
     }
 
     async handleFilesForVerification(files) {
+        if (files.length === 0) {
+            return
+        }
         const fileList = document.getElementById('fileList');
         fileList.innerHTML = ''; // Очистить предыдущий список
         this.fileWihtSign = null
@@ -294,12 +297,12 @@ export class OwlSigner extends Component {
 
     }
 
-    getAsicSignTypeString(signType) {
+    getAsicSignTypeString(signType, signLevel) {
         switch (signType) {
             case EU_ASIC_SIGN_TYPE_XADES:
-                return 'Дані та підпис зберігаються в XML файлі (XAdES)';
+                return this.getXadesSignTypeString(signLevel);
             case EU_ASIC_SIGN_TYPE_CADES:
-                return 'Дані та підпис зберігаються в CMS файлі (CAdES)';
+                return this.getSignTypeString(signLevel);
             default:
                 return 'невизначено';
         }
@@ -393,7 +396,7 @@ export class OwlSigner extends Component {
                 let signType
                 if (isAsicSign) {
                     info = pThis.euSign.ASiCVerifyData(0, files[0].data);
-                    signType = pThis.getAsicSignTypeString(pThis.euSign.ASiCGetSignType(files[0].data))
+                    signType = pThis.getAsicSignTypeString(pThis.euSign.ASiCGetSignType(files[0].data), pThis.euSign.ASiCGetSignLevel(0, files[0].data))
                 } else if (isXAdESSign) {
                     pThis.euSign.XAdESGetSignReferences(0, files[0].data).forEach((ref, index) => {
                         // let reference = pThis.euSign.XAdESGetReference(files[isInternalSign ? 0 : 1].data, ref)
