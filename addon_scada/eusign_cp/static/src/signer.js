@@ -25,7 +25,7 @@ export class OwlSigner extends Component {
         }
     }
 
-    handleFilesForVerification(files) {
+    async handleFilesForVerification(files) {
         const fileList = document.getElementById('fileList');
         fileList.innerHTML = ''; // Очистить предыдущий список
         this.fileWihtSign = null
@@ -39,6 +39,29 @@ export class OwlSigner extends Component {
         for (const file of files) {
             if (file.name.endsWith('.p7s') || file.name.endsWith('.asics') || file.name.endsWith('.asice')) {
                 isSign = true
+                break
+            }
+            if (file.name.endsWith('.pdf')) {
+                try {
+                    const data = await this.utils.loadFileAsArrayBuffer(file),
+                        uint8Array = new Uint8Array(data);
+                    this.euSign.PDFGetSignsCount(uint8Array)
+                    isSign = true
+                    break
+                } catch (e) {
+
+                }
+            }
+            if (file.name.endsWith('.xml')) {
+                try {
+                    const data = await this.utils.loadFileAsArrayBuffer(file),
+                        uint8Array = new Uint8Array(data);
+                    this.euSign.XAdESGetSignsCount(uint8Array)
+                    isSign = true
+                    break
+                } catch (e) {
+
+                }
             }
         }
         if (!isSign) {
@@ -52,8 +75,38 @@ export class OwlSigner extends Component {
                 content = 'Файл з підписом : ' + file.name
                 this.fileWihtSign = file
             } else {
-                content = 'Файл без підпису : ' + file.name
-                this.fileWihtOutSign = file
+                if (file.name.endsWith('.xml')) {
+                    try {
+                        const data = await this.utils.loadFileAsArrayBuffer(file),
+                            uint8Array = new Uint8Array(data);
+                        this.euSign.XAdESGetSignsCount(uint8Array)
+                        content = 'Файл з підписом : ' + file.name
+                        this.fileWihtSign = file
+                        // continue
+                    } catch (e) {
+                        content = 'Файл без підпису : ' + file.name
+                        this.fileWihtOutSign = file
+                        // continue
+                    }
+                }
+                else if (file.name.endsWith('.pdf')) {
+                    try {
+                        const data = await this.utils.loadFileAsArrayBuffer(file),
+                            uint8Array = new Uint8Array(data);
+                        this.euSign.PDFGetSignsCount(uint8Array)
+                        content = 'Файл з підписом : ' + file.name
+                        this.fileWihtSign = file
+                        // continue
+                    } catch (e) {
+                        content = 'Файл без підпису : ' + file.name
+                        this.fileWihtOutSign = file
+                        // continue
+                    }
+                }
+                else {
+                    content = 'Файл без підпису : ' + file.name
+                    this.fileWihtOutSign = file
+                }
             }
             li.textContent = content;
             fileList.appendChild(li);
@@ -193,7 +246,7 @@ export class OwlSigner extends Component {
         try {
             var files = this.loadFilesFromLocalStorage(
                 this.CertsLocalStorageName,
-                 (fileName, fileData) =>{
+                (fileName, fileData) => {
                     if (fileName.indexOf(".cer") >= 0)
                         this.euSign.SaveCertificate(fileData);
                     else if (fileName.indexOf(".p7b") >= 0)
@@ -241,6 +294,47 @@ export class OwlSigner extends Component {
 
     }
 
+    getAsicSignTypeString(signType) {
+        switch (signType) {
+            case EU_ASIC_SIGN_TYPE_XADES:
+                return 'Дані та підпис зберігаються в XML файлі (XAdES)';
+            case EU_ASIC_SIGN_TYPE_CADES:
+                return 'Дані та підпис зберігаються в CMS файлі (CAdES)';
+            default:
+                return 'невизначено';
+        }
+    }
+
+    getXadesSignTypeString(signType) {
+        switch (signType) {
+            case EU_XADES_SIGN_LEVEL_B_B:
+                return 'Базовий (XAdES-B-B)';
+            case EU_XADES_SIGN_LEVEL_B_T:
+                return 'З позначкою часу від ЕП (XAdES-B-T)';
+            case EU_XADES_SIGN_LEVEL_B_LT:
+                return 'З повними даними для перевірки (XAdES-B-LT)';
+            case EU_XADES_SIGN_LEVEL_B_LTA:
+                return 'З повними даними для архівного зберігання (XAdES-B-LTA)';
+            default:
+                return 'невизначено';
+        }
+    }
+
+    getPDFSignTypeString(signType) {
+        switch (signType) {
+            case EU_PADES_SIGN_LEVEL_B_B:
+                return 'Базовий (PAdES-B-B)';
+            case EU_PADES_SIGN_LEVEL_B_T:
+                return 'З позначкою часу від ЕП (PAdES-B-T)';
+            case EU_PADES_SIGN_LEVEL_B_LT:
+                return 'З повними даними для перевірки (PAdES-B-LT)';
+            case EU_PADES_SIGN_LEVEL_B_LTA:
+                return 'З повними даними для архівного зберігання (PAdES-B-LTA)';
+            default:
+                return 'невизначено';
+        }
+    }
+
     getSignTypeString(signType) {
         switch (signType) {
             case EU_SIGN_TYPE_CADES_BES:
@@ -280,7 +374,10 @@ export class OwlSigner extends Component {
         const pThis = this;
         const files = [],
             isInternalSign = !(this.fileWihtOutSign != null),
-            isGetSignerInfo = true
+            isGetSignerInfo = true,
+            isAsicSign = this.fileWihtSign.name.endsWith('.asics') || this.fileWihtSign.name.endsWith('.asice'),
+            isXAdESSign = this.fileWihtSign.name.endsWith('.xml'),
+            isPDFSign = this.fileWihtSign.name.endsWith('.pdf')
         if (!isInternalSign) {
             files.push(this.fileWihtOutSign)
         }
@@ -292,20 +389,45 @@ export class OwlSigner extends Component {
         }
         const _onSuccess = function (files) {
             try {
-                var info = "";
-                if (isInternalSign) {
-                    info = pThis.euSign.VerifyDataInternal(files[0].data);
+                let info = "";
+                let signType
+                if (isAsicSign) {
+                    info = pThis.euSign.ASiCVerifyData(0, files[0].data);
+                    signType = pThis.getAsicSignTypeString(pThis.euSign.ASiCGetSignType(files[0].data))
+                } else if (isXAdESSign) {
+                    pThis.euSign.XAdESGetSignReferences(0, files[0].data).forEach((ref, index) => {
+                        // let reference = pThis.euSign.XAdESGetReference(files[isInternalSign ? 0 : 1].data, ref)
+                        info = pThis.euSign.XAdESVerifyData(ref, 0, files[0].data);
+                    })
+                    signType = pThis.getXadesSignTypeString(pThis.euSign.XAdESGetSignLevel(0, files[0].data))
+                } else if (isPDFSign) {
+                    info = pThis.euSign.PDFVerifyData(0, files[0].data)
+                    signType = pThis.getPDFSignTypeString( pThis.euSign.PDFGetSignType(0, files[0].data))
                 } else {
-                    info = pThis.euSign.VerifyData(files[0].data, files[1].data);
+                    if (isInternalSign) {
+                        info = pThis.euSign.VerifyDataInternal(files[0].data);
+                    } else {
+                        info = pThis.euSign.VerifyData(files[0].data, files[1].data);
+                    }
+                    signType = pThis.getSignTypeString(pThis.euSign.GetSignType(0, files[isInternalSign ? 0 : 1].data))
                 }
-                var signType = pThis.getSignTypeString(
-                    pThis.euSign.GetSignType(0, files[isInternalSign ? 0 : 1].data));
+                // if (!isAsicSign && isInternalSign) {
+                //     info = pThis.euSign.VerifyDataInternal(files[0].data);
+                // } else if (!isAsicSign && !isInternalSign) {
+                //     info = pThis.euSign.VerifyData(files[0].data, files[1].data);
+                // } else {
+                //     // let signerCount = pThis.euSign.ASiCGetSignsCount(files[0].data)
+                //     info = pThis.euSign.ASiCVerifyData(0, files[0].data);
+                // }
+                // const signType = !isAsicSign ? pThis.getSignTypeString(
+                //     pThis.euSign.GetSignType(0, files[isInternalSign ? 0 : 1].data)
+                // ) : pThis.getAsicSignTypeString(pThis.euSign.ASiCGetSignType(files[0].data))
 
-                var message = "Підпис успішно перевірено";
+                let message = "Підпис успішно перевірено";
 
                 if (isGetSignerInfo) {
-                    var ownerInfo = info.GetOwnerInfo();
-                    var timeInfo = info.GetTimeInfo();
+                    const ownerInfo = info.GetOwnerInfo();
+                    const timeInfo = info.GetTimeInfo();
 
                     message += "\n";
                     message += "Підписувач: " + ownerInfo.GetSubjCN() + "\n" +
@@ -325,10 +447,37 @@ export class OwlSigner extends Component {
                     message += '\nТип підпису: ' + signType;
                 }
 
-                if (isInternalSign) {
-                    saveFile(files[0].name.substring(0,
+                if (isAsicSign) {
+                     pThis.euSign.ASiCGetSignReferences(0, files[0].data).forEach((ref, index) => {
+                        pThis.saveFile(files[0].name.substring(0,
+                            files[0].name.length - 6), pThis.euSign.ASiCGetReference(files[0].data, ref));
+                    })
+                } else if (isXAdESSign) {
+                    if (isInternalSign) {
+                        pThis.euSign.XAdESGetSignReferences(0, files[0].data).forEach((ref, index) => {
+                            pThis.saveFile(files[0].name.substring(0,
+                                files[0].name.length - 4) + '.verified' + '.xml', pThis.euSign.XAdESGetReference(files[0].data, ref));
+                        })
+                    }
+                } else if (isPDFSign) {
+                    // pThis.saveFile(files[0].name.substring(0,
+                    //     files[0].name.length - 4) + '.verified' + '.pdf', info.GetData());
+                } else {
+                    if (isInternalSign) {
+                        pThis.saveFile(files[0].name.substring(0,
                         files[0].name.length - 4), info.GetData());
+                    }
                 }
+
+                // if (isInternalSign && !isAsicSign) {
+                //     pThis.saveFile(files[0].name.substring(0,
+                //         files[0].name.length - 4), info.GetData());
+                // } else if (isAsicSign) {
+                //     pThis.euSign.ASiCGetSignReferences(0, files[0].data).forEach((ref, index) => {
+                //         pThis.saveFile(files[0].name.substring(0,
+                //             files[0].name.length - 6), pThis.euSign.ASiCGetReference(files[0].data, ref));
+                //     })
+                // }
 
                 // alert(message);
                 // setStatus('');
@@ -383,9 +532,9 @@ export class OwlSigner extends Component {
                 if (evt.target.readyState != FileReader.DONE)
                     return;
 
-                const isInternalSign = false;
+                const isInternalSign = parseInt(self.SignType.el.value) === 2
                 // document.getElementById("InternalSignCheckbox").checked;
-                const isAddCert = false;
+                const isAddCert = true;
                 // var isAddCert = document.getElementById(
                 // 	"AddCertToInternalSignCheckbox").checked;
                 const dsAlgType = parseInt(self.DSAlgTypeSelect.el.value);
@@ -859,7 +1008,7 @@ export class OwlSigner extends Component {
         // document.getElementById('PKeyFileName').value = keyName;
         // document.getElementById('PKeyPassword').value = password;
         this.PKeyPassword.el.value = password
-        const _readPK =  async () => {
+        const _readPK = async () => {
             await self.readPrivateKey(keyName, key, password, null, true);
             if (self.euSign.IsPrivateKeyReaded()) {
                 self.showOwnerInfo();
@@ -910,7 +1059,7 @@ export class OwlSigner extends Component {
                 // euSignTest.setSelectPKCertificatesEvents();
 
                 if (pThis.utils.IsSessionStorageSupported()) {
-                    const _readPrivateKeyAsStoredFile =  () => {
+                    const _readPrivateKeyAsStoredFile = () => {
                         pThis.readPrivateKeyAsStoredFile();
                     };
                     setTimeout(_readPrivateKeyAsStoredFile, 10);
@@ -1147,6 +1296,7 @@ export class OwlSigner extends Component {
         this.VerificationButton = useRef("VerificationButton")
         this.fileElem = useRef("fileElem")
         this.SignButton = useRef("SignButton")
+        this.SignType = useRef("SignType")
 
         onMounted(async () => {
             this.applyDragDropEvents()

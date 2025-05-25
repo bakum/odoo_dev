@@ -160,8 +160,14 @@
                                              </button>
                                              <div class="panel">
                                                  <div class="m-2">
+                                                     <small class="m-0">Тип підпису:</small>
+                                                    <select class="form-select form-select-sm mt-1 mb-2"
+                                                            t-ref="SignType">
+                                                        <option value="1" selected="1">Підпис та дані в окремих файлах (detached)</option>
+                                                        <option value="2">Підпис та дані в одному файлі (enveloped)</option>
+                                                    </select>
                                                     <small>Оберіть файл для підпису (не більше 5 МБ):</small>
-                                                    <div class="input-group input-group-sm mt-3 mb-3">
+                                                    <div class="input-group input-group-sm mt-1 mb-3">
                                                       <input type="file" class="form-control" id="FileToSign"
                                                              t-ref="FileToSign" t-on-change="onChangeFileToSign"/>
                                                     </div>
