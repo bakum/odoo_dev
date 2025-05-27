@@ -91,8 +91,7 @@ export class OwlSigner extends Component {
                         this.fileWihtOutSign = file
                         // continue
                     }
-                }
-                else if (file.name.endsWith('.pdf')) {
+                } else if (file.name.endsWith('.pdf')) {
                     try {
                         const data = await this.utils.loadFileAsArrayBuffer(file),
                             uint8Array = new Uint8Array(data);
@@ -105,8 +104,7 @@ export class OwlSigner extends Component {
                         this.fileWihtOutSign = file
                         // continue
                     }
-                }
-                else {
+                } else {
                     content = 'Файл без підпису : ' + file.name
                     this.fileWihtOutSign = file
                 }
@@ -119,7 +117,7 @@ export class OwlSigner extends Component {
     }
 
     onChangeFileToSign(ev) {
-        console.log(ev.target)
+        // console.log(ev.target)
         this.state.file_loaded = ev.target.files.length > 0 && this.euSign.IsPrivateKeyReaded()
     }
 
@@ -242,7 +240,8 @@ export class OwlSigner extends Component {
         // 	setPointerEvents(document.getElementById('PKeySaveInfo'),
         // 		file.name.endsWith(".jks"));
         // }
-        this.state.privateKeyReaded = enable
+        this.state.privateKeyReaded = this.euSign.IsPrivateKeyReaded()
+        this.state.file_loaded = ev.target.files.length > 0 && this.euSign.IsPrivateKeyReaded()
     }
 
     loadCertsAndCRLsFromLocalStorage() {
@@ -295,6 +294,54 @@ export class OwlSigner extends Component {
             //     "Виникла помилка при завантаженні СВС з локального сховища";
         }
 
+    }
+
+    signTypeASiCSelectOnChange(el) {
+        const index = parseInt(this.signTypeASiCSelect.el.value)
+        if (index === 1) {
+            this.state.PadesSelected = false
+            this.state.XadesSelected = false
+            this.state.CadesSelected = true
+        } else {
+            this.state.PadesSelected = false
+            this.state.XadesSelected = true
+            this.state.CadesSelected = false
+        }
+    }
+
+    SignFormatOnChange(el) {
+        const index = parseInt(this.SignFormat.el.value)
+        switch (index) {
+            case 1: {
+                this.state.PadesSelected = false
+                this.state.XadesSelected = true
+                this.state.CadesSelected = false
+                this.state.AsicSelected = false
+                break
+            }
+            case 2: {
+                this.state.PadesSelected = true
+                this.state.XadesSelected = false
+                this.state.CadesSelected = false
+                this.state.AsicSelected = false
+                break
+            }
+            case 3: {
+                this.state.PadesSelected = false
+                this.state.XadesSelected = false
+                this.state.CadesSelected = true
+                this.state.AsicSelected = false
+                break
+            }
+            default: {
+                const asic_type = parseInt(this.signTypeASiCSelect.el.value)
+                this.state.PadesSelected = false
+                this.state.XadesSelected = asic_type === 2
+                this.state.CadesSelected = asic_type === 1
+                this.state.AsicSelected = true
+                break
+            }
+        }
     }
 
     getAsicSignTypeString(signType, signLevel) {
@@ -405,7 +452,7 @@ export class OwlSigner extends Component {
                     signType = pThis.getXadesSignTypeString(pThis.euSign.XAdESGetSignLevel(0, files[0].data))
                 } else if (isPDFSign) {
                     info = pThis.euSign.PDFVerifyData(0, files[0].data)
-                    signType = pThis.getPDFSignTypeString( pThis.euSign.PDFGetSignType(0, files[0].data))
+                    signType = pThis.getPDFSignTypeString(pThis.euSign.PDFGetSignType(0, files[0].data))
                 } else {
                     if (isInternalSign) {
                         info = pThis.euSign.VerifyDataInternal(files[0].data);
@@ -451,7 +498,7 @@ export class OwlSigner extends Component {
                 }
 
                 if (isAsicSign) {
-                     pThis.euSign.ASiCGetSignReferences(0, files[0].data).forEach((ref, index) => {
+                    pThis.euSign.ASiCGetSignReferences(0, files[0].data).forEach((ref, index) => {
                         pThis.saveFile(files[0].name.substring(0,
                             files[0].name.length - 6), pThis.euSign.ASiCGetReference(files[0].data, ref));
                     })
@@ -468,7 +515,7 @@ export class OwlSigner extends Component {
                 } else {
                     if (isInternalSign) {
                         pThis.saveFile(files[0].name.substring(0,
-                        files[0].name.length - 4), info.GetData());
+                            files[0].name.length - 4), info.GetData());
                     }
                 }
 
@@ -501,6 +548,138 @@ export class OwlSigner extends Component {
 
         // setStatus('перевірка підпису файлів');
         this.utils.LoadFilesToArray(files, _onSuccess, _onFail);
+    }
+
+    signFileEx() {
+        const file = this.FileToSign.el.files[0];
+        const self = this;
+        if (this.SignButton.el.innerHTML === 'Дякую!') {
+            this.SignButton.el.innerHTML = 'Підписати'
+            this.FileToSign.el.value = ''
+            this.state.file_loaded = false
+            return
+        }
+
+        if (!file) {
+            this.setAlert('Файл для підпису не обрано. Оберіть файл', 'alert-danger')
+            return;
+        }
+
+        if (file.size > Module.MAX_DATA_SIZE) {
+            // alert("Розмір файлу для піпису занадто великий. Оберіть файл меншого розміру");
+            this.setAlert("Розмір файлу для піпису занадто великий. Оберіть файл меншого розміру", 'alert-warning')
+            return;
+        }
+        if (!this.euSign.IsPrivateKeyReaded()) {
+            this.setAlert("Особистий ключ не зчитано!", 'alert-danger')
+            return;
+        }
+        const formatSign = parseInt(this.SignFormat.el.value)
+
+        class CustomObject {
+            constructor(name, data) {
+                this.name = name;
+                this.data = data;
+            }
+
+            GetName() {
+                return this.name;
+            }
+
+            GetData() {
+                return this.data;
+            }
+        }
+
+        const fileReader = new FileReader();
+
+        fileReader.onloadend = ((fileName) => {
+            return (evt) => {
+                if (evt.target.readyState != FileReader.DONE)
+                    return;
+                const data = new Uint8Array(evt.target.result);
+                if (formatSign === 1) {
+                    try {
+                        const xadesType = EU_XADES_TYPE_ENVELOPED,
+                            signLevel = parseInt(self.signFormatXAdESSelect.el.value),
+                            obj = new CustomObject(fileName, data),
+                            files = [obj],
+                            sign = self.euSign.XAdESSignData(xadesType, signLevel, files, false)
+
+                        self.SignButton.el.innerHTML = 'Дякую!'
+                        self.setAlert("Файл успішно підписано", 'alert-success')
+
+                        self.saveFile(fileName, sign);
+
+                    } catch (e) {
+                        self.setAlert(e.message, 'alert-danger')
+                    }
+                } else if (formatSign === 2) {
+                    try{
+                        const signType = parseInt(self.signFormatPAdESSelect.el.value),
+                            sign = self.euSign.PDFSignData(data, signType,false)
+                        self.SignButton.el.innerHTML = 'Дякую!'
+                        self.setAlert("Файл успішно підписано", 'alert-success')
+
+                        self.saveFile(fileName, sign)
+                    } catch (e) {
+                        self.setAlert(e.message, 'alert-danger')
+                    }
+                } else if (formatSign === 3) {
+                    const isInternalSign = parseInt(self.SignType.el.value) === 2
+                    // document.getElementById("InternalSignCheckbox").checked;
+                    const isAddCert = true;
+                    // var isAddCert = document.getElementById(
+                    // 	"AddCertToInternalSignCheckbox").checked;
+                    const dsAlgType = parseInt(self.DSAlgTypeSelect.el.value);
+
+
+                    try {
+                        let sign;
+
+                        if (dsAlgType == 1) {
+                            if (isInternalSign)
+                                sign = self.euSign.SignDataInternal(isAddCert, data, false);
+                            else
+                                sign = self.euSign.SignData(data, false);
+                        } else {
+                            sign = self.euSign.SignDataRSA(data, isAddCert,
+                                !isInternalSign, false);
+                        }
+                        self.SignButton.el.innerHTML = 'Дякую!'
+                        self.setAlert("Файл успішно підписано", 'alert-success')
+                        self.saveFile(fileName + ".p7s", sign);
+
+                        // setStatus('');
+                        // alert("Файл успішно підписано");
+
+                    } catch (e) {
+                        // setStatus('');
+                        // alert(e);
+                        self.setAlert(e.message, 'alert-danger')
+                    }
+                } else if (formatSign > 3) {
+                    try {
+                        const asicType = formatSign === 4 ? EU_ASIC_TYPE_E : EU_ASIC_TYPE_S,
+                            signType = parseInt(self.signTypeASiCSelect.el.value) === 1 ? EU_ASIC_SIGN_TYPE_CADES : EU_ASIC_SIGN_TYPE_XADES,
+                            signLevel = signType === EU_ASIC_SIGN_TYPE_CADES ? this.CAdESTypes[this.DSCAdESTypeSelect.el.selectedIndex] : parseInt(self.signFormatXAdESSelect.el.value),
+                            obj = new CustomObject(fileName, signType === EU_ASIC_SIGN_TYPE_XADES ? data : evt.target.result),
+                            files = [obj],
+                            sign = self.euSign.ASiCSignData(asicType, signType, signLevel, files, false)
+
+                        self.SignButton.el.innerHTML = 'Дякую!'
+                        self.setAlert("Файл успішно підписано", 'alert-success')
+
+                        self.saveFile(fileName + (asicType === EU_ASIC_TYPE_S ? ".asics" : ".asice"), sign);
+                    } catch (e) {
+                        self.setAlert(e.message, 'alert-danger')
+                    }
+                }
+            };
+        })(file.name);
+
+        // setStatus('підпис файлу');
+        fileReader.readAsArrayBuffer(file);
     }
 
     signFile() {
@@ -1217,6 +1396,10 @@ export class OwlSigner extends Component {
 
     setup() {
         this.state = useState({
+            CadesSelected: false,
+            PadesSelected: false,
+            XadesSelected: false,
+            AsicSelected: false,
             loaded: false,
             file_loaded: false,
             privateKeyReaded: false,
@@ -1300,6 +1483,10 @@ export class OwlSigner extends Component {
         this.fileElem = useRef("fileElem")
         this.SignButton = useRef("SignButton")
         this.SignType = useRef("SignType")
+        this.SignFormat = useRef("SignFormat")
+        this.signFormatXAdESSelect = useRef("signFormatXAdESSelect")
+        this.signFormatPAdESSelect = useRef("signFormatPAdESSelect")
+        this.signTypeASiCSelect = useRef("signTypeASiCSelect")
 
         onMounted(async () => {
             this.applyDragDropEvents()
@@ -1307,6 +1494,7 @@ export class OwlSigner extends Component {
             await this.initialize()
             setTimeout(() => {
                 this.state.loaded = true
+                this.SignFormatOnChange()
             }, 1000)
         })
         onWillUnmount(() => {

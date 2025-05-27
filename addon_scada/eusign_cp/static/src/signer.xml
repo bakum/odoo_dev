@@ -110,7 +110,6 @@
                                                            multiple="false" hidden="1"
                                                            t-on-change="selectPrivateKeyFile"/>
                                                 </div>
-
                                                     <div class="input-group input-group-sm mb-3">
                                                         <input type="password" id="PKeyPassword" t-ref="PKeyPassword"
                                                          disabled="state.privateKeyReaded"
@@ -121,6 +120,10 @@
                                                             style="cursor:pointer; pointer-events:auto;"
                                                             t-on-click="readPrivateKeyButtonClick"
                                                             disabled="state.privateKeyReaded">Зчитати</span>
+                                                    </div>
+                                                    <div t-attf-class="mb-2 {{state.privateKeyReaded ? '' : 'd-none'}}">
+                                                        <a href="javascript:void(0);">xcxcxcxc.cer</a><br/>
+                                                        <a href="javascript:void(0);">xcxcxcxc1.cer</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -133,35 +136,53 @@
                                             </button>
                                             <div class="panel">
                                                 <div class="m-2">
+                                                    <small class="m-0">Формат контейнера:</small>
+                                                    <select class="form-select form-select-sm mt-1 mb-2"
+                                                            t-ref="SignFormat" t-on-change="SignFormatOnChange">
+                                                        <option value="1">XAdES. Дані та підпис зберігаються в XML файлі (*.xml)</option>
+                                                        <option value="2">PAdES. Дані та підпис зберігаються в PDF файлі (*.pdf)</option>
+                                                        <option value="3">CAdES. Дані та підпис зберігаються в CMS файлі (*.p7s)</option>
+                                                        <option value="4" selected="1">ASIC-E. Дані та підпис зберігаються в архіві (розширений формат)</option>
+                                                        <option value="5">ASIC-S. Дані та підпис зберігаються в архіві (простий формат)</option>
+                                                    </select>
+                                                    <small t-attf-class="m-0 {{state.AsicSelected ? '' : 'd-none'}}">Тип підпису:</small>
+                                                    <select t-attf-class="form-select form-select-sm mt-1 mb-2 {{state.AsicSelected ? '' : 'd-none'}}"
+                                                            t-ref="signTypeASiCSelect"
+                                                            t-on-change="signTypeASiCSelectOnChange">
+									                    <option value="1" selected="1">CAdES</option>
+									                    <option value="2">XAdES</option>
+								                    </select>
                                                     <small class="m-0">Алгоритм підпису:</small>
-                                                    <select class="form-select form-select-sm m-2"
+                                                    <select class="form-select form-select-sm mt-1 mb-2"
                                                             t-ref="DSAlgTypeSelect"
                                                             disabled="1">
                                                         <option value="1" selected="1">ДСТУ-4145</option>
                                                         <option value="2">RSA</option>
                                                     </select>
                                                     <small class="m-0">Формат підпису:</small>
-                                                    <select class="form-select form-select-sm m-2 mb-3"
-                                                            t-ref="DSCAdESTypeSelect" t-on-change="DSCAdESTypeChanged">
-                                                        <option value="0">базовий (CADES_BES)</option>
-                                                        <option value="1">з позначкою часу від ЕЦП (CADES_T)</option>
-                                                        <option value="2">з посиланням на повні дані для перевірки (CADES_C)</option>
-                                                        <option value="3">з повними даними для перевірки (CADES_X_LONG)</option>
-                                                        <option value="4" selected="1">з повними даними ЦСК для перевірки (CADES_X_LONG_TRUSTED)</option>
+                                                    <select t-attf-class="form-select form-select-sm mt-1 mb-2 {{state.XadesSelected ? '' : 'd-none'}}"
+                                                            t-ref="signFormatXAdESSelect">
+                                                        <option value="32">XAdES-B-LTA – е-підпис для тривалого (архівного) зберігання</option>
+									                    <option value="16" selected="1">XAdES-B-LT – додаються повні дані для перевірки</option>
+									                    <option value="4">XAdES-B-T – додається час підписання файлу КЕП</option>
+									                    <option value="1">XAdES-B-B – базова перевірка достовірності і цілісності даних</option>
                                                     </select>
-                                                </div>
-                                            </div>
-
-                                             <button class="accordion">
-                                                 <div class="d-flex align-items-center">
-                                                    <img src="/eusign_cp/static/description/Arrow.png" border="0"/>
-                                                    <h6 class="m-0"><span class="m-2"> 4. Підпис файлів </span></h6>
-                                                </div>
-                                             </button>
-                                             <div class="panel">
-                                                 <div class="m-2">
-                                                     <small class="m-0">Тип підпису:</small>
-                                                    <select class="form-select form-select-sm mt-1 mb-2"
+                                                    <select t-attf-class="form-select form-select-sm mt-1 mb-2 {{state.PadesSelected ? '' : 'd-none'}}" t-ref="signFormatPAdESSelect">
+									                    <option value="32">PAdES-B-LTA – е-підпис для тривалого (архівного) зберігання</option>
+									                    <option value="16" selected="1">PAdES-B-LT – додаються повні дані для перевірки</option>
+									                    <option value="4">PAdES-B-T – додається час підписання файлу КЕП</option>
+									                    <option value="1">PAdES-B-B – базова перевірка достовірності і цілісності даних</option>
+								                    </select>
+                                                    <select t-attf-class="form-select form-select-sm mt-1 mb-2 {{state.CadesSelected ? '' : 'd-none'}}"
+                                                            t-ref="DSCAdESTypeSelect" t-on-change="DSCAdESTypeChanged">
+                                                        <option value="0">CAdES-BES – базова перевірка достовірності і цілісності даних</option>
+                                                        <option value="1">CAdES-T – додається час підписання файлу КЕП</option>
+                                                        <option value="2">CAdES-C – додається посилання на повні дані для перевірки</option>
+                                                        <option value="3" selected="1">CAdES-X Long – Довгостроковий з повними даними для перевірки</option>
+                                                        <option value="4">CAdES-X Long Trusted– Довгостроковий з повними даними ЦСК для перевірки</option>
+                                                    </select>
+                                                    <small t-attf-class="m-0 {{state.CadesSelected &amp;&amp; !state.AsicSelected ? '' : 'd-none'}}">Тип підпису:</small>
+                                                    <select t-attf-class="form-select form-select-sm mt-1 mb-2 {{state.CadesSelected &amp;&amp; !state.AsicSelected ? '' : 'd-none'}}"
                                                             t-ref="SignType">
                                                         <option value="1" selected="1">Підпис та дані в окремих файлах (detached)</option>
                                                         <option value="2">Підпис та дані в одному файлі (enveloped)</option>
@@ -173,9 +194,21 @@
                                                     </div>
                                                     <button type="button" t-ref="SignButton"
                                                             t-attf-class="btn btn-outline-primary btn-sm {{state.file_loaded ? '' : 'disabled'}}"
-                                                            t-on-click="signFile">Підписати</button>
-                                                 </div>
-                                             </div>
+                                                            t-on-click="signFileEx">Підписати</button>
+                                                </div>
+                                            </div>
+
+<!--                                             <button class="accordion">-->
+<!--                                                 <div class="d-flex align-items-center">-->
+<!--                                                    <img src="/eusign_cp/static/description/Arrow.png" border="0"/>-->
+<!--                                                    <h6 class="m-0"><span class="m-2"> 4. Підпис файлів </span></h6>-->
+<!--                                                </div>-->
+<!--                                             </button>-->
+<!--                                             <div class="panel">-->
+<!--                                                 <div class="m-2">-->
+<!--                                                    -->
+<!--                                                 </div>-->
+<!--                                             </div>-->
                                         </div>
                                     </div>
                                 </div>
