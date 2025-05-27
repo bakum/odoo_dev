@@ -4,16 +4,14 @@
 import {browser} from "@web/core/browser/browser"
 import {Component, onMounted, useRef, useState, onWillUnmount} from "@odoo/owl";
 
-class CustomObject {
+class SignableObject {
     constructor(name, data) {
         this.name = name;
         this.data = data;
     }
-
     GetName() {
         return this.name;
     }
-
     GetData() {
         return this.data;
     }
@@ -620,7 +618,7 @@ export class OwlSigner extends Component {
                         }
                         const xadesType = parseInt(self.SignType.el.value) === 2 ? EU_XADES_TYPE_ENVELOPED : EU_XADES_TYPE_DETACHED,
                             signLevel = parseInt(self.signFormatXAdESSelect.el.value),
-                            obj = new CustomObject(fileName, data),
+                            obj = new SignableObject(fileName, data),
                             files = [obj],
                             sign = self.euSign.XAdESSignData(xadesType, signLevel, files, false)
 
@@ -684,7 +682,7 @@ export class OwlSigner extends Component {
                         const asicType = formatSign === 4 ? EU_ASIC_TYPE_E : EU_ASIC_TYPE_S,
                             signType = parseInt(self.signTypeASiCSelect.el.value) === 1 ? EU_ASIC_SIGN_TYPE_CADES : EU_ASIC_SIGN_TYPE_XADES,
                             signLevel = signType === EU_ASIC_SIGN_TYPE_CADES ? this.CAdESTypes[this.DSCAdESTypeSelect.el.selectedIndex] : parseInt(self.signFormatXAdESSelect.el.value),
-                            obj = new CustomObject(fileName, signType === EU_ASIC_SIGN_TYPE_XADES ? data : evt.target.result),
+                            obj = new SignableObject(fileName, signType === EU_ASIC_SIGN_TYPE_XADES ? data : evt.target.result),
                             files = [obj],
                             sign = self.euSign.ASiCSignData(asicType, signType, signLevel, files, false)
 
