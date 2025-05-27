@@ -181,8 +181,8 @@
                                                         <option value="3" selected="1">CAdES-X Long – Довгостроковий з повними даними для перевірки</option>
                                                         <option value="4">CAdES-X Long Trusted– Довгостроковий з повними даними ЦСК для перевірки</option>
                                                     </select>
-                                                    <small t-attf-class="m-0 {{state.CadesSelected &amp;&amp; !state.AsicSelected ? '' : 'd-none'}}">Тип підпису:</small>
-                                                    <select t-attf-class="form-select form-select-sm mt-1 mb-2 {{state.CadesSelected &amp;&amp; !state.AsicSelected ? '' : 'd-none'}}"
+                                                    <small t-attf-class="m-0 {{state.XadesSelected || state.CadesSelected &amp;&amp; !state.AsicSelected ? '' : 'd-none'}}">Тип підпису:</small>
+                                                    <select t-attf-class="form-select form-select-sm mt-1 mb-2 {{state.XadesSelected || state.CadesSelected &amp;&amp; !state.AsicSelected ? '' : 'd-none'}}"
                                                             t-ref="SignType">
                                                         <option value="1" selected="1">Підпис та дані в окремих файлах (detached)</option>
                                                         <option value="2">Підпис та дані в одному файлі (enveloped)</option>

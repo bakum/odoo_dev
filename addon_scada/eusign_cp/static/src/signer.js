@@ -600,7 +600,10 @@ export class OwlSigner extends Component {
                 const data = new Uint8Array(evt.target.result);
                 if (formatSign === 1) {
                     try {
-                        const xadesType = EU_XADES_TYPE_ENVELOPED,
+                        if (!fileName.endsWith('.xml')) {
+                            throw new Error('Файл для підпису має бути у форматі XML')
+                        }
+                        const xadesType = parseInt(self.SignType.el.value) === 2 ? EU_XADES_TYPE_ENVELOPED : EU_XADES_TYPE_DETACHED,
                             signLevel = parseInt(self.signFormatXAdESSelect.el.value),
                             obj = new CustomObject(fileName, data),
                             files = [obj],
@@ -616,6 +619,9 @@ export class OwlSigner extends Component {
                     }
                 } else if (formatSign === 2) {
                     try{
+                        if (!fileName.endsWith('.pdf')) {
+                            throw new Error('Файл для підпису має бути у форматі PDF')
+                        }
                         const signType = parseInt(self.signFormatPAdESSelect.el.value),
                             sign = self.euSign.PDFSignData(data, signType,false)
                         self.SignButton.el.innerHTML = 'Дякую!'
