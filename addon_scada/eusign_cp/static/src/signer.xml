@@ -161,13 +161,15 @@
                                                     </select>
                                                     <small class="m-0">Формат підпису:</small>
                                                     <select t-attf-class="form-select form-select-sm mt-1 mb-2 {{state.XadesSelected ? '' : 'd-none'}}"
-                                                            t-ref="signFormatXAdESSelect">
+                                                            t-ref="signFormatXAdESSelect" t-on-change="signFormatXAdESSelectOnChange">
                                                         <option value="32">XAdES-B-LTA – е-підпис для тривалого (архівного) зберігання</option>
 									                    <option value="16" selected="1">XAdES-B-LT – додаються повні дані для перевірки</option>
 									                    <option value="4">XAdES-B-T – додається час підписання файлу КЕП</option>
 									                    <option value="1">XAdES-B-B – базова перевірка достовірності і цілісності даних</option>
                                                     </select>
-                                                    <select t-attf-class="form-select form-select-sm mt-1 mb-2 {{state.PadesSelected ? '' : 'd-none'}}" t-ref="signFormatPAdESSelect">
+                                                    <select t-attf-class="form-select form-select-sm mt-1 mb-2 {{state.PadesSelected ? '' : 'd-none'}}"
+                                                            t-ref="signFormatPAdESSelect"
+                                                            t-on-change="signFormatPAdESSelectOnChange">
 									                    <option value="32">PAdES-B-LTA – е-підпис для тривалого (архівного) зберігання</option>
 									                    <option value="16" selected="1">PAdES-B-LT – додаються повні дані для перевірки</option>
 									                    <option value="4">PAdES-B-T – додається час підписання файлу КЕП</option>

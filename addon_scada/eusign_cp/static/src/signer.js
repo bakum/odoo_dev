@@ -4,6 +4,21 @@
 import {browser} from "@web/core/browser/browser"
 import {Component, onMounted, useRef, useState, onWillUnmount} from "@odoo/owl";
 
+class CustomObject {
+    constructor(name, data) {
+        this.name = name;
+        this.data = data;
+    }
+
+    GetName() {
+        return this.name;
+    }
+
+    GetData() {
+        return this.data;
+    }
+}
+
 export class OwlSigner extends Component {
     static template = "eusign_cp.owl_signer"
 
@@ -550,6 +565,21 @@ export class OwlSigner extends Component {
         this.utils.LoadFilesToArray(files, _onSuccess, _onFail);
     }
 
+    signFormatPAdESSelectOnChange() {
+        const index = parseInt(this.signFormatPAdESSelect.el.value)
+        if (index === EU_PADES_SIGN_LEVEL_B_B) {
+            this.setAlert('Звертаємо Вашу увагу на те, що із набуттям чинності 07.11.2018 Закону України «Про електронну ідентифікацію та електронні довірчі послуги» та відповідно до частини четвертої статті 26 цього закону, використання кваліфікованої електронної позначки часу для постійного зберігання електронних даних є обов’язковим.', 'alert-warning')
+        }
+
+    }
+
+    signFormatXAdESSelectOnChange() {
+        const index = parseInt(this.signFormatXAdESSelect.el.value)
+        if (index === EU_XADES_SIGN_LEVEL_B_B) {
+            this.setAlert('Звертаємо Вашу увагу на те, що із набуттям чинності 07.11.2018 Закону України «Про електронну ідентифікацію та електронні довірчі послуги» та відповідно до частини четвертої статті 26 цього закону, використання кваліфікованої електронної позначки часу для постійного зберігання електронних даних є обов’язковим.', 'alert-warning')
+        }
+    }
+
     signFileEx() {
         const file = this.FileToSign.el.files[0];
         const self = this;
@@ -575,21 +605,6 @@ export class OwlSigner extends Component {
             return;
         }
         const formatSign = parseInt(this.SignFormat.el.value)
-
-        class CustomObject {
-            constructor(name, data) {
-                this.name = name;
-                this.data = data;
-            }
-
-            GetName() {
-                return this.name;
-            }
-
-            GetData() {
-                return this.data;
-            }
-        }
 
         const fileReader = new FileReader();
 
@@ -618,12 +633,12 @@ export class OwlSigner extends Component {
                         self.setAlert(e.message, 'alert-danger')
                     }
                 } else if (formatSign === 2) {
-                    try{
+                    try {
                         if (!fileName.endsWith('.pdf')) {
                             throw new Error('Файл для підпису має бути у форматі PDF')
                         }
                         const signType = parseInt(self.signFormatPAdESSelect.el.value),
-                            sign = self.euSign.PDFSignData(data, signType,false)
+                            sign = self.euSign.PDFSignData(data, signType, false)
                         self.SignButton.el.innerHTML = 'Дякую!'
                         self.setAlert("Файл успішно підписано", 'alert-success')
 
@@ -1422,7 +1437,7 @@ export class OwlSigner extends Component {
         this.fileWihtOutSign = null
         this.alertStyles = {
             'alert-danger': "linear-gradient(to right, #721c24, #721c24)",
-            'alert-warning': "linear-gradient(to right, #721c24, #f8d7da)",
+            'alert-warning': "linear-gradient(to right, #FFA500, #FFA500)",
             'alert-success': "linear-gradient(to right, #00b09b, #00b09b)",
         }
         this.URL_GET_CERTIFICATES = "/eusign_cp/static/data/CACertificates.p7b"
