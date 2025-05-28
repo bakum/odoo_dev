@@ -45,7 +45,8 @@
                         <page name="distrib_additional" string="Informations">
                             <group>
                                 <group>
-                                    <field name="pricelist_id" options="{'no_open': True, 'no_quick_create': True}"/>
+                                    <field name="has_move" invisible="1"/>
+                                    <field name="pricelist_id" options="{'no_open': True, 'no_quick_create': True}" attrs="{'readonly': [('has_move', '!=', False)]}"/>
                                     <field name="currency_id"/>
                                 </group>
                             </group>

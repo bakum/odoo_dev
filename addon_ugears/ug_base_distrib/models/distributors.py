@@ -24,6 +24,13 @@ class Distributors(models.Model):
     pricelist_id = fields.Many2one('product.pricelist', 'Pricelist', tracking=True, required=True)
     currency_id = fields.Many2one('res.currency', compute="_compute_currency")
     region_id = fields.Many2one('distrib.regions', "Region", tracking=True)
+    has_move = fields.Boolean(string="Has Move", compute="_compute_has_move")
+
+    def _compute_has_move(self):
+        all_moves = self.env['distrib.distributors.move'].sudo()
+        domain = [('distrib_id', 'in', self.ids)]
+        for rec in self:
+            rec.has_move = all_moves.search_count(domain) > 0
 
     @api.depends('pricelist_id')
     def _compute_currency(self):
