@@ -148,6 +148,7 @@ class WebsiteWholeSale(WebsiteSale):
             conversion_rate=conversion_rate,
             **post
         )
+        options['allowFuzzy'] = False
         fuzzy_search_term, product_count, search_product = self._shop_lookup_products(attrib_set, options, post, search,
                                                                                       website)
 
