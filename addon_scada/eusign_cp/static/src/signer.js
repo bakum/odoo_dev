@@ -450,7 +450,7 @@ export class OwlSigner extends Component {
             this.setAlert("Розмір файлу для перевірки підпису занадто великий. Оберіть файл меншого розміру", 'alert-warning');
             return;
         }
-        const _onSuccess = function (files) {
+        const _onSuccess = async function (files) {
             try {
                 let info = "";
                 let signType
@@ -511,10 +511,15 @@ export class OwlSigner extends Component {
                 }
 
                 if (isAsicSign) {
-                    pThis.euSign.ASiCGetSignReferences(0, files[0].data).forEach((ref, index) => {
+                    for (const ref of pThis.euSign.ASiCGetSignReferences(0, files[0].data)) {
+                        // const index = pThis.euSign.ASiCGetSignReferences(0, files[0].data).indexOf(ref);
+                        const zip = new JSZip(),
+                            file = pThis.euSign.ASiCGetReference(files[0].data, ref)
+                        zip.file(ref, file)
+                        const content = await zip.generateAsync({type: "blob"})
                         pThis.saveFile(files[0].name.substring(0,
-                            files[0].name.length - 6), pThis.euSign.ASiCGetReference(files[0].data, ref));
-                    })
+                            files[0].name.length - 6) + '.zip', content);
+                    }
                 } else if (isXAdESSign) {
                     if (isInternalSign) {
                         pThis.euSign.XAdESGetSignReferences(0, files[0].data).forEach((ref, index) => {
@@ -682,7 +687,8 @@ export class OwlSigner extends Component {
                         const asicType = formatSign === 4 ? EU_ASIC_TYPE_E : EU_ASIC_TYPE_S,
                             signType = parseInt(self.signTypeASiCSelect.el.value) === 1 ? EU_ASIC_SIGN_TYPE_CADES : EU_ASIC_SIGN_TYPE_XADES,
                             signLevel = signType === EU_ASIC_SIGN_TYPE_CADES ? this.CAdESTypes[this.DSCAdESTypeSelect.el.selectedIndex] : parseInt(self.signFormatXAdESSelect.el.value),
-                            obj = new SignableObject(fileName, signType === EU_ASIC_SIGN_TYPE_XADES ? data : evt.target.result),
+                            // obj = new SignableObject(fileName, signType === EU_ASIC_SIGN_TYPE_XADES ? data : evt.target.result),
+                            obj = new SignableObject(fileName, data),
                             files = [obj],
                             sign = self.euSign.ASiCSignData(asicType, signType, signLevel, files, false)
 

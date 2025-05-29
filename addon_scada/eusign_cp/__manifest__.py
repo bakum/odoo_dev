@@ -48,6 +48,7 @@
             'eusign_cp/static/lib/qr/reedsolomon.js',
             'eusign_cp/static/lib/fs/Blob.min.js',
             'eusign_cp/static/lib/fs/FileSaver.js',
+            'eusign_cp/static/lib/fs/jszip.min.js',
             'eusign_cp/static/lib/toastify-js.js',
             'eusign_cp/static/lib/toastify.min.css',
             'eusign_cp/static/src/signer.css',
