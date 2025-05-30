@@ -401,15 +401,15 @@ export class OwlSigner extends Component {
     getSignTypeString(signType) {
         switch (signType) {
             case EU_SIGN_TYPE_CADES_BES:
-                return 'базовий';
+                return 'Базовий (CADES-BES)';
             case EU_SIGN_TYPE_CADES_T:
-                return 'з позначкою часу від ЕЦП';
+                return 'З позначкою часу від ЕЦП (CADES-T)';
             case EU_SIGN_TYPE_CADES_C:
-                return 'з посиланням на повні дані для перевірки';
+                return 'З посиланням на повні дані для перевірки (CADES-C)';
             case EU_SIGN_TYPE_CADES_X_LONG:
-                return 'з повними даними для перевірки';
+                return 'з повними даними для перевірки (CADES-X-LONG)';
             case EU_SIGN_TYPE_CADES_X_LONG | EU_SIGN_TYPE_CADES_X_LONG_TRUSTED:
-                return 'з повними даними ЦСК для перевірки';
+                return 'з повними даними ЦСК для перевірки (CADES-X-LONG-TRUSTED)';
             default:
                 return 'невизначено';
         }
