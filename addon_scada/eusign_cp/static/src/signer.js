@@ -505,6 +505,8 @@ export class OwlSigner extends Component {
 
                     if (timeInfo.IsSignTimeStampAvail()) {
                         message += "\nМітка часу (від підпису):" + timeInfo.GetSignTimeStamp();
+                    } else {
+                        message += "не підтверджено надавачем послуг";
                     }
 
                     message += '\nТип підпису: ' + signType;
