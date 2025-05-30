@@ -364,7 +364,7 @@ export class OwlSigner extends Component {
             case EU_ASIC_SIGN_TYPE_CADES:
                 return this.getSignTypeString(signLevel);
             default:
-                return 'невизначено';
+                return 'Невизначено';
         }
     }
 
@@ -379,7 +379,7 @@ export class OwlSigner extends Component {
             case EU_XADES_SIGN_LEVEL_B_LTA:
                 return 'З повними даними для архівного зберігання (XAdES-B-LTA)';
             default:
-                return 'невизначено';
+                return 'Невизначено';
         }
     }
 
@@ -394,7 +394,7 @@ export class OwlSigner extends Component {
             case EU_PADES_SIGN_LEVEL_B_LTA:
                 return 'З повними даними для архівного зберігання (PAdES-B-LTA)';
             default:
-                return 'невизначено';
+                return 'Невизначено';
         }
     }
 
@@ -407,11 +407,11 @@ export class OwlSigner extends Component {
             case EU_SIGN_TYPE_CADES_C:
                 return 'З посиланням на повні дані для перевірки (CADES-C)';
             case EU_SIGN_TYPE_CADES_X_LONG:
-                return 'з повними даними для перевірки (CADES-X-LONG)';
+                return 'З повними даними для перевірки (CADES-X-LONG)';
             case EU_SIGN_TYPE_CADES_X_LONG | EU_SIGN_TYPE_CADES_X_LONG_TRUSTED:
-                return 'з повними даними ЦСК для перевірки (CADES-X-LONG-TRUSTED)';
+                return 'З повними даними ЦСК для перевірки (CADES-X-LONG-TRUSTED)';
             default:
-                return 'невизначено';
+                return 'Невизначено';
         }
     }
 
