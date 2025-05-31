@@ -3,15 +3,18 @@
 // import {loadCSS, loadJS} from "@web/core/assets"
 import {browser} from "@web/core/browser/browser"
 import {Component, onMounted, useRef, useState, onWillUnmount} from "@odoo/owl";
+import {Downloader} from "./components/downloader/downloader";
 
 class SignableObject {
     constructor(name, data) {
         this.name = name;
         this.data = data;
     }
+
     GetName() {
         return this.name;
     }
+
     GetData() {
         return this.data;
     }
@@ -19,6 +22,7 @@ class SignableObject {
 
 export class OwlSigner extends Component {
     static template = "eusign_cp.owl_signer"
+    static components = {Downloader}
 
     loadFilesFromLocalStorage(localStorageFolder, loadFunc) {
         if (!this.utils.IsStorageSupported())

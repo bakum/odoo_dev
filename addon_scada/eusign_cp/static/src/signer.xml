@@ -122,8 +122,7 @@
                                                             disabled="state.privateKeyReaded">Зчитати</span>
                                                     </div>
                                                     <div t-attf-class="mb-2 {{state.privateKeyReaded ? '' : 'd-none'}}">
-                                                        <a href="javascript:void(0);">xcxcxcxc.cer</a><br/>
-                                                        <a href="javascript:void(0);">xcxcxcxc1.cer</a>
+                                                        <Downloader/>
                                                     </div>
                                                 </div>
                                             </div>
