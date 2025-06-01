@@ -459,13 +459,13 @@ export class OwlSigner extends Component {
         const _onSuccess = async function (files) {
             try {
                 let info = "";
-                let signType, file_info = {}, file_info1 = [], files_sign = []
+                let signType, file_info = {}, file_with_sign_info = [], files_sign = []
                 // pThis.state.verified_files = []
                 if (files.length === 1) {
-                    file_info1.serial = files[0].name
-                    file_info1.certificate = files[0].data
-                    file_info1.keyUsage = 'Файл з підписом'
-                    files_sign.push(file_info1)
+                    file_with_sign_info.serial = files[0].name
+                    file_with_sign_info.certificate = files[0].data
+                    file_with_sign_info.keyUsage = 'Файл з підписом'
+                    files_sign.push(file_with_sign_info)
                 }
                 if (isAsicSign) {
                     info = pThis.euSign.ASiCVerifyData(0, files[0].data);
