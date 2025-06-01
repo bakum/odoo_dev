@@ -2,10 +2,10 @@
 <templates xml:space="preserve">
     <t t-name="eusign_cp.owl_downloader">
         <div class="m-2">
-            <small class="m-0">ЕЦП (ДСТУ 4145), Неспростовність (ДСТУ 4145)</small><br/>
-            <a href="javascript:void(0);">xcxcxcxc.cer</a><br/>
-            <small class="m-0">Протоколи розподілу ключів (ДСТУ 4145)</small><br/>
-            <a href="javascript:void(0);">xcxcxcxc1.cer</a>
+            <t t-foreach="props.certificates" t-key="i.serial" t-as="i">
+                <small class="m-0" t-esc="i.keyUsage"/><br/>
+                <a href="javascript:void(0);" t-on-click="onLoadCertificate" t-esc="i.serial"/><br/>
+            </t>
         </div>
     </t>
 </templates>

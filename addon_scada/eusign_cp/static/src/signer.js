@@ -213,6 +213,7 @@ export class OwlSigner extends Component {
                 this.euSign.ReadFile(files[0], _onFileRead, _onError);
             } else {
                 this.file_loaded = false
+                this.state.certificates = []
                 this.onChangeMenuItem()
             }
         } catch (e) {
@@ -258,7 +259,7 @@ export class OwlSigner extends Component {
         // 		file.name.endsWith(".jks"));
         // }
         this.state.privateKeyReaded = this.euSign.IsPrivateKeyReaded()
-        this.state.file_loaded = ev.target.files.length > 0 && this.euSign.IsPrivateKeyReaded()
+        this.state.file_loaded = event.target.files.length > 0 && this.euSign.IsPrivateKeyReaded()
     }
 
     loadCertsAndCRLsFromLocalStorage() {
@@ -430,6 +431,7 @@ export class OwlSigner extends Component {
             fileList.innerHTML = ''; // Очистить предыдущий список
             this.state.filesForVerifyReaded = false
             this.fileElem.el.value = ''
+            this.state.verified_files = []
 
             return
         }
@@ -457,7 +459,14 @@ export class OwlSigner extends Component {
         const _onSuccess = async function (files) {
             try {
                 let info = "";
-                let signType
+                let signType, file_info = {}, file_info1 = [], files_sign = []
+                // pThis.state.verified_files = []
+                if (files.length === 1) {
+                    file_info1.serial = files[0].name
+                    file_info1.certificate = files[0].data
+                    file_info1.keyUsage = 'Файл з підписом'
+                    files_sign.push(file_info1)
+                }
                 if (isAsicSign) {
                     info = pThis.euSign.ASiCVerifyData(0, files[0].data);
                     signType = pThis.getAsicSignTypeString(pThis.euSign.ASiCGetSignType(files[0].data), pThis.euSign.ASiCGetSignLevel(0, files[0].data))
@@ -523,14 +532,22 @@ export class OwlSigner extends Component {
                             file = pThis.euSign.ASiCGetReference(files[0].data, ref)
                         zip.file(ref, file)
                         const content = await zip.generateAsync({type: "blob"})
-                        pThis.saveFile(files[0].name.substring(0,
-                            files[0].name.length - 6) + '.zip', content);
+                        file_info.serial = files[0].name.substring(0, files[0].name.length - 6) + '.zip'
+                        file_info.certificate = content
+                        file_info.keyUsage = 'Файл без підпису (архів)'
+                        files_sign.push(file_info)
+                        // pThis.saveFile(files[0].name.substring(0,
+                        //     files[0].name.length - 6) + '.zip', content);
                     }
                 } else if (isXAdESSign) {
                     if (isInternalSign) {
                         pThis.euSign.XAdESGetSignReferences(0, files[0].data).forEach((ref, index) => {
-                            pThis.saveFile(files[0].name.substring(0,
-                                files[0].name.length - 4) + '.verified' + '.xml', pThis.euSign.XAdESGetReference(files[0].data, ref));
+                            file_info.serial = files[0].name.substring(0, files[0].name.length - 4) + '.verified' + '.xml'
+                            file_info.certificate = pThis.euSign.XAdESGetReference(files[0].data, ref)
+                            file_info.keyUsage = 'Файл без підпису'
+                            files_sign.push(file_info)
+                            // pThis.saveFile(files[0].name.substring(0,
+                            //     files[0].name.length - 4) + '.verified' + '.xml', pThis.euSign.XAdESGetReference(files[0].data, ref));
                         })
                     }
                 } else if (isPDFSign) {
@@ -538,8 +555,12 @@ export class OwlSigner extends Component {
                     //     files[0].name.length - 4) + '.verified' + '.pdf', info.GetData());
                 } else {
                     if (isInternalSign) {
-                        pThis.saveFile(files[0].name.substring(0,
-                            files[0].name.length - 4), info.GetData());
+                        file_info.serial = files[0].name.substring(0, files[0].name.length - 4)
+                        file_info.certificate = info.GetData()
+                        file_info.keyUsage = 'Файл без підпису'
+                        files_sign.push(file_info)
+                        // pThis.saveFile(files[0].name.substring(0,
+                        //     files[0].name.length - 4), info.GetData());
                     }
                 }
 
@@ -557,6 +578,7 @@ export class OwlSigner extends Component {
                 // setStatus('');
                 pThis.setAlert(message, 'alert-success')
                 pThis.VerificationButton.el.innerHTML = 'Дякую!'
+                pThis.state.verified_files = files_sign
             } catch (e) {
                 // alert(e);
                 pThis.setAlert(e.message, 'alert-danger')
@@ -596,6 +618,7 @@ export class OwlSigner extends Component {
             this.SignButton.el.innerHTML = 'Підписати'
             this.FileToSign.el.value = ''
             this.state.file_loaded = false
+            this.state.signed_files = []
             return
         }
 
@@ -621,7 +644,8 @@ export class OwlSigner extends Component {
             return (evt) => {
                 if (evt.target.readyState != FileReader.DONE)
                     return;
-                const data = new Uint8Array(evt.target.result);
+                const data = new Uint8Array(evt.target.result),
+                signed_files = [], info = {}
                 if (formatSign === 1) {
                     try {
                         if (!fileName.endsWith('.xml')) {
@@ -635,8 +659,12 @@ export class OwlSigner extends Component {
 
                         self.SignButton.el.innerHTML = 'Дякую!'
                         self.setAlert("Файл успішно підписано", 'alert-success')
+                        info.serial = fileName
+                        info.keyUsage = 'Цифровий підпис'
+                        info.certificate = sign
+                        signed_files.push(info)
 
-                        self.saveFile(fileName, sign);
+                        // self.saveFile(fileName, sign);
 
                     } catch (e) {
                         self.setAlert(e.message, 'alert-danger')
@@ -650,8 +678,11 @@ export class OwlSigner extends Component {
                             sign = self.euSign.PDFSignData(data, signType, false)
                         self.SignButton.el.innerHTML = 'Дякую!'
                         self.setAlert("Файл успішно підписано", 'alert-success')
-
-                        self.saveFile(fileName, sign)
+                        info.serial = fileName
+                        info.keyUsage = 'Цифровий підпис'
+                        info.certificate = sign
+                        signed_files.push(info)
+                        // self.saveFile(fileName, sign)
                     } catch (e) {
                         self.setAlert(e.message, 'alert-danger')
                     }
@@ -678,7 +709,11 @@ export class OwlSigner extends Component {
                         }
                         self.SignButton.el.innerHTML = 'Дякую!'
                         self.setAlert("Файл успішно підписано", 'alert-success')
-                        self.saveFile(fileName + ".p7s", sign);
+                        // self.saveFile(fileName + ".p7s", sign);
+                        info.serial = fileName + ".p7s"
+                        info.keyUsage = 'Цифровий підпис'
+                        info.certificate = sign
+                        signed_files.push(info)
 
                         // setStatus('');
                         // alert("Файл успішно підписано");
@@ -701,10 +736,18 @@ export class OwlSigner extends Component {
                         self.SignButton.el.innerHTML = 'Дякую!'
                         self.setAlert("Файл успішно підписано", 'alert-success')
 
-                        self.saveFile(fileName + (asicType === EU_ASIC_TYPE_S ? ".asics" : ".asice"), sign);
+                        info.serial = fileName + (asicType === EU_ASIC_TYPE_S ? ".asics" : ".asice")
+                        info.keyUsage = 'Цифровий підпис'
+                        info.certificate = sign
+                        signed_files.push(info)
+
+                        // self.saveFile(fileName + (asicType === EU_ASIC_TYPE_S ? ".asics" : ".asice"), sign);
                     } catch (e) {
                         self.setAlert(e.message, 'alert-danger')
                     }
+                }
+                if (signed_files.length > 0) {
+                   self.state.signed_files = signed_files
                 }
             };
         })(file.name);
@@ -1112,6 +1155,33 @@ export class OwlSigner extends Component {
         return true;
     }
 
+    pKeyInfo() {
+        try {
+            if (this.euSign.IsPrivateKeyReaded()) {
+                let i = 0
+                this.state.certificates = []
+                while (true) {
+                    const certInfo = this.euSign.EnumOwnCertificates(i),
+                        info = {}
+                    if (certInfo == null)
+                        break
+                    const cert = this.euSign.GetCertificate(
+                        certInfo.GetIssuer(), certInfo.GetSerial()),
+                        keyUsage = certInfo.GetKeyUsage()
+
+                    info.serial = 'EU-' + certInfo.GetSerial() + '.cer'
+                    info.certificate = cert
+                    info.keyUsage = keyUsage
+                    this.state.certificates.push(info)
+                        // keyUsageExtended = certInfo.GetExtKeyUsages()
+                    i++
+                }
+            }
+        } catch (e) {
+            this.setAlert(e.message, 'alert-danger')
+        }
+    }
+
     readPrivateKey(keyName, key, password, certificates, fromCache) {
         const self = this;
         const _onError = (e) => {
@@ -1169,6 +1239,7 @@ export class OwlSigner extends Component {
 
             this.privateKeyReaded(true);
             this.file_loaded = this.FileToSign.el.files.length > 0
+            this.pKeyInfo()
             // euSignTest.updateCertList();
 
             if (!fromCache)
@@ -1442,6 +1513,9 @@ export class OwlSigner extends Component {
                 class: '',
             },
             filesForVerifyReaded: false,
+            certificates: [],
+            signed_files: [],
+            verified_files: [],
         })
         this.fileWihtSign = null
         this.fileWihtOutSign = null
