@@ -14,6 +14,7 @@
         'data/sequence.xml',
         'views/actions.xml',
         'views/menu.xml',
+        'wizard/change_pricelist_action.xml'
         'views/distrib_move.xml',
         'views/distrib_move_line.xml',
         'views/distrib.xml',
@@ -50,7 +51,6 @@
         'views/terms_action.xml',
         'views/discount_rules.xml',
         'data/mail_template_data.xml',
-        'wizard/change_pricelist_action.xml'
     ],
     'assets': {
         'web.assets_backend': [
