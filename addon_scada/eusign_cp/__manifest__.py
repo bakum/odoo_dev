@@ -37,6 +37,7 @@
             'eusign_cp/static/src/signer.xml',
             'eusign_cp/static/src/components/downloader/downloader.js',
             'eusign_cp/static/src/components/downloader/downloader.xml',
+            'eusign_cp/static/src/components/downloader/downloader.css',
             'eusign_cp/static/src/accordion.css',
         ],
         'eusign_cp.assets_library': [
