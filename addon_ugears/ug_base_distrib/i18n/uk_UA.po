@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-09 17:43+0000\n"
-"PO-Revision-Date: 2025-04-09 17:43+0000\n"
+"POT-Creation-Date: 2025-06-02 10:44+0000\n"
+"PO-Revision-Date: 2025-06-02 10:44+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -448,6 +448,7 @@ msgid "Budgets"
 msgstr "Планування"
 
 #. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.change_pricelist_view
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.ug_import_distrib_budget_from_xls_view
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.ug_import_distrib_expenses_from_xls_view
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.ug_import_distrib_inventory_from_xls_view
@@ -513,6 +514,18 @@ msgstr "Категорія"
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_discount_rules_form
 msgid "Category Items"
 msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.model,name:ug_base_distrib.model_distrib_change_pricelist
+msgid "Change Distributor Pricelist"
+msgstr ""
+
+#. module: ug_base_distrib
+#: model:ir.actions.act_window,name:ug_base_distrib.action_change_pricelist
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.change_pricelist_view
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.view_distributors_distrib_form
+msgid "Change Pricelist"
+msgstr "Змінити прайс-лист"
 
 #. module: ug_base_distrib
 #: model:ir.model.fields,help:ug_base_distrib.field_res_config_settings__restrict_date
@@ -627,6 +640,7 @@ msgstr "Створити новий продукт"
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__create_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_change_pricelist__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules_line__create_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__create_uid
@@ -657,6 +671,7 @@ msgstr ""
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__create_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_change_pricelist__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules_line__create_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__create_date
@@ -694,6 +709,7 @@ msgstr "Кредит"
 #: model:ir.model,name:ug_base_distrib.model_res_currency
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__currency_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__currency_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_change_pricelist__currency_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__currency_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__currency_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__currency_id
@@ -870,6 +886,7 @@ msgstr "Правила знижок"
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__display_name
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_change_pricelist__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules_line__display_name
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__display_name
@@ -938,6 +955,7 @@ msgstr "Дистрибуція"
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__distrib_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__distrib_id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_change_pricelist__distrib_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move__distrib_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_line__distrib_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors_move_statistic__distrib_id
@@ -1452,6 +1470,11 @@ msgid "Has Message"
 msgstr ""
 
 #. module: ug_base_distrib
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__has_move
+msgid "Has Move"
+msgstr ""
+
+#. module: ug_base_distrib
 #: model:ir.module.category,description:ug_base_distrib.module_category_distrib_distributors
 msgid "Helps you manage your distribution"
 msgstr "Допомагає керувати дистриб'юторами"
@@ -1467,6 +1490,7 @@ msgstr "Історія"
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__id
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_change_pricelist__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules_line__id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__id
@@ -1928,6 +1952,7 @@ msgstr "Дата останньої інвентаризації"
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line____last_update
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_change_pricelist____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules_line____last_update
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors____last_update
@@ -1965,6 +1990,7 @@ msgstr ""
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__write_uid
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_change_pricelist__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules_line__write_uid
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__write_uid
@@ -1995,6 +2021,7 @@ msgstr ""
 #. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_budget_move_line__write_date
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_change_pricelist__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules_line__write_date
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__write_date
@@ -2579,6 +2606,7 @@ msgstr ""
 
 #. module: ug_base_distrib
 #: model:ir.model,name:ug_base_distrib.model_product_pricelist
+#: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_change_pricelist__pricelist_id
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_distributors__pricelist_id
 #: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_price
 msgid "Pricelist"
@@ -2850,11 +2878,6 @@ msgid "Responsible User"
 msgstr ""
 
 #. module: ug_base_distrib
-#: model:ir.ui.menu,name:ug_base_distrib.menu_distrib_review
-msgid "Review"
-msgstr "Огляд"
-
-#. module: ug_base_distrib
 #: model:ir.model.fields,field_description:ug_base_distrib.field_distrib_discount_rules__move_line
 msgid "Rule Lines"
 msgstr ""
@@ -2912,6 +2935,11 @@ msgstr "Інформаційна панель продажів дістріб'ю
 #: model:ir.actions.act_window,name:ug_base_distrib.action_distrib_sales_channels_form
 msgid "Sales channels"
 msgstr "Канали продажу"
+
+#. module: ug_base_distrib
+#: model_terms:ir.ui.view,arch_db:ug_base_distrib.change_pricelist_view
+msgid "Save"
+msgstr "Зберегти"
 
 #. module: ug_base_distrib
 #: model_terms:ir.ui.view,arch_db:ug_base_distrib.ug_import_distrib_budget_from_xls_view

@@ -6,6 +6,11 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
+                    <header>
+                        <button name="%(action_change_pricelist)d" class="btn-primary" data-hotkey="v" string="Change Pricelist" type="action"
+                            context="{'default_distrib_id': id, 'default_currency_id': currency_id, 'default_pricelist_id': pricelist_id}"
+                            attrs="{'invisible': [('id', '=', False)]}" groups="ug_base_distrib.group_distrib_manager"/>
+                    </header>
                     <div class="oe_button_box" name="button_box"/>
                     <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
                     <field name="ref" readonly="1"/>
@@ -33,7 +38,8 @@
                             </div>
                         </group>
                         <group>
-                            <field name="partner_id" widget="res_partner_many2one" placeholder="Company Name..." domain="[('is_company', '=', True)]"/>
+                            <field name="partner_id" widget="res_partner_many2one"
+                                   placeholder="Company Name..." domain="[('is_company', '=', True)]" options="{'no_open': True, 'no_quick_create': True}"/>
                             <field name="phone" widget="phone"/>
                             <field name="mobile" widget="phone"/>
                             <field name="email" widget="email" context="{'gravatar_image': True}"/>
@@ -47,7 +53,7 @@
                                 <group>
                                     <field name="has_move" invisible="1"/>
                                     <field name="pricelist_id" options="{'no_open': True, 'no_quick_create': True}" attrs="{'readonly': [('has_move', '!=', False)]}"/>
-                                    <field name="currency_id"/>
+                                    <field name="currency_id" options="{'no_open': True, 'no_quick_create': True}"/>
                                 </group>
                             </group>
                         </page>

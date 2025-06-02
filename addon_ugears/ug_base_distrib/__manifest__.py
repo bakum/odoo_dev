@@ -49,7 +49,8 @@
         'views/inventory_history.xml',
         'views/terms_action.xml',
         'views/discount_rules.xml',
-        'data/mail_template_data.xml'
+        'data/mail_template_data.xml',
+        'wizard/change_pricelist_action.xml'
     ],
     'assets': {
         'web.assets_backend': [
