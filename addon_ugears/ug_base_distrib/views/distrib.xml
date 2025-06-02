@@ -9,7 +9,7 @@
                     <header>
                         <button name="%(action_change_pricelist)d" class="btn-primary" data-hotkey="v" string="Change Pricelist" type="action"
                             context="{'default_distrib_id': id, 'default_currency_id': currency_id, 'default_pricelist_id': pricelist_id}"
-                            attrs="{'invisible': [('id', '=', False)]}" groups="ug_base_distrib.group_distrib_manager"/>
+                            attrs="{'invisible': ['|',('has_move', '=', False), ('id', '=', False)]}" groups="ug_base_distrib.group_distrib_manager"/>
                     </header>
                     <div class="oe_button_box" name="button_box"/>
                     <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
