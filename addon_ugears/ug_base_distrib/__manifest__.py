@@ -14,7 +14,7 @@
         'data/sequence.xml',
         'views/actions.xml',
         'views/menu.xml',
-        'wizard/change_pricelist_action.xml'
+        'wizard/change_pricelist_action.xml',
         'views/distrib_move.xml',
         'views/distrib_move_line.xml',
         'views/distrib.xml',
