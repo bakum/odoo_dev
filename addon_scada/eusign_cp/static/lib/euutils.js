@@ -33,6 +33,11 @@ var Utils = NewClass({
     },
     function (euSign) {
         this.euSign = euSign;
+        this.alertStyles = {
+            'alert-danger': "linear-gradient(to right, #721c24, #721c24)",
+            'alert-warning': "linear-gradient(to right, #FFA500, #FFA500)",
+            'alert-success': "linear-gradient(to right, #00b09b, #00b09b)",
+        }
     },
     {
         //-----------------------------------------------------------------------------
@@ -64,6 +69,18 @@ var Utils = NewClass({
 
             console.log(msg);
         },
+        alert(message, className, closeButton = false) {
+            let background = this.alertStyles[className]
+            Toastify({
+                text: message,
+                close: closeButton,
+                style: {
+                    background: background,
+                },
+                stopOnFocus: true,
+                duration: 5000
+            }).showToast();
+        },
         IsFileSystemSupported: function () {
             window.requestFileSystem = window.requestFileSystem ||
                 window.webkitRequestFileSystem;
@@ -71,12 +88,8 @@ var Utils = NewClass({
                 EU_PERSISTENT_FS_SIZE, initFunction, HandleErrorFileSystem);
         },
         IsFileSupported: function () {
-            if (window.File && window.FileReader &&
-                window.FileList && window.Blob) {
-                return true;
-            } else {
-                return false;
-            }
+            return !!(window.File && window.FileReader &&
+                window.FileList && window.Blob);
         },
         //-----------------------------------------------------------------------------
         // Session storage API

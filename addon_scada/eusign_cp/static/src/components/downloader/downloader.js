@@ -3,6 +3,7 @@
 import {Component} from "@odoo/owl"
 
 export class Downloader extends Component {
+    static template = "eusign_cp.owl_downloader"
     saveFile(fileName, array) {
         const blob = new Blob([array], {type: "application/octet-stream"});
         saveAs(blob, fileName);
@@ -16,5 +17,3 @@ export class Downloader extends Component {
         }
     }
 }
-
-Downloader.template = "eusign_cp.owl_downloader"

@@ -4,6 +4,7 @@
 import {browser} from "@web/core/browser/browser"
 import {Component, onMounted, useRef, useState, onWillUnmount} from "@odoo/owl";
 import {Downloader} from "./components/downloader/downloader";
+import {Verifier} from "./components/verifier/verifier";
 
 class SignableObject {
     constructor(name, data) {
@@ -22,7 +23,7 @@ class SignableObject {
 
 export class OwlSigner extends Component {
     static template = "eusign_cp.owl_signer"
-    static components = {Downloader}
+    static components = {Downloader, Verifier}
 
     loadFilesFromLocalStorage(localStorageFolder, loadFunc) {
         if (!this.utils.IsStorageSupported())
@@ -42,104 +43,9 @@ export class OwlSigner extends Component {
         }
     }
 
-    async handleFilesForVerification(files) {
-        if (files.length === 0) {
-            return
-        }
-        const fileList = document.getElementById('fileList');
-        fileList.innerHTML = ''; // Очистить предыдущий список
-        this.fileWihtSign = null
-        this.fileWihtOutSign = null
-        this.state.filesForVerifyReaded = false
-        if (files.length > 2) {
-            this.setAlert('Виберіть не більше 2-х файлів', 'alert-danger')
-            return
-        }
-        let isSign = false
-        for (const file of files) {
-            if (file.name.endsWith('.p7s') || file.name.endsWith('.asics') || file.name.endsWith('.asice')) {
-                isSign = true
-                break
-            }
-            if (file.name.endsWith('.pdf')) {
-                try {
-                    const data = await this.utils.loadFileAsArrayBuffer(file),
-                        uint8Array = new Uint8Array(data);
-                    this.euSign.PDFGetSignsCount(uint8Array)
-                    isSign = true
-                    break
-                } catch (e) {
-
-                }
-            }
-            if (file.name.endsWith('.xml')) {
-                try {
-                    const data = await this.utils.loadFileAsArrayBuffer(file),
-                        uint8Array = new Uint8Array(data);
-                    this.euSign.XAdESGetSignsCount(uint8Array)
-                    isSign = true
-                    break
-                } catch (e) {
-
-                }
-            }
-        }
-        if (!isSign) {
-            this.setAlert('Виберіть файл з підписом', 'alert-danger')
-            return
-        }
-        for (const file of files) {
-            const li = document.createElement('li');
-            let content
-            if (file.name.endsWith('.p7s') || file.name.endsWith('.asics') || file.name.endsWith('.asice')) {
-                content = 'Файл з підписом : ' + file.name
-                this.fileWihtSign = file
-            } else {
-                if (file.name.endsWith('.xml')) {
-                    try {
-                        const data = await this.utils.loadFileAsArrayBuffer(file),
-                            uint8Array = new Uint8Array(data);
-                        this.euSign.XAdESGetSignsCount(uint8Array)
-                        content = 'Файл з підписом : ' + file.name
-                        this.fileWihtSign = file
-                        // continue
-                    } catch (e) {
-                        content = 'Файл без підпису : ' + file.name
-                        this.fileWihtOutSign = file
-                        // continue
-                    }
-                } else if (file.name.endsWith('.pdf')) {
-                    try {
-                        const data = await this.utils.loadFileAsArrayBuffer(file),
-                            uint8Array = new Uint8Array(data);
-                        this.euSign.PDFGetSignsCount(uint8Array)
-                        content = 'Файл з підписом : ' + file.name
-                        this.fileWihtSign = file
-                        // continue
-                    } catch (e) {
-                        content = 'Файл без підпису : ' + file.name
-                        this.fileWihtOutSign = file
-                        // continue
-                    }
-                } else {
-                    content = 'Файл без підпису : ' + file.name
-                    this.fileWihtOutSign = file
-                }
-            }
-            li.textContent = content;
-            fileList.appendChild(li);
-        }
-        // this.VerificationButton.el.disabled = ''
-        this.state.filesForVerifyReaded = true
-    }
-
     onChangeFileToSign(ev) {
         // console.log(ev.target)
         this.state.file_loaded = ev.target.files.length > 0 && this.euSign.IsPrivateKeyReaded()
-    }
-
-    handleFiles(ev) {
-        this.handleFilesForVerification(ev.target.files)
     }
 
     setItemsToList(listId, items) {
@@ -196,16 +102,6 @@ export class OwlSigner extends Component {
                     return;
                 }
 
-                // if (utils.IsFileImage(files[0])) {
-                // 	euSignTest.readPrivateKeyAsImage(files[0], _onSuccess, _onError);
-                // }
-                // else {
-                // 	var _onFileRead = function(readedFile) {
-                // 		_onSuccess(readedFile.file.name, readedFile.data);
-                // 	};
-                //
-                // 	euSign.ReadFile(files[0], _onFileRead, _onError);
-                // }
                 var _onFileRead = function (readedFile) {
                     _onSuccess(readedFile.file.name, readedFile.data);
                 };
@@ -230,34 +126,18 @@ export class OwlSigner extends Component {
         this.PKeyFileInput.el.value = null
         this.clearPrivateKeyCertificatesList();
         this.state.status_key = "";
-        this.fileElem.el.value = null
+        // this.fileElem.el.value = null
     }
 
     clearPrivateKeyCertificatesList() {
         this.privateKeyCerts = null;
-        // document.getElementById('ChoosePKCertsInput').value = null;
-        // document.getElementById('SelectedPKCertsList').innerHTML =
-        // 	"Сертифікати відкритого ключа не обрано" + '<br>';
     }
 
     selectPrivateKeyFile(event) {
         const enable = (event.target.files.length == 1);
-
-        // setPointerEvents(document.getElementById('PKeyReadButton'), enable);
         this.PKeyPassword.el.disabled = enable ? '' : 'disabled'
-        // document.getElementById('PKeyPassword').disabled =
-        // 	enable ? '' : 'disabled';
         this.PKeyFileName.el.value = enable ? event.target.files[0].name : ''
-        // document.getElementById('PKeyFileName').value =
-        // 	enable ? event.target.files[0].name : '';
         this.PKeyPassword.el.value = ''
-        // document.getElementById('PKeyPassword').value = '';
-
-        // if (enable) {
-        // 	var file = event.target.files[0];
-        // 	setPointerEvents(document.getElementById('PKeySaveInfo'),
-        // 		file.name.endsWith(".jks"));
-        // }
         this.state.privateKeyReaded = this.euSign.IsPrivateKeyReaded()
         this.state.file_loaded = event.target.files.length > 0 && this.euSign.IsPrivateKeyReaded()
     }
@@ -276,15 +156,10 @@ export class OwlSigner extends Component {
                 this.setItemsToList('SelectedCertsList', files);
             else {
                 this.SelectedCertsList.el.innerHTML = "Сертифікати відсутні в локальному сховищі"
-                // document.getElementById('SelectedCertsList').innerHTML =
-                //     "Сертифікати відсутні в локальному сховищі";
             }
         } catch (e) {
             this.SelectedCertsList.el.innerHTML = "Виникла помилка при завантаженні сертифікатів " +
                 "з локального сховища"
-            // document.getElementById('SelectedCertsList').innerHTML =
-            //     "Виникла помилка при завантаженні сертифікатів " +
-            //     "з локального сховища";
         }
 
         try {
@@ -303,13 +178,9 @@ export class OwlSigner extends Component {
                 this.setItemsToList('SelectedCRLsList', files);
             else {
                 this.SelectedCRLsList.el.innerHTML = "СВС відсутні в локальному сховищі"
-                // document.getElementById('SelectedCRLsList').innerHTML =
-                //     "СВС відсутні в локальному сховищі";
             }
         } catch (e) {
             this.SelectedCRLsList.el.innerHTML = "Виникла помилка при завантаженні СВС з локального сховища"
-            // document.getElementById('SelectedCRLsList').innerHTML =
-            //     "Виникла помилка при завантаженні СВС з локального сховища";
         }
 
     }
@@ -362,240 +233,6 @@ export class OwlSigner extends Component {
         }
     }
 
-    getAsicSignTypeString(signType, signLevel) {
-        switch (signType) {
-            case EU_ASIC_SIGN_TYPE_XADES:
-                return this.getXadesSignTypeString(signLevel);
-            case EU_ASIC_SIGN_TYPE_CADES:
-                return this.getSignTypeString(signLevel);
-            default:
-                return 'Невизначено';
-        }
-    }
-
-    getXadesSignTypeString(signType) {
-        switch (signType) {
-            case EU_XADES_SIGN_LEVEL_B_B:
-                return 'Базовий (XAdES-B-B)';
-            case EU_XADES_SIGN_LEVEL_B_T:
-                return 'З позначкою часу від ЕП (XAdES-B-T)';
-            case EU_XADES_SIGN_LEVEL_B_LT:
-                return 'З повними даними для перевірки (XAdES-B-LT)';
-            case EU_XADES_SIGN_LEVEL_B_LTA:
-                return 'З повними даними для архівного зберігання (XAdES-B-LTA)';
-            default:
-                return 'Невизначено';
-        }
-    }
-
-    getPDFSignTypeString(signType) {
-        switch (signType) {
-            case EU_PADES_SIGN_LEVEL_B_B:
-                return 'Базовий (PAdES-B-B)';
-            case EU_PADES_SIGN_LEVEL_B_T:
-                return 'З позначкою часу від ЕП (PAdES-B-T)';
-            case EU_PADES_SIGN_LEVEL_B_LT:
-                return 'З повними даними для перевірки (PAdES-B-LT)';
-            case EU_PADES_SIGN_LEVEL_B_LTA:
-                return 'З повними даними для архівного зберігання (PAdES-B-LTA)';
-            default:
-                return 'Невизначено';
-        }
-    }
-
-    getSignTypeString(signType) {
-        switch (signType) {
-            case EU_SIGN_TYPE_CADES_BES:
-                return 'Базовий (CADES-BES)';
-            case EU_SIGN_TYPE_CADES_T:
-                return 'З позначкою часу від ЕЦП (CADES-T)';
-            case EU_SIGN_TYPE_CADES_C:
-                return 'З посиланням на повні дані для перевірки (CADES-C)';
-            case EU_SIGN_TYPE_CADES_X_LONG:
-                return 'З повними даними для перевірки (CADES-X-LONG)';
-            case EU_SIGN_TYPE_CADES_X_LONG | EU_SIGN_TYPE_CADES_X_LONG_TRUSTED:
-                return 'З повними даними ЦСК для перевірки (CADES-X-LONG-TRUSTED)';
-            default:
-                return 'Невизначено';
-        }
-    }
-
-    verifyFile(ev) {
-        // console.log(this.fileWihtOutSign)
-        // console.log(this.fileWihtSign)
-        if (this.VerificationButton.el.innerHTML == 'Дякую!') {
-            this.VerificationButton.el.innerHTML = 'Перевірити'
-            this.fileWihtOutSign = null
-            this.fileWihtSign = null
-            const fileList = document.getElementById('fileList');
-            fileList.innerHTML = ''; // Очистить предыдущий список
-            this.state.filesForVerifyReaded = false
-            this.fileElem.el.value = ''
-            this.state.verified_files = []
-
-            return
-        }
-        if (this.fileWihtSign == null && this.fileWihtOutSign == null) {
-            this.setAlert('Виберіть файли для перевірки', 'alert-danger')
-            return
-        }
-
-        const pThis = this;
-        const files = [],
-            isInternalSign = !(this.fileWihtOutSign != null),
-            isGetSignerInfo = true,
-            isAsicSign = this.fileWihtSign.name.endsWith('.asics') || this.fileWihtSign.name.endsWith('.asice'),
-            isXAdESSign = this.fileWihtSign.name.endsWith('.xml'),
-            isPDFSign = this.fileWihtSign.name.endsWith('.pdf')
-        if (!isInternalSign) {
-            files.push(this.fileWihtOutSign)
-        }
-        files.push(this.fileWihtSign);
-        if ((files[0].size > (Module.MAX_DATA_SIZE + EU_MAX_P7S_CONTAINER_SIZE)) ||
-            (!isInternalSign && (files[1].size > Module.MAX_DATA_SIZE))) {
-            this.setAlert("Розмір файлу для перевірки підпису занадто великий. Оберіть файл меншого розміру", 'alert-warning');
-            return;
-        }
-        const _onSuccess = async function (files) {
-            try {
-                let info = "";
-                let signType, file_info = {}, file_with_sign_info = [], files_sign = []
-                // pThis.state.verified_files = []
-                if (files.length === 1) {
-                    file_with_sign_info.serial = files[0].name
-                    file_with_sign_info.certificate = files[0].data
-                    file_with_sign_info.keyUsage = 'Файл з підписом'
-                    files_sign.push(file_with_sign_info)
-                }
-                if (isAsicSign) {
-                    info = pThis.euSign.ASiCVerifyData(0, files[0].data);
-                    signType = pThis.getAsicSignTypeString(pThis.euSign.ASiCGetSignType(files[0].data), pThis.euSign.ASiCGetSignLevel(0, files[0].data))
-                } else if (isXAdESSign) {
-                    pThis.euSign.XAdESGetSignReferences(0, files[0].data).forEach((ref, index) => {
-                        // let reference = pThis.euSign.XAdESGetReference(files[isInternalSign ? 0 : 1].data, ref)
-                        info = pThis.euSign.XAdESVerifyData(ref, 0, files[0].data);
-                    })
-                    signType = pThis.getXadesSignTypeString(pThis.euSign.XAdESGetSignLevel(0, files[0].data))
-                } else if (isPDFSign) {
-                    info = pThis.euSign.PDFVerifyData(0, files[0].data)
-                    signType = pThis.getPDFSignTypeString(pThis.euSign.PDFGetSignType(0, files[0].data))
-                } else {
-                    if (isInternalSign) {
-                        info = pThis.euSign.VerifyDataInternal(files[0].data);
-                    } else {
-                        info = pThis.euSign.VerifyData(files[0].data, files[1].data);
-                    }
-                    signType = pThis.getSignTypeString(pThis.euSign.GetSignType(0, files[isInternalSign ? 0 : 1].data))
-                }
-                // if (!isAsicSign && isInternalSign) {
-                //     info = pThis.euSign.VerifyDataInternal(files[0].data);
-                // } else if (!isAsicSign && !isInternalSign) {
-                //     info = pThis.euSign.VerifyData(files[0].data, files[1].data);
-                // } else {
-                //     // let signerCount = pThis.euSign.ASiCGetSignsCount(files[0].data)
-                //     info = pThis.euSign.ASiCVerifyData(0, files[0].data);
-                // }
-                // const signType = !isAsicSign ? pThis.getSignTypeString(
-                //     pThis.euSign.GetSignType(0, files[isInternalSign ? 0 : 1].data)
-                // ) : pThis.getAsicSignTypeString(pThis.euSign.ASiCGetSignType(files[0].data))
-
-                let message = "Підпис успішно перевірено";
-
-                if (isGetSignerInfo) {
-                    const ownerInfo = info.GetOwnerInfo();
-                    const timeInfo = info.GetTimeInfo();
-
-                    message += "\n";
-                    message += "Підписувач: " + ownerInfo.GetSubjCN() + "\n" +
-                        "ЦСК: " + ownerInfo.GetIssuerCN() + "\n" +
-                        "Серійний номер: " + ownerInfo.GetSerial() + "\n";
-                    if (timeInfo.IsTimeAvail()) {
-                        message += (timeInfo.IsTimeStamp() ?
-                            "Мітка часу (від даних):" : "Час підпису: ") + timeInfo.GetTime();
-                    } else {
-                        message += "Час підпису відсутній";
-                    }
-
-                    if (timeInfo.IsSignTimeStampAvail()) {
-                        message += "\nМітка часу (від підпису):" + timeInfo.GetSignTimeStamp();
-                    } else {
-                        message += "не підтверджено надавачем послуг";
-                    }
-
-                    message += '\nТип підпису: ' + signType;
-                }
-
-                if (isAsicSign) {
-                    for (const ref of pThis.euSign.ASiCGetSignReferences(0, files[0].data)) {
-                        // const index = pThis.euSign.ASiCGetSignReferences(0, files[0].data).indexOf(ref);
-                        const zip = new JSZip(),
-                            file = pThis.euSign.ASiCGetReference(files[0].data, ref)
-                        zip.file(ref, file)
-                        const content = await zip.generateAsync({type: "blob"})
-                        file_info.serial = files[0].name.substring(0, files[0].name.length - 6) + '.zip'
-                        file_info.certificate = content
-                        file_info.keyUsage = 'Файл без підпису (архів)'
-                        files_sign.push(file_info)
-                        // pThis.saveFile(files[0].name.substring(0,
-                        //     files[0].name.length - 6) + '.zip', content);
-                    }
-                } else if (isXAdESSign) {
-                    if (isInternalSign) {
-                        pThis.euSign.XAdESGetSignReferences(0, files[0].data).forEach((ref, index) => {
-                            file_info.serial = files[0].name.substring(0, files[0].name.length - 4) + '.verified' + '.xml'
-                            file_info.certificate = pThis.euSign.XAdESGetReference(files[0].data, ref)
-                            file_info.keyUsage = 'Файл без підпису'
-                            files_sign.push(file_info)
-                            // pThis.saveFile(files[0].name.substring(0,
-                            //     files[0].name.length - 4) + '.verified' + '.xml', pThis.euSign.XAdESGetReference(files[0].data, ref));
-                        })
-                    }
-                } else if (isPDFSign) {
-                    // pThis.saveFile(files[0].name.substring(0,
-                    //     files[0].name.length - 4) + '.verified' + '.pdf', info.GetData());
-                } else {
-                    if (isInternalSign) {
-                        file_info.serial = files[0].name.substring(0, files[0].name.length - 4)
-                        file_info.certificate = info.GetData()
-                        file_info.keyUsage = 'Файл без підпису'
-                        files_sign.push(file_info)
-                        // pThis.saveFile(files[0].name.substring(0,
-                        //     files[0].name.length - 4), info.GetData());
-                    }
-                }
-
-                // if (isInternalSign && !isAsicSign) {
-                //     pThis.saveFile(files[0].name.substring(0,
-                //         files[0].name.length - 4), info.GetData());
-                // } else if (isAsicSign) {
-                //     pThis.euSign.ASiCGetSignReferences(0, files[0].data).forEach((ref, index) => {
-                //         pThis.saveFile(files[0].name.substring(0,
-                //             files[0].name.length - 6), pThis.euSign.ASiCGetReference(files[0].data, ref));
-                //     })
-                // }
-
-                // alert(message);
-                // setStatus('');
-                pThis.setAlert(message, 'alert-success')
-                pThis.VerificationButton.el.innerHTML = 'Дякую!'
-                pThis.state.verified_files = files_sign
-            } catch (e) {
-                // alert(e);
-                pThis.setAlert(e.message, 'alert-danger')
-                // setStatus('');
-            }
-        };
-
-        const _onFail = function (files) {
-            // setStatus('');
-            // alert("Виникла помилка при зчитуванні файлів для перевірки підпису");
-            pThis.setAlert("Виникла помилка при зчитуванні файлів для перевірки підпису", 'alert-danger')
-        };
-
-        // setStatus('перевірка підпису файлів');
-        this.utils.LoadFilesToArray(files, _onSuccess, _onFail);
-    }
-
     signFormatPAdESSelectOnChange() {
         const index = parseInt(this.signFormatPAdESSelect.el.value)
         if (index === EU_PADES_SIGN_LEVEL_B_B) {
@@ -628,7 +265,6 @@ export class OwlSigner extends Component {
         }
 
         if (file.size > Module.MAX_DATA_SIZE) {
-            // alert("Розмір файлу для піпису занадто великий. Оберіть файл меншого розміру");
             this.setAlert("Розмір файлу для піпису занадто великий. Оберіть файл меншого розміру", 'alert-warning')
             return;
         }
@@ -664,8 +300,6 @@ export class OwlSigner extends Component {
                         info.certificate = sign
                         signed_files.push(info)
 
-                        // self.saveFile(fileName, sign);
-
                     } catch (e) {
                         self.setAlert(e.message, 'alert-danger')
                     }
@@ -688,10 +322,7 @@ export class OwlSigner extends Component {
                     }
                 } else if (formatSign === 3) {
                     const isInternalSign = parseInt(self.SignType.el.value) === 2
-                    // document.getElementById("InternalSignCheckbox").checked;
                     const isAddCert = true;
-                    // var isAddCert = document.getElementById(
-                    // 	"AddCertToInternalSignCheckbox").checked;
                     const dsAlgType = parseInt(self.DSAlgTypeSelect.el.value);
 
 
@@ -714,9 +345,6 @@ export class OwlSigner extends Component {
                         info.keyUsage = 'Цифровий підпис'
                         info.certificate = sign
                         signed_files.push(info)
-
-                        // setStatus('');
-                        // alert("Файл успішно підписано");
 
                     } catch (e) {
                         // setStatus('');
@@ -741,7 +369,6 @@ export class OwlSigner extends Component {
                         info.certificate = sign
                         signed_files.push(info)
 
-                        // self.saveFile(fileName + (asicType === EU_ASIC_TYPE_S ? ".asics" : ".asice"), sign);
                     } catch (e) {
                         self.setAlert(e.message, 'alert-danger')
                     }
@@ -752,7 +379,6 @@ export class OwlSigner extends Component {
             };
         })(file.name);
 
-        // setStatus('підпис файлу');
         fileReader.readAsArrayBuffer(file);
     }
 
@@ -772,7 +398,6 @@ export class OwlSigner extends Component {
         }
 
         if (file.size > Module.MAX_DATA_SIZE) {
-            // alert("Розмір файлу для піпису занадто великий. Оберіть файл меншого розміру");
             this.setAlert("Розмір файлу для піпису занадто великий. Оберіть файл меншого розміру", 'alert-warning')
             return;
         }
@@ -789,10 +414,8 @@ export class OwlSigner extends Component {
                     return;
 
                 const isInternalSign = parseInt(self.SignType.el.value) === 2
-                // document.getElementById("InternalSignCheckbox").checked;
                 const isAddCert = true;
-                // var isAddCert = document.getElementById(
-                // 	"AddCertToInternalSignCheckbox").checked;
+
                 const dsAlgType = parseInt(self.DSAlgTypeSelect.el.value);
 
                 var data = new Uint8Array(evt.target.result);
@@ -873,7 +496,6 @@ export class OwlSigner extends Component {
                 }
             }
         } catch (e) {
-            // alert("Виникла помилка при встановленні налашувань: " + e);
             this.setAlert("Виникла помилка при встановленні налашувань: " + e.message, 'alert-danger')
         }
     }
@@ -885,12 +507,9 @@ export class OwlSigner extends Component {
         if (certificates != null) {
             try {
                 this.euSign.SaveCertificates(certificates);
-                // this.updateCertList();
+
                 return;
             } catch (e) {
-                // alert("Виникла помилка при імпорті " +
-                //     "завантажених з сервера сертифікатів " +
-                //     "до файлового сховища");
                 this.setAlert("Виникла помилка при імпорті " +
                     "завантажених з сервера сертифікатів " +
                     "до файлового сховища", 'alert-danger')
@@ -903,11 +522,8 @@ export class OwlSigner extends Component {
                 pThis.utils.SetSessionStorageItem(
                     pThis.CACertificatesSessionStorageName,
                     certificates, false);
-                // this.updateCertList();
             } catch (e) {
-                // alert("Виникла помилка при імпорті " +
-                //     "завантажених з сервера сертифікатів " +
-                //     "до файлового сховища");
+
                 pThis.setAlert("Виникла помилка при імпорті " +
                     "завантажених з сервера сертифікатів " +
                     "до файлового сховища", 'alert-danger')
@@ -936,8 +552,7 @@ export class OwlSigner extends Component {
             this.CAServerIndexSessionStorageName, false, false);
         if (index != null) {
             this.CAsServersSelect.el.selectedIndex = parseInt(index)
-            // document.getElementById("CAsServersSelect").selectedIndex =
-            // 	parseInt(index);
+
             this.setCASettings(parseInt(index));
         }
     }
@@ -1063,42 +678,6 @@ export class OwlSigner extends Component {
         }
     }
 
-    applyDragDropEvents() {
-        const self = this
-        let dropArea = document.getElementById('drop-area')
-        ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            dropArea.addEventListener(eventName, preventDefaults, false)
-        })
-
-        function preventDefaults(e) {
-            e.preventDefault()
-            e.stopPropagation()
-        }
-
-        ;['dragenter', 'dragover'].forEach(eventName => {
-            dropArea.addEventListener(eventName, highlight, false)
-        })
-        ;['dragleave', 'drop'].forEach(eventName => {
-            dropArea.addEventListener(eventName, unhighlight, false)
-        })
-
-        function highlight(e) {
-            dropArea.classList.add('highlight')
-        }
-
-        function unhighlight(e) {
-            dropArea.classList.remove('highlight')
-        }
-
-        dropArea.addEventListener('drop', handleDrop, false)
-
-        function handleDrop(e) {
-            let dt = e.dataTransfer
-            let files = dt.files
-            self.handleFilesForVerification(files)
-        }
-    }
-
     applyAccordionEvents() {
         const containers = document.querySelectorAll(".accordion-container")
         containers.forEach(container => {
@@ -1173,7 +752,6 @@ export class OwlSigner extends Component {
                     info.certificate = cert
                     info.keyUsage = keyUsage
                     this.state.certificates.push(info)
-                        // keyUsageExtended = certInfo.GetExtKeyUsages()
                     i++
                 }
             }
@@ -1240,7 +818,6 @@ export class OwlSigner extends Component {
             this.privateKeyReaded(true);
             this.file_loaded = this.FileToSign.el.files.length > 0
             this.pKeyInfo()
-            // euSignTest.updateCertList();
 
             if (!fromCache)
                 this.showOwnerInfo();
@@ -1252,23 +829,11 @@ export class OwlSigner extends Component {
 
     showOwnerInfo() {
         try {
-            // const stringToHTML = function (str) {
-            //     const dom = document.createElement('div');
-            //     dom.innerHTML = str;
-            //     return dom;
-            // };
             const ownerInfo = this.euSign.GetPrivateKeyOwnerInfo();
-            // this.state.status_key = stringToHTML("Власник: " + ownerInfo.GetSubjCN() + "<br/>" +
-            //     "ЦСК: " + ownerInfo.GetIssuerCN() + "<br/>" +
-            //     "Серійний номер: " + ownerInfo.GetSerial())
             this.state.status_key = "Власник: " + ownerInfo.GetSubjCN() + "\n" +
                 "ЦСК: " + ownerInfo.GetIssuerCN() + "\n" +
                 "Серійний номер: " + ownerInfo.GetSerial()
-            // alert("Власник: " + ownerInfo.GetSubjCN() + "\n" +
-            // 		"ЦСК: " + ownerInfo.GetIssuerCN() + "\n" +
-            // 		"Серійний номер: " + ownerInfo.GetSerial());
         } catch (e) {
-            // alert(e);
             this.setAlert(e.message, 'alert-danger')
         }
     }
@@ -1286,11 +851,7 @@ export class OwlSigner extends Component {
 
         this.loadCAServer();
 
-        // setStatus('зчитування ключа');
-        // setPointerEvents(document.getElementById('PKeyReadButton'), true);
         this.PKeyFileName.el.value = keyName
-        // document.getElementById('PKeyFileName').value = keyName;
-        // document.getElementById('PKeyPassword').value = password;
         this.PKeyPassword.el.value = password
         const _readPK = async () => {
             await self.readPrivateKey(keyName, key, password, null, true);
@@ -1322,25 +883,13 @@ export class OwlSigner extends Component {
                         pThis.loadCertsAndCRLsFromLocalStorage();
                     } else {
                         pThis.SelectedCertsList.el.innerHTML = "Локальне сховище не підтримується"
-                        // document.getElementById(
-                        //     'SelectedCertsList').innerHTML =
-                        //     "Локальне сховище не підтримується";
+
                         pThis.SelectedCRLsList.el.innerHTML = "Локальне сховище не підтримується"
-                        // document.getElementById(
-                        //     'SelectedCRLsList').innerHTML =
-                        //     "Локальне сховище не підтримується";
                     }
                 }
 
                 pThis.loadCertsFromServer();
                 pThis.setCASettings(0);
-
-                // setPointerEvents(
-                //     document.getElementById('PGenKeyButton'), true);
-                // setPointerEvents(
-                //     document.getElementById('VerifyDataButton'), true);
-                //
-                // euSignTest.setSelectPKCertificatesEvents();
 
                 if (pThis.utils.IsSessionStorageSupported()) {
                     const _readPrivateKeyAsStoredFile = () => {
@@ -1350,24 +899,14 @@ export class OwlSigner extends Component {
                 }
                 pThis.DSCAdESTypeChanged()
 
-                // euSignTest.updateCertList();
-
-                // setStatus('');
-                // pThis.state.loaded = true
             } catch (e) {
-                // setStatus('не ініціалізовано');
-                // alert(e);
                 pThis.setAlert(e.message, 'alert-danger')
             }
         };
 
         const _onError = () => {
-            // setStatus('Не ініціалізовано');
-            // alert('Виникла помилка ' +
-            //     'при завантаженні криптографічної бібліотеки');
             pThis.setAlert('Виникла помилка ' +
                 'при завантаженні криптографічної бібліотеки', 'alert-danger')
-            // console.error("Виникла помилка при завантаженні криптографічної бібліотеки")
         };
         this.loadCAsSettings(_onSuccess, _onError);
     }
@@ -1388,18 +927,8 @@ export class OwlSigner extends Component {
             this.state.useCMP = useCMP;
             this.state.loadPKCertsFromFile = loadPKCertsFromFile;
 
-            // document.getElementById('ChoosePKFileText').innerHTML =
-            // 	"Оберіть файл з особистим ключем " +
-            // 	"та вкажіть пароль захисту";
-            // if (loadPKCertsFromFile) {
-            // 	document.getElementById('ChoosePKFileText').innerHTML +=
-            // 		", а також оберіть сертифікат(и)";
-            // }
-
             let settings;
 
-            // document.getElementById('PKCertsSelectZone').hidden =
-            // 	loadPKCertsFromFile ? '' : 'hidden';
             this.clearPrivateKeyCertificatesList();
 
             settings = this.euSign.CreateTSPSettings();
@@ -1435,7 +964,6 @@ export class OwlSigner extends Component {
             settings = this.euSign.CreateLDAPSettings();
             this.euSign.SetLDAPSettings(settings);
         } catch (e) {
-            // alert("Виникла помилка при встановленні налашувань: " + e);
             this.setAlert("Виникла помилка при встановленні налашувань: " + e.message, 'alert-danger')
         }
     }
@@ -1458,10 +986,6 @@ export class OwlSigner extends Component {
                     select.add(option);
                 }
 
-                // select.onchange = function() {
-                // 	pThis.setCASettings(select.selectedIndex);
-                // };
-
                 pThis.CAsServers = servers;
 
                 onSuccess();
@@ -1480,20 +1004,10 @@ export class OwlSigner extends Component {
     }
 
     setAlert(message, className, closeButton = false) {
-        const self = this
         this.state.alert_occurred = true
         this.state.alert_object.message = message
         this.state.alert_object.class = className
-        let background = this.alertStyles[className]
-        Toastify({
-            text: message,
-            close: closeButton,
-            style: {
-                background: background,
-            },
-            stopOnFocus: true,
-            duration: 5000
-        }).showToast();
+        this.utils.alert(message, className, closeButton);
     }
 
     setup() {
@@ -1512,43 +1026,13 @@ export class OwlSigner extends Component {
                 message: '',
                 class: '',
             },
-            filesForVerifyReaded: false,
             certificates: [],
             signed_files: [],
-            verified_files: [],
+
         })
-        this.fileWihtSign = null
-        this.fileWihtOutSign = null
-        this.alertStyles = {
-            'alert-danger': "linear-gradient(to right, #721c24, #721c24)",
-            'alert-warning': "linear-gradient(to right, #FFA500, #FFA500)",
-            'alert-success': "linear-gradient(to right, #00b09b, #00b09b)",
-        }
         this.URL_GET_CERTIFICATES = "/eusign_cp/static/data/CACertificates.p7b"
         this.URL_CAS = "/eusign_cp/static/data/CAs.json"
         this.URL_XML_HTTP_PROXY_SERVICE = "/signer/proxyHandler";
-        this.SubjectCertTypes = [
-            {"type": EU_SUBJECT_TYPE_UNDIFFERENCED, "subtype": EU_SUBJECT_CA_SERVER_SUB_TYPE_UNDIFFERENCED},
-            {"type": EU_SUBJECT_TYPE_CA, "subtype": EU_SUBJECT_CA_SERVER_SUB_TYPE_UNDIFFERENCED},
-            {"type": EU_SUBJECT_TYPE_CA_SERVER, "subtype": EU_SUBJECT_CA_SERVER_SUB_TYPE_UNDIFFERENCED},
-            {"type": EU_SUBJECT_TYPE_CA_SERVER, "subtype": EU_SUBJECT_CA_SERVER_SUB_TYPE_CMP},
-            {"type": EU_SUBJECT_TYPE_CA_SERVER, "subtype": EU_SUBJECT_CA_SERVER_SUB_TYPE_OCSP},
-            {"type": EU_SUBJECT_TYPE_CA_SERVER, "subtype": EU_SUBJECT_CA_SERVER_SUB_TYPE_TSP},
-            {"type": EU_SUBJECT_TYPE_END_USER, "subtype": EU_SUBJECT_CA_SERVER_SUB_TYPE_UNDIFFERENCED},
-            {"type": EU_SUBJECT_TYPE_RA_ADMINISTRATOR, "subtype": EU_SUBJECT_CA_SERVER_SUB_TYPE_UNDIFFERENCED}
-        ]
-        this.CertKeyTypes = [
-            EU_CERT_KEY_TYPE_UNKNOWN,
-            EU_CERT_KEY_TYPE_DSTU4145,
-            EU_CERT_KEY_TYPE_RSA,
-            EU_CERT_KEY_TYPE_ECDSA
-        ];
-
-        this.KeyUsages = [
-            EU_KEY_USAGE_UNKNOWN,
-            EU_KEY_USAGE_DIGITAL_SIGNATURE,
-            EU_KEY_USAGE_KEY_AGREEMENT
-        ];
 
         this.CAdESTypes = [
             EU_SIGN_TYPE_CADES_BES,
@@ -1584,8 +1068,6 @@ export class OwlSigner extends Component {
         this.FileToSign = useRef("FileToSign")
         this.DSAlgTypeSelect = useRef("DSAlgTypeSelect")
         this.alertMessage = useRef("alertMessage")
-        this.VerificationButton = useRef("VerificationButton")
-        this.fileElem = useRef("fileElem")
         this.SignButton = useRef("SignButton")
         this.SignType = useRef("SignType")
         this.SignFormat = useRef("SignFormat")
@@ -1594,7 +1076,6 @@ export class OwlSigner extends Component {
         this.signTypeASiCSelect = useRef("signTypeASiCSelect")
 
         onMounted(async () => {
-            this.applyDragDropEvents()
             this.applyAccordionEvents()
             await this.initialize()
             setTimeout(() => {
