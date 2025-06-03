@@ -288,7 +288,7 @@
                         <br/>
                         <br/>
                     </p>
-                    <t t-if="hasattr(object, 'website_id') and object.website_id">
+<!--                    <t t-if="hasattr(object, 'website_id') and object.website_id">-->
                         <div style="margin: 0px; padding: 0px;">
                             <table width="100%" style="color: #454748; font-size: 12px; border-collapse: collapse;">
                                 <tr style="border-bottom: 2px solid #dee2e6;">
@@ -491,7 +491,7 @@
                                 </tr>
                             </table>
                         </div>
-                    </t>
+<!--                    </t>-->
                 </div>
             </field>
             <field name="report_template" ref="action_report_distriborder"/>
