@@ -126,6 +126,11 @@ class SaleOrder(models.Model):
 
     def _action_confirm(self):
         self._recalc_by_package()
+        send_confirmation = self.env['ir.config_parameter'].sudo().get_param('distrib.send_confirmation',
+                                                                         default=False)
+        if bool(send_confirmation):
+            template_mail = self.env.ref('ug_wholesale_shop.mail_template_sale_confirmation_for_robot', raise_if_not_found=False)
+            template_mail.send_mail(self.id, force_send=True)
         return super(SaleOrder, self)._action_confirm()
 
     def _action_cancel(self):
