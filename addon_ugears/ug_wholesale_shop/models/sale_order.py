@@ -91,16 +91,15 @@ class SaleOrder(models.Model):
     def _search_distrib_ids(self, operator, value):
         if operator == 'in' and value:
             self.env.cr.execute("""
-                SELECT array_agg(so.id)
-                    FROM sale_order so
-                    JOIN sale_order_line sol ON sol.order_id = so.id
-                    JOIN sale_order_line_incoming_rel soli_rel ON soli_rel.order_line_id = sol.id
-                    JOIN distrib_distributors_move_line aml ON aml.id = soli_rel.incoming_line_id
-                    JOIN distrib_distributors_move am ON am.id = aml.move_id
-                WHERE
-                    am.operation in ('inc') AND
-                    am.id = ANY(%s)
-            """, (list(value),))
+                                SELECT array_agg(so.id)
+                                FROM sale_order so
+                                         JOIN sale_order_line sol ON sol.order_id = so.id
+                                         JOIN sale_order_line_incoming_rel soli_rel ON soli_rel.order_line_id = sol.id
+                                         JOIN distrib_distributors_move_line aml ON aml.id = soli_rel.incoming_line_id
+                                         JOIN distrib_distributors_move am ON am.id = aml.move_id
+                                WHERE am.operation in ('inc')
+                                  AND am.id = ANY (%s)
+                                """, (list(value),))
             so_ids = self.env.cr.fetchone()[0] or []
             return [('id', 'in', so_ids)]
         elif operator == '=' and not value:
@@ -126,10 +125,10 @@ class SaleOrder(models.Model):
 
     def _action_confirm(self):
         self._recalc_by_package()
-        send_confirmation = self.env['ir.config_parameter'].sudo().get_param('distrib.send_confirmation',
-                                                                         default=False)
+        send_confirmation = self.env['ir.config_parameter'].sudo().get_param('distrib.send_confirmation', default=False)
         if bool(send_confirmation):
-            template_mail = self.env.ref('ug_wholesale_shop.mail_template_sale_confirmation_for_robot', raise_if_not_found=False)
+            template_mail = self.env.ref('ug_wholesale_shop.mail_template_sale_confirmation_for_robot',
+                                         raise_if_not_found=False)
             template_mail.send_mail(self.id, force_send=True)
         return super(SaleOrder, self)._action_confirm()
 
@@ -204,7 +203,7 @@ class SaleOrder(models.Model):
         elif len(incomes) == 1:
             form_view = [(self.env.ref('ug_base_distrib.view_distributors_distrib_move_form').id, 'form')]
             if 'views' in action:
-                action['views'] = form_view + [(state,view) for state,view in action['views'] if view != 'form']
+                action['views'] = form_view + [(state, view) for state, view in action['views'] if view != 'form']
             else:
                 action['views'] = form_view
             action['res_id'] = incomes.id
@@ -223,7 +222,6 @@ class SaleOrder(models.Model):
         #     })
         action['context'] = context
         return action
-
 
     def _create_distrib_move_inc(self):
         if not self.env['distrib.distributors.move'].check_access_rights('create', False):
@@ -264,7 +262,8 @@ class SaleOrder(models.Model):
             move_val['move_line'] += incoming_line_vals
             invoice_vals_list.append(move_val)
 
-            moves = self.env['distrib.distributors.move'].sudo().with_context(default_operation='inc').create(invoice_vals_list)
+            moves = self.env['distrib.distributors.move'].sudo().with_context(default_operation='inc').create(
+                invoice_vals_list)
             return moves
 
             # return {
@@ -304,7 +303,7 @@ class SaleOrder(models.Model):
             'type': 'ir.actions.client',
             'name': 'Wholesale shop',
             'tag': 'start_shop',
-            'params' : {
+            'params': {
                 'url': url,
             }
         }
@@ -862,7 +861,7 @@ class SaleOrder(models.Model):
         if not distrib_id.discount_available:
             return
         if self.price_total_no_discount < distrib_id.discount_after:
-            self.order_line.update({'discount' : 0})
+            self.order_line.update({'discount': 0})
         else:
             for line in self.order_line:
                 Rules = self.env['distrib.discount.rules']
