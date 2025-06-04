@@ -44,6 +44,9 @@ class SaleOrder(models.Model):
         compute="_compute_total_product_uom_qty",
         store=True
     )
+    confirmation_was_sent = fields.Boolean("Confirmation was sent",
+                                           help="This field is used to prevent sending confirmation email multiple times.",
+                                           default=False)
 
     @api.depends('order_line.product_uom_qty')
     def _compute_total_product_uom_qty(self):
@@ -132,6 +135,9 @@ class SaleOrder(models.Model):
         template_mail = self.env.ref('ug_wholesale_shop.mail_template_sale_confirmation_for_robot',
                                      raise_if_not_found=False).with_env(self.env(cr=new_cr))
         template_mail.send_mail(self.id, force_send=True)
+
+        new_cr.commit()
+        self.write({'confirmation_was_sent': True})
         new_cr.commit()
         new_cr.close()
 
@@ -139,7 +145,7 @@ class SaleOrder(models.Model):
         self._recalc_by_package()
         self.package_line = self._get_package_line_data()
         send_confirmation = self.env['ir.config_parameter'].sudo().get_param('distrib.send_confirmation', default=False)
-        if bool(send_confirmation):
+        if bool(send_confirmation) and not self.confirmation_was_sent:
             threaded_calculation = threading.Thread(target=self._send_mail)
             threaded_calculation.start()
         return super(SaleOrder, self)._action_confirm()
