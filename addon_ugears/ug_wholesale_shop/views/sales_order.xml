@@ -86,5 +86,27 @@
                 </data>
             </field>
         </record>
+
+        <record model="ir.actions.server" id="action_confirmation_undo">
+            <field name="name">Cancel Confirmation Flag</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="groups_id" eval="[(4, ref('ug_base_distrib.group_distrib_manager'))]"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.action_confirmation_undo()
+            </field>
+        </record>
+
+        <record model="ir.actions.server" id="action_confirmation_set">
+            <field name="name">Set Confirmation Flag</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="groups_id" eval="[(4, ref('ug_base_distrib.group_distrib_manager'))]"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.action_confirmation_set()
+            </field>
+        </record>
     </data>
 </odoo>

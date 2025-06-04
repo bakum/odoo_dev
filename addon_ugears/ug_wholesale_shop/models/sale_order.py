@@ -127,6 +127,70 @@ class SaleOrder(models.Model):
             ('order_line.incoming_lines.move_id', operator, value),
         ]
 
+    def action_confirmation_undo(self):
+        moves = []
+        # context = dict(self.env.context or {})
+        # recalc_totals = context.get('recalc_totals', False)
+        for order in self:
+            if order.confirmation_was_sent:
+                res = order.write({'confirmation_was_sent': False})
+                if res:
+                    moves.append(order)
+
+        if len(moves) > 0:
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'title': _('Success!'),
+                    'message': _('Confirmation was undone!'),
+                    'sticky': False,
+                }
+            }
+        else:
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'type': 'warning',
+                    'title': _('Warning!'),
+                    'message': _('Confirmation already canceled!'),
+                    'sticky': False,
+                }
+            }
+
+    def action_confirmation_set(self):
+        moves = []
+        # context = dict(self.env.context or {})
+        # recalc_totals = context.get('recalc_totals', False)
+        for order in self:
+            if not order.confirmation_was_sent:
+                res = order.write({'confirmation_was_sent': True})
+                if res:
+                    moves.append(order)
+
+        if len(moves) > 0:
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'title': _('Success!'),
+                    'message': _('Confirmation was set!'),
+                    'sticky': False,
+                }
+            }
+        else:
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'type': 'warning',
+                    'title': _('Warning!'),
+                    'message': _('Confirmation already installed!'),
+                    'sticky': False,
+                }
+            }
+
     def _send_mail(self):
         new_cr = self.pool.cursor()
         new_env = api.Environment(new_cr, self.env.uid, self.env.context)
