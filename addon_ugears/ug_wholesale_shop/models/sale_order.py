@@ -137,6 +137,7 @@ class SaleOrder(models.Model):
 
     def _action_confirm(self):
         self._recalc_by_package()
+        self.package_line = self._get_package_line_data()
         send_confirmation = self.env['ir.config_parameter'].sudo().get_param('distrib.send_confirmation', default=False)
         if bool(send_confirmation):
             threaded_calculation = threading.Thread(target=self._send_mail)
