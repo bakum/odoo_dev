@@ -1,4 +1,5 @@
 import math
+import threading
 from datetime import datetime
 
 from odoo import models, _, fields, api, Command
@@ -123,13 +124,23 @@ class SaleOrder(models.Model):
             ('order_line.incoming_lines.move_id', operator, value),
         ]
 
+    def _send_mail(self):
+        new_cr = self.pool.cursor()
+        new_env = api.Environment(new_cr, self.env.uid, self.env.context)
+        self = self.with_env(new_env)
+
+        template_mail = self.env.ref('ug_wholesale_shop.mail_template_sale_confirmation_for_robot',
+                                     raise_if_not_found=False).with_env(self.env(cr=new_cr))
+        template_mail.send_mail(self.id, force_send=True)
+        new_cr.commit()
+        new_cr.close()
+
     def _action_confirm(self):
         self._recalc_by_package()
         send_confirmation = self.env['ir.config_parameter'].sudo().get_param('distrib.send_confirmation', default=False)
         if bool(send_confirmation):
-            template_mail = self.env.ref('ug_wholesale_shop.mail_template_sale_confirmation_for_robot',
-                                         raise_if_not_found=False)
-            template_mail.send_mail(self.id, force_send=True)
+            threaded_calculation = threading.Thread(target=self._send_mail)
+            threaded_calculation.start()
         return super(SaleOrder, self)._action_confirm()
 
     def _action_cancel(self):
