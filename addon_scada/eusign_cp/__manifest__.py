@@ -35,6 +35,8 @@
             'eusign_cp/static/src/main.js',
             'eusign_cp/static/src/signer.js',
             'eusign_cp/static/src/signer.xml',
+            'eusign_cp/static/src/components/signer/eusigner.js',
+            'eusign_cp/static/src/components/signer/eusigner.xml',
             'eusign_cp/static/src/components/verifier/verifier.js',
             'eusign_cp/static/src/components/verifier/verifier.xml',
             'eusign_cp/static/src/components/downloader/downloader.js',

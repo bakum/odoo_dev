@@ -10,6 +10,9 @@ import {OwlSigner} from "./signer";
 whenReady(() => {
     const env = {
         _t: _t,
+        sharedState: {
+            state: null
+        }
     };
     mount(OwlSigner, document.body, {templates, dev: false, name: "Owl EUSignCP", env});
 })
