@@ -123,6 +123,8 @@ export class EUSigner extends Component {
         this.PKeyFileInput.el.value = null
         this.clearPrivateKeyCertificatesList();
         this.sharedState.status_key = "";
+        this.utils.RemoveSessionStorageItem(
+            this.CACertificatesSessionStorageName);
         // this.fileElem.el.value = null
     }
 
@@ -555,8 +557,6 @@ export class EUSigner extends Component {
             this.PrivateKeyCertificatesChainSessionStorageName);
         this.utils.RemoveSessionStorageItem(
             this.PrivateKeyCertificatesSessionStorageName);
-        this.utils.RemoveSessionStorageItem(
-            this.CACertificatesSessionStorageName);
 
         this.removeCAServer();
     }
