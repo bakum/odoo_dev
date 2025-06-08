@@ -555,6 +555,8 @@ export class EUSigner extends Component {
             this.PrivateKeyCertificatesChainSessionStorageName);
         this.utils.RemoveSessionStorageItem(
             this.PrivateKeyCertificatesSessionStorageName);
+        this.utils.RemoveSessionStorageItem(
+            this.CACertificatesSessionStorageName);
 
         this.removeCAServer();
     }
@@ -990,8 +992,8 @@ export class EUSigner extends Component {
 
             const resizeObserver = new ResizeObserver((entries) => {
                 entries.forEach((entry) => {
-                    const panel = entry.target.parentNode.parentNode.parentNode
-                    if (panel.style.maxHeight) {
+                    const panel = entry.target.closest(".panel")
+                    if (panel && panel.style.maxHeight) {
                         panel.style.maxHeight = panel.scrollHeight + "px";
                     }
                 })
