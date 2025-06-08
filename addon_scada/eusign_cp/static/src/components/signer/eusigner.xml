@@ -7,7 +7,7 @@
                     <img src="/eusign_cp/static/description/CertificateCheck.png" alt="Logo" width="30" class="d-inline-block align-text-top"/>
                     <span class="m-3">Підписати документ</span>
                 </h5>
-                <div class="accordion-container mt-2">
+                <div class="accordion-container mt-2" t-ref="accordionContainer">
                     <button class="accordion current">
                         <div class="d-flex align-items-center">
                             <img src="/eusign_cp/static/description/Arrow.png" border="0"/>
@@ -39,19 +39,19 @@
                     <div class="panel">
                       <div class="m-2">
                           <small>(зазвичай його назва "Key-6.dat" або *.pfx, *.pk8, *.zs2, *.jks)</small>
-                            <div class="input-group input-group-sm mt-3 mb-3">
-                          <input type="text" class="form-control" id="PKeyFileName"
-                                 placeholder="Особистий ключ" t-ref="PKeyFileName"
-                                 aria-label="Особистий ключ" readonly="1"
-                                 onclick="document.getElementById('PKeyFileInput').click();"/>
-                            <span class="input-group-text"
-                                  style="cursor:pointer; pointer-events:auto;"
-                                  t-ref="PKeySelectFileButton"
-                                  onclick="document.getElementById('PKeyFileInput').click();">Обрати</span>
-                            <input id="PKeyFileInput" t-ref="PKeyFileInput" type="file"
-                                   multiple="false" hidden="1"
-                                   t-on-change="selectPrivateKeyFile"/>
-                        </div>
+                          <div class="input-group input-group-sm mt-3 mb-3">
+                              <input type="text" class="form-control" id="PKeyFileName"
+                                     placeholder="Особистий ключ" t-ref="PKeyFileName"
+                                     aria-label="Особистий ключ" readonly="1"
+                                     onclick="document.getElementById('PKeyFileInput').click();"/>
+                                <span class="input-group-text"
+                                      style="cursor:pointer; pointer-events:auto;"
+                                      t-ref="PKeySelectFileButton"
+                                      onclick="document.getElementById('PKeyFileInput').click();">Обрати</span>
+                                <input id="PKeyFileInput" t-ref="PKeyFileInput" type="file"
+                                       multiple="false" hidden="1"
+                                       t-on-change="selectPrivateKeyFile"/>
+                          </div>
                             <div class="input-group input-group-sm mb-3">
                                 <input type="password" id="PKeyPassword" t-ref="PKeyPassword"
                                  disabled="state.privateKeyReaded"
@@ -135,12 +135,12 @@
                               <input type="file" class="form-control" id="FileToSign"
                                      t-ref="FileToSign" t-on-change="onChangeFileToSign"/>
                             </div>
-                            <button type="button" t-ref="SignButton"
-                                    t-attf-class="btn btn-outline-primary btn-sm {{state.file_loaded ? '' : 'disabled'}}"
-                                    t-on-click="signFileEx">Підписати</button>
                             <div t-attf-class="mb-2 {{state.signed_files.length === 0 ? 'd-none' : ''}}">
                                 <Downloader title="'Підписаний файл'" certificates="state.signed_files"/>
                             </div>
+                            <button type="button" t-ref="SignButton"
+                                    t-attf-class="btn btn-outline-primary btn-lg {{state.file_loaded ? '' : 'disabled'}}"
+                                    t-on-click="signFileEx">Підписати</button>
                         </div>
                     </div>
                 </div>

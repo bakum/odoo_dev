@@ -906,16 +906,7 @@ export class EUSigner extends Component {
         this.euSign.LoadDataFromServer(this.URL_CAS, _onSuccess, onError, false);
     }
 
-    onCloseAlert() {
-        this.state.alert_occurred = false
-        this.state.alert_object.message = ''
-        this.state.alert_object.class = ''
-    }
-
     setAlert(message, className, closeButton = false) {
-        this.state.alert_occurred = true
-        this.state.alert_object.message = message
-        this.state.alert_object.class = className
         this.utils.alert(message, className, closeButton);
     }
 
@@ -930,11 +921,6 @@ export class EUSigner extends Component {
             AsicSelected: false,
             file_loaded: false,
             privateKeyReaded: false,
-            alert_occurred: false,
-            alert_object: {
-                message: '',
-                class: '',
-            },
             certificates: [],
             signed_files: [],
 
@@ -983,6 +969,7 @@ export class EUSigner extends Component {
         this.signFormatXAdESSelect = useRef("signFormatXAdESSelect")
         this.signFormatPAdESSelect = useRef("signFormatPAdESSelect")
         this.signTypeASiCSelect = useRef("signTypeASiCSelect")
+        this.accordionContainer = useRef("accordionContainer")
 
         useEffect(() => {
             const handleBeforeUnload = (event) => {
@@ -997,6 +984,27 @@ export class EUSigner extends Component {
         useEffect(() => {
             this.applyAccordionEvents()
         }, () => [])
+
+        useEffect((container) => {
+            const downloaders = container.querySelectorAll(".panel .downloader");
+
+            const resizeObserver = new ResizeObserver((entries) => {
+                entries.forEach((entry) => {
+                    const panel = entry.target.parentNode.parentNode.parentNode
+                    if (panel.style.maxHeight) {
+                        panel.style.maxHeight = panel.scrollHeight + "px";
+                    }
+                })
+            })
+            downloaders.forEach((downloader) => {
+                resizeObserver.observe(downloader);
+            })
+            return () => {
+                downloaders.forEach((downloader) => {
+                    resizeObserver.unobserve(downloader);
+                })
+            }
+        },()=>[this.accordionContainer.el])
 
         onMounted(async () => {
             await this.initialize()
