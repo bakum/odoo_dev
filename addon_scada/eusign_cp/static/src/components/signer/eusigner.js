@@ -1,6 +1,6 @@
 /** @odoo-module **/
 
-import {Component, onMounted, onWillDestroy, useRef, useState, useEnv, useEffect} from "@odoo/owl"
+import {Component, onMounted, useRef, useState, useEnv, useEffect} from "@odoo/owl"
 import {Downloader} from "../downloader/downloader";
 
 
@@ -42,7 +42,6 @@ export class EUSigner extends Component {
     }
 
     onChangeFileToSign(ev) {
-        // console.log(ev.target)
         this.state.file_loaded = ev.target.files.length > 0 && this.euSign.IsPrivateKeyReaded()
     }
 
@@ -588,25 +587,6 @@ export class EUSigner extends Component {
         }
     }
 
-    toggleMenu(ev) {
-        const allPanels = document.getElementsByClassName("nav-link");
-        const id = ev.target.id;
-
-        if (id === "home") {
-            this.onChangeMenuItem();
-            browser.location.href = '/';
-            return;
-        }
-
-        Array.from(allPanels).forEach(panel => panel.classList.remove("active"));
-
-        this.state.signmode = id === "sign";
-        ev.target.classList.toggle("active");
-        if (!this.state.signmode) {
-            this.onChangeMenuItem();
-        }
-    }
-
     applyAccordionEvents() {
         const containers = document.querySelectorAll(".accordion-container")
         containers.forEach(container => {
@@ -948,11 +928,8 @@ export class EUSigner extends Component {
             PadesSelected: false,
             XadesSelected: false,
             AsicSelected: false,
-            // loaded: false,
             file_loaded: false,
             privateKeyReaded: false,
-            // signmode: this.sharedState.signmode,
-            // status_key: '',
             alert_occurred: false,
             alert_object: {
                 message: '',
@@ -1021,17 +998,12 @@ export class EUSigner extends Component {
             this.applyAccordionEvents()
         }, () => [])
 
-
         onMounted(async () => {
             await this.initialize()
             setTimeout(() => {
                 this.sharedState.loaded = true
                 this.SignFormatOnChange()
             }, 1000)
-        })
-
-        onWillDestroy(() => {
-            this.onChangeMenuItem()
         })
     }
 }
