@@ -939,9 +939,9 @@ export class EUSigner extends Component {
             signed_files: [],
 
         })
-        this.URL_GET_CERTIFICATES = "/eusign_cp/static/data/CACertificates.p7b"
-        this.URL_CAS = "/eusign_cp/static/data/CAs.json"
-        this.URL_XML_HTTP_PROXY_SERVICE = "/signer/proxyHandler"
+        this.URL_GET_CERTIFICATES = this.props.url_get_certificates
+        this.URL_CAS = this.props.url_cas
+        this.URL_XML_HTTP_PROXY_SERVICE = this.props.url_xml_http_proxy_service
 
         this.CAdESTypes = [
             EU_SIGN_TYPE_CADES_BES,

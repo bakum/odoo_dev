@@ -40,7 +40,10 @@
                                 <Verifier/>
                             </div>
                             <div t-attf-class="col col-lg-5 m-0 p-0 {{state.signmode ? '' : 'd-none'}}">
-                                <EUSigner/>
+                                <EUSigner url_xml_http_proxy_service="'/signer/proxyHandler'"
+                                          url_get_certificates="'/eusign_cp/static/data/CACertificates.p7b'"
+                                          url_cas="'/eusign_cp/static/data/CAs.json'"
+                                />
                             </div>
                         </div>
                     </div>
