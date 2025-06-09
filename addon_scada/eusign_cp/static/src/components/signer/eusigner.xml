@@ -132,7 +132,7 @@
                             </select>
                             <small>Оберіть файл для підпису (не більше 5 МБ):</small>
                             <div class="input-group input-group-sm mt-1 mb-3">
-                              <input type="file" class="form-control" id="FileToSign"
+                              <input type="file" t-attf-class="form-control {{!state.sign_button_disabled ? '' : 'disabled'}}" id="FileToSign"
                                      t-ref="FileToSign" t-on-change="onChangeFileToSign"/>
                             </div>
                             <div t-attf-class="mb-2 {{state.signed_files.length === 0 ? 'd-none' : ''}}">

@@ -925,6 +925,7 @@ export class EUSigner extends Component {
             privateKeyReaded: false,
             certificates: [],
             signed_files: [],
+            sign_button_disabled: false,
 
         })
         this.URL_GET_CERTIFICATES = this.props.url_get_certificates
@@ -973,6 +974,17 @@ export class EUSigner extends Component {
         this.signTypeASiCSelect = useRef("signTypeASiCSelect")
         this.accordionContainer = useRef("accordionContainer")
 
+        useEffect((isKeyReaded, signedFiles) => {
+            this.state.sign_button_disabled = !isKeyReaded || signedFiles.length > 0
+            if (!isKeyReaded && signedFiles.length > 0) {
+                this.SignButton.el.innerHTML = 'Підписати'
+                this.FileToSign.el.value = ''
+                this.state.file_loaded = false
+                this.state.signed_files = []
+            }
+
+        }, () => [this.state.privateKeyReaded, this.state.signed_files])
+
         useEffect(() => {
             const handleBeforeUnload = (event) => {
                 this.onChangeMenuItem()
@@ -1006,7 +1018,7 @@ export class EUSigner extends Component {
                     resizeObserver.unobserve(downloader);
                 })
             }
-        },()=>[this.accordionContainer.el])
+        }, () => [this.accordionContainer.el])
 
         onMounted(async () => {
             await this.initialize()

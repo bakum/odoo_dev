@@ -21,6 +21,8 @@ p {
 #fileList {
   list-style: none;
 }
-button.disabled, label.disabled {
+button.disabled, label.disabled, input.disabled {
     pointer-events: none;
+    background-color: #e9ecef;
+    opacity: 1;
 }
