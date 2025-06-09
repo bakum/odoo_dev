@@ -15,7 +15,6 @@ export class OwlSigner extends Component {
         const id = ev.target.id;
 
         if (id === "home") {
-            // this.onChangeMenuItem();
             browser.location.href = '/';
             return;
         }
