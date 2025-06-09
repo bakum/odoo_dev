@@ -946,8 +946,6 @@ export class EUSigner extends Component {
         this.CAServerIndexSessionStorageName = "CAServerIndex"
         this.CertsLocalStorageName = "Certificates"
         this.CRLsLocalStorageName = "CRLs"
-        this.recepientsCertsIssuers = null
-        this.recepientsCertsSerials = null
         this.PrivateKeyNameSessionStorageName = "PrivateKeyName"
         this.PrivateKeySessionStorageName = "PrivateKey"
         this.PrivateKeyPasswordSessionStorageName = "PrivateKeyPassword"
