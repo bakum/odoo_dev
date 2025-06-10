@@ -45,7 +45,6 @@
             'eusign_cp/static/src/accordion.css',
         ],
         'eusign_cp.assets_library': [
-            'eusign_cp/static/lib/common.js',
             'eusign_cp/static/lib/euutils.js',
             'eusign_cp/static/lib/euscpt.js',
             'eusign_cp/static/lib/euscpm.js',
