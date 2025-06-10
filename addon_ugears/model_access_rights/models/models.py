@@ -139,7 +139,7 @@ def _create(self, data_list):
         if other_fields:
             # discard default values from context for other fields
             others = records.with_context(clean_context(self._context))
-            for field in sorted(other_fields, key=attrgetter('_sequence')):
+            for field in sorted(other_fields, key=lambda f: f._sequence):
                 field.create([
                     (other, data['stored'][field.name])
                     for other, data in zip(others, data_list)
