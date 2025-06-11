@@ -130,7 +130,8 @@ class UgImportMove(models.TransientModel):
         art = data_array[1]
 
         if barcode and art:
-            domain = ['&', ('barcode', '=', barcode), ('default_code', '=', art)]
+            # domain = ['&', ('barcode', '=', barcode), ('default_code', '=', art)]
+            domain = [('barcode', '=', barcode)]
         elif barcode:
             domain = [('barcode', '=', barcode)]
         elif art:
