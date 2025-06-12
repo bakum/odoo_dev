@@ -23,4 +23,20 @@
         <field name="binding_model_id" ref="sale.model_sale_order"/>
         <field name="binding_type">report</field>
     </record>
+
+    <record id="report_export_products_out_xls" model="ir.actions.report">
+        <field name="name">Template Sales Move</field>
+        <field name="model">product.template</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">ug_base_distrib.export_products_out_xls</field>
+        <field name="attachment_use">False</field>
+    </record>
+
+    <record id="report_export_products_in_xls" model="ir.actions.report">
+        <field name="name">Template Incoming Move</field>
+        <field name="model">product.template</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">ug_base_distrib.export_products_in_xls</field>
+        <field name="attachment_use">False</field>
+    </record>
 </odoo>

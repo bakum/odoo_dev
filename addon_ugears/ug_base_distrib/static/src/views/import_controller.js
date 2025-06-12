@@ -22,26 +22,29 @@ export class ImportMoveController extends ListController {
     }
 
     OnDownloadIn() {
-        this.actionService.doAction({
-            'type': 'ir.actions.act_url',
-            'url': '/ug_base_distrib/static/xls/template_incomes_distrib.xlsx',
-            'target': 'new'
-        })
+        // this.actionService.doAction({
+        //     'type': 'ir.actions.act_url',
+        //     'url': '/ug_base_distrib/static/xls/template_incomes_distrib.xlsx',
+        //     'target': 'new'
+        // })
+        return this.actionService.doAction("ug_base_distrib.report_export_products_in_xls", {
+           additionalContext: {
+               move_type: 'in'
+            },
+        });
     }
     OnDownloadOut() {
-        this.actionService.doAction({
-            'type': 'ir.actions.act_url',
-            'url': '/ug_base_distrib/static/xls/template_sales_distrib.xlsx',
-            'target': 'new'
-        })
+        // this.actionService.doAction({
+        //     'type': 'ir.actions.act_url',
+        //     'url': '/ug_base_distrib/static/xls/template_sales_distrib.xlsx',
+        //     'target': 'new'
+        // })
+        return this.actionService.doAction("ug_base_distrib.report_export_products_out_xls", {
+           additionalContext: {
+               move_type: 'out'
+            },
+        });
     }
-    // OnDownloadInventory() {
-    //     this.actionService.doAction({
-    //         'type': 'ir.actions.act_url',
-    //         'url': '/ug_base_distrib/static/xls/template_inventory_distrib.xlsx',
-    //         'target': 'new'
-    //     })
-    // }
 }
 
 export const ImportMoveListView = {
