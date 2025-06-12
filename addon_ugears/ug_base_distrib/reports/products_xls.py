@@ -15,7 +15,7 @@ class ProductsOutXlsx(models.AbstractModel):
             if excluded_categories:
                 domain += [('categ_id', 'not in', excluded_categories)]
 
-        Products = products.with_context(lang='en_US').search(domain)
+        Products = products.search(domain)
         sheet = workbook.add_worksheet('Distr Sales')
 
         bold_head = workbook.add_format({'bold': True, 'font_name': 'Arial', 'font_size': 10})
@@ -42,7 +42,13 @@ class ProductsOutXlsx(models.AbstractModel):
                 sheet.write(num + 1, 0, product.barcode, txt)
             if product.default_code:
                 sheet.write(num + 1, 1, product.default_code, txt)
-            sheet.write(num + 1, 2, product.display_name, txt1)
+
+            field = product._fields
+            translations = field['name']._get_stored_translations(product)
+            if translations and 'en_US' in translations:
+                sheet.write(num + 1, 2, translations['en_US'], txt1)
+            else:
+                sheet.write(num + 1, 2, product.display_name, txt1)
             for count, channel in enumerate(Channels):
                 sheet.write(num + 1, 3 + count, 0, txt1)
 
@@ -85,5 +91,11 @@ class ProductsInXlsx(models.AbstractModel):
                 sheet.write(num + 1, 0, product.barcode, txt)
             if product.default_code:
                 sheet.write(num + 1, 1, product.default_code, txt)
-            sheet.write(num + 1, 2, product.display_name, txt1)
+
+            field = product._fields
+            translations = field['name']._get_stored_translations(product)
+            if translations and 'en_US' in translations:
+                sheet.write(num + 1, 2, translations['en_US'], txt1)
+            else:
+                sheet.write(num + 1, 2, product.display_name, txt1)
             sheet.write(num + 1, 3, 0, txt1)
