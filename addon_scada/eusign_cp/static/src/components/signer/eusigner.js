@@ -2,22 +2,8 @@
 
 import {Component, onMounted, useRef, useState, useEnv, useEffect} from "@odoo/owl"
 import {Downloader} from "../downloader/downloader";
+import {SignableObject} from "../../helpers/signable";
 
-
-class SignableObject {
-    constructor(name, data) {
-        this.name = name;
-        this.data = data;
-    }
-
-    GetName() {
-        return this.name;
-    }
-
-    GetData() {
-        return this.data;
-    }
-}
 
 export class EUSigner extends Component {
     static template = "eusign_cp.owl_signer_template"

@@ -16,25 +16,27 @@
     'assets': {
         'eusign_cp.assets_signer': [
             # bootstrap
-            ('include', 'web._assets_helpers'),
-            'web/static/src/scss/pre_variables.scss',
-            'web/static/lib/bootstrap/scss/_variables.scss',
-            ('include', 'web._assets_bootstrap_backend'),
-            ('include', 'web._assets_bootstrap'),  # Подключение Bootstrap
+            # ('include', 'web._assets_helpers'),
+            ('include', 'web.assets_frontend'),
+            # 'web/static/src/scss/pre_variables.scss',
+            # 'web/static/lib/bootstrap/scss/_variables.scss',
+            # ('include', 'web._assets_bootstrap_backend'),
+            # ('include', 'web._assets_bootstrap'),  # Подключение Bootstrap
+            #
+            # # required for fa icons
+            # 'web/static/src/libs/fontawesome/css/font-awesome.css',
+            #
+            # # include base files from framework
+            # ('include', 'web._assets_core'),
 
-            # required for fa icons
-            'web/static/src/libs/fontawesome/css/font-awesome.css',
-
-            # include base files from framework
-            ('include', 'web._assets_core'),
-
-            'web/static/src/core/utils/functions.js',
-            'web/static/src/core/browser/browser.js',
-            'web/static/src/core/registry.js',
-            'web/static/src/core/assets.js',
+            # 'web/static/src/core/utils/functions.js',
+            # 'web/static/src/core/browser/browser.js',
+            # 'web/static/src/core/registry.js',
+            # 'web/static/src/core/assets.js',
             'eusign_cp/static/src/main.js',
             'eusign_cp/static/src/signer.js',
             'eusign_cp/static/src/signer.xml',
+            'eusign_cp/static/src/helpers/signable.js',
             'eusign_cp/static/src/components/signer/eusigner.js',
             'eusign_cp/static/src/components/signer/eusigner.xml',
             'eusign_cp/static/src/components/verifier/verifier.js',
