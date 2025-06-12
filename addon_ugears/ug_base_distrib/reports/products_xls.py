@@ -60,7 +60,7 @@ class ProductsInXlsx(models.AbstractModel):
                 domain += [('categ_id', 'not in', excluded_categories)]
 
         Products = products.with_context(lang='en_US').search(domain)
-        sheet = workbook.add_worksheet('Distr Sales')
+        sheet = workbook.add_worksheet('Distr Incomes')
 
         bold_head = workbook.add_format({'bold': True, 'font_name': 'Arial', 'font_size': 10})
         head = workbook.add_format(
