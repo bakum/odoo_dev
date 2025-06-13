@@ -29,7 +29,7 @@ class TemplateRules(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            vals['name'] = 'Default Discount Rule'
+            vals['name'] = 'Default Templates Rule'
         return super(TemplateRules, self).create(vals_list)
 
     def unlink(self):
