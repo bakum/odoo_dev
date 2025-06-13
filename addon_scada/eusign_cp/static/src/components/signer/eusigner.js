@@ -8,6 +8,11 @@ import {SignableObject} from "../../helpers/signable";
 export class EUSigner extends Component {
     static template = "eusign_cp.owl_signer_template"
     static components = {Downloader}
+    static props = {
+        url_xml_http_proxy_service: {type: String, optional: false},
+        url_get_certificates: {type: String, optional: false},
+        url_cas: {type: String, optional: false},
+    }
 
     loadFilesFromLocalStorage(localStorageFolder, loadFunc) {
         if (!this.utils.IsStorageSupported())
