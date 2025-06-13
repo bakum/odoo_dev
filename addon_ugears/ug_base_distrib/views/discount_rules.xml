@@ -72,6 +72,10 @@
                             <field id="company" class="text-break" name="name" default_focus="1"/>
                         </h1>
                     </div>
+                    <group string="Settings for read">
+                        <field name="filter_domain" widget="domain" options="{'model': 'product.template', 'in_dialog': True}"
+                               placeholder="Add domain to filter result, example: [('name', '=', 'Test')]"/>
+                    </group>
                     <notebook>
                         <page id="categ_tab" name="move_tab" string="Excluded from template">
                             <field name="move_line" widget="section_and_note_one2many" mode="tree">

@@ -1,5 +1,6 @@
 from odoo import fields, models, _, api
 from odoo.exceptions import ValidationError
+from odoo.tools import safe_eval
 
 
 class TemplateRules(models.Model):
@@ -14,6 +15,7 @@ class TemplateRules(models.Model):
         string="Rule Lines",
         copy=True)
     main_req = fields.Integer("Main Rule", required=True, default=1)
+    filter_domain = fields.Char(default="[]")
     active = fields.Boolean(default=True)
 
     @api.constrains('main_req')
@@ -37,6 +39,22 @@ class TemplateRules(models.Model):
         """ Returns a list of categories that are excluded by the current template rules. """
         self.ensure_one()
         return self.move_line.mapped('categ_id.id')
+
+    def _get_eval_context(self):
+        """ Prepare the context used when evaluating python code
+            :returns: dict -- evaluation context given to safe_eval
+        """
+        return {
+            'datetime': safe_eval.datetime,
+            'dateutil': safe_eval.dateutil,
+            'time': safe_eval.time,
+            'uid': self.env.uid,
+            'user': self.env.user,
+        }
+
+    def _eval_domain(self, domain):
+        self.ensure_one()
+        return safe_eval.safe_eval(domain, self._get_eval_context())
 
 
 class TemplateRulesLines(models.Model):
