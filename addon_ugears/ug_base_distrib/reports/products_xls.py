@@ -9,7 +9,7 @@ class ProductsOutXlsx(models.AbstractModel):
         Rules = self.env['distrib.template.rules'].search([])[:1]
         Channels = self.env['distrib.sales.channels'].search([])
 
-        domain = [('sale_ok', '=', True), ('detailed_type', '!=', 'service')]
+        domain = [('sale_ok', '=', True), ('detailed_type', '!=', 'service'), ('is_published', '=', True)]
         if Rules:
             excluded_categories = Rules.get_excluded_categories()
             if excluded_categories:
@@ -59,7 +59,7 @@ class ProductsInXlsx(models.AbstractModel):
 
     def generate_xlsx_report(self, workbook, data, products):
         Rules = self.env['distrib.template.rules'].search([])[:1]
-        domain = [('sale_ok', '=', True), ('detailed_type', '!=', 'service')]
+        domain = [('sale_ok', '=', True), ('detailed_type', '!=', 'service'), ('is_published', '=', True)]
         if Rules:
             excluded_categories = Rules.get_excluded_categories()
             if excluded_categories:
