@@ -2,7 +2,17 @@ from odoo import models
 from odoo.osv import expression
 
 
-def write_product_to_xlsx(workbook, products):
+def write_product_to_xlsx(workbook, products, sheet_name):
+    """
+    Записывает информацию о продуктах в лист Excel с использованием переданного workbook.
+
+    Аргументы:
+        workbook: Объект xlsxwriter.Workbook для создания листа и форматирования.
+        products: Odoo recordset продуктов, для которых формируется отчет.
+
+    Возвращает:
+        dict: Словарь с объектами форматирования, листом и списком продуктов.
+    """
     sheet_object = {}
     Rules = products.env['distrib.template.rules'].search([])[:1]
     domain = []
@@ -13,7 +23,7 @@ def write_product_to_xlsx(workbook, products):
             domain = expression.AND([domain, [('categ_id', 'not in', excluded_categories)]])
 
     Products = products.with_context(lang='en_US').search(domain)
-    sheet = workbook.add_worksheet('Distr Incomes')
+    sheet = workbook.add_worksheet(sheet_name)
 
     bold_head = workbook.add_format({'bold': True, 'font_name': 'Arial', 'font_size': 10})
     head = workbook.add_format(
@@ -61,7 +71,7 @@ class ProductsOutXlsx(models.AbstractModel):
 
     def generate_xlsx_report(self, workbook, data, products):
         Channels = self.env['distrib.sales.channels'].search([])
-        sheet_obj = write_product_to_xlsx(workbook, products)
+        sheet_obj = write_product_to_xlsx(workbook, products, 'Distr Sales')
         sheet = sheet_obj['sheet']
         head = sheet_obj['head']
         Products = sheet_obj['products']
@@ -82,7 +92,7 @@ class ProductsInXlsx(models.AbstractModel):
     _inherit = 'report.report_xlsx.abstract'
 
     def generate_xlsx_report(self, workbook, data, products):
-        sheet_obj = write_product_to_xlsx(workbook, products)
+        sheet_obj = write_product_to_xlsx(workbook, products, 'Distr Incomes')
         sheet = sheet_obj['sheet']
         head = sheet_obj['head']
         Products = sheet_obj['products']
