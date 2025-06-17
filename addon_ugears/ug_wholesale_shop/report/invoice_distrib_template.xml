@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_distrib_invoice_document">
+        <t t-call="web.basic_layout">
+            <table class="table table-sm table-borderless">
+                 <tr>
+                     <td width="15%" align="left" style="vertical-align: middle;">
+                        <h5>
+                            <strong>Invoice</strong>
+                        </h5>
+                    </td>
+                    <td width="55%" align="left" style="vertical-align: middle;" class="text-muted">
+                        <span t-field="doc.name"/>
+                    </td>
+                     <td width="20%">
+                     </td>
+                     <td width="10%" align="right">
+                        <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)" class="float-end"
+                            alt="Logo"/>
+                     </td>
+                 </tr>
+                <tr>
+                    <td align="left" style="vertical-align: top;">
+                        <h6>
+                            <strong>The Supplier:</strong>
+                        </h6>
+                    </td>
+                    <td align="left" style="vertical-align: top;">
+                        <h5><span t-field="doc.company_id.partner_id.name"/></h5>
+                    </td>
+                    <td align="left" style="vertical-align: top;" class="text-muted">
+                        <span>VAT number:</span>
+                    </td>
+                    <td align="left" style="vertical-align: top;" class="text-muted">
+                        <span t-field="doc.company_id.partner_id.vat"/>
+                    </td>
+                </tr>
+            </table>
+        </t>
+    </template>
+
+    <template id="report_distrib_invoice">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="ug_wholesale_shop.report_distrib_invoice_document" t-lang="doc.partner_id.lang">
+<!--                     <t t-set="palettes_list" t-value="doc._get_packing_list()"/>-->
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

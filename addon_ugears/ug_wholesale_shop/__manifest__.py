@@ -31,6 +31,8 @@
         'report/order_distrib_action.xml',
         'report/report_distrib_quantity.xml',
         'views/mail_template_data.xml',
+        'report/invoice_distrib_template.xml',
+        'report/invoice_distrib_action.xml',
     ],
     'assets': {
         'web.assets_frontend': [

@@ -399,6 +399,11 @@ class SaleOrder(models.Model):
             palette = website.get_current_palette()
             request.session['website_sale_palette_time'] = now
             request.session['website_sale_current_palette'] = palette.id
+        if not request.session.get('sale_order_id') and self.state == 'draft':
+            request.session['sale_order_id'] = self.id
+            request.session['website_sale_cart_quantity'] = self.cart_quantity
+        elif request.session.get('sale_order_id'):
+            raise UserError("The cart is not empty! Please clear it before using the calculator.")
         return action
 
     @api.model
