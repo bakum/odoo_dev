@@ -205,6 +205,19 @@ class SaleOrder(models.Model):
         new_cr.commit()
         new_cr.close()
 
+    def _prepare_confirmation_values(self):
+        """ Prepare the sales order confirmation values.
+
+        Note: self can contain multiple records.
+
+        :return: Sales Order confirmation values
+        :rtype: dict
+        """
+        return {
+            'state': 'sale',
+            # 'date_order': fields.Datetime.now()
+        }
+
     def _action_confirm(self):
         self._recalc_by_package()
         self.package_line = self._get_package_line_data()
