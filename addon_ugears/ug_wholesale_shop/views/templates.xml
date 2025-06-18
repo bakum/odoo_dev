@@ -774,7 +774,15 @@
 
     <template id="distrib_card_wizard" inherit_id="website_sale.wizard_checkout" name="Shopping Cart">
          <xpath expr='//*[hasclass("wizard")]' position="replace">
+             <t t-set="order_for_calc" t-value="request.session['order_for_calculate'] if 'order_for_calculate' in request.session else 0"/>
              <t t-call="ug_wholesale_shop.alert_warning_package_rounding"/>
+             <div t-if="order_for_calc != 0" class="container d-flex justify-content-end mb3">
+                 <t t-set="order_name" t-value="' Order# %s from Cart' % (website_sale_order.name)"/>
+                 <a role="button" t-att-href="'/shop/clear'" class="btn btn-secondary mb32">
+                    <span class="fa fa-chevron-left" />
+                    <span>Unload<span class="d-none d-md-inline" t-esc="order_name"/></span>
+                </a>
+             </div>
          </xpath>
     </template>
 
@@ -830,8 +838,9 @@
             <div class="container">
                 <div class="text-center">
                     This is a packaging calculator.
-                    <a t-att-href="backend_url"
-                       t-attf-class="fa fa-arrow-right me-1" aria-hidden="true">
+                    <a t-attf-class="fa fa-arrow-right me-1" aria-hidden="true">
+<!--                            t-att-href="backend_url"-->
+
                         <span>Order#</span>
                         <em t-field="order.name"></em>
                     </a>

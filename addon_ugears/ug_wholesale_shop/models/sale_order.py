@@ -384,6 +384,14 @@ class SaleOrder(models.Model):
                     package += 1
                 line.product_uom_qty = package * product.qty_in_cartoon
 
+    def clear_order(self):
+        request.session.pop('sale_order_id', None)
+        request.session.pop('website_sale_current_pl', None)
+        request.session.pop('website_sale_cart_quantity', None)
+        request.session.pop('order_for_calculate', None)
+        request.session.pop('website_sale_current_palette', None)
+        return True
+
     def action_calculate_sale_order(self):
         self.ensure_one()
         url = '/shop/calculator?order=%s' % (

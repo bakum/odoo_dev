@@ -800,6 +800,22 @@ class WebsiteWholeSale(WebsiteSale):
         else:
             return request.redirect('/shop')
 
+    @http.route('/shop/clear', type='http', auth="user", website=True, sitemap=False)
+    def order_clear(self, **post):
+        # redirect_to_orders = post.get('redirect_to_orders', False)
+        sale_order_id = request.session.get('sale_last_order_id')
+        if sale_order_id:
+            # redirect_url = '/web#model=sale.order&amp;id=%s&amp;view_type=form&amp;action=%s' % (sale_order_id,
+            #                                                                       'ug_wholesale_shop.action_orders_wholesale_shop')
+            request.website.sale_reset()
+            request.session.pop('order_for_calculate', None)
+
+            request.session.pop('website_sale_current_palette', None)
+            # if redirect_to_orders:
+            #     return request.redirect(redirect_url)
+            return request.redirect('/shop')
+        return None
+
     @http.route('/shop/confirm', type='http', auth="user", website=True, sitemap=False)
     def order_confirmation(self, **post):
         if post.get('order'):
@@ -817,6 +833,7 @@ class WebsiteWholeSale(WebsiteSale):
             order.with_context(send_email=True).action_confirm()
             # return request.redirect(order.get_portal_url())
             return request.redirect('/shop')
+        return None
 
     @http.route(['/shop/change_palette/<model("distrib.packages.sizes"):palette>'], type='http', auth="user",
                 website=True, sitemap=False)
