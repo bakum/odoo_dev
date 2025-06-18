@@ -69,6 +69,8 @@ class Website(models.Model):
 
         # Only set when neeeded
         pricelist_id = False
+        if sale_order_sudo:
+            pricelist_id = sale_order_sudo.pricelist_id
 
         if sale_order_sudo:
             partner_sudo = sale_order_sudo.partner_id
