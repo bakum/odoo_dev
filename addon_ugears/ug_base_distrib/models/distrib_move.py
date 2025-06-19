@@ -308,7 +308,7 @@ class DistributorMove(models.Model):
         return super().name_get()
 
     def action_done(self):
-        self._apply_discount_if_needed()
+        # self._apply_discount_if_needed()
         self.write({'state': 'done'})
 
     def action_cancel(self):
