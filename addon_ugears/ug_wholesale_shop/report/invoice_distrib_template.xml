@@ -10,6 +10,16 @@
             <t t-else="">
                 <t t-set="palettes_list" t-value="False"/>
             </t>
+            <style>
+                @font-face {
+                    font-family: 'CustomFont';
+                    src: url('/ug_wholesale_shop/static/fonts/Arimo-Medium.ttf') format('truetype');
+                }
+                body {
+                    font-family: 'CustomFont', sans-serif;
+                    font-size: 12px;
+                }
+            </style>
              <style>
                  #o_main_table td, #o_main_table th,
                  #o_sub_table td, #o_sub_table th,
