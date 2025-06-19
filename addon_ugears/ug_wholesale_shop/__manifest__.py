@@ -25,6 +25,7 @@
         'views/distrib_places.xml',
         'views/distributors.xml',
         'views/import_order.xml',
+        'views/account_move.xml',
         'views/sales_order.xml',
         'views/distrib_move.xml',
         'views/config_settings_views.xml',

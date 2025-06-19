@@ -142,7 +142,7 @@
                 <tr>
                     <td> </td>
                     <td align="left" style="vertical-align: top;">
-                        <t t-set="bank" t-value="' %s' % doc.partner_bank_id.bank_id.name"/>
+                        <t t-set="bank" t-value="' %s' % doc.customer_bank_id.bank_id.name"/>
                         <div>
                           <span>Bank<strong><span t-esc="bank"/></strong></span>
                         </div>
@@ -151,7 +151,7 @@
                         <span>Account number (IBAN)</span>
                     </td>
                     <td align="left" style="vertical-align: top;">
-                        <span t-field="doc.partner_bank_id.acc_number"/>
+                        <span t-field="doc.customer_bank_id.acc_number"/>
                     </td>
                 </tr>
                 <tr>
@@ -163,7 +163,7 @@
                         <span>Bank's SWIFT</span>
                     </td>
                     <td align="left" style="vertical-align: top;">
-                        <span t-field="doc.partner_bank_id.bank_id.bic"/>
+                        <span t-field="doc.customer_bank_id.bank_id.bic"/>
                     </td>
                 </tr>
                 <tr>
