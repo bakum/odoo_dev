@@ -314,11 +314,11 @@
             <table class="table table-sm table-borderless">
                 <tr class="bg-200 fw-bold">
                     <td width="55%" class="text-end">Total Invoice</td>
-                    <td width="10%" class="text-center">
+                    <td width="10%" class="text-end">
                         <span t-raw="all_qtt"/>
                     </td>
                     <td width="5%"/>
-                    <td width="10%" class="text-center">
+                    <td width="10%" class="text-end">
                         <span t-raw="all_boxes"/>
                     </td>
                     <td width="10%"/>
