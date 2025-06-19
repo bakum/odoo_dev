@@ -280,7 +280,7 @@
                             <td name="td_barcode" class="text-start">
                                 <span style="font-size: 0.7em;" t-field="line.product_id.barcode"/>
                             </td>
-                            <td name="td_description" class="text-end">
+                            <td name="td_description" class="text-start">
                                 <span style="font-size: 0.8em;" t-field="line.product_id.display_name"/>
                             </td>
                             <td name="td_qtt" class="text-end">
@@ -310,66 +310,62 @@
                         </tr>
                     </t>
                 </tbody>
-                <tfoot>
-                    <tr class="bg-200 fs-6 font-italic">
-                        <td colspan="4"/>
-<!--                        <td/>-->
-<!--                        <td/>-->
-<!--                        <td/>-->
-                        <td>Total Invoice</td>
-                        <td class="text-end">
-                            <span t-raw="all_qtt"/>
-                        </td>
-                        <td colspan="2"/>
-<!--                        <td/>-->
-                        <td class="text-end">
-                            <span t-raw="all_boxes"/>
-                        </td>
-                        <td/>
-                        <td class="text-end">
-                            <span class="text-nowrap">
-                                <span class="oe_currency_value" t-raw="doc.amount_total"/>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="9" class="text-end" style="border-left: none; border-bottom: none;">
-                            <span>"Reverse charge applies in accordance with Article 138 of DIRECTIVE 2006/112/EC”</span>
-                        </td>
-                        <td>
-                            <span>VAT 0%</span>
-                        </td>
-                        <td class="text-end">
-                            <span>0.00</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="9" class="text-end" style="border-left: none; border-bottom: none; border-top: none;">
-                            <span>Gross weight of Shipment (kg):</span>
-                        </td>
-                        <td t-if="order" colspan="2" class="text-end">
-                            <span t-raw="'%s/%s' % (round(order.brutto_total/1000,2),round(order.netto_total/1000,2))"/>
-                        </td>
-                        <td t-else="" colspan="2" class="text-end"><span> </span></td>
-                    </tr>
-                    <tr>
-                        <td colspan="9" class="text-end" style="border-left: none; border-bottom: none; border-top: none;">
-                            <span>Net weight of Shipment (kg):</span>
-                        </td>
-                        <td t-if="order" colspan="2" class="text-end">
-                            <span t-raw="round(order.netto_total/1000,2)"/>
-                        </td>
-                        <td t-else="" colspan="2" class="text-end"><span> </span></td>
-                    </tr>
-                    <tr>
-                        <td colspan="9" class="text-end" style="border-left: none; border-bottom: none; border-top: none;">
-                            <span>Number of pallets:</span>
-                        </td>
-                        <td t-if="palettes_list and palettes_list['palettes']" colspan="2" class="text-end">
-                            <span t-raw="len(palettes_list['palettes'])"/></td>
-                        <td colspan="2" t-else="" class="text-end"><span> </span></td>
-                    </tr>
-                </tfoot>
+            </table>
+            <table class="table table-sm table-borderless">
+                <tr class="bg-200 fw-bold">
+                    <td width="55%" class="text-end">Total Invoice</td>
+                    <td width="10%" class="text-center">
+                        <span t-raw="all_qtt"/>
+                    </td>
+                    <td width="5%"/>
+                    <td width="10%" class="text-center">
+                        <span t-raw="all_boxes"/>
+                    </td>
+                    <td width="10%"/>
+                    <td width="10%"/>
+                    <td width="10%" class="text-end">
+                        <span class="text-nowrap">
+                            <span class="oe_currency_value" t-raw="doc.amount_total"/>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="text-end" style="border-left: none; border-bottom: none;">
+                        <span>"Reverse charge applies in accordance with Article 138 of DIRECTIVE 2006/112/EC”</span>
+                    </td>
+                    <td>
+                        <span>VAT 0%</span>
+                    </td>
+                    <td class="text-end">
+                        <span>0.00</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="text-end" style="border-left: none; border-bottom: none; border-top: none;">
+                        <span>Gross weight of Shipment (kg):</span>
+                    </td>
+                    <td t-if="order" colspan="2" class="text-end">
+                        <span t-raw="'%s/%s' % (round(order.brutto_total/1000,2),round(order.netto_total/1000,2))"/>
+                    </td>
+                    <td t-else="" colspan="2" class="text-end"><span> </span></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="text-end" style="border-left: none; border-bottom: none; border-top: none;">
+                        <span>Net weight of Shipment (kg):</span>
+                    </td>
+                    <td t-if="order" colspan="2" class="text-end">
+                        <span t-raw="round(order.netto_total/1000,2)"/>
+                    </td>
+                    <td t-else="" colspan="2" class="text-end"><span> </span></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="text-end" style="border-left: none; border-bottom: none; border-top: none;">
+                        <span>Number of pallets:</span>
+                    </td>
+                    <td t-if="palettes_list and palettes_list['palettes']" colspan="2" class="text-end">
+                        <span t-raw="len(palettes_list['palettes'])"/></td>
+                    <td colspan="2" t-else="" class="text-end"><span> </span></td>
+                </tr>
             </table>
 
 
