@@ -48,6 +48,9 @@ class SaleOrder(models.Model):
                                            help="This field is used to prevent sending confirmation email multiple times.",
                                            default=False)
 
+    place_warehouse_id = fields.Many2one('distrib.places', 'Place of Warehouse')
+    place_taking_googs_id = fields.Many2one('distrib.places', 'Place of taking goods')
+
     @api.depends('order_line.product_uom_qty')
     def _compute_total_product_uom_qty(self):
         for order in self:

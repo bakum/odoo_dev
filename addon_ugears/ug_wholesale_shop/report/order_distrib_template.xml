@@ -95,7 +95,9 @@
                                       style="text-indent:10px"/>
                             </td>
                             <td name="td_tariff" class="text-start" align="center"><span style="font-size: 0.7em;" t-field="line.product_id.customscode"/></td>
-                            <td name="td_country" class="text-center" align="center"><span style="font-size: 0.8em;" t-raw="doc.company_id.country_id.display_name"/></td>
+                            <td name="td_country" class="text-center" align="center">
+                                <span style="font-size: 0.8em;">Ukraine</span>
+                            </td>
                             <td name="td_barcode" class="text-start">
                                 <span style="font-size: 0.7em;" t-field="line.product_id.barcode"/>
                             </td>

@@ -22,6 +22,7 @@
         'security/ir.model.access.csv',
         'data/packages_sizes_data.xml',
         'views/packages_sizes.xml',
+        'views/distrib_places.xml',
         'views/distributors.xml',
         'views/import_order.xml',
         'views/sales_order.xml',
