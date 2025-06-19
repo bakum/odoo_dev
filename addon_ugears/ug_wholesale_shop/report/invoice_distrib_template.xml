@@ -3,6 +3,8 @@
     <template id="report_distrib_invoice_document">
         <t t-call="web.basic_layout">
             <t t-set="doc" t-value="doc.with_context({'lang':'en_US'})"/>
+            <t t-set="partner_bank" t-value="doc.beneficiary_bank_id if doc.beneficiary_bank_id else doc.partner_bank_id"/>
+            <t t-set="beneficiary" t-value="doc.bank_beneficiary_id if doc.bank_beneficiary_id else doc.company_id.partner_id"/>
             <t t-set="order" t-value="doc.get_source_orders()"/>
             <t t-if="order">
                 <t t-set="palettes_list" t-value="order._get_packing_list()"/>
@@ -62,31 +64,31 @@
                         <strong><span>The Supplier:</span></strong>
                     </td>
                     <td align="left" style="vertical-align: bottom;" class="d-md-table-cell">
-                        <strong><span style="font-size: 1.1em;" t-field="doc.company_id.partner_id.name"/></strong>
+                        <strong><span style="font-size: 1.1em;" t-field="beneficiary.name"/></strong>
                     </td>
                     <td align="left" style="vertical-align: bottom;" class="text-muted d-md-table-cell">
                         <span>VAT number:</span>
                     </td>
                     <td align="left" style="vertical-align: bottom;" class="text-muted d-md-table-cell">
-                        <span t-field="doc.company_id.partner_id.vat"/>
+                        <span t-field="beneficiary.vat"/>
                     </td>
                 </tr>
                  <tr>
                     <td> </td>
                     <td align="left" style="vertical-align: top;" class="text-muted d-md-table-cell">
-                        <span t-field="doc.company_id.partner_id.street"/>
+                        <span t-field="beneficiary.street"/>
                     </td>
                     <td align="left" style="vertical-align: top;" class="text-muted d-md-table-cell">
                         <span>Country code:</span>
                     </td>
                     <td align="left" style="vertical-align: top;" class="text-muted">
-                        <span t-field="doc.company_id.partner_id.country_id.code"/>
+                        <span t-field="beneficiary.country_id.code"/>
                     </td>
                 </tr>
                  <tr>
                     <td> </td>
                     <td align="left" style="vertical-align: top;">
-                        <t t-set="bank" t-value="' %s' % '' if not doc.partner_bank_id else doc.partner_bank_id.bank_id.name"/>
+                        <t t-set="bank" t-value="' %s' % '' if not partner_bank else partner_bank.bank_id.name"/>
                         <div>
                           <span>Bank<strong><span t-esc="bank"/></strong></span>
                         </div>
@@ -95,7 +97,7 @@
                         <span>Account number (IBAN)</span>
                     </td>
                     <td align="left" style="vertical-align: top;">
-                        <span t-field="doc.partner_bank_id.acc_number"/>
+                        <span t-field="partner_bank.acc_number"/>
                     </td>
                 </tr>
                  <tr>
@@ -107,7 +109,7 @@
                         <span>Bank's SWIFT</span>
                     </td>
                     <td align="left" style="vertical-align: top;">
-                        <span t-field="doc.partner_bank_id.bank_id.bic"/>
+                        <span t-field="partner_bank.bank_id.bic"/>
                     </td>
                 </tr>
                  <tr>

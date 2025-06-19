@@ -8,6 +8,8 @@
             <field name="arch" type="xml">
                 <data>
                     <xpath expr="//field[@name='qr_code_method']" position="before">
+                        <field name="bank_beneficiary_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="beneficiary_bank_id" context="{'default_beneficiary_bank_id': bank_beneficiary_id}" domain="[('partner_id', '=', bank_beneficiary_id)]" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                         <field name="bank_customer_id" invisible="1"/>
                         <field name="customer_bank_id" context="{'default_customer_bank_id': bank_customer_id}" domain="[('partner_id', '=', bank_customer_id)]" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                     </xpath>
