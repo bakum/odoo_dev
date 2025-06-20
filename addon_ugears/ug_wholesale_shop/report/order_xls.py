@@ -1,8 +1,6 @@
 from odoo import models
 from odoo.osv import expression
 
-months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-
 def write_product_to_xlsx(workbook, products, sheet_name):
     """
     Записывает информацию о продуктах в лист Excel с использованием переданного workbook.
@@ -65,62 +63,19 @@ def write_product_to_xlsx(workbook, products, sheet_name):
     sheet_object['sheet'] = sheet
     return sheet_object
 
-
-class ProductsOutXlsx(models.AbstractModel):
-    _name = 'report.ug_base_distrib.export_products_out_xls'
+class OrderXlsx(models.AbstractModel):
+    _name = 'report.ug_wholesale_shop.export_order_template_xls'
     _inherit = 'report.report_xlsx.abstract'
 
     def generate_xlsx_report(self, workbook, data, products):
-        Channels = self.env['distrib.sales.channels'].search([])
-        sheet_obj = write_product_to_xlsx(workbook, products, 'Distr Sales')
+        sheet_obj = write_product_to_xlsx(workbook, products, 'Distr Order')
         sheet = sheet_obj['sheet']
         head = sheet_obj['head']
         Products = sheet_obj['products']
         txt1 = sheet_obj['txt1']
 
-        for count, channel in enumerate(Channels):
-            sheet.write(0, 3 + count, channel.name, head)
-            width = len(channel.name) + 5
-            sheet.set_column(3 + count, 3 + count, width)
-
-        for num, product in enumerate(Products):
-            for count, channel in enumerate(Channels):
-                sheet.write(num + 1, 3 + count, 0, txt1)
-
-
-class ProductsInXlsx(models.AbstractModel):
-    _name = 'report.ug_base_distrib.export_products_in_xls'
-    _inherit = 'report.report_xlsx.abstract'
-
-    def generate_xlsx_report(self, workbook, data, products):
-        sheet_obj = write_product_to_xlsx(workbook, products, 'Distr Incomes')
-        sheet = sheet_obj['sheet']
-        head = sheet_obj['head']
-        Products = sheet_obj['products']
-        txt1 = sheet_obj['txt1']
-
-        sheet.write(0, 3, 'Qtt', head)
+        sheet.write(0, 3, 'Qt', head)
         sheet.set_column(3, 3, 5)
 
         for num, product in enumerate(Products):
             sheet.write(num + 1, 3, 0, txt1)
-
-class SellInXlsx(models.AbstractModel):
-    _name = 'report.ug_base_distrib.export_sell_in_xls'
-    _inherit = 'report.report_xlsx.abstract'
-
-    def generate_xlsx_report(self, workbook, data, products):
-        sheet_obj = write_product_to_xlsx(workbook, products, 'Distr Budget')
-        sheet = sheet_obj['sheet']
-        head = sheet_obj['head']
-        Products = sheet_obj['products']
-        txt1 = sheet_obj['txt1']
-
-        for count, month in enumerate(months):
-            sheet.write(0, 3 + count, month, head)
-            width = len(month) + 5
-            sheet.set_column(3 + count, 3 + count, width)
-
-        for num, product in enumerate(Products):
-            for count, month in enumerate(months):
-                sheet.write(num + 1, 3 + count, 0, txt1)

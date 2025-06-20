@@ -35,6 +35,7 @@
         'views/mail_template_data.xml',
         'report/invoice_distrib_template.xml',
         'report/invoice_distrib_action.xml',
+        'report/order_template_xls.xml',
     ],
     'assets': {
         'web.assets_frontend': [

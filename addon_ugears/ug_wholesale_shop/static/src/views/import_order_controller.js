@@ -21,10 +21,11 @@ export class ImportOrderController extends ListController {
         });
     }
     OnDownload() {
-        this.actionService.doAction({
-            'type': 'ir.actions.act_url',
-            'url': '/ug_wholesale_shop/static/xls/template.xlsx',
-            'target': 'new'
-        })
+        return this.actionService.doAction("ug_wholesale_shop.report_export_order_template_xls", {})
+        // this.actionService.doAction({
+        //     'type': 'ir.actions.act_url',
+        //     'url': '/ug_wholesale_shop/static/xls/template.xlsx',
+        //     'target': 'new'
+        // })
     }
 }

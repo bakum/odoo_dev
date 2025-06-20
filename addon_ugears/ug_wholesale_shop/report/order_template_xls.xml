@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="report_export_order_template_xls" model="ir.actions.report">
+        <field name="name">Import Template for Distribution Order</field>
+        <field name="model">product.template</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">ug_wholesale_shop.export_order_template_xls</field>
+        <field name="attachment_use">False</field>
+    </record>
+</odoo>

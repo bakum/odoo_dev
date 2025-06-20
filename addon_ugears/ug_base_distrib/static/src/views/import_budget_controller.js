@@ -21,11 +21,12 @@ export class ImportBudgetController extends ListController {
         });
     }
     OnDownload() {
-        this.actionService.doAction({
-            'type': 'ir.actions.act_url',
-            'url': '/ug_base_distrib/static/xls/template_budget_distrib.xlsx',
-            'target': 'new'
-        })
+        // this.actionService.doAction({
+        //     'type': 'ir.actions.act_url',
+        //     'url': '/ug_base_distrib/static/xls/template_budget_distrib.xlsx',
+        //     'target': 'new'
+        // })
+        return this.actionService.doAction("ug_base_distrib.report_export_sell_in_xls", {});
     }
 }
 
