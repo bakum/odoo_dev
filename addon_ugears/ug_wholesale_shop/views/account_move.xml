@@ -9,11 +9,22 @@
                 <data>
                     <xpath expr="//field[@name='qr_code_method']" position="before">
                         <field name="bank_beneficiary_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                        <field name="beneficiary_bank_id" context="{'default_beneficiary_bank_id': bank_beneficiary_id}" domain="[('partner_id', '=', bank_beneficiary_id)]" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="beneficiary_bank_id" context="{'default_partner_id': bank_beneficiary_id, 'default_currency_id': currency_id}" domain="['&amp;',('partner_id', '=', bank_beneficiary_id),('currency_id', '=', currency_id)]" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                         <field name="bank_customer_id" invisible="1"/>
-                        <field name="customer_bank_id" context="{'default_customer_bank_id': bank_customer_id}" domain="[('partner_id', '=', bank_customer_id)]" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="customer_bank_id" context="{'default_partner_id': bank_customer_id, 'default_currency_id': currency_id}" domain="['&amp;',('partner_id', '=', bank_customer_id),('currency_id', '=', currency_id)]" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                     </xpath>
                 </data>
+            </field>
+        </record>
+
+        <record id="view_distributor_bank_form_inherit_account" model="ir.ui.view">
+            <field name="name">res.distrib.bank.form.inherit.account</field>
+            <field name="model">res.partner.bank</field>
+            <field name="inherit_id" ref="base.view_partner_bank_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="currency_id"/>
+                </xpath>
             </field>
         </record>
     </data>

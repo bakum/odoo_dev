@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-19 18:36+0000\n"
-"PO-Revision-Date: 2025-03-19 18:36+0000\n"
+"POT-Creation-Date: 2025-06-20 04:37+0000\n"
+"PO-Revision-Date: 2025-06-20 04:37+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -24,9 +24,435 @@ msgid " gram"
 msgstr " г"
 
 #. module: ug_wholesale_shop
+#: model:ir.actions.report,print_report_name:ug_wholesale_shop.action_report_distrib_invoice
+msgid "'Invoice - %s' % (object.name)"
+msgstr ""
+
+#. module: ug_wholesale_shop
 #: model:ir.actions.report,print_report_name:ug_wholesale_shop.action_report_distriborder
 msgid "'Order Confirmation - %s' % (object.name)"
 msgstr ""
+
+#. module: ug_wholesale_shop
+#: model:mail.template,body_html:ug_wholesale_shop.mail_template_sale_confirmation_for_robot
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                    <p style=\"margin: 0px; padding: 0px; font-size: 12px;\">\n"
+"                        Hello,\n"
+"                        <br>\n"
+"                        <br>\n"
+"                        <t t-set=\"transaction\" t-value=\"object.get_portal_last_transaction()\"></t>\n"
+"                        The order <span style=\"font-weight:bold;\" t-out=\"object.name or ''\">S00049</span> from <span style=\"font-weight:bold;\" t-out=\"object.partner_id.name or ''\"></span> amounting in\n"
+"                        <span style=\"font-weight:bold;\" t-out=\"format_amount(object.amount_total, object.currency_id) or ''\">$ 10.00\n"
+"                        </span>\n"
+"                        <t t-if=\"object.state == 'sale' or (transaction and transaction.state in ('done', 'authorized'))\">\n"
+"                            has been confirmed.\n"
+"                            <br>\n"
+"                        </t>\n"
+"\n"
+"                        <br>\n"
+"                        <br>\n"
+"                    </p>\n"
+"<!--                    <t t-if=\"hasattr(object, 'website_id') and object.website_id\">-->\n"
+"                        <div style=\"margin: 0px; padding: 0px;\">\n"
+"                            <table width=\"100%\" style=\"color: #454748; font-size: 12px; border-collapse: collapse;\">\n"
+"                                <tr style=\"border-bottom: 2px solid #dee2e6;\">\n"
+"                                    <td style=\"width: 150px;\">\n"
+"                                        <span style=\"font-weight:bold;\">Products</span>\n"
+"                                    </td>\n"
+"                                    <td></td>\n"
+"                                    <td width=\"15%\" align=\"center\">\n"
+"                                        <span style=\"font-weight:bold;\">Quantity</span>\n"
+"                                    </td>\n"
+"                                    <td width=\"20%\" align=\"right\">\n"
+"                                        <span style=\"font-weight:bold;\">\n"
+"                                            <t t-if=\"object.user_id.has_group('account.group_show_line_subtotals_tax_excluded')\">\n"
+"                                                VAT Excl.\n"
+"                                            </t>\n"
+"                                            <t t-else=\"\">\n"
+"                                                VAT Incl.\n"
+"                                            </t>\n"
+"                                        </span>\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                            </table>\n"
+"                            <t t-foreach=\"object.order_line\" t-as=\"line\">\n"
+"                                <t t-if=\"(not hasattr(line, 'is_delivery') or not line.is_delivery) and line.display_type in ['line_section', 'line_note']\">\n"
+"                                    <table width=\"100%\" style=\"color: #454748; font-size: 12px; border-collapse: collapse;\">\n"
+"                                        <t t-set=\"loop_cycle_number\" t-value=\"loop_cycle_number or 0\"></t>\n"
+"                                        <tr t-att-style=\"'background-color: #f2f2f2' if loop_cycle_number % 2 == 0 else 'background-color: #ffffff'\">\n"
+"                                            <t t-set=\"loop_cycle_number\" t-value=\"loop_cycle_number + 1\"></t>\n"
+"                                            <td colspan=\"4\">\n"
+"                                                <t t-if=\"line.display_type == 'line_section'\">\n"
+"                                                    <span style=\"font-weight:bold;\" t-out=\"line.name or ''\">Taking care\n"
+"                                                        of Trees Course\n"
+"                                                    </span>\n"
+"                                                </t>\n"
+"                                                <t t-elif=\"line.display_type == 'line_note'\">\n"
+"                                                    <i t-out=\"line.name or ''\">Taking care of Trees Course</i>\n"
+"                                                </t>\n"
+"                                            </td>\n"
+"                                        </tr>\n"
+"                                    </table>\n"
+"                                </t>\n"
+"                                <t t-elif=\"(not hasattr(line, 'is_delivery') or not line.is_delivery)\">\n"
+"                                    <table width=\"100%\" style=\"color: #454748; font-size: 12px; border-collapse: collapse;\">\n"
+"                                        <t t-set=\"loop_cycle_number\" t-value=\"loop_cycle_number or 0\"></t>\n"
+"                                        <tr t-att-style=\"'background-color: #f2f2f2' if loop_cycle_number % 2 == 0 else 'background-color: #ffffff'\">\n"
+"                                            <t t-set=\"loop_cycle_number\" t-value=\"loop_cycle_number + 1\"></t>\n"
+"                                            <td style=\"width: 150px;\">\n"
+"                                                <img t-attf-src=\"/web/image/product.product/{{ line.product_id.id }}/image_128\" style=\"width: 64px; height: 64px; object-fit: contain;\" alt=\"Product image\">\n"
+"                                            </td>\n"
+"                                            <td align=\"left\" t-out=\"line.product_id.name or ''\">Taking care of Trees\n"
+"                                                Course\n"
+"                                            </td>\n"
+"                                            <td width=\"15%\" align=\"center\" t-out=\"line.product_uom_qty or ''\">1</td>\n"
+"                                            <td width=\"20%\" align=\"right\">\n"
+"                                                <span style=\"font-weight:bold;\">\n"
+"                                                    <t t-if=\"object.user_id.has_group('account.group_show_line_subtotals_tax_excluded')\">\n"
+"                                                        <t t-out=\"format_amount(line.price_reduce_taxexcl, object.currency_id) or ''\">\n"
+"                                                            $ 10.00\n"
+"                                                        </t>\n"
+"                                                    </t>\n"
+"                                                    <t t-else=\"\">\n"
+"                                                        <t t-out=\"format_amount(line.price_reduce_taxinc, object.currency_id) or ''\">\n"
+"                                                            $ 10.00\n"
+"                                                        </t>\n"
+"                                                    </t>\n"
+"                                                </span>\n"
+"                                            </td>\n"
+"                                        </tr>\n"
+"                                    </table>\n"
+"                                </t>\n"
+"                            </t>\n"
+"                        </div>\n"
+"                        <div style=\"margin: 0px; padding: 0px;\" t-if=\"hasattr(object, 'carrier_id') and object.carrier_id\">\n"
+"                            <table width=\"100%\" style=\"color: #454748; font-size: 12px; border-spacing: 0px 4px;\" align=\"right\">\n"
+"                                <tr>\n"
+"                                    <td style=\"width: 60%\"></td>\n"
+"                                    <td style=\"width: 30%; border-top: 1px solid #dee2e6;\" align=\"right\">\n"
+"                                        <span style=\"font-weight:bold;\">Delivery:</span>\n"
+"                                    </td>\n"
+"                                    <td style=\"width: 10%; border-top: 1px solid #dee2e6;\" align=\"right\" t-out=\"format_amount(object.amount_delivery, object.currency_id) or ''\">$ 0.00\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                                <tr>\n"
+"                                    <td style=\"width: 60%\"></td>\n"
+"                                    <td style=\"width: 30%;\" align=\"right\">\n"
+"                                        <span style=\"font-weight:bold;\">SubTotal:</span>\n"
+"                                    </td>\n"
+"                                    <td style=\"width: 10%;\" align=\"right\" t-out=\"format_amount(object.amount_untaxed, object.currency_id) or ''\">$ 10.00\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                            </table>\n"
+"                        </div>\n"
+"                        <div style=\"margin: 0px; padding: 0px;\" t-else=\"\">\n"
+"                            <table width=\"100%\" style=\"color: #454748; font-size: 12px; border-spacing: 0px 4px;\" align=\"right\">\n"
+"                                <tr>\n"
+"                                    <td style=\"width: 60%\"></td>\n"
+"                                    <td style=\"width: 30%; border-top: 1px solid #dee2e6;\" align=\"right\">\n"
+"                                        <span style=\"font-weight:bold;\">SubTotal:</span>\n"
+"                                    </td>\n"
+"                                    <td style=\"width: 10%; border-top: 1px solid #dee2e6;\" align=\"right\" t-out=\"format_amount(object.amount_untaxed, object.currency_id) or ''\">$ 10.00\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                            </table>\n"
+"                        </div>\n"
+"                        <div style=\"margin: 0px; padding: 0px;\">\n"
+"                            <table width=\"100%\" style=\"color: #454748; font-size: 12px; border-spacing: 0px 4px;\" align=\"right\">\n"
+"                                <tr>\n"
+"                                    <td style=\"width: 60%\"></td>\n"
+"                                    <td style=\"width: 30%;\" align=\"right\">\n"
+"                                        <span style=\"font-weight:bold;\">Taxes:</span>\n"
+"                                    </td>\n"
+"                                    <td style=\"width: 10%;\" align=\"right\" t-out=\"format_amount(object.amount_tax, object.currency_id) or ''\">$ 0.00\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                                <tr>\n"
+"                                    <td style=\"width: 60%\"></td>\n"
+"                                    <td style=\"width: 30%; border-top: 1px solid #dee2e6;\" align=\"right\">\n"
+"                                        <span style=\"font-weight:bold;\">Total:</span>\n"
+"                                    </td>\n"
+"                                    <td style=\"width: 10%; border-top: 1px solid #dee2e6;\" align=\"right\" t-out=\"format_amount(object.amount_total, object.currency_id) or ''\">$ 10.00\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                            </table>\n"
+"                        </div>\n"
+"                        <div t-if=\"object.partner_invoice_id\" style=\"margin: 0px; padding: 0px;\">\n"
+"                            <table width=\"100%\" style=\"color: #454748; font-size: 12px;\">\n"
+"                                <tr>\n"
+"                                    <td style=\"padding-top: 10px;\">\n"
+"                                        <span style=\"font-weight:bold;\">Bill to:</span>\n"
+"                                        <t t-out=\"object.partner_invoice_id.street or ''\">1201 S Figueroa St</t>\n"
+"                                        <t t-out=\"object.partner_invoice_id.city or ''\">Los Angeles</t>\n"
+"                                        <t t-out=\"object.partner_invoice_id.state_id.name or ''\">California</t>\n"
+"                                        <t t-out=\"object.partner_invoice_id.zip or ''\">90015</t>\n"
+"                                        <t t-out=\"object.partner_invoice_id.country_id.name or ''\">United States</t>\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                                <tr>\n"
+"                                    <td>\n"
+"                                        <span style=\"font-weight:bold;\">Payment Method:</span>\n"
+"                                        <t t-if=\"transaction.token_id\">\n"
+"                                            <t t-out=\"transaction.token_id.display_name or ''\"></t>\n"
+"                                        </t>\n"
+"                                        <t t-else=\"\">\n"
+"                                            <t t-out=\"transaction.provider_id.sudo().name or ''\"></t>\n"
+"                                        </t>\n"
+"                                        (<t t-out=\"format_amount(transaction.amount, object.currency_id) or ''\">$\n"
+"                                        10.00</t>)\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                            </table>\n"
+"                        </div>\n"
+"                        <div t-if=\"object.partner_shipping_id and not object.only_services\" style=\"margin: 0px; padding: 0px;\">\n"
+"                            <table width=\"100%\" style=\"color: #454748; font-size: 12px;\">\n"
+"                                <tr>\n"
+"                                    <td>\n"
+"                                        <br>\n"
+"                                        <span style=\"font-weight:bold;\">Ship to:</span>\n"
+"                                        <t t-out=\"object.partner_shipping_id.street or ''\">1201 S Figueroa St</t>\n"
+"                                        <t t-out=\"object.partner_shipping_id.city or ''\">Los Angeles</t>\n"
+"                                        <t t-out=\"object.partner_shipping_id.state_id.name or ''\">California</t>\n"
+"                                        <t t-out=\"object.partner_shipping_id.zip or ''\">90015</t>\n"
+"                                        <t t-out=\"object.partner_shipping_id.country_id.name or ''\">United States</t>\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                            </table>\n"
+"                            <table t-if=\"hasattr(object, 'carrier_id') and object.carrier_id\" width=\"100%\" style=\"color: #454748; font-size: 12px;\">\n"
+"                                <tr>\n"
+"                                    <td>\n"
+"                                        <span style=\"font-weight:bold;\">Shipping Method:</span>\n"
+"                                        <t t-out=\"object.carrier_id.name or ''\"></t>\n"
+"                                        <t t-if=\"object.amount_delivery == 0.0\">\n"
+"                                            (Free)\n"
+"                                        </t>\n"
+"                                        <t t-else=\"\">\n"
+"                                            (<t t-out=\"format_amount(object.amount_delivery, object.currency_id) or ''\">\n"
+"                                            $ 10.00</t>)\n"
+"                                        </t>\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                                <tr t-if=\"object.carrier_id.carrier_description\">\n"
+"                                    <td>\n"
+"                                        <strong>Shipping Description:</strong>\n"
+"                                        <t t-out=\"object.carrier_id.carrier_description\"></t>\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                            </table>\n"
+"                        </div>\n"
+"<!--                    </t>-->\n"
+"                </div>\n"
+"            "
+msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                    <p style=\"box-sizing:border-box;margin: 0px; padding: 0px; font-size: 12px;\">\n"
+"                        Hello,\n"
+"                        <br>\n"
+"                        <br>\n"
+"                        <t t-set=\"transaction\" t-value=\"object.get_portal_last_transaction()\"></t>\n"
+"                        The order <span style=\"font-weight:bold;\" t-out=\"object.name or ''\">S00049</span> from <span style=\"font-weight:bold;\" t-out=\"object.partner_id.name or ''\"></span> amounting in\n"
+"                        <span style=\"font-weight:bold;\" t-out=\"format_amount(object.amount_total, object.currency_id) or ''\">$ 10.00\n"
+"                        </span>\n"
+"                        <t t-if=\"object.state == 'sale' or (transaction and transaction.state in ('done', 'authorized'))\">\n"
+"                            has been confirmed.\n"
+"                            <br>\n"
+"                        </t>\n"
+"\n"
+"                        <br>\n"
+"                        <br>\n"
+"                    </p>\n"
+"\n"
+"                        <div style=\"margin: 0px; padding: 0px;\">\n"
+"                            <table width=\"100%\" style=\"box-sizing:border-box;caption-side:bottom;color: #454748; font-size: 12px; border-collapse: collapse;\">\n"
+"                                <tbody style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\"><tr style=\"border-style:solid;box-sizing:border-box;border-bottom-color:#dee2e6;border-left-width:0px;border-bottom-width:2px;border-right-width:0px;border-top-width:0px;border-bottom: 2px solid #dee2e6;\">\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;width: 150px;\" width=\"150\">\n"
+"                                        <span style=\"font-weight:bold;\">Products</span>\n"
+"                                    </td>\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">&nbsp;</td>\n"
+"                                    <td width=\"15%\" align=\"center\" style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                        <span style=\"font-weight:bold;\">Quantity</span>\n"
+"                                    </td>\n"
+"                                    <td width=\"20%\" align=\"right\" style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                        <span style=\"font-weight:bold;\">\n"
+"                                            <t t-if=\"object.user_id.has_group('account.group_show_line_subtotals_tax_excluded')\">\n"
+"                                                VAT Excl.\n"
+"                                            </t>\n"
+"                                            <t t-else=\"\">\n"
+"                                                VAT Incl.\n"
+"                                            </t>\n"
+"                                        </span>\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                            </tbody></table>\n"
+"                            <t t-foreach=\"object.order_line\" t-as=\"line\">\n"
+"                                <t t-if=\"(not hasattr(line, 'is_delivery') or not line.is_delivery) and line.display_type in ['line_section', 'line_note']\">\n"
+"                                    <t t-set=\"loop_cycle_number\" t-value=\"loop_cycle_number or 0\"></t><t t-set=\"loop_cycle_number\" t-value=\"loop_cycle_number + 1\"></t><table width=\"100%\" style=\"box-sizing:border-box;caption-side:bottom;color: #454748; font-size: 12px; border-collapse: collapse;\">\n"
+"                                        \n"
+"                                        <tbody style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\"><tr t-att-style=\"'background-color: #f2f2f2' if loop_cycle_number % 2 == 0 else 'background-color: #ffffff'\" style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                            \n"
+"                                            <td colspan=\"4\" style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                                <t t-if=\"line.display_type == 'line_section'\">\n"
+"                                                    <span style=\"font-weight:bold;\" t-out=\"line.name or ''\">Taking care\n"
+"                                                        of Trees Course\n"
+"                                                    </span>\n"
+"                                                </t>\n"
+"                                                <t t-elif=\"line.display_type == 'line_note'\">\n"
+"                                                    <i t-out=\"line.name or ''\">Taking care of Trees Course</i>\n"
+"                                                </t>\n"
+"                                            </td>\n"
+"                                        </tr>\n"
+"                                    </tbody></table>\n"
+"                                </t>\n"
+"                                <t t-elif=\"(not hasattr(line, 'is_delivery') or not line.is_delivery)\">\n"
+"                                    <t t-set=\"loop_cycle_number\" t-value=\"loop_cycle_number or 0\"></t><t t-set=\"loop_cycle_number\" t-value=\"loop_cycle_number + 1\"></t><table width=\"100%\" style=\"box-sizing:border-box;caption-side:bottom;color: #454748; font-size: 12px; border-collapse: collapse;\">\n"
+"                                        \n"
+"                                        <tbody style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\"><tr t-att-style=\"'background-color: #f2f2f2' if loop_cycle_number % 2 == 0 else 'background-color: #ffffff'\" style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                            \n"
+"                                            <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;width: 150px;\" width=\"150\">\n"
+"                                                <img t-attf-src=\"/web/image/product.product/{{ line.product_id.id }}/image_128\" style=\"box-sizing: border-box; vertical-align: middle; width: 64px; height: 18px; object-fit: contain;\" alt=\"Product image\" width=\"64\" height=\"18\">\n"
+"                                            </td>\n"
+"                                            <td align=\"left\" t-out=\"line.product_id.name or ''\" style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">Taking care of Trees\n"
+"                                                Course\n"
+"                                            </td>\n"
+"                                            <td width=\"15%\" align=\"center\" t-out=\"line.product_uom_qty or ''\" style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">1</td>\n"
+"                                            <td width=\"20%\" align=\"right\" style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                                <span style=\"font-weight:bold;\">\n"
+"                                                    <t t-if=\"object.user_id.has_group('account.group_show_line_subtotals_tax_excluded')\">\n"
+"                                                        <t t-out=\"format_amount(line.price_reduce_taxexcl, object.currency_id) or ''\">\n"
+"                                                            $ 10.00\n"
+"                                                        </t>\n"
+"                                                    </t>\n"
+"                                                    <t t-else=\"\">\n"
+"                                                        <t t-out=\"format_amount(line.price_reduce_taxinc, object.currency_id) or ''\">\n"
+"                                                            $ 10.00\n"
+"                                                        </t>\n"
+"                                                    </t>\n"
+"                                                </span>\n"
+"                                            </td>\n"
+"                                        </tr>\n"
+"                                    </tbody></table>\n"
+"                                </t>\n"
+"                            </t>\n"
+"                        </div>\n"
+"                        <div style=\"margin: 0px; padding: 0px;\" t-if=\"hasattr(object, 'carrier_id') and object.carrier_id\">\n"
+"                            <table width=\"100%\" style=\"box-sizing:border-box;-webkit-border-vertical-spacing:4px;-webkit-border-horizontal-spacing:0px;border-collapse:collapse;caption-side:bottom;color: #454748; font-size: 12px; border-spacing: 0px 4px;\" align=\"right\">\n"
+"                                <tbody style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\"><tr style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;width: 60%;\" width=\"60%\">&nbsp;</td>\n"
+"                                    <td style=\"border-style:solid;box-sizing:border-box;border-top-color:#dee2e6;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:1px;width: 30%; border-top: 1px solid #dee2e6;\" align=\"right\" width=\"30%\">\n"
+"                                        <span style=\"font-weight:bold;\">Delivery:</span>\n"
+"                                    </td>\n"
+"                                    <td style=\"border-style:solid;box-sizing:border-box;border-top-color:#dee2e6;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:1px;width: 10%; border-top: 1px solid #dee2e6;\" align=\"right\" t-out=\"format_amount(object.amount_delivery, object.currency_id) or ''\" width=\"10%\">$ 0.00\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                                <tr style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;width: 60%;\" width=\"60%\">&nbsp;</td>\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;width: 30%;\" align=\"right\" width=\"30%\">\n"
+"                                        <span style=\"font-weight:bold;\">SubTotal:</span>\n"
+"                                    </td>\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;width: 10%;\" align=\"right\" t-out=\"format_amount(object.amount_untaxed, object.currency_id) or ''\" width=\"10%\">$ 10.00\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                            </tbody></table>\n"
+"                        </div>\n"
+"                        <div style=\"margin: 0px; padding: 0px;\" t-else=\"\">\n"
+"                            <table width=\"100%\" style=\"box-sizing:border-box;-webkit-border-vertical-spacing:4px;-webkit-border-horizontal-spacing:0px;border-collapse:collapse;caption-side:bottom;color: #454748; font-size: 12px; border-spacing: 0px 4px;\" align=\"right\">\n"
+"                                <tbody style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\"><tr style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;width: 60%;\" width=\"60%\">&nbsp;</td>\n"
+"                                    <td style=\"border-style:solid;box-sizing:border-box;border-top-color:#dee2e6;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:1px;width: 30%; border-top: 1px solid #dee2e6;\" align=\"right\" width=\"30%\">\n"
+"                                        <span style=\"font-weight:bold;\">SubTotal:</span>\n"
+"                                    </td>\n"
+"                                    <td style=\"border-style:solid;box-sizing:border-box;border-top-color:#dee2e6;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:1px;width: 10%; border-top: 1px solid #dee2e6;\" align=\"right\" t-out=\"format_amount(object.amount_untaxed, object.currency_id) or ''\" width=\"10%\">$ 10.00\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                            </tbody></table>\n"
+"                        </div>\n"
+"                        <div style=\"margin: 0px; padding: 0px;\">\n"
+"                            <table width=\"100%\" style=\"box-sizing:border-box;-webkit-border-vertical-spacing:4px;-webkit-border-horizontal-spacing:0px;border-collapse:collapse;caption-side:bottom;color: #454748; font-size: 12px; border-spacing: 0px 4px;\" align=\"right\">\n"
+"                                <tbody style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\"><tr style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;width: 60%;\" width=\"60%\">&nbsp;</td>\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;width: 30%;\" align=\"right\" width=\"30%\">\n"
+"                                        <span style=\"font-weight:bold;\">Taxes:</span>\n"
+"                                    </td>\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;width: 10%;\" align=\"right\" t-out=\"format_amount(object.amount_tax, object.currency_id) or ''\" width=\"10%\">$ 0.00\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                                <tr style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;width: 60%;\" width=\"60%\">&nbsp;</td>\n"
+"                                    <td style=\"border-style:solid;box-sizing:border-box;border-top-color:#dee2e6;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:1px;width: 30%; border-top: 1px solid #dee2e6;\" align=\"right\" width=\"30%\">\n"
+"                                        <span style=\"font-weight:bold;\">Total:</span>\n"
+"                                    </td>\n"
+"                                    <td style=\"border-style:solid;box-sizing:border-box;border-top-color:#dee2e6;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:1px;width: 10%; border-top: 1px solid #dee2e6;\" align=\"right\" t-out=\"format_amount(object.amount_total, object.currency_id) or ''\" width=\"10%\">$ 10.00\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                            </tbody></table>\n"
+"                        </div>\n"
+"                        <div t-if=\"object.partner_invoice_id\" style=\"margin: 0px; padding: 0px;\">\n"
+"                            <table width=\"100%\" style=\"box-sizing:border-box;border-collapse:collapse;caption-side:bottom;color: #454748; font-size: 12px;\">\n"
+"                                <tbody style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\"><tr style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                    <td style=\"border-style:none;padding:10px 0 0 0;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;padding-top: 10px;\">\n"
+"                                        <span style=\"font-weight:bold;\">Bill to:</span>\n"
+"                                        <t t-out=\"object.partner_invoice_id.street or ''\">1201 S Figueroa St</t>\n"
+"                                        <t t-out=\"object.partner_invoice_id.city or ''\">Los Angeles</t>\n"
+"                                        <t t-out=\"object.partner_invoice_id.state_id.name or ''\">California</t>\n"
+"                                        <t t-out=\"object.partner_invoice_id.zip or ''\">90015</t>\n"
+"                                        <t t-out=\"object.partner_invoice_id.country_id.name or ''\">United States</t>\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                                <tr style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                        <span style=\"font-weight:bold;\">Payment Method:</span>\n"
+"                                        <t t-if=\"transaction.token_id\">\n"
+"                                            <t t-out=\"transaction.token_id.display_name or ''\"></t>\n"
+"                                        </t>\n"
+"                                        <t t-else=\"\">\n"
+"                                            <t t-out=\"transaction.provider_id.sudo().name or ''\"></t>\n"
+"                                        </t>\n"
+"                                        (<t t-out=\"format_amount(transaction.amount, object.currency_id) or ''\">$\n"
+"                                        10.00</t>)\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                            </tbody></table>\n"
+"                        </div>\n"
+"                        <div t-if=\"object.partner_shipping_id and not object.only_services\" style=\"margin: 0px; padding: 0px;\">\n"
+"                            <table width=\"100%\" style=\"box-sizing:border-box;border-collapse:collapse;caption-side:bottom;color: #454748; font-size: 12px;\">\n"
+"                                <tbody style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\"><tr style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                        <br>\n"
+"                                        <span style=\"font-weight:bold;\">Ship to:</span>\n"
+"                                        <t t-out=\"object.partner_shipping_id.street or ''\">1201 S Figueroa St</t>\n"
+"                                        <t t-out=\"object.partner_shipping_id.city or ''\">Los Angeles</t>\n"
+"                                        <t t-out=\"object.partner_shipping_id.state_id.name or ''\">California</t>\n"
+"                                        <t t-out=\"object.partner_shipping_id.zip or ''\">90015</t>\n"
+"                                        <t t-out=\"object.partner_shipping_id.country_id.name or ''\">United States</t>\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                            </tbody></table>\n"
+"                            <table t-if=\"hasattr(object, 'carrier_id') and object.carrier_id\" width=\"100%\" style=\"box-sizing:border-box;border-collapse:collapse;caption-side:bottom;color: #454748; font-size: 12px;\">\n"
+"                                <tbody style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\"><tr style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                        <span style=\"font-weight:bold;\">Shipping Method:</span>\n"
+"                                        <t t-out=\"object.carrier_id.name or ''\"></t>\n"
+"                                        <t t-if=\"object.amount_delivery == 0.0\">\n"
+"                                            (Free)\n"
+"                                        </t>\n"
+"                                        <t t-else=\"\">\n"
+"                                            (<t t-out=\"format_amount(object.amount_delivery, object.currency_id) or ''\">\n"
+"                                            $ 10.00</t>)\n"
+"                                        </t>\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                                <tr t-if=\"object.carrier_id.carrier_description\" style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                        <strong style=\"box-sizing:border-box;font-weight:bolder;\">Shipping Description:</strong>\n"
+"                                        <t t-out=\"object.carrier_id.carrier_description\"></t>\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                            </tbody></table>\n"
+"                        </div>\n"
+"\n"
+"                </div>\n"
+"            "
 
 #. module: ug_wholesale_shop
 #: model:mail.template,body_html:ug_wholesale_shop.mail_template_sale_confirmation
@@ -256,7 +682,7 @@ msgid ""
 "            "
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
-"                    <p style=\"margin: 0px; padding: 0px; font-size: 12px;\">\n"
+"                    <p style=\"box-sizing:border-box;margin: 0px; padding: 0px; font-size: 12px;\">\n"
 "                        Привіт,\n"
 "                        <br>\n"
 "                        <br>\n"
@@ -289,16 +715,16 @@ msgstr ""
 "                    </p>\n"
 "                    <t t-if=\"hasattr(object, 'website_id') and object.website_id\">\n"
 "                        <div style=\"margin: 0px; padding: 0px;\">\n"
-"                            <table width=\"100%\" style=\"color: #454748; font-size: 12px; border-collapse: collapse;\">\n"
-"                                <tr style=\"border-bottom: 2px solid #dee2e6;\">\n"
-"                                    <td style=\"width: 150px;\">\n"
+"                            <table width=\"100%\" style=\"box-sizing:border-box;caption-side:bottom;color: #454748; font-size: 12px; border-collapse: collapse;\">\n"
+"                                <tbody style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\"><tr style=\"border-style:solid;box-sizing:border-box;border-bottom-color:#dee2e6;border-left-width:0px;border-bottom-width:2px;border-right-width:0px;border-top-width:0px;border-bottom: 2px solid #dee2e6;\">\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;width: 150px;\" width=\"150\">\n"
 "                                        <span style=\"font-weight:bold;\">Товар</span>\n"
 "                                    </td>\n"
-"                                    <td></td>\n"
-"                                    <td width=\"15%\" align=\"center\">\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">&nbsp;</td>\n"
+"                                    <td width=\"15%\" align=\"center\" style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
 "                                        <span style=\"font-weight:bold;\">Кіл</span>\n"
 "                                    </td>\n"
-"                                    <td width=\"20%\" align=\"right\">\n"
+"                                    <td width=\"20%\" align=\"right\" style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
 "                                        <span style=\"font-weight:bold;\">\n"
 "                                            <t t-if=\"object.user_id.has_group('account.group_show_line_subtotals_tax_excluded')\">\n"
 "                                                ПДВ викл.\n"
@@ -309,14 +735,14 @@ msgstr ""
 "                                        </span>\n"
 "                                    </td>\n"
 "                                </tr>\n"
-"                            </table>\n"
+"                            </tbody></table>\n"
 "                            <t t-foreach=\"object.order_line\" t-as=\"line\">\n"
 "                                <t t-if=\"(not hasattr(line, 'is_delivery') or not line.is_delivery) and line.display_type in ['line_section', 'line_note']\">\n"
-"                                    <table width=\"100%\" style=\"color: #454748; font-size: 12px; border-collapse: collapse;\">\n"
-"                                        <t t-set=\"loop_cycle_number\" t-value=\"loop_cycle_number or 0\"></t>\n"
-"                                        <tr t-att-style=\"'background-color: #f2f2f2' if loop_cycle_number % 2 == 0 else 'background-color: #ffffff'\">\n"
-"                                            <t t-set=\"loop_cycle_number\" t-value=\"loop_cycle_number + 1\"></t>\n"
-"                                            <td colspan=\"4\">\n"
+"                                    <t t-set=\"loop_cycle_number\" t-value=\"loop_cycle_number or 0\"></t><t t-set=\"loop_cycle_number\" t-value=\"loop_cycle_number + 1\"></t><table width=\"100%\" style=\"box-sizing:border-box;caption-side:bottom;color: #454748; font-size: 12px; border-collapse: collapse;\">\n"
+"                                        \n"
+"                                        <tbody style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\"><tr t-att-style=\"'background-color: #f2f2f2' if loop_cycle_number % 2 == 0 else 'background-color: #ffffff'\" style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                            \n"
+"                                            <td colspan=\"4\" style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
 "                                                <t t-if=\"line.display_type == 'line_section'\">\n"
 "                                                    <span style=\"font-weight:bold;\" t-out=\"line.name or ''\">Taking care\n"
 "                                                        of Trees Course\n"
@@ -327,21 +753,21 @@ msgstr ""
 "                                                </t>\n"
 "                                            </td>\n"
 "                                        </tr>\n"
-"                                    </table>\n"
+"                                    </tbody></table>\n"
 "                                </t>\n"
 "                                <t t-elif=\"(not hasattr(line, 'is_delivery') or not line.is_delivery)\">\n"
-"                                    <table width=\"100%\" style=\"color: #454748; font-size: 12px; border-collapse: collapse;\">\n"
-"                                        <t t-set=\"loop_cycle_number\" t-value=\"loop_cycle_number or 0\"></t>\n"
-"                                        <tr t-att-style=\"'background-color: #f2f2f2' if loop_cycle_number % 2 == 0 else 'background-color: #ffffff'\">\n"
-"                                            <t t-set=\"loop_cycle_number\" t-value=\"loop_cycle_number + 1\"></t>\n"
-"                                            <td style=\"width: 150px;\">\n"
-"                                                <img t-attf-src=\"/web/image/product.product/{{ line.product_id.id }}/image_128\" style=\"width: 64px; height: 64px; object-fit: contain;\" alt=\"Product image\">\n"
+"                                    <t t-set=\"loop_cycle_number\" t-value=\"loop_cycle_number or 0\"></t><t t-set=\"loop_cycle_number\" t-value=\"loop_cycle_number + 1\"></t><table width=\"100%\" style=\"box-sizing:border-box;caption-side:bottom;color: #454748; font-size: 12px; border-collapse: collapse;\">\n"
+"                                        \n"
+"                                        <tbody style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\"><tr t-att-style=\"'background-color: #f2f2f2' if loop_cycle_number % 2 == 0 else 'background-color: #ffffff'\" style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                            \n"
+"                                            <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;width: 150px;\" width=\"150\">\n"
+"                                                <img t-attf-src=\"/web/image/product.product/{{ line.product_id.id }}/image_128\" style=\"box-sizing: border-box; vertical-align: middle; width: 64px; height: 18px; object-fit: contain;\" alt=\"Product image\" width=\"64\" height=\"18\">\n"
 "                                            </td>\n"
-"                                            <td align=\"left\" t-out=\"line.product_id.name or ''\">Taking care of Trees\n"
+"                                            <td align=\"left\" t-out=\"line.product_id.name or ''\" style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">Taking care of Trees\n"
 "                                                Course\n"
 "                                            </td>\n"
-"                                            <td width=\"15%\" align=\"center\" t-out=\"line.product_uom_qty or ''\">1</td>\n"
-"                                            <td width=\"20%\" align=\"right\">\n"
+"                                            <td width=\"15%\" align=\"center\" t-out=\"line.product_uom_qty or ''\" style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">1</td>\n"
+"                                            <td width=\"20%\" align=\"right\" style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
 "                                                <span style=\"font-weight:bold;\">\n"
 "                                                    <t t-if=\"object.user_id.has_group('account.group_show_line_subtotals_tax_excluded')\">\n"
 "                                                        <t t-out=\"format_amount(line.price_reduce_taxexcl, object.currency_id) or ''\">\n"
@@ -356,66 +782,66 @@ msgstr ""
 "                                                </span>\n"
 "                                            </td>\n"
 "                                        </tr>\n"
-"                                    </table>\n"
+"                                    </tbody></table>\n"
 "                                </t>\n"
 "                            </t>\n"
 "                        </div>\n"
 "                        <div style=\"margin: 0px; padding: 0px;\" t-if=\"hasattr(object, 'carrier_id') and object.carrier_id\">\n"
-"                            <table width=\"100%\" style=\"color: #454748; font-size: 12px; border-spacing: 0px 4px;\" align=\"right\">\n"
-"                                <tr>\n"
-"                                    <td style=\"width: 60%\"></td>\n"
-"                                    <td style=\"width: 30%; border-top: 1px solid #dee2e6;\" align=\"right\">\n"
+"                            <table width=\"100%\" style=\"box-sizing:border-box;-webkit-border-vertical-spacing:4px;-webkit-border-horizontal-spacing:0px;border-collapse:collapse;caption-side:bottom;color: #454748; font-size: 12px; border-spacing: 0px 4px;\" align=\"right\">\n"
+"                                <tbody style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\"><tr style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;width: 60%;\" width=\"60%\">&nbsp;</td>\n"
+"                                    <td style=\"border-style:solid;box-sizing:border-box;border-top-color:#dee2e6;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:1px;width: 30%; border-top: 1px solid #dee2e6;\" align=\"right\" width=\"30%\">\n"
 "                                        <span style=\"font-weight:bold;\">Доставка:</span>\n"
 "                                    </td>\n"
-"                                    <td style=\"width: 10%; border-top: 1px solid #dee2e6;\" align=\"right\" t-out=\"format_amount(object.amount_delivery, object.currency_id) or ''\">$ 0.00\n"
+"                                    <td style=\"border-style:solid;box-sizing:border-box;border-top-color:#dee2e6;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:1px;width: 10%; border-top: 1px solid #dee2e6;\" align=\"right\" t-out=\"format_amount(object.amount_delivery, object.currency_id) or ''\" width=\"10%\">$ 0.00\n"
 "                                    </td>\n"
 "                                </tr>\n"
-"                                <tr>\n"
-"                                    <td style=\"width: 60%\"></td>\n"
-"                                    <td style=\"width: 30%;\" align=\"right\">\n"
+"                                <tr style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;width: 60%;\" width=\"60%\">&nbsp;</td>\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;width: 30%;\" align=\"right\" width=\"30%\">\n"
 "                                        <span style=\"font-weight:bold;\">Разом:</span>\n"
 "                                    </td>\n"
-"                                    <td style=\"width: 10%;\" align=\"right\" t-out=\"format_amount(object.amount_untaxed, object.currency_id) or ''\">$ 10.00\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;width: 10%;\" align=\"right\" t-out=\"format_amount(object.amount_untaxed, object.currency_id) or ''\" width=\"10%\">$ 10.00\n"
 "                                    </td>\n"
 "                                </tr>\n"
-"                            </table>\n"
+"                            </tbody></table>\n"
 "                        </div>\n"
 "                        <div style=\"margin: 0px; padding: 0px;\" t-else=\"\">\n"
-"                            <table width=\"100%\" style=\"color: #454748; font-size: 12px; border-spacing: 0px 4px;\" align=\"right\">\n"
-"                                <tr>\n"
-"                                    <td style=\"width: 60%\"></td>\n"
-"                                    <td style=\"width: 30%; border-top: 1px solid #dee2e6;\" align=\"right\">\n"
+"                            <table width=\"100%\" style=\"box-sizing:border-box;-webkit-border-vertical-spacing:4px;-webkit-border-horizontal-spacing:0px;border-collapse:collapse;caption-side:bottom;color: #454748; font-size: 12px; border-spacing: 0px 4px;\" align=\"right\">\n"
+"                                <tbody style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\"><tr style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;width: 60%;\" width=\"60%\">&nbsp;</td>\n"
+"                                    <td style=\"border-style:solid;box-sizing:border-box;border-top-color:#dee2e6;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:1px;width: 30%; border-top: 1px solid #dee2e6;\" align=\"right\" width=\"30%\">\n"
 "                                        <span style=\"font-weight:bold;\">Підсумок:</span>\n"
 "                                    </td>\n"
-"                                    <td style=\"width: 10%; border-top: 1px solid #dee2e6;\" align=\"right\" t-out=\"format_amount(object.amount_untaxed, object.currency_id) or ''\">$ 10.00\n"
+"                                    <td style=\"border-style:solid;box-sizing:border-box;border-top-color:#dee2e6;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:1px;width: 10%; border-top: 1px solid #dee2e6;\" align=\"right\" t-out=\"format_amount(object.amount_untaxed, object.currency_id) or ''\" width=\"10%\">$ 10.00\n"
 "                                    </td>\n"
 "                                </tr>\n"
-"                            </table>\n"
+"                            </tbody></table>\n"
 "                        </div>\n"
 "                        <div style=\"margin: 0px; padding: 0px;\">\n"
-"                            <table width=\"100%\" style=\"color: #454748; font-size: 12px; border-spacing: 0px 4px;\" align=\"right\">\n"
-"                                <tr>\n"
-"                                    <td style=\"width: 60%\"></td>\n"
-"                                    <td style=\"width: 30%;\" align=\"right\">\n"
+"                            <table width=\"100%\" style=\"box-sizing:border-box;-webkit-border-vertical-spacing:4px;-webkit-border-horizontal-spacing:0px;border-collapse:collapse;caption-side:bottom;color: #454748; font-size: 12px; border-spacing: 0px 4px;\" align=\"right\">\n"
+"                                <tbody style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\"><tr style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;width: 60%;\" width=\"60%\">&nbsp;</td>\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;width: 30%;\" align=\"right\" width=\"30%\">\n"
 "                                        <span style=\"font-weight:bold;\">Податки:</span>\n"
 "                                    </td>\n"
-"                                    <td style=\"width: 10%;\" align=\"right\" t-out=\"format_amount(object.amount_tax, object.currency_id) or ''\">$ 0.00\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;width: 10%;\" align=\"right\" t-out=\"format_amount(object.amount_tax, object.currency_id) or ''\" width=\"10%\">$ 0.00\n"
 "                                    </td>\n"
 "                                </tr>\n"
-"                                <tr>\n"
-"                                    <td style=\"width: 60%\"></td>\n"
-"                                    <td style=\"width: 30%; border-top: 1px solid #dee2e6;\" align=\"right\">\n"
+"                                <tr style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;width: 60%;\" width=\"60%\">&nbsp;</td>\n"
+"                                    <td style=\"border-style:solid;box-sizing:border-box;border-top-color:#dee2e6;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:1px;width: 30%; border-top: 1px solid #dee2e6;\" align=\"right\" width=\"30%\">\n"
 "                                        <span style=\"font-weight:bold;\">Загалом:</span>\n"
 "                                    </td>\n"
-"                                    <td style=\"width: 10%; border-top: 1px solid #dee2e6;\" align=\"right\" t-out=\"format_amount(object.amount_total, object.currency_id) or ''\">$ 10.00\n"
+"                                    <td style=\"border-style:solid;box-sizing:border-box;border-top-color:#dee2e6;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:1px;width: 10%; border-top: 1px solid #dee2e6;\" align=\"right\" t-out=\"format_amount(object.amount_total, object.currency_id) or ''\" width=\"10%\">$ 10.00\n"
 "                                    </td>\n"
 "                                </tr>\n"
-"                            </table>\n"
+"                            </tbody></table>\n"
 "                        </div>\n"
 "                        <div t-if=\"object.partner_invoice_id\" style=\"margin: 0px; padding: 0px;\">\n"
-"                            <table width=\"100%\" style=\"color: #454748; font-size: 12px;\">\n"
-"                                <tr>\n"
-"                                    <td style=\"padding-top: 10px;\">\n"
+"                            <table width=\"100%\" style=\"box-sizing:border-box;border-collapse:collapse;caption-side:bottom;color: #454748; font-size: 12px;\">\n"
+"                                <tbody style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\"><tr style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                    <td style=\"border-style:none;padding:10px 0 0 0;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;padding-top: 10px;\">\n"
 "                                        <span style=\"font-weight:bold;\">Рахунок:</span>\n"
 "                                        <t t-out=\"object.partner_invoice_id.street or ''\">1201 S Figueroa St</t>\n"
 "                                        <t t-out=\"object.partner_invoice_id.city or ''\">Los Angeles</t>\n"
@@ -424,8 +850,8 @@ msgstr ""
 "                                        <t t-out=\"object.partner_invoice_id.country_id.name or ''\">United States</t>\n"
 "                                    </td>\n"
 "                                </tr>\n"
-"                                <tr>\n"
-"                                    <td>\n"
+"                                <tr style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
 "                                        <span style=\"font-weight:bold;\">Оплата:</span>\n"
 "                                        <t t-if=\"transaction.token_id\">\n"
 "                                            <t t-out=\"transaction.token_id.display_name or ''\"></t>\n"
@@ -437,12 +863,12 @@ msgstr ""
 "                                        10.00</t>)\n"
 "                                    </td>\n"
 "                                </tr>\n"
-"                            </table>\n"
+"                            </tbody></table>\n"
 "                        </div>\n"
 "                        <div t-if=\"object.partner_shipping_id and not object.only_services\" style=\"margin: 0px; padding: 0px;\">\n"
-"                            <table width=\"100%\" style=\"color: #454748; font-size: 12px;\">\n"
-"                                <tr>\n"
-"                                    <td>\n"
+"                            <table width=\"100%\" style=\"box-sizing:border-box;border-collapse:collapse;caption-side:bottom;color: #454748; font-size: 12px;\">\n"
+"                                <tbody style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\"><tr style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
 "                                        <br>\n"
 "                                        <span style=\"font-weight:bold;\">Відправити до:</span>\n"
 "                                        <t t-out=\"object.partner_shipping_id.street or ''\">1201 S Figueroa St</t>\n"
@@ -452,10 +878,10 @@ msgstr ""
 "                                        <t t-out=\"object.partner_shipping_id.country_id.name or ''\">United States</t>\n"
 "                                    </td>\n"
 "                                </tr>\n"
-"                            </table>\n"
-"                            <table t-if=\"hasattr(object, 'carrier_id') and object.carrier_id\" width=\"100%\" style=\"color: #454748; font-size: 12px;\">\n"
-"                                <tr>\n"
-"                                    <td>\n"
+"                            </tbody></table>\n"
+"                            <table t-if=\"hasattr(object, 'carrier_id') and object.carrier_id\" width=\"100%\" style=\"box-sizing:border-box;border-collapse:collapse;caption-side:bottom;color: #454748; font-size: 12px;\">\n"
+"                                <tbody style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\"><tr style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
 "                                        <span style=\"font-weight:bold;\">Спосіб доставки:</span>\n"
 "                                        <t t-out=\"object.carrier_id.name or ''\"></t>\n"
 "                                        <t t-if=\"object.amount_delivery == 0.0\">\n"
@@ -467,17 +893,18 @@ msgstr ""
 "                                        </t>\n"
 "                                    </td>\n"
 "                                </tr>\n"
-"                                <tr t-if=\"object.carrier_id.carrier_description\">\n"
-"                                    <td>\n"
-"                                        <strong>Опис доставки:</strong>\n"
+"                                <tr t-if=\"object.carrier_id.carrier_description\" style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                    <td style=\"border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;\">\n"
+"                                        <strong style=\"box-sizing:border-box;font-weight:bolder;\">Опис доставки:</strong>\n"
 "                                        <t t-out=\"object.carrier_id.carrier_description\"></t>\n"
 "                                    </td>\n"
 "                                </tr>\n"
-"                            </table>\n"
+"                            </tbody></table>\n"
 "                        </div>\n"
 "                    </t>\n"
 "                </div>\n"
 "            "
+
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
 msgid ""
@@ -522,6 +949,16 @@ msgstr ""
 "                                </span>"
 
 #. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.res_config_settings_wholesale_form
+msgid "<span class=\"o_form_label\">Send confirmation email</span>"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.res_config_settings_wholesale_form
+msgid "<span class=\"o_form_label\">Send email after order confirmation.</span>"
+msgstr ""
+
+#. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.view_sale_order_form_inherit_distrib
 msgid ""
 "<span class=\"o_stat_text\">Calculator</span>\n"
@@ -531,6 +968,13 @@ msgstr ""
 "                                <span class=\"o_stat_text\">Перегляд</span>"
 
 #. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
+msgid "<span style=\"font-size: 0.8em;\">Ukraine</span>"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
 msgid "<span style=\"font-size: 0.8em;\">pcs</span>"
 msgstr ""
@@ -544,6 +988,43 @@ msgstr "<span style=\"margin-left:30px;\">Валюта:</span>"
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
 msgid "<span style=\"margin-left:30px;\">Dated:</span>"
 msgstr "<span style=\"margin-left:30px;\">Дата:</span>"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
+msgid ""
+"<span>\"Reverse charge applies in accordance with Article 138 of DIRECTIVE "
+"2006/112/EC”</span>"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
+msgid "<span>0.00</span>"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
+msgid "<span>According to PO No.</span>"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
+msgid "<span>According to proforma No.</span>"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
+msgid "<span>Account number (IBAN)</span>"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
+msgid "<span>Bank's Address</span>"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
+msgid "<span>Bank's SWIFT</span>"
+msgstr ""
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.packing_list_lines
@@ -571,9 +1052,54 @@ msgid "<span>Confirmed</span>"
 msgstr "<span>Підтверджено</span>"
 
 #. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
+msgid "<span>Country code:</span>"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
+msgid "<span>Currency:</span>"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
+msgid "<span>Dated:</span>"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
+msgid "<span>Gross weight of Shipment (kg):</span>"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
+msgid "<span>Incoterm:</span>"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
+msgid "<span>Invoice No.:</span>"
+msgstr ""
+
+#. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.palettes_list_lines
 msgid "<span>Max. pcs</span>"
 msgstr "<span>Макс. шт</span>"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
+msgid "<span>Net weight of Shipment (kg):</span>"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
+msgid "<span>Notes:</span>"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
+msgid "<span>Number of pallets:</span>"
+msgstr ""
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.action_to_order_from_calculator
@@ -603,6 +1129,21 @@ msgid ""
 msgstr ""
 "<span>Продовжити покупки</span>\n"
 "                                <span class=\"fa fa-shopping-bag\"/>"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
+msgid "<span>VAT 0%</span>"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
+msgid "<span>VAT number:</span>"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
+msgid "<span>__________________________________________________</span>"
+msgstr ""
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.palettes_list_total
@@ -635,6 +1176,21 @@ msgid "<strong style=\"margin-left:30px;\">The Supplier:</strong>"
 msgstr "<strong style=\"margin-left:30px;\">Постачальник:</strong>"
 
 #. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
+msgid "<strong><span style=\"font-size: 1.2em;\">Invoice</span></strong>"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
+msgid "<strong><span>The Buyer:</span></strong>"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
+msgid "<strong><span>The Supplier:</span></strong>"
+msgstr ""
+
+#. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.palettes_list_total
 msgid "<strong>Total:</strong>"
 msgstr "<strong>Всього:</strong>"
@@ -656,6 +1212,7 @@ msgstr ""
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__active
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_places__active
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_product_public_category__active
 msgid "Active"
 msgstr ""
@@ -673,16 +1230,69 @@ msgstr "Загалом коробок"
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.view_distributors_package_form
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.view_distributors_package_search
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.view_distributors_places_form
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.view_distributors_places_search
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.view_product_public_category_search
 msgid "Archived"
 msgstr "Заархівовано"
 
 #. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
+msgid "Bank"
+msgstr "Банк"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,help:ug_wholesale_shop.field_account_bank_statement_line__customer_bank_id
+#: model:ir.model.fields,help:ug_wholesale_shop.field_account_move__customer_bank_id
+#: model:ir.model.fields,help:ug_wholesale_shop.field_account_payment__customer_bank_id
+msgid ""
+"Bank Account Number from which the invoice will be paid. A Customer bank "
+"account if this is a Customer Invoice"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,help:ug_wholesale_shop.field_account_bank_statement_line__beneficiary_bank_id
+#: model:ir.model.fields,help:ug_wholesale_shop.field_account_move__beneficiary_bank_id
+#: model:ir.model.fields,help:ug_wholesale_shop.field_account_payment__beneficiary_bank_id
+msgid ""
+"Bank Account Number to which the invoice will be paid. A Company or bank "
+"account if this is a Customer Invoice"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_account_bank_statement_line__bank_customer_id
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_account_move__bank_customer_id
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_account_payment__bank_customer_id
+msgid "Bank Customer"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model:ir.actions.act_window,name:ug_wholesale_shop.action_banks_wholesale_shop
+#: model:ir.ui.menu,name:ug_wholesale_shop.menu_distrib_banks_items
+msgid "Bank`s Accounts"
+msgstr "Банківскі рахунки"
+
+#. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list__barcode
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.distrib_product_package
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
 msgid "Barcode"
 msgstr "Штрих-код"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_account_bank_statement_line__bank_beneficiary_id
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_account_move__bank_beneficiary_id
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_account_payment__bank_beneficiary_id
+msgid "Beneficiary"
+msgstr "Бенефіціар"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_account_bank_statement_line__beneficiary_bank_id
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_account_move__beneficiary_bank_id
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_account_payment__beneficiary_bank_id
+msgid "Beneficiary Bank"
+msgstr "Банк бенефіціара"
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.distrib_product_package
@@ -702,8 +1312,18 @@ msgid "Brutto weight "
 msgstr "Вага брутто "
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_account_move__campaign_id
+msgid "Campaign"
+msgstr "Кампанія"
+
+#. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order__can_full_access
 msgid "Can Full Access"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model:ir.actions.server,name:ug_wholesale_shop.action_confirmation_undo
+msgid "Cancel Confirmation Flag"
 msgstr ""
 
 #. module: ug_wholesale_shop
@@ -748,11 +1368,55 @@ msgid "Company"
 msgstr "Компанія"
 
 #. module: ug_wholesale_shop
+#: model:ir.model,name:ug_wholesale_shop.model_res_config_settings
+msgid "Config Settings"
+msgstr "Налаштування"
+
+#. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
 msgid "Confirm"
 msgstr "Підтвердити"
 
 #. module: ug_wholesale_shop
+#. odoo-python
+#: code:addons/ug_wholesale_shop/models/sale_order.py:0
+#, python-format
+msgid "Confirmation already canceled!"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#. odoo-python
+#: code:addons/ug_wholesale_shop/models/sale_order.py:0
+#, python-format
+msgid "Confirmation already installed!"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order__confirmation_was_sent
+msgid "Confirmation was sent"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#. odoo-python
+#: code:addons/ug_wholesale_shop/models/sale_order.py:0
+#, python-format
+msgid "Confirmation was set!"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#. odoo-python
+#: code:addons/ug_wholesale_shop/models/sale_order.py:0
+#, python-format
+msgid "Confirmation was undone!"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model:ir.model,name:ug_wholesale_shop.model_res_partner
+msgid "Contact"
+msgstr "Контакт"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
 msgid "Country of origin"
 msgstr "Країна походження"
@@ -760,6 +1424,7 @@ msgstr "Країна походження"
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__create_uid
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__create_uid
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_places__create_uid
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__create_uid
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list__create_uid
 msgid "Created by"
@@ -768,6 +1433,7 @@ msgstr ""
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__create_date
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__create_date
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_places__create_date
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__create_date
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list__create_date
 msgid "Created on"
@@ -781,13 +1447,26 @@ msgid ""
 msgstr ""
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields.selection,name:ug_wholesale_shop.selection__distrib_places__places_type__custom
+msgid "Custom Place"
+msgstr ""
+
+#. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__order_partner_id
 msgid "Customer"
 msgstr ""
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_account_bank_statement_line__customer_bank_id
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_account_move__customer_bank_id
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_account_payment__customer_bank_id
+msgid "Customer Bank"
+msgstr "Банк покупця"
+
+#. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_product_product__customscode
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_product_template__customscode
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
 msgid "Customs tariff number"
 msgstr "Код УКТЗЕД"
@@ -820,6 +1499,7 @@ msgstr "Висота, мм"
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__name
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list__description
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
 msgid "Description"
 msgstr "Примітка"
@@ -852,6 +1532,7 @@ msgstr "Знижка, %"
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__display_name
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__display_name
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_places__display_name
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__display_name
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list__display_name
 msgid "Display Name"
@@ -915,6 +1596,13 @@ msgid "Extra boxes"
 msgstr "Додаткові коробки"
 
 #. module: ug_wholesale_shop
+#: model:ir.actions.act_window,name:ug_wholesale_shop.action_distrib_places
+#: model:ir.model,name:ug_wholesale_shop.model_distrib_places
+#: model:ir.ui.menu,name:ug_wholesale_shop.menu_distrib_places
+msgid "Geographic Places"
+msgstr "Географічні місця"
+
+#. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
 msgid "Gross / Net weight of Shipment (kg):"
 msgstr "Вага брутто / нетто (кг):"
@@ -933,6 +1621,7 @@ msgstr "Довжина, мм"
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__id
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__id
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_places__id
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__id
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list__id
 msgid "ID"
@@ -991,6 +1680,11 @@ msgid "Invalid image"
 msgstr "Невірне зображення"
 
 #. module: ug_wholesale_shop
+#: model:ir.actions.report,name:ug_wholesale_shop.action_report_distrib_invoice
+msgid "Invoice (UGears)"
+msgstr "Рахунок-фактура (UGears)"
+
+#. module: ug_wholesale_shop
 #. odoo-python
 #: code:addons/ug_wholesale_shop/models/sale_order.py:0
 #, python-format
@@ -998,8 +1692,14 @@ msgid "It is forbidden to modify a sales order which is not in draft status."
 msgstr "Забороняється змінювати замовлення клієнта, яке не є чернеткою."
 
 #. module: ug_wholesale_shop
+#: model:ir.model,name:ug_wholesale_shop.model_account_move
+msgid "Journal Entry"
+msgstr "Запис у журналі"
+
+#. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line____last_update
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes____last_update
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_places____last_update
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order____last_update
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list____last_update
 msgid "Last Modified on"
@@ -1008,6 +1708,7 @@ msgstr ""
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__write_uid
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__write_uid
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_places__write_uid
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__write_uid
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list__write_uid
 msgid "Last Updated by"
@@ -1016,6 +1717,7 @@ msgstr ""
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__write_date
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__write_date
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_places__write_date
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__write_date
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list__write_date
 msgid "Last Updated on"
@@ -1048,9 +1750,15 @@ msgstr ""
 "                    до відвантаження."
 
 #. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
 msgid "Logo"
 msgstr "Лого"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_account_move__medium_id
+msgid "Medium"
+msgstr "Канал"
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order_line__qty_delivered_method
@@ -1064,6 +1772,7 @@ msgstr "Допускається мінімум 1 упаковка"
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__name
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_places__name
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__name
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order_list__name
 msgid "Name"
@@ -1104,6 +1813,7 @@ msgid "Nothing to load"
 msgstr "Даних для завантаження немає"
 
 #. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
 msgid "Number of boxes"
 msgstr "Кількість коробок"
@@ -1188,6 +1898,11 @@ msgid "Packing Info -"
 msgstr "Інформація про пакування -"
 
 #. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
+msgid "Page: <span class=\"page\"/> / <span class=\"topage\"/><br/>"
+msgstr ""
+
+#. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.palette_list
 msgid "Palette"
 msgstr "Палета"
@@ -1211,9 +1926,25 @@ msgid "Pallet"
 msgstr "Палета"
 
 #. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
 msgid "Pieces of boxes in box"
 msgstr "Виробів в коробці"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order__place_warehouse_id
+msgid "Place of Warehouse"
+msgstr "Місце складу"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order__place_taking_googs_id
+msgid "Place of taking goods"
+msgstr "Місце отримання товарів"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields.selection,name:ug_wholesale_shop.selection__distrib_places__places_type__point_of_load
+msgid "Place of taking over the goods"
+msgstr "Місце отримання товарів"
 
 #. module: ug_wholesale_shop
 #. odoo-python
@@ -1261,6 +1992,7 @@ msgid "Products list"
 msgstr "Перелік товарів"
 
 #. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
 msgid "Q-ty"
 msgstr "Кількість"
@@ -1330,6 +2062,7 @@ msgstr ""
 
 #. module: ug_wholesale_shop
 #: model:mail.template,name:ug_wholesale_shop.mail_template_sale_confirmation
+#: model:mail.template,name:ug_wholesale_shop.mail_template_sale_confirmation_for_robot
 msgid "Sales: Order Confirmation"
 msgstr ""
 
@@ -1349,6 +2082,21 @@ msgid "Self-height, mm"
 msgstr "Власна висота, мм"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_res_config_settings__send_confirmation
+msgid "Send confirmation email"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,help:ug_wholesale_shop.field_res_config_settings__send_confirmation
+msgid "Send email after order confirmation."
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model:mail.template,description:ug_wholesale_shop.mail_template_sale_confirmation_for_robot
+msgid "Sent on order confirmation"
+msgstr ""
+
+#. module: ug_wholesale_shop
 #: model:mail.template,description:ug_wholesale_shop.mail_template_sale_confirmation
 msgid "Sent to customers on order confirmation"
 msgstr ""
@@ -1359,9 +2107,19 @@ msgid "Sequence"
 msgstr ""
 
 #. module: ug_wholesale_shop
+#: model:ir.actions.server,name:ug_wholesale_shop.action_confirmation_set
+msgid "Set Confirmation Flag"
+msgstr ""
+
+#. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.confirmation
 msgid "Shop - Confirmed"
 msgstr "Оптові закупівлі - Підтверджено"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_account_move__source_id
+msgid "Source"
+msgstr "Джерело"
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.reduction_code_promotion
@@ -1371,10 +2129,33 @@ msgstr "Разом без знижки:"
 
 #. module: ug_wholesale_shop
 #. odoo-python
+#: code:addons/ug_wholesale_shop/models/sale_order.py:0
+#: code:addons/ug_wholesale_shop/models/sale_order.py:0
+#, python-format
+msgid "Success!"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#. odoo-python
 #: code:addons/ug_wholesale_shop/models/import_order.py:0
 #, python-format
 msgid "Successfully loaded"
 msgstr "Успішно завантажено"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,help:ug_wholesale_shop.field_account_bank_statement_line__bank_beneficiary_id
+#: model:ir.model.fields,help:ug_wholesale_shop.field_account_bank_statement_line__bank_customer_id
+#: model:ir.model.fields,help:ug_wholesale_shop.field_account_move__bank_beneficiary_id
+#: model:ir.model.fields,help:ug_wholesale_shop.field_account_move__bank_customer_id
+#: model:ir.model.fields,help:ug_wholesale_shop.field_account_payment__bank_beneficiary_id
+#: model:ir.model.fields,help:ug_wholesale_shop.field_account_payment__bank_customer_id
+msgid "Technical field to get the domain on the bank"
+msgstr "Технічне поле для отримання домену для банку"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
+msgid "Terms of Payment:"
+msgstr ""
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
@@ -1421,14 +2202,51 @@ msgid "This category or one of its children has products"
 msgstr ""
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,help:ug_wholesale_shop.field_sale_order__confirmation_was_sent
+msgid ""
+"This field is used to prevent sending confirmation email multiple times."
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,help:ug_wholesale_shop.field_account_move__campaign_id
+msgid ""
+"This is a name that helps you keep track of your different campaign efforts,"
+" e.g. Fall_Drive, Christmas_Special"
+msgstr ""
+"Це ім'я, яке допомагає вам стежити за різними зусиллями кампанії, напр. "
+"Fall_Drive, Christmas_Special"
+
+#. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.action_to_order_from_calculator
 msgid "This is a packaging calculator."
 msgstr ""
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,help:ug_wholesale_shop.field_account_move__medium_id
+msgid "This is the method of delivery, e.g. Postcard, Email, or Banner Ad"
+msgstr ""
+"Це спосіб доставки, наприклад, листівка, електронна пошта або банерна "
+"реклама"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,help:ug_wholesale_shop.field_account_move__source_id
+msgid ""
+"This is the source of the link, e.g. Search Engine, another domain, or name "
+"of email list"
+msgstr ""
+"Це джерело посилання, наприклад, пошукова система, інший домен або ім'я "
+"списку листів"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
 msgid "Total Invoice"
 msgstr "Загалом"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order__total_product_uom_qty
+msgid "Total Product Quantity"
+msgstr ""
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order__boxes_total
@@ -1451,6 +2269,11 @@ msgid "Type of package"
 msgstr "Тип пакування"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_places__places_type
+msgid "Type of place"
+msgstr "Тип місця"
+
+#. module: ug_wholesale_shop
 #. odoo-python
 #: code:addons/ug_wholesale_shop/models/sale_order.py:0
 #, python-format
@@ -1458,9 +2281,15 @@ msgid "Unable to find distributor for delivery"
 msgstr "Не вдалося знайти дистриб'ютора для доставки"
 
 #. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
 msgid "Unit"
 msgstr "Од."
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.distrib_card_wizard
+msgid "Unload"
+msgstr "Вивантажити"
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_distributors__discount_available
@@ -1473,6 +2302,11 @@ msgid "Volume discount:"
 msgstr "Знижка на обсяг:"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields.selection,name:ug_wholesale_shop.selection__distrib_places__places_type__warehouse
+msgid "Warehouse"
+msgstr "Склад"
+
+#. module: ug_wholesale_shop
 #. odoo-python
 #: code:addons/ug_wholesale_shop/models/sale_order.py:0
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.packing_list_lines
@@ -1481,9 +2315,17 @@ msgid "Warning"
 msgstr "Увага"
 
 #. module: ug_wholesale_shop
+#. odoo-python
+#: code:addons/ug_wholesale_shop/models/sale_order.py:0
+#: code:addons/ug_wholesale_shop/models/sale_order.py:0
+#, python-format
+msgid "Warning!"
+msgstr ""
+
+#. module: ug_wholesale_shop
 #: model:ir.model,name:ug_wholesale_shop.model_website
 msgid "Website"
-msgstr "Веб-сайт"
+msgstr "Головна сторінка"
 
 #. module: ug_wholesale_shop
 #: model:ir.model,name:ug_wholesale_shop.model_website_menu
@@ -1548,13 +2390,25 @@ msgstr ""
 
 #. module: ug_wholesale_shop
 #: model:mail.template,report_name:ug_wholesale_shop.mail_template_sale_confirmation
+#: model:mail.template,report_name:ug_wholesale_shop.mail_template_sale_confirmation_for_robot
 msgid "{{ (object.name or '').replace('/','_') }}"
 msgstr ""
 
 #. module: ug_wholesale_shop
 #: model:mail.template,subject:ug_wholesale_shop.mail_template_sale_confirmation
 msgid ""
-"{{ object.company_id.name }} {{ (object.get_portal_last_transaction().state ==\n"
-"                'pending') and 'Pending Order' or 'Order' }} (Ref {{ object.name or 'n/a' }})\n"
-"            "
+"{{ object.company_id.name }} {{ (object.get_portal_last_transaction().state "
+"== 'pending') and 'Pending Order' or 'Order' }} (Ref {{ object.name or 'n/a'"
+" }})"
+msgstr ""
+"{{ object.company_id.name }} {{ (object.get_portal_last_transaction().state "
+"== 'pending') and 'Pending Order' or 'Order' }} (Ref {{ object.name or 'n/a'"
+" }})            "
+
+#. module: ug_wholesale_shop
+#: model:mail.template,subject:ug_wholesale_shop.mail_template_sale_confirmation_for_robot
+msgid ""
+"{{ object.partner_id.name }} {{ (object.get_portal_last_transaction().state "
+"== 'pending') and 'Pending Order' or 'Order' }} (Ref {{ object.name or 'n/a'"
+" }})"
 msgstr ""

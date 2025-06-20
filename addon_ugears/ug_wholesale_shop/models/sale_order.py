@@ -48,8 +48,16 @@ class SaleOrder(models.Model):
                                            help="This field is used to prevent sending confirmation email multiple times.",
                                            default=False)
 
-    place_warehouse_id = fields.Many2one('distrib.places', 'Place of Warehouse')
-    place_taking_googs_id = fields.Many2one('distrib.places', 'Place of taking goods')
+    def _default_warehouse(self):
+        """ Default warehouse for the sale order """
+        return self.env['distrib.places'].search([('places_type', '=', 'warehouse')], limit=1)
+
+    def _default_place(self):
+        """ Default place for the sale order """
+        return self.env['distrib.places'].search([('places_type', '=', 'point_of_load')], limit=1)
+
+    place_warehouse_id = fields.Many2one('distrib.places', 'Place of Warehouse', default=_default_warehouse)
+    place_taking_googs_id = fields.Many2one('distrib.places', 'Place of taking goods', default=_default_place)
 
     @api.depends('order_line.product_uom_qty')
     def _compute_total_product_uom_qty(self):
