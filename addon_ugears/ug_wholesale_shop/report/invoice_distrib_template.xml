@@ -90,7 +90,7 @@
                     <td align="left" style="vertical-align: top;">
                         <t t-set="bank" t-value="' %s' % '' if not partner_bank else partner_bank.bank_id.name"/>
                         <div>
-                          <span>Bank<strong><span t-esc="bank"/></strong></span>
+                          <span>Bank <strong><span t-esc="bank"/></strong></span>
                         </div>
                     </td>
                     <td align="left" style="vertical-align: top;">
@@ -103,7 +103,8 @@
                  <tr>
                     <td> </td>
                     <td align="left" style="vertical-align: top;">
-                        <span>Bank's Address</span>
+                        <t t-set="bank_address" t-value="' %s' % '' if not partner_bank else partner_bank.bank_id.street"/>
+                        <span>Bank's Address <span t-esc="bank_address"/></span>
                     </td>
                     <td align="left" style="vertical-align: top;">
                         <span>Bank's SWIFT</span>
@@ -156,7 +157,7 @@
                     <td align="left" style="vertical-align: top;">
                         <t t-set="bank" t-value="' %s' % '' if not doc.customer_bank_id else doc.customer_bank_id.bank_id.name"/>
                         <div>
-                          <span>Bank<strong><span t-esc="bank"/></strong></span>
+                          <span>Bank <strong><span t-esc="bank"/></strong></span>
                         </div>
                     </td>
                     <td align="left" style="vertical-align: top;">
@@ -169,7 +170,8 @@
                 <tr>
                     <td> </td>
                     <td align="left" style="vertical-align: top;">
-                        <span>Bank's Address</span>
+                        <t t-set="bank_address" t-value="' %s' % '' if not doc.customer_bank_id else doc.customer_bank_id.bank_id.street"/>
+                        <span>Bank's Address <span t-esc="bank_address"/></span>
                     </td>
                     <td align="left" style="vertical-align: top;">
                         <span>Bank's SWIFT</span>
@@ -210,12 +212,12 @@
                     <td align="left" style="vertical-align: top;">
                         <span t-field="doc.currency_id.name"/>
                     </td>
-                    <td align="left" style="vertical-align: top;">
-                        <span>According to proforma No.</span>
-                    </td>
-                    <td align="left" style="vertical-align: top;">
-                        <span> </span>
-                    </td>
+<!--                    <td align="left" style="vertical-align: top;">-->
+<!--                        <span>According to proforma No.</span>-->
+<!--                    </td>-->
+<!--                    <td align="left" style="vertical-align: top;">-->
+<!--                        <span> </span>-->
+<!--                    </td>-->
                 </tr>
                 <tr>
                     <td align="left" style="vertical-align: top;">
@@ -345,7 +347,7 @@
                         <span>Gross weight of Shipment (kg):</span>
                     </td>
                     <td t-if="order" colspan="2" class="text-end">
-                        <span t-raw="'%s/%s' % (round(order.brutto_total/1000,2),round(order.netto_total/1000,2))"/>
+                        <span t-raw="'%s' % (round(order.brutto_total/1000,2))"/>
                     </td>
                     <td t-else="" colspan="2" class="text-end"><span> </span></td>
                 </tr>
