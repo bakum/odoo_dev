@@ -6,7 +6,8 @@ class AccountMove(models.Model):
     _inherit = ['account.move', 'utm.mixin']
 
     def _compute_bank_beneficiary_id(self):
-        return self.company_id.partner_id.id
+        default_beneficiary = self.env['ir.config_parameter'].sudo().get_param('distrib.default_beneficiary', default=False)
+        return int(default_beneficiary) if default_beneficiary else self.company_id.partner_id.id
 
     bank_customer_id = fields.Many2one(
         comodel_name='res.partner',

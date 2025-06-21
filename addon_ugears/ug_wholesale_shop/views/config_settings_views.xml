@@ -17,6 +17,13 @@
                             <div class="text-muted">
                                 <span class="o_form_label">Send email after order confirmation.</span>
                             </div>
+                            <span class="o_form_label mt16">Default beneficiary</span>
+                            <div class="text-muted content-group mt16">
+                                <field name="beneficiary"/>
+                            </div>
+                            <div class="text-muted">
+                                <span class="o_form_label">Default beneficiary for wholesale orders. If not set, the company will be used.</span>
+                            </div>
                         </div>
                     </div>
                 </xpath>
