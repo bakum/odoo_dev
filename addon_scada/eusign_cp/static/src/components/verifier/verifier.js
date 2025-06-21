@@ -6,6 +6,7 @@ import {Downloader} from "../downloader/downloader";
 export class Verifier extends Component {
     static template = "eusign_cp.owl_verifier"
     static components = {Downloader}
+    static props = {}
 
     setAlert(message, className, closeButton = false) {
         this.utils.alert(message, className, closeButton);

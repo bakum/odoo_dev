@@ -3,15 +3,16 @@
 import {Component, onMounted, useRef, useState, useEnv, useEffect} from "@odoo/owl"
 import {Downloader} from "../downloader/downloader";
 import {SignableObject} from "../../helpers/signable";
+import {useService} from "@web/core/utils/hooks";
 
 
 export class EUSigner extends Component {
     static template = "eusign_cp.owl_signer_template"
     static components = {Downloader}
     static props = {
-        url_xml_http_proxy_service: {type: String, optional: false},
-        url_get_certificates: {type: String, optional: false},
-        url_cas: {type: String, optional: false},
+        url_xml_http_proxy_service: {type: String, required: true},
+        url_get_certificates: {type: String, required: true},
+        url_cas: {type: String, required: true},
     }
 
     loadFilesFromLocalStorage(localStorageFolder, loadFunc) {
@@ -379,7 +380,7 @@ export class EUSigner extends Component {
 
     setDefaultSettings() {
         try {
-            this.euSign.SetXMLHTTPProxyService(this.URL_XML_HTTP_PROXY_SERVICE);
+            this.euSign.SetXMLHTTPProxyService(this.props.url_xml_http_proxy_service);
 
             let settings = this.euSign.CreateFileStoreSettings();
             settings.SetPath("/certificates");
@@ -456,7 +457,7 @@ export class EUSigner extends Component {
                 "(HTTP статус " + errorCode + ")");
         };
 
-        this.utils.GetDataFromServerAsync(this.URL_GET_CERTIFICATES, _onSuccess, _onFail, true);
+        this.utils.GetDataFromServerAsync(this.props.url_get_certificates, _onSuccess, _onFail, true);
     }
 
     getCAServer() {
@@ -896,16 +897,22 @@ export class EUSigner extends Component {
             }
         };
 
-        this.euSign.LoadDataFromServer(this.URL_CAS, _onSuccess, onError, false);
+        this.euSign.LoadDataFromServer(this.props.url_cas, _onSuccess, onError, false);
     }
 
     setAlert(message, className, closeButton = false) {
         this.utils.alert(message, className, closeButton);
+        // this.notification.add(message, {
+        //     title: "Unknown barcode command",
+        //     type: className === 'alert-success' ? "info" : className ==='alert-warning' ? "warning" : "danger",
+        //     sticky: closeButton,
+        // });
     }
 
     setup() {
         this.env = useEnv()
         this.sharedState = this.env.sharedState.state
+        // this.notification = useService("notification")
 
         this.state = useState({
             CadesSelected: false,
@@ -919,9 +926,6 @@ export class EUSigner extends Component {
             sign_button_disabled: false,
 
         })
-        this.URL_GET_CERTIFICATES = this.props.url_get_certificates
-        this.URL_CAS = this.props.url_cas
-        this.URL_XML_HTTP_PROXY_SERVICE = this.props.url_xml_http_proxy_service
 
         this.CAdESTypes = [
             EU_SIGN_TYPE_CADES_BES,
