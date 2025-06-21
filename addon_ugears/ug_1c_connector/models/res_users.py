@@ -14,8 +14,8 @@ class ResUsers(models.Model):
 
     def generate_api_rest_key(self):
         self.ensure_one()
-        if self.api_rest_key:
-            return
+        # if self.api_rest_key:
+        #     return
         while True:
             api_rest_key = secrets.token_urlsafe(40)
             if not self.sudo().search([('api_rest_key', '=', api_rest_key)]):
