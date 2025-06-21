@@ -50,11 +50,11 @@ class SaleOrder(models.Model):
 
     def _default_warehouse(self):
         """ Default warehouse for the sale order """
-        return self.env['distrib.places'].search([('places_type', '=', 'warehouse')], limit=1)
+        return self.env['distrib.places'].search([('places_type', '=', 'warehouse')], order='id desc', limit=1)
 
     def _default_place(self):
         """ Default place for the sale order """
-        return self.env['distrib.places'].search([('places_type', '=', 'point_of_load')], limit=1)
+        return self.env['distrib.places'].search([('places_type', '=', 'point_of_load')], order='id desc', limit=1)
 
     place_warehouse_id = fields.Many2one('distrib.places', 'Place of Warehouse', default=_default_warehouse)
     place_taking_googs_id = fields.Many2one('distrib.places', 'Place of taking goods', default=_default_place)
