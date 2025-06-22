@@ -44,6 +44,7 @@
     <record id="action_scada_weight_form" model="ir.actions.act_window">
         <field name="name">Weight values</field>
         <field name="res_model">nw.weight</field>
+        <field name="path">weight</field>
         <field name="view_mode">list,form</field>
     </record>
 

@@ -98,6 +98,7 @@
     <record id="action_scada_moxa_form" model="ir.actions.act_window">
         <field name="name">Control points</field>
         <field name="res_model">nw.moxa</field>
+        <field name="path">moxa</field>
         <field name="view_mode">list,form</field>
     </record>
 
