@@ -252,17 +252,17 @@
                    cellpadding="2" class="table table-sm o_main_table">
                 <thead style="display: table-row-group">
                     <tr class="bg-200 fw-bold">
-                        <th name="th_number">#</th>
-                        <th name="th_tariff">Customs tariff number</th>
-                        <th name="th_country">Country of origin</th>
-                        <th name="th_barcode" class="col-md-1">Barcode</th>
-                        <th name="th_description" class="col-md-6">Description</th>
-                        <th name="th_qtt">Q-ty</th>
-                        <th name="th_quantity">Unit</th>
-                        <th name="th_pieces">Pieces of boxes in box</th>
-                        <th name="th_boxes">Number of boxes</th>
-                        <th name="th_price"><span t-raw="price_title"/></th>
-                        <th name="th_subtotal"><span t-raw="price_total_title"/></th>
+                        <th name="th_number" class="text-center" align="center" style="vertical-align: middle;">#</th>
+                        <th name="th_tariff" class="text-center" align="center" style="vertical-align: middle;">Customs tariff number</th>
+                        <th name="th_country" class="text-center" align="center" style="vertical-align: middle;">Country of origin</th>
+                        <th name="th_barcode" class="col-md-1 text-center" align="center" style="vertical-align: middle;">Barcode</th>
+                        <th name="th_description" class="col-md-6 text-center" align="center" style="vertical-align: middle;">Description</th>
+                        <th name="th_qtt" class="text-center" align="center" style="vertical-align: middle;">Q-ty</th>
+                        <th name="th_quantity" class="text-center" align="center" style="vertical-align: middle;">Unit</th>
+                        <th name="th_pieces" class="text-center" align="center" style="vertical-align: middle;">Pieces of boxes in box</th>
+                        <th name="th_boxes" class="text-center" align="center" style="vertical-align: middle;">Number of boxes</th>
+                        <th name="th_price" class="text-center" align="center" style="vertical-align: middle;"><span t-raw="price_title"/></th>
+                        <th name="th_subtotal" class="text-center" align="center" style="vertical-align: middle;"><span t-raw="price_total_title"/></th>
                     </tr>
                 </thead>
                 <tbody class="sale_tbody">
