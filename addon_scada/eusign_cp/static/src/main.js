@@ -3,12 +3,21 @@
 import {browser} from "@web/core/browser/browser";
 import {_t} from "@web/core/l10n/translation";
 import {mount, whenReady} from "@odoo/owl";
+import { session } from "@web/session";
 import {makeEnv, startServices, mountComponent} from "@web/env";
 import {templates} from "@web/core/assets";
 import {OwlSigner} from "./signer";
 
 // Mount the Playground component when the document.body is ready
 whenReady(async () => {
+    // odoo.info = {
+    //     db: session.db,
+    //     server_version: session.server_version,
+    //     server_version_info: session.server_version_info,
+    //     isEnterprise: session.server_version_info ? session.server_version_info.slice(-1)[0] === "e" : undefined,
+    // };
+    // odoo.isReady = false;
+
     let env = makeEnv();
     await startServices(env)
     env = {
@@ -16,8 +25,10 @@ whenReady(async () => {
             state: null
         }
     }
-    // mount(OwlSigner, document.body, {templates, dev: true, name: "Owl EUSignCP", env});
-    await mountComponent(OwlSigner, document.body, { name: "Owl EUSignCP", env })
+    const root = await mount(OwlSigner, document.body, {templates, dev: env.debug, name: "Owl EUSignCP", env});
+    odoo.__WOWL_DEBUG__ = { root };
+    // await mountComponent(OwlSigner, document.body, { name: "Owl EUSignCP", env })
+    // odoo.isReady = true;
 })
 
 /**
