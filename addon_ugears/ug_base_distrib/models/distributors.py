@@ -20,7 +20,7 @@ class Distributors(models.Model):
     website = fields.Char(string='website', tracking=True)
     country_id = fields.Many2one('res.country', "Country", tracking=True)
     state_id = fields.Many2one('res.country.state', "State", tracking=True)
-    partner_id = fields.Many2one('res.partner', 'Partner', tracking=True)
+    partner_id = fields.Many2one('res.partner', 'Partner', tracking=True, required=True)
     pricelist_id = fields.Many2one('product.pricelist', 'Pricelist', tracking=True, required=True)
     currency_id = fields.Many2one('res.currency', compute="_compute_currency")
     region_id = fields.Many2one('distrib.regions', "Region", tracking=True)
