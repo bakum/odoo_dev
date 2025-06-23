@@ -849,6 +849,14 @@
         </div>
     </template>
 
+    <template inherit_id="web.login" id="inherit_web_login" name="Login">
+        <xpath expr="//div[hasclass('field-login')]" position="replace">
+            <div class="mb-3 field-login">
+                <label for="login" class="form-label">Login</label>
+                <input type="text" placeholder="Login" name="login" t-att-value="login" id="login" t-attf-class="form-control #{'form-control-sm' if form_small else ''}" required="required" autocomplete="username" autofocus="autofocus" autocapitalize="off"/>
+            </div>
+        </xpath>
+    </template>
 
 <!--    <template-->
 <!--        inherit_id="website_sale.products_categories"-->
