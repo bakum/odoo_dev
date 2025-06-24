@@ -119,7 +119,7 @@ class ApiRestPath(models.Model):
         default.update(name=_("%s (copy)") % (self.name or ''))
         return super(ApiRestPath, self).copy(default)
 
-    @api.model
+    @api.model_create_multi
     def create(self, values):
         self._update_values(values)
         return super().create(values)

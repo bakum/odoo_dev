@@ -36,7 +36,7 @@ class ApiRestVersion(models.Model):
             record.url_swagger = urls.url_join(
                 base_url, '/api-docs/v{}/swagger.json'.format(record.name))
 
-    @api.model
+    @api.model_create_multi
     def create(self, values):
         version = super().create(values)
         user = self.env.ref('base.user_admin')

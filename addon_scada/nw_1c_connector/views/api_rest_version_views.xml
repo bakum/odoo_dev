@@ -6,18 +6,18 @@
 <odoo>
 
     <menuitem id="menu_api_rest" name="API REST" sequence="100" groups="nw_1c_connector.configuration_manager"
-              web_icon="nw_1c_connector,static/description/odoo_icon.png"/>
+              web_icon="nw_1c_connector/static/description/odoo_icon.png"/>
 
     <record model="ir.ui.view" id="view_api_rest_version_tree">
         <field name="name">api.rest.version.tree</field>
         <field name="model">api.rest.version</field>
-        <field name="type">tree</field>
+        <field name="type">list</field>
         <field name="arch" type="xml">
-            <tree string="Versions" decoration-muted="not active">
+            <list string="Versions" decoration-muted="not active">
                 <field name="active"/>
                 <field name="name"/>
                 <field name="description"/>
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -55,18 +55,18 @@
                     <notebook colspan="4">
                         <page string="Paths">
                             <field name="path_ids"
-                                   context="{'default_version_id': active_id}"
+                                   context="{'default_version_id': id}"
                                    nolabel="1" />
                         </page>
                         <page string="Security">
                             <field name="user_ids">
-                                <tree>
+                                <list>
                                     <field name="name"/>
                                     <field name="api_rest_key"/>
                                     <button type="object" class="oe_highlight"
                                             name="generate_api_rest_key"
                                             string="Generate API Key"/>
-                                </tree>
+                                </list>
                                 <form>
                                     <sheet>
                                         <group>
@@ -91,7 +91,7 @@
         <field name="name">Versions</field>
         <field name="res_model">api.rest.version</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="context">{'active_test': False}</field>
     </record>
 

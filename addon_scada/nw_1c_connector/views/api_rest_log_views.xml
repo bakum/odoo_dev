@@ -8,13 +8,13 @@
     <record model="ir.ui.view" id="view_api_rest_log_tree">
         <field name="name">api.rest.log.tree</field>
         <field name="model">api.rest.log</field>
-        <field name="type">tree</field>
+        <field name="type">list</field>
         <field name="arch" type="xml">
-            <tree string="Logs">
+            <list string="Logs">
                 <field name="create_date"/>
                 <field name="create_uid"/>
                 <field name="request_url"/>
-            </tree>
+            </list>
         </field>
     </record>
 
