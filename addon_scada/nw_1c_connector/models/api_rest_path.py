@@ -7,7 +7,6 @@ from copy import deepcopy
 from odoo import api, fields, models, _
 from odoo.tools import safe_eval
 
-
 MAPPING_FIELDS_SWAGGER = {
     'binary': ('string', 'binary'),
     'boolean': ('boolean', ''),
@@ -26,7 +25,6 @@ MAPPING_FIELDS_SWAGGER = {
     'selection': ('array', ''),
     'text': ('string', ''),
 }
-
 
 LIMIT_MAX = 500
 
@@ -110,8 +108,13 @@ class ApiRestPath(models.Model):
         self.warning_required = warning_required
 
     def _update_values(self, values):
-        if values.get('name'):
-            values['name'] = values.get('name', '').replace(' ', '')
+        if isinstance(values, list):
+            for value in values:
+                if value.get('name'):
+                    value['name'] = value.get('name', '').replace(' ', '')
+        if isinstance(values, dict):
+            if values.get('name'):
+                values['name'] = values.get('name', '').replace(' ', '')
 
     @api.returns('self', lambda value: value.id)
     def copy(self, default=None):
@@ -534,7 +537,7 @@ class ApiRestPath(models.Model):
         # Convert many2many & one2many
         fields_many2many = self.api_field_ids.filtered(
             lambda f:
-            f.field_id.ttype in['many2many', 'one2many']).mapped('field_name')
+            f.field_id.ttype in ['many2many', 'one2many']).mapped('field_name')
         for field in fields_many2many:
             if field in post_values:
                 values = post_values.get(field)
@@ -604,6 +607,7 @@ class ApiRestPath(models.Model):
                 'array': list,
                 'object': dict,
             }.get(type)
+
         self.ensure_one()
         new_values = {}
         for function_parameter in self.function_parameter_ids:

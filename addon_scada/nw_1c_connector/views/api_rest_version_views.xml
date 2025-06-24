@@ -91,6 +91,7 @@
         <field name="name">Versions</field>
         <field name="res_model">api.rest.version</field>
         <field name="type">ir.actions.act_window</field>
+        <field name="path">rest_version</field>
         <field name="view_mode">list,form</field>
         <field name="context">{'active_test': False}</field>
     </record>
