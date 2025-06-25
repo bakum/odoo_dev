@@ -88,3 +88,6 @@ class AccountMove(models.Model):
     @api.onchange('bank_beneficiary_id')
     def _onchange_bank_beneficiary_id(self):
         self.beneficiary_bank_id = False
+
+    def _message_auto_subscribe_followers(self, updated_values, default_subtype_ids):
+        return []
