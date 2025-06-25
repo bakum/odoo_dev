@@ -168,7 +168,7 @@ class Website(models.Model):
             'payment_term_id': self.sale_get_payment_term(partner_sudo),
 
             'team_id': self.salesteam_id.id or partner_sudo.parent_id.team_id.id or partner_sudo.team_id.id,
-            'user_id': salesperson_user_sudo.id,
+            'user_id': self.env.user.id,
             'website_id': self.id,
         }
 
