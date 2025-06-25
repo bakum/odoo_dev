@@ -99,7 +99,7 @@ class SaleOrder(models.Model):
             'transaction_ids': [Command.set(self.transaction_ids.ids)],
             'company_id': self.company_id.id,
             'invoice_line_ids': [],
-            'user_id': self.user_id.id,
+            'user_id': self.env.user.id,
         }
 
     @api.model_create_multi
