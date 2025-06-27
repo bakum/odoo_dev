@@ -190,13 +190,47 @@ class DistributorMoveLines(models.Model):
                           precompute=True)
     default_code = fields.Char(related='product_id.default_code', depends=['product_id'], store=True, precompute=True)
 
+    def _recalculate_full_name_for_all(self):
+        new_cr = self.pool.cursor()
+        new_env = api.Environment(new_cr, self.env.uid, self.env.context)
+        self = self.with_env(new_env)
+        _logger.info("job %s starting", 'Recalculate FullName for all')
+        Moves = self.env['distrib.distributors.move.line'].with_env(
+            self.env(cr=new_cr)).sudo().search(
+            [],
+            order='date,id')
+        for move in Moves:
+            field = move.product_template_id._fields
+            translations = field['name']._get_stored_translations(move.product_template_id)
+            if translations and 'en_US' in translations:
+                name = translations['en_US']
+            else:
+                name = move.product_template_id.name
+
+            if move.product_id.barcode and move.product_id.default_code:
+                full_name = f'{name}/{move.product_id.barcode}/{move.product_id.default_code}'
+            elif move.product_id.barcode:
+                full_name = f'{name}/{move.product_id.barcode}'
+            elif move.product_id.default_code:
+                full_name = f'{name}/{move.product_id.default_code}'
+            else:
+                full_name = f'{name}'
+            move.write({'full_name': full_name})
+            new_cr.commit()
+            _logger.info("record %s updated - %s", move.id, full_name)
+        _logger.info("job %s updated and released", 'Recalculate FullName for all')
+        new_cr.close()
+        return {}
+
     def _recalculate_sell_in_for_all(self):
         new_cr = self.pool.cursor()
         new_env = api.Environment(new_cr, self.env.uid, self.env.context)
         self = self.with_env(new_env)
         _logger.info("job %s starting", 'Recalculate Sell-In for all')
         Moves = self.env['distrib.distributors.move.line'].with_env(
-            self.env(cr=new_cr)).sudo().search(['&','&',('state', '=', 'done'),('operation', '=', 'out'),('is_inventory', '=', False)], order='date,id')
+            self.env(cr=new_cr)).sudo().search(
+            ['&', '&', ('state', '=', 'done'), ('operation', '=', 'out'), ('is_inventory', '=', False)],
+            order='date,id')
         for move in Moves:
             date = fields.Date.from_string(move.date.strftime("%Y-%m-01 00:00:00"))
             last_date = get_last_day_of_month(date)
@@ -209,6 +243,11 @@ class DistributorMoveLines(models.Model):
         _logger.info("job %s updated and released", 'Recalculate Sell-In for all')
         new_cr.close()
         return {}
+
+    def recalculate_full_name_for_all(self):
+        threaded_calculation = threading.Thread(
+            target=self._recalculate_full_name_for_all)
+        threaded_calculation.start()
 
     def recalculate_sell_in_for_all(self):
         threaded_calculation = threading.Thread(
@@ -355,14 +394,22 @@ class DistributorMoveLines(models.Model):
     def _compute_product_template_id(self):
         for line in self:
             line.product_template_id = line.product_id.product_tmpl_id
-            if line.product_id.barcode and line.product_id.default_code:
-                line.full_name = f'{line.product_id.name}/{line.product_id.barcode}/{line.product_id.default_code}'
-            elif line.product_id.barcode:
-                line.full_name = f'{line.product_id.name}/{line.product_id.barcode}'
-            elif line.product_id.default_code:
-                line.full_name = f'{line.product_id.name}/{line.product_id.default_code}'
+
+            field = line.product_template_id._fields
+            translations = field['name']._get_stored_translations(line.product_template_id)
+            if translations and 'en_US' in translations:
+                name = translations['en_US']
             else:
-                line.full_name = f'{line.product_id.name}'
+                name = line.product_template_id.name
+
+            if line.product_id.barcode and line.product_id.default_code:
+                line.full_name = f'{name}/{line.product_id.barcode}/{line.product_id.default_code}'
+            elif line.product_id.barcode:
+                line.full_name = f'{name}/{line.product_id.barcode}'
+            elif line.product_id.default_code:
+                line.full_name = f'{name}/{line.product_id.default_code}'
+            else:
+                line.full_name = f'{name}'
 
     def _search_product_template_id(self, operator, value):
         return [('product_id.product_tmpl_id', operator, value)]
