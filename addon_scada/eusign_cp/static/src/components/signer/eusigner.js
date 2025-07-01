@@ -3,7 +3,6 @@
 import {Component, onMounted, useRef, useState, useEnv, useEffect} from "@odoo/owl"
 import {Downloader} from "../downloader/downloader";
 import {SignableObject} from "../../helpers/signable";
-import {useService} from "@web/core/utils/hooks";
 
 
 export class EUSigner extends Component {
