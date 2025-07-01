@@ -1,20 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
     <t t-name="eusign_cp.owl_signer">
-        <nav t-attf-class="navbar navbar-expand-lg navbar-light bg-light {{state.loaded ? '' : 'd-none'}}">
-          <div class="container-fluid">
-              <a class="navbar-brand" t-on-click="toggleMenu" href="javascript:void(0);">
-                <i id="home" class="fa fa-home fa-2x" aria-hidden="true"/>
-            </a>
-              <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                  <div class="navbar-nav">
-                      <a class="nav-link active" id="sign" t-on-click="toggleMenu" href="javascript:void(0);">Підписати документ</a>
-                      <a class="nav-link" id="verify" t-on-click="toggleMenu" href="javascript:void(0);">Перевірити підпис</a>
-                  </div>
-                  <span class="navbar-text ms-auto" t-out="state.status_key"/>
-              </div>
-          </div>
-        </nav>
+        <NavBar loaded="state.loaded" status_key="state.status_key"/>
         <div class="vh-100 overflow-auto bg-muted">
             <t t-if="!state.loaded">
                 <div class="row">

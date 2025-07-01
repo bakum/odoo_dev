@@ -59,6 +59,8 @@
             'eusign_cp/static/src/helpers/signable.js',
             'eusign_cp/static/src/components/signer/eusigner.js',
             'eusign_cp/static/src/components/signer/eusigner.xml',
+            'eusign_cp/static/src/components/navbar/navbar.js',
+            'eusign_cp/static/src/components/navbar/navbar.xml',
             'eusign_cp/static/src/components/verifier/verifier.js',
             'eusign_cp/static/src/components/verifier/verifier.xml',
             'eusign_cp/static/src/components/downloader/downloader.js',

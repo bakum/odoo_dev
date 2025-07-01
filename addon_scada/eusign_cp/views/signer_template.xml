@@ -15,10 +15,6 @@
                     </script>
                     <script t-nocache="Session information should always be up to date." type="text/javascript">
                         odoo.__session_info__ = <t t-out="json.dumps(request.env['ir.http'].get_frontend_session_info())"/>;
-                        if (!/(^|;\s)tz=/.test(document.cookie)) {
-                            const userTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
-                            document.cookie = `tz=${userTZ}; path=/`;
-                        }
                     </script>
                     <t t-call-assets="eusign_cp.assets_library"/>
                     <t t-call-assets="eusign_cp.assets_signer"/>
