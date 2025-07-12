@@ -1,6 +1,6 @@
 /** @odoo-module **/
 
-import {Component, onMounted, onWillUnmount, useEffect, useRef, useState} from "@odoo/owl";
+import {Component, onMounted, onWillUnmount, useRef, useState} from "@odoo/owl";
 import {registry} from "@web/core/registry";
 import {useService} from "@web/core/utils/hooks";
 import {_t} from "@web/core/l10n/translation";
@@ -28,9 +28,9 @@ export class ChatWidget extends Component {
             // Пример: можно подгрузить историю сообщений при старте
         });
 
-        useEffect(() => {
-            this.scrollToBottom();
-        }, () => [this.state.messages]);
+        // useEffect(() => {
+        //     this.scrollToBottom();
+        // }, () => [this.state.messages]);
 
         onWillUnmount(() => {
             window.removeEventListener("resize", this.adjustMessageHeight);
@@ -75,8 +75,9 @@ export class ChatWidget extends Component {
         const session = this.state.sessions.find((s) => s.id === sessionId);
         this.state.header = session?.name || '';
 
-        const messages = await this.orm.searchRead("llm.chat.message", [['session_id', '=', sessionId]], ["id", "author", "content"]);
-        this.state.messages = messages;
+        this.state.messages = await this.orm.searchRead("llm.chat.message", [['session_id', '=', sessionId]], ["id", "author", "content"]);
+        this.scrollToBottom()
+
     }
 
     async deleteSession(el) {
@@ -137,6 +138,7 @@ export class ChatWidget extends Component {
             this.state.messages.push({id: errId, author: 'bot', content: _t('⚠ Request error.') + ' ' +error.message});
         } finally {
             this.state.isLoading = false;
+            this.scrollToBottom()
         }
     }
 
