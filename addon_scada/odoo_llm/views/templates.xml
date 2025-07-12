@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="llm_chat_web" model="ir.actions.client">
+            <field name="name">LLM Chat-bot</field>
+            <field name="tag">odoo_llm.chat_widget</field>
+        </record>
+
+        <menuitem id="menu_llm_chats_main"
+            name="Chat-bot"
+            parent="menu_llm_chat_root"
+            action="llm_chat_web"
+            sequence="10"/>
+    </data>
+</odoo>

@@ -1,0 +1,12 @@
+<odoo>
+    <data>
+        <record id="cron_index_docs" model="ir.cron">
+            <field name="name">Index All Documents</field>
+            <field name="model_id" ref="model_llm_document"/>
+            <field name="state">code</field>
+            <field name="code">model.env['llm.vector.service'].index_all()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+        </record>
+    </data>
+</odoo>

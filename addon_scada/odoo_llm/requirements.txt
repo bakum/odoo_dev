@@ -1,0 +1,7 @@
+PyPDF2==3.0.1
+python-docx
+requests
+faiss-cpu
+numpy
+sentence-transformers
+langdetect==1.0.9

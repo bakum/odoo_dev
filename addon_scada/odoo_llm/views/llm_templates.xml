@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+<!--  &lt;!&ndash; LLM Requests &ndash;&gt;-->
+<!--  <record id="action_llm_request" model="ir.actions.act_window">-->
+<!--    <field name="name">LLM Requests</field>-->
+<!--    <field name="res_model">llm.request</field>-->
+<!--    <field name="view_mode">tree,form</field>-->
+<!--  </record>-->
+
+
+  <!-- View llm.request -->
+<!--  <record id="view_llm_request_form" model="ir.ui.view">-->
+<!--    <field name="name">llm.request.form</field>-->
+<!--    <field name="model">llm.request</field>-->
+<!--    <field name="arch" type="xml">-->
+<!--      <form string="LLM Request">-->
+<!--        <sheet>-->
+<!--          <group>-->
+<!--            <field name="name"/>-->
+<!--            <field name="prompt"/>-->
+<!--            <field name="response" readonly="1"/>-->
+<!--          </group>-->
+<!--          <footer>-->
+<!--            <button name="action_generate"-->
+<!--                    type="object"-->
+<!--                    string="Generate Response"-->
+<!--                    class="btn-primary"/>-->
+<!--          </footer>-->
+<!--        </sheet>-->
+<!--      </form>-->
+<!--    </field>-->
+<!--  </record>-->
+
+  <!-- Главное меню LLM -->
+
+  <menuitem id="menu_llm_root" name="LLM" sequence="10"/>
+<!--  <menuitem id="menu_llm_requests"-->
+<!--            name="Requests"-->
+<!--            parent="menu_llm_root"-->
+<!--            action="action_llm_request"/>-->
+  </data>
+</odoo>

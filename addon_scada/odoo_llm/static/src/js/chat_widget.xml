@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="odoo_llm.ChatWidget" owl="1">
+    <div class="container-fluid py-4">
+        <div class="row">
+            <!-- Левая колонка: история -->
+            <div class="col-lg-3">
+                <div class="shadow-sm border mb-2 p-2 bg-white">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h4 class="text-primary fw-bold"><i class="fa fa-comments" aria-hidden="true"></i> <span>Infirmation Desk</span></h4>
+                    </div>
+                </div>
+                <button class="btn btn-outline-primary w-100 mb-2" t-on-click="onNewSessionClick">
+                    <i class="fa fa-plus-circle me-1"></i> New Session
+                </button>
+                <div class="card shadow-sm mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary"><i class="fa fa-history" aria-hidden="true"></i> <span>History</span></h5>
+                        <t t-foreach="state.sessions" t-as="s" t-key="s.id">
+                            <div class="d-flex align-items-center mb-1">
+                                <button
+                                    t-on-click="loadSessionMessages"
+                                    t-att-id="s.id"
+                                    class="btn btn-outline-primary btn-sm text-start flex-grow-1 me-2 text-truncate overflow-hidden small"
+                                    t-att-class="state.session_id === s.id ? 'active' : ''"
+                                    style="min-width: 0;"
+                                >
+                                    <t t-esc="s.name" />
+                                </button>
+                                <button class="btn btn-sm btn-danger" t-att-id="s.id" t-on-click="deleteSession">
+                                    <i t-att-id="s.id" class="fa fa-trash"></i>
+                                </button>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Правая колонка: чат -->
+            <div class="col-lg-9">
+                <div class="card shadow d-flex flex-column" style="height: 700px;">
+                    <!-- Заголовок -->
+                    <div class="card-header bg-white">
+                        <h5 class="m-0 text-success fw-bold">
+                            <t t-esc="state.header || 'New conversation'" />
+                        </h5>
+                    </div>
+
+                    <!-- Область сообщений (фиксированной высоты) -->
+                    <div t-ref="messages"
+                         class="card-body overflow-auto">
+
+                        <t t-foreach="state.messages" t-as="msg" t-key="msg.id">
+                            <div class="d-flex flex-column mb-2">
+                                <div t-attf-class="#{msg.author === 'bot' ? 'align-self-start bg-light text-dark' : 'align-self-end bg-primary text-white'} rounded p-2">
+                                    <pre class="m-0" style="white-space: pre-wrap;"><t t-esc="msg.content" /></pre>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                    <t t-if="state.isLoading">
+                      <div class="d-flex align-items-center mb-2">
+                        <img src="/odoo_llm/static/src/img/dots.gif"
+                             alt="typing…"
+                             style="width: 120px; height: 74px;" />
+                      </div>
+                    </t>
+
+                    <!-- Форма ввода -->
+                    <div class="card-footer">
+                        <form class="d-flex" t-on-submit.prevent="sendMessage">
+                            <input
+                                type="text"
+                                class="form-control me-2"
+                                placeholder="Enter the message..."
+                                t-model="state.inputText"
+                                t-on-keydown="onKeydown"
+                                t-att-disabled="state.isLoading"
+                            />
+                            <button type="submit" class="btn btn-outline-success" t-att-disabled="state.isLoading">Send</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</t>
+
+</templates>

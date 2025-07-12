@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+  <record id="action_llm_chat" model="ir.actions.act_window">
+    <field name="name">Chat sessions</field>
+    <field name="res_model">llm.chat.session</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <!-- View llm.chat.session -->
+  <record id="view_chat_session_form" model="ir.ui.view">
+    <field name="name">llm.chat.session.form</field>
+    <field name="model">llm.chat.session</field>
+    <field name="arch" type="xml">
+      <form string="Chat Session">
+        <sheet>
+<!--          <header>-->
+<!--            <button name="open_chat"-->
+<!--                    type="object"-->
+<!--                    string="Open Chat"-->
+<!--                    class="btn-primary"/>-->
+<!--          </header>-->
+          <group>
+            <field name="name"/>
+          </group>
+
+        </sheet>
+      </form>
+    </field>
+  </record>
+     <!-- Чат-бот -->
+
+  <menuitem id="menu_llm_chat_root"
+            name="Chat-bot"
+            parent="menu_llm_root"
+            sequence="30"/>
+    <menuitem id="menu_llm_chats"
+            name="Sessions"
+            parent="menu_llm_chat_root"
+            action="action_llm_chat"
+            sequence="20"/>
+    </data>
+
+</odoo>

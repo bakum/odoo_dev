@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="action_document" model="ir.actions.act_window">
+            <field name="name">Documents</field>
+            <field name="res_model">llm.document</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- View llm.document -->
+        <record id="view_document_form" model="ir.ui.view">
+            <field name="name">llm.document.form</field>
+            <field name="model">llm.document</field>
+            <field name="arch" type="xml">
+                <form string="Документ">
+                    <sheet>
+                        <header>
+                            <button name="build_index"
+                                    type="object"
+                                    string="Index All Documents"
+                                    class="btn-outline-primary"/>
+                            <button name="action_extract_text"
+                                    type="object"
+                                    string="Extract Text"
+                                    class="btn-primary"/>
+                        </header>
+                        <group>
+                            <field name="name"/>
+                            <field name="file" filename="name"/>
+                            <field name="text_content"/>
+                            <field name="embedding" readonly="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Документы -->
+
+        <menuitem id="menu_llm_root"
+                  name="LLM"
+                  sequence="10"/>
+        <menuitem id="menu_doc_root"
+                  name="Documents"
+                  parent="menu_llm_root"
+                  sequence="40"/>
+        <!-- Menu for documents -->
+        <menuitem id="menu_documents"
+                  name="List of Documents"
+                  parent="menu_doc_root"
+                  action="action_document"/>
+    </data>
+</odoo>
