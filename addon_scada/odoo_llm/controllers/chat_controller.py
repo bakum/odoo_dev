@@ -8,11 +8,11 @@ class ChatController(http.Controller):
     def send(self, session_id, text):
         lang = detect(text)
         instructions = {
-            'ru': "Отвечай на русском языке.",
-            'uk': "Відповідай на українській мові.",
-            'en': "Answer in English.",
+            'ru': "Ты — помощник, который говорит только по-русски. Веди диалог на русском. Отвечай на русском языке.",
+            'uk': "Ти помічник, який говорить тільки українською. Веди діалог українською. Відповідай українською мовою.",
+            'en': "You are an assistant who speaks only English. Conduct a dialogue in English. Answer in English.",
         }
-        instruction = instructions.get(lang, "Answer in the language of the question.")
+        instruction = instructions.get(lang, "You are an assistant who speaks only English. Answer in the language of the question.")
 
         # 1. Сохраняем пользовательское сообщение
         user_msg = request.env['llm.chat.message'].sudo().create({

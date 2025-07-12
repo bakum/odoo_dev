@@ -1,0 +1,245 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* odoo_llm
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-12 15:07+0000\n"
+"PO-Revision-Date: 2025-07-12 15:07+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: odoo_llm
+#: model:ir.model,name:odoo_llm.model_llm_service
+msgid "Advanced Ollama LLM Service"
+msgstr ""
+
+#. module: odoo_llm
+#: model:ir.model.fields,field_description:odoo_llm.field_llm_chat_message__author
+msgid "Author"
+msgstr ""
+
+#. module: odoo_llm
+#: model:ir.model.fields.selection,name:odoo_llm.selection__llm_chat_message__author__bot
+msgid "Bot"
+msgstr ""
+
+#. module: odoo_llm
+#: model:ir.model,name:odoo_llm.model_llm_chat_message
+msgid "Chat Message"
+msgstr ""
+
+#. module: odoo_llm
+#: model_terms:ir.ui.view,arch_db:odoo_llm.view_chat_session_form
+msgid "Chat Session"
+msgstr ""
+
+#. module: odoo_llm
+#: model:ir.actions.act_window,name:odoo_llm.action_llm_chat
+msgid "Chat sessions"
+msgstr "Сеанси чату"
+
+#. module: odoo_llm
+#: model:ir.ui.menu,name:odoo_llm.menu_llm_chat_root
+#: model:ir.ui.menu,name:odoo_llm.menu_llm_chats_main
+msgid "Chat-bot"
+msgstr "Інтерактивний чат-бот"
+
+#. module: odoo_llm
+#: model:ir.model,name:odoo_llm.model_llm_document
+msgid "Corporative Document"
+msgstr ""
+
+#. module: odoo_llm
+#: model:ir.model.fields,field_description:odoo_llm.field_llm_chat_message__create_uid
+#: model:ir.model.fields,field_description:odoo_llm.field_llm_chat_session__create_uid
+#: model:ir.model.fields,field_description:odoo_llm.field_llm_document__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: odoo_llm
+#: model:ir.model.fields,field_description:odoo_llm.field_llm_chat_message__create_date
+#: model:ir.model.fields,field_description:odoo_llm.field_llm_chat_session__create_date
+#: model:ir.model.fields,field_description:odoo_llm.field_llm_document__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: odoo_llm
+#: model:ir.model.fields,field_description:odoo_llm.field_llm_chat_message__date
+msgid "Date"
+msgstr ""
+
+#. module: odoo_llm
+#: model:ir.model.fields,field_description:odoo_llm.field_llm_chat_message__display_name
+#: model:ir.model.fields,field_description:odoo_llm.field_llm_chat_session__display_name
+#: model:ir.model.fields,field_description:odoo_llm.field_llm_document__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: odoo_llm
+#: model:ir.actions.act_window,name:odoo_llm.action_document
+#: model:ir.ui.menu,name:odoo_llm.menu_doc_root
+msgid "Documents"
+msgstr "Документи"
+
+#. module: odoo_llm
+#: model:ir.model.fields,field_description:odoo_llm.field_llm_document__embedding
+msgid "Embedding"
+msgstr "Вбудовування"
+
+#. module: odoo_llm
+#. odoo-javascript
+#: code:addons/odoo_llm/static/src/js/chat_widget.xml:0
+#, python-format
+msgid "Enter the message..."
+msgstr "Введіть повідомлення..."
+
+#. module: odoo_llm
+#: model_terms:ir.ui.view,arch_db:odoo_llm.view_document_form
+msgid "Extract Text"
+msgstr "Витягти текст"
+
+#. module: odoo_llm
+#: model:ir.model,name:odoo_llm.model_llm_vector_index
+msgid "FAISS Vector Index Service"
+msgstr ""
+
+#. module: odoo_llm
+#: model:ir.model.fields,field_description:odoo_llm.field_llm_document__file
+msgid "File"
+msgstr "Файл"
+
+#. module: odoo_llm
+#. odoo-javascript
+#: code:addons/odoo_llm/static/src/js/chat_widget.xml:0
+#, python-format
+msgid "History"
+msgstr "Історія"
+
+#. module: odoo_llm
+#: model:ir.model.fields,field_description:odoo_llm.field_llm_chat_message__id
+#: model:ir.model.fields,field_description:odoo_llm.field_llm_chat_session__id
+#: model:ir.model.fields,field_description:odoo_llm.field_llm_document__id
+msgid "ID"
+msgstr ""
+
+#. module: odoo_llm
+#: model:ir.actions.server,name:odoo_llm.cron_index_docs_ir_actions_server
+#: model_terms:ir.ui.view,arch_db:odoo_llm.view_document_form
+msgid "Index All Documents"
+msgstr "Індексувати всі документи"
+
+#. module: odoo_llm
+#. odoo-javascript
+#: code:addons/odoo_llm/static/src/js/chat_widget.xml:0
+#, python-format
+msgid "Infirmation Desk"
+msgstr "Інформаційне бюро"
+
+#. module: odoo_llm
+#: model:ir.ui.menu,name:odoo_llm.menu_llm_root
+msgid "LLM"
+msgstr ""
+
+#. module: odoo_llm
+#: model:ir.model,name:odoo_llm.model_llm_chat_session
+msgid "LLM Chat Session"
+msgstr ""
+
+#. module: odoo_llm
+#: model:ir.actions.client,name:odoo_llm.llm_chat_web
+msgid "LLM Chat-bot"
+msgstr ""
+
+#. module: odoo_llm
+#: model:ir.model.fields,field_description:odoo_llm.field_llm_chat_message__write_uid
+#: model:ir.model.fields,field_description:odoo_llm.field_llm_chat_session__write_uid
+#: model:ir.model.fields,field_description:odoo_llm.field_llm_document__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: odoo_llm
+#: model:ir.model.fields,field_description:odoo_llm.field_llm_chat_message__write_date
+#: model:ir.model.fields,field_description:odoo_llm.field_llm_chat_session__write_date
+#: model:ir.model.fields,field_description:odoo_llm.field_llm_document__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: odoo_llm
+#: model:ir.ui.menu,name:odoo_llm.menu_documents
+msgid "List of Documents"
+msgstr "Документи"
+
+#. module: odoo_llm
+#: model:ir.model.fields,field_description:odoo_llm.field_llm_chat_session__message_ids
+msgid "Messages"
+msgstr "Повідомлення"
+
+#. module: odoo_llm
+#: model:ir.model.fields,field_description:odoo_llm.field_llm_document__name
+msgid "Name"
+msgstr "Найменування"
+
+#. module: odoo_llm
+#. odoo-javascript
+#: code:addons/odoo_llm/static/src/js/chat_widget.xml:0
+#, python-format
+msgid "New Session"
+msgstr "Новий сеанс"
+
+#. module: odoo_llm
+#. odoo-javascript
+#: code:addons/odoo_llm/static/src/js/chat_widget.xml:0
+#, python-format
+msgid "Send"
+msgstr "Надіслати"
+
+#. module: odoo_llm
+#: model:ir.model.fields,field_description:odoo_llm.field_llm_chat_message__session_id
+#: model:ir.model.fields,field_description:odoo_llm.field_llm_chat_session__name
+msgid "Session"
+msgstr "Cеанс"
+
+#. module: odoo_llm
+#: model:ir.ui.menu,name:odoo_llm.menu_llm_chats
+msgid "Sessions"
+msgstr "Cеанси"
+
+#. module: odoo_llm
+#: model:ir.model.fields,field_description:odoo_llm.field_llm_chat_message__content
+#: model:ir.model.fields,field_description:odoo_llm.field_llm_document__text_content
+msgid "Text"
+msgstr "Текст"
+
+#. module: odoo_llm
+#: model:ir.model,name:odoo_llm.model_llm_embedding_service
+msgid "Text Generation + Embedding Service"
+msgstr ""
+
+#. module: odoo_llm
+#: model:ir.model.fields.selection,name:odoo_llm.selection__llm_chat_message__author__user
+msgid "User"
+msgstr ""
+
+#. module: odoo_llm
+#: model:ir.model,name:odoo_llm.model_llm_vector_service
+msgid "Vector Search Service"
+msgstr ""
+
+#. module: odoo_llm
+#. odoo-javascript
+#: code:addons/odoo_llm/static/src/js/chat_widget.xml:0
+#, python-format
+msgid "typing…"
+msgstr ""
+
+#. module: odoo_llm
+#: model_terms:ir.ui.view,arch_db:odoo_llm.view_document_form
+msgid "Документ"
+msgstr ""
