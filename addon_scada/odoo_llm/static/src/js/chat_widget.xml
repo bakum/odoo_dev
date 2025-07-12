@@ -10,7 +10,9 @@
                         <h4 class="text-primary fw-bold"><i class="fa fa-comments" aria-hidden="true"></i> <span>Infirmation Desk</span></h4>
                     </div>
                 </div>
-                <button class="btn btn-outline-primary w-100 mb-2" t-on-click="onNewSessionClick">
+                <button class="btn btn-outline-primary w-100 mb-2"
+                        title="Click to start a new session"
+                        data-bs-toggle="tooltip" t-on-click="onNewSessionClick">
                     <i class="fa fa-plus-circle me-1"></i> New Session
                 </button>
                 <div class="card shadow-sm mb-3">
@@ -24,10 +26,15 @@
                                     class="btn btn-outline-primary btn-sm text-start flex-grow-1 me-2 text-truncate overflow-hidden small"
                                     t-att-class="state.session_id === s.id ? 'active' : ''"
                                     style="min-width: 0;"
+                                    title="Click to load session messages"
+                                    data-bs-toggle="tooltip"
                                 >
                                     <t t-esc="s.name" />
                                 </button>
-                                <button class="btn btn-sm btn-danger" t-att-id="s.id" t-on-click="deleteSession">
+                                <button class="btn btn-sm btn-danger" t-att-id="s.id"
+                                        title="Delete session"
+                                        data-bs-toggle="tooltip"
+                                        t-on-click="deleteSession">
                                     <i t-att-id="s.id" class="fa fa-trash"></i>
                                 </button>
                             </div>
@@ -42,7 +49,7 @@
                     <!-- Заголовок -->
                     <div class="card-header bg-white">
                         <h5 class="m-0 text-success fw-bold">
-                            <t t-esc="state.header || 'New conversation'" />
+                            <t t-esc="getHeaderText()" />
                         </h5>
                     </div>
 
@@ -77,7 +84,7 @@
                                 t-on-keydown="onKeydown"
                                 t-att-disabled="state.isLoading"
                             />
-                            <button type="submit" class="btn btn-outline-success" t-att-disabled="state.isLoading">Send</button>
+                            <button type="submit" class="btn btn-outline-success" t-att-disabled="state.isLoading">Ask</button>
                         </form>
                     </div>
                 </div>

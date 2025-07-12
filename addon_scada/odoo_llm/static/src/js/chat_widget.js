@@ -3,6 +3,7 @@
 import {Component, onMounted, onWillUnmount, useEffect, useRef, useState} from "@odoo/owl";
 import {registry} from "@web/core/registry";
 import {useService} from "@web/core/utils/hooks";
+import {_t} from "@web/core/l10n/translation";
 
 export class ChatWidget extends Component {
     setup() {
@@ -33,6 +34,10 @@ export class ChatWidget extends Component {
         onWillUnmount(() => {
             window.removeEventListener("resize", this.adjustMessageHeight);
         });
+    }
+
+    getHeaderText() {
+        return this.state.header || _t("New conversation");
     }
 
     scrollToBottom() {
