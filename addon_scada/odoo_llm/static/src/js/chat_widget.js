@@ -1,6 +1,6 @@
 /** @odoo-module **/
 
-import {Component, onMounted, onWillUnmount, useRef, useState} from "@odoo/owl";
+import {Component, onMounted, onWillUnmount, useRef, useEffect, useState} from "@odoo/owl";
 import {registry} from "@web/core/registry";
 import {useService} from "@web/core/utils/hooks";
 import {_t} from "@web/core/l10n/translation";
@@ -28,9 +28,9 @@ export class ChatWidget extends Component {
             // Пример: можно подгрузить историю сообщений при старте
         });
 
-        // useEffect(() => {
-        //     this.scrollToBottom();
-        // }, () => [this.state.messages]);
+        useEffect(() => {
+            this.scrollToBottom();
+        }, () => [this.state.messages]);
 
         onWillUnmount(() => {
             window.removeEventListener("resize", this.adjustMessageHeight);
@@ -76,7 +76,7 @@ export class ChatWidget extends Component {
         this.state.header = session?.name || '';
 
         this.state.messages = await this.orm.searchRead("llm.chat.message", [['session_id', '=', sessionId]], ["id", "author", "content"]);
-        this.scrollToBottom()
+        // this.scrollToBottom()
 
     }
 
