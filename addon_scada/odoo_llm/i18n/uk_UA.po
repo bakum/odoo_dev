@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-12 15:55+0000\n"
-"PO-Revision-Date: 2025-07-12 15:55+0000\n"
+"POT-Creation-Date: 2025-07-12 19:15+0000\n"
+"PO-Revision-Date: 2025-07-12 19:15+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,9 +16,11 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: odoo_llm
-#: model:ir.model,name:odoo_llm.model_llm_service
-msgid "Advanced Ollama LLM Service"
-msgstr ""
+#. odoo-javascript
+#: code:addons/odoo_llm/static/src/js/chat_widget.js:0
+#, python-format
+msgid "Are you sure you want to delete this session?"
+msgstr "Ви впевнені, що хочете видалити цей сеанс?"
 
 #. module: odoo_llm
 #. odoo-javascript
@@ -53,7 +55,6 @@ msgid "Chat sessions"
 msgstr "Сеанси чату"
 
 #. module: odoo_llm
-#: model:ir.ui.menu,name:odoo_llm.menu_llm_chat_root
 #: model:ir.ui.menu,name:odoo_llm.menu_llm_chats_main
 msgid "Chat-bot"
 msgstr "Інтерактивний чат-бот"
@@ -71,6 +72,11 @@ msgstr "Натисніть, щоб завантажити повідомленн
 #, python-format
 msgid "Click to start a new session"
 msgstr "Натисніть, щоб розпочати новий сеанс"
+
+#. module: odoo_llm
+#: model:ir.model,name:odoo_llm.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
 
 #. module: odoo_llm
 #: model:ir.model,name:odoo_llm.model_llm_document
@@ -112,7 +118,6 @@ msgstr ""
 
 #. module: odoo_llm
 #: model:ir.actions.act_window,name:odoo_llm.action_document
-#: model:ir.ui.menu,name:odoo_llm.menu_doc_root
 msgid "Documents"
 msgstr "Документи"
 
@@ -172,6 +177,7 @@ msgstr "Інформаційне бюро"
 
 #. module: odoo_llm
 #: model:ir.ui.menu,name:odoo_llm.menu_llm_root
+#: model_terms:ir.ui.view,arch_db:odoo_llm.llm_settings_view_form
 msgid "LLM"
 msgstr ""
 
@@ -183,6 +189,17 @@ msgstr ""
 #. module: odoo_llm
 #: model:ir.actions.client,name:odoo_llm.llm_chat_web
 msgid "LLM Chat-bot"
+msgstr ""
+
+#. module: odoo_llm
+#: model_terms:ir.ui.view,arch_db:odoo_llm.llm_settings_view_form
+msgid "LLM Integration with RAG"
+msgstr ""
+
+#. module: odoo_llm
+#: model:ir.model.fields,field_description:odoo_llm.field_res_config_settings__llm_model_name
+#: model_terms:ir.ui.view,arch_db:odoo_llm.llm_settings_view_form
+msgid "LLM Model Name"
 msgstr ""
 
 #. module: odoo_llm
@@ -229,6 +246,12 @@ msgid "New conversation"
 msgstr "Нова розмова"
 
 #. module: odoo_llm
+#: model:ir.model.fields,field_description:odoo_llm.field_res_config_settings__ollama_entrypoint
+#: model_terms:ir.ui.view,arch_db:odoo_llm.llm_settings_view_form
+msgid "Ollama Entrypoint"
+msgstr ""
+
+#. module: odoo_llm
 #: model:ir.model.fields,field_description:odoo_llm.field_llm_chat_message__session_id
 #: model:ir.model.fields,field_description:odoo_llm.field_llm_chat_session__name
 msgid "Session"
@@ -238,6 +261,12 @@ msgstr "Cеанс"
 #: model:ir.ui.menu,name:odoo_llm.menu_llm_chats
 msgid "Sessions"
 msgstr "Cеанси"
+
+#. module: odoo_llm
+#: model:ir.actions.act_window,name:odoo_llm.llm_settings_action
+#: model:ir.ui.menu,name:odoo_llm.llm_settings_menu
+msgid "Settings"
+msgstr "Налаштування"
 
 #. module: odoo_llm
 #: model:ir.model.fields,field_description:odoo_llm.field_llm_chat_message__content
@@ -271,3 +300,17 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:odoo_llm.view_document_form
 msgid "Документ"
 msgstr ""
+
+#. module: odoo_llm
+#. odoo-javascript
+#: code:addons/odoo_llm/static/src/js/chat_widget.js:0
+#, python-format
+msgid "⚠ Failed to delete session."
+msgstr "⚠ Не вдалося видалити сеанс."
+
+#. module: odoo_llm
+#. odoo-javascript
+#: code:addons/odoo_llm/static/src/js/chat_widget.js:0
+#, python-format
+msgid "⚠ Request error."
+msgstr "⚠ Помилка запиту."

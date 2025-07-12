@@ -40,14 +40,15 @@
         <menuitem id="menu_llm_root"
                   name="LLM"
                   sequence="10"/>
-        <menuitem id="menu_doc_root"
-                  name="Documents"
-                  parent="menu_llm_root"
-                  sequence="40"/>
+<!--        <menuitem id="menu_doc_root"-->
+<!--                  name="Documents"-->
+<!--                  parent="menu_llm_root"-->
+<!--                  sequence="40"/>-->
         <!-- Menu for documents -->
         <menuitem id="menu_documents"
                   name="List of Documents"
-                  parent="menu_doc_root"
-                  action="action_document"/>
+                  parent="menu_llm_root"
+                  action="action_document"
+                  sequence="40"/>
     </data>
 </odoo>

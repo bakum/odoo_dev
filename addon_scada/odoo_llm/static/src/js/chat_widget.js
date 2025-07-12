@@ -10,7 +10,8 @@ export class ChatWidget extends Component {
         this.rpc = useService("rpc");
         this.orm = useService("orm");
         this.messageRef = useRef("messages");
-        this.cardRef = useRef("card");
+        this.user = useService("user");
+        this.userId = this.user.userId;
         this.state = useState({
             // session_id: this.props.action.context.params.res_id,
             header: '',
@@ -62,7 +63,7 @@ export class ChatWidget extends Component {
     }
 
     async loadSessions() {
-        this.state.sessions = await this.orm.searchRead("llm.chat.session", [], ["id", "name"], {
+        this.state.sessions = await this.orm.searchRead("llm.chat.session", [["create_uid", "=", parseInt(this.userId)]], ["id", "name"], {
             order: "id desc", limit: 10
         });
     }
@@ -79,7 +80,7 @@ export class ChatWidget extends Component {
     }
 
     async deleteSession(el) {
-        if (!confirm("Are you sure you want to delete this session?")) return;
+        if (!confirm(_t("Are you sure you want to delete this session?"))) return;
         const sessionId = parseInt(el.target.id)
 
         try {
@@ -96,8 +97,8 @@ export class ChatWidget extends Component {
             }
             await this.loadSessions()
         } catch (error) {
-            console.error("Failed to delete session:", error);
-            alert("⚠ Не удалось удалить сессию.");
+            // console.error("Failed to delete session:", error);
+            alert(_t("⚠ Failed to delete session."));
         }
     }
 
@@ -133,7 +134,7 @@ export class ChatWidget extends Component {
             this.state.messages.push({id: botId, author: 'bot', content: response.bot.content});
         } catch (error) {
             const errId = Date.now().toString() + Math.random().toString(16).slice(2);
-            this.state.messages.push({id: errId, author: 'bot', content: '⚠ Ошибка запроса.'});
+            this.state.messages.push({id: errId, author: 'bot', content: _t('⚠ Request error.') + ' ' +error.message});
         } finally {
             this.state.isLoading = false;
         }

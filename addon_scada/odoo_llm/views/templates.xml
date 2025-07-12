@@ -8,7 +8,7 @@
 
         <menuitem id="menu_llm_chats_main"
             name="Chat-bot"
-            parent="menu_llm_chat_root"
+            parent="menu_llm_root"
             action="llm_chat_web"
             sequence="10"/>
     </data>

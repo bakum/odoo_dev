@@ -33,12 +33,16 @@ class TextPlusEmbeddingService(models.AbstractModel):
 
     @api.model
     def _get_llm_model(self):
-        return self.env['ir.config_parameter'].sudo().get_param('ollama.model_name', default='mistral')
+        return self.env['ir.config_parameter'].sudo().get_param('odoo_llm.llm_model_name', default='llama3')
+
+    @api.model
+    def _get_entrypoint(self):
+        return self.env['ir.config_parameter'].sudo().get_param('odoo_llm.ollama_entrypoint', default='http://localhost:11434/api/chat')
 
     @api.model
     def generate_text(self, prompt):
         res = requests.post(
-            "http://localhost:11434/api/chat",
+            self._get_entrypoint(),
             json={
                 "model": self._get_llm_model(),
                 "messages": [{"role": "user", "content": prompt}],

@@ -30,13 +30,13 @@
   </record>
      <!-- Чат-бот -->
 
-  <menuitem id="menu_llm_chat_root"
-            name="Chat-bot"
-            parent="menu_llm_root"
-            sequence="30"/>
+<!--  <menuitem id="menu_llm_chat_root"-->
+<!--            name="Chat-bot"-->
+<!--            parent="menu_llm_root"-->
+<!--            sequence="30"/>-->
     <menuitem id="menu_llm_chats"
             name="Sessions"
-            parent="menu_llm_chat_root"
+            parent="menu_llm_root"
             action="action_llm_chat"
             sequence="20"/>
     </data>

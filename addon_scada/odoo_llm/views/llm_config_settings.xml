@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="llm_settings_view_form" model="ir.ui.view">
+            <field name="name">llm.settings.view.form</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="90"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="inside">
+                    <app data-string="LLM Integration with RAG"
+                         id="llm" string="LLM Integration with RAG" name="odoo_llm">
+                        <block title="LLM" id="llm_setting">
+                            <setting string="LLM Model Name">
+                                <div class="text-muted content-group mt16">
+                                    <field name="llm_model_name" />
+                                </div>
+<!--                                <span class="o_form_label">Last days count/////.</span>-->
+                            </setting>
+                            <setting string="Ollama Entrypoint">
+                                <div class="text-muted content-group mt16">
+                                    <field name="ollama_entrypoint" />
+                                </div>
+<!--                                <span class="o_form_label">Store stable data only/////.</span>-->
+                            </setting>
+                        </block>
+                    </app>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="llm_settings_action" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context">{'module' : 'odoo_llm', 'bin_size': False}</field>
+        </record>
+
+        <menuitem id="llm_settings_menu" name="Settings"
+                  parent="menu_llm_root" sequence="50" action="llm_settings_action"
+                  groups="base.group_system"/>
+    </data>
+</odoo>

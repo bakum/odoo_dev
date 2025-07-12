@@ -12,7 +12,7 @@ class ChatController(http.Controller):
             'uk': "Ти помічник, який говорить тільки українською. Веди діалог українською. Відповідай українською мовою.",
             'en': "You are an assistant who speaks only English. Conduct a dialogue in English. Answer in English.",
         }
-        instruction = instructions.get(lang, "You are an assistant who speaks only English. Answer in the language of the question.")
+        instruction = instructions.get(lang, "Ти помічник, який говорить тільки українською. Веди діалог українською. Відповідай українською мовою.")
 
         # 1. Сохраняем пользовательское сообщение
         user_msg = request.env['llm.chat.message'].sudo().create({
@@ -36,7 +36,7 @@ class ChatController(http.Controller):
         # 4. Собираем промпт с контекстом
         augmented_prompt = (
             f"{instruction}\n\n"
-            "Ниже представлена релевантная информация из документов. Используйте её при ответе.:\n\n"
+            "Нижче надано релевантну інформацію з документів. Використовуй її при відповіді.\n\n"
             f"{context}\n\nВопрос: {text}"
         )
 

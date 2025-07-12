@@ -22,6 +22,7 @@
         "views/document_views.xml",
         "views/chat_views.xml",
         "views/templates.xml",
+        "views/llm_config_settings.xml",
     ],
     "installable": True,
     "application": False,
