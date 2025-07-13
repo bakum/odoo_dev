@@ -5,3 +5,4 @@ faiss-cpu
 numpy
 sentence-transformers
 langdetect==1.0.9
+ollama

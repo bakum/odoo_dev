@@ -25,6 +25,9 @@ import json
 from odoo import api, models
 from sentence_transformers import SentenceTransformer
 
+from .ollama_client import OllamaClient
+
+
 class TextPlusEmbeddingService(models.AbstractModel):
     _name = "llm.embedding_service"
     _description = "Text Generation + Embedding Service"
@@ -41,16 +44,19 @@ class TextPlusEmbeddingService(models.AbstractModel):
 
     @api.model
     def generate_text(self, prompt):
-        res = requests.post(
-            self._get_entrypoint(),
-            json={
-                "model": self._get_llm_model(),
-                "messages": [{"role": "user", "content": prompt}],
-                "stream": False
-            }
-        )
-        res.raise_for_status()
-        return res.json()["message"]["content"]
+        client = OllamaClient(model=self._get_llm_model(), entrypoint=self._get_entrypoint())
+        res = client.ask(prompt)
+        return res
+        # res = requests.post(
+        #     self._get_entrypoint(),
+        #     json={
+        #         "model": self._get_llm_model(),
+        #         "messages": [{"role": "user", "content": prompt}],
+        #         "stream": False
+        #     }
+        # )
+        # res.raise_for_status()
+        # return res.json()["message"]["content"]
 
     @api.model
     def embed(self, text):

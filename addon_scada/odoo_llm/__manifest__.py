@@ -34,7 +34,8 @@
            "faiss-cpu",
            "numpy",
            "sentence_transformers",
-           "langdetect"
+           "langdetect",
+           "ollama"
            ]
     },
     'assets': {
