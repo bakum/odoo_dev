@@ -74,9 +74,21 @@ export class ChatWidget extends Component {
         this.state.session_id = sessionId;
         const session = this.state.sessions.find((s) => s.id === sessionId);
         this.state.header = session?.name || '';
+        this.state.isLoading = true;
 
-        this.state.messages = await this.orm.searchRead("llm.chat.message", [['session_id', '=', sessionId]], ["id", "author", "content"]);
-        // this.scrollToBottom()
+        try {
+            this.state.messages = []
+            const response = await this.rpc(`/llm/chat/session/${sessionId}`);
+            if (!response.success) {
+                throw new Error(response.bot_text);
+            }
+            this.state.messages = await this.orm.searchRead("llm.chat.message", [['session_id', '=', sessionId]], ["id", "author", "content"]);
+        } catch (error) {
+            const errId = Date.now().toString() + Math.random().toString(16).slice(2);
+            this.state.messages.push({id: errId, author: 'bot', content: _t('⚠ Request error.') + ' ' + error.message});
+        } finally {
+            this.state.isLoading = false;
+        }
 
     }
 
@@ -131,11 +143,14 @@ export class ChatWidget extends Component {
                 session_id: this.state.session_id,
                 text: text,
             });
+            if (!response.success) {
+                throw new Error(response.error);
+            }
             const botId = Date.now().toString() + Math.random().toString(16).slice(2);
             this.state.messages.push({id: botId, author: 'bot', content: response.bot.content});
         } catch (error) {
             const errId = Date.now().toString() + Math.random().toString(16).slice(2);
-            this.state.messages.push({id: errId, author: 'bot', content: _t('⚠ Request error.') + ' ' +error.message});
+            this.state.messages.push({id: errId, author: 'bot', content: _t('⚠ Request error.') + ' ' + error.message});
         } finally {
             this.state.isLoading = false;
             this.scrollToBottom()

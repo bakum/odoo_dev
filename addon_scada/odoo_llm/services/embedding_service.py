@@ -43,20 +43,17 @@ class TextPlusEmbeddingService(models.AbstractModel):
         return self.env['ir.config_parameter'].sudo().get_param('odoo_llm.ollama_entrypoint', default='http://localhost:11434/api/chat')
 
     @api.model
+    def set_context(self, messages):
+        """Set context for the client, if needed."""
+        client = OllamaClient(model=self._get_llm_model(), entrypoint=self._get_entrypoint())
+        response = client.set_context(messages)
+        return response
+
+    @api.model
     def generate_text(self, prompt):
         client = OllamaClient(model=self._get_llm_model(), entrypoint=self._get_entrypoint())
         res = client.ask(prompt)
         return res
-        # res = requests.post(
-        #     self._get_entrypoint(),
-        #     json={
-        #         "model": self._get_llm_model(),
-        #         "messages": [{"role": "user", "content": prompt}],
-        #         "stream": False
-        #     }
-        # )
-        # res.raise_for_status()
-        # return res.json()["message"]["content"]
 
     @api.model
     def embed(self, text):

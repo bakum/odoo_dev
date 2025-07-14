@@ -6,6 +6,14 @@ class OllamaClient:
         self.model = model
         self.entrypoint = entrypoint
 
+    def set_context(self,  messages):
+        """Set context for the client, if needed."""
+        client = Client(
+            host=self.entrypoint,
+        )
+        response = client.chat(model=self.model, messages=messages)
+        return response['message']['content']
+
     def ask(self, prompt):
         client = Client(
             host=self.entrypoint,

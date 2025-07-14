@@ -41,7 +41,13 @@ class ChatController(http.Controller):
         )
 
         # 5. Генерация ответа
-        bot_text = request.env['llm.embedding_service'].sudo().generate_text(augmented_prompt)
+        try:
+            bot_text = request.env['llm.embedding_service'].sudo().generate_text(augmented_prompt)
+        except ConnectionError as e:
+            return {
+                'success': False,
+                'error': str(e),
+            }
 
         # 6. Сохраняем сообщение бота
         bot_msg = request.env['llm.chat.message'].sudo().create({
@@ -51,6 +57,34 @@ class ChatController(http.Controller):
         })
 
         return {
+            'success': True,
             'user': {'id': user_msg.id, 'content': user_msg.content, 'date': str(user_msg.date)},
             'bot':  {'id': bot_msg.id,  'content': bot_msg.content,  'date': str(bot_msg.date)},
+        }
+
+    @http.route('/llm/chat/session/<int:session_id>', type='json', auth='user')
+    def load_session(self, session_id):
+        session = request.env['llm.chat.session'].sudo().browse(session_id)
+        if not session.exists():
+            return request.not_found()
+
+        messages = session.message_ids.sudo().search([], order='id asc')[-10]
+        llm_messages = [
+            {'role': 'user' if m.author == 'user' else 'assistant', 'content': m.content}
+            for m in messages
+        ]
+
+        try:
+            bot_text = request.env['llm.embedding_service'].sudo().set_context(llm_messages)
+        except ConnectionError as e:
+            return {
+                'success': False,
+                'session_id': session.id,
+                'bot_text': str(e),
+            }
+
+        return {
+            'success': True,
+            'session_id': session.id,
+            'bot_text': bot_text,
         }
