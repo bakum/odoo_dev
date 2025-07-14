@@ -68,7 +68,7 @@ class ChatController(http.Controller):
         if not session.exists():
             return request.not_found()
 
-        messages = session.message_ids.sudo().search([], order='id asc')[-20]
+        messages = session.message_ids.sudo().search([], order='id asc')[:-20]  # Last 20 messages for performance
         llm_messages = [
             {'role': 'user' if m.author == 'user' else 'assistant', 'content': m.content}
             for m in messages

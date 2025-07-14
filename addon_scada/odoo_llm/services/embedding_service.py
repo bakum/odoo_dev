@@ -20,7 +20,9 @@
 #     def deserialize(self, blob):
 #         return json.loads(blob)
 
-import requests
+import warnings
+warnings.filterwarnings("ignore", message=".*symlinks.*", category=UserWarning)
+
 import json
 from odoo import api, models
 from sentence_transformers import SentenceTransformer
@@ -32,7 +34,8 @@ class TextPlusEmbeddingService(models.AbstractModel):
     _name = "llm.embedding_service"
     _description = "Text Generation + Embedding Service"
 
-    _embedding_model = SentenceTransformer('all-MiniLM-L6-v2')  # Загружается один раз при инициализации
+    # _embedding_model = SentenceTransformer('all-MiniLM-L6-v2')  # Загружается один раз при инициализации
+    _embedding_model = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')  # Загружается один раз при инициализации
 
     @api.model
     def _get_llm_model(self):
