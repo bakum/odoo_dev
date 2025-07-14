@@ -1,5 +1,8 @@
 import json
 
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+
 import faiss
 import numpy as np
 import os
