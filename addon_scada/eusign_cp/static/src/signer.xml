@@ -23,10 +23,10 @@
                         </div>
                         <p class="text-center">За допомогою форми можна підписувати файли, що знаходяться на файловій системі тощо</p>
                         <div class="row d-flex align-items-center justify-content-center">
-                            <div t-attf-class="col col-lg-5 m-0 p-0 {{state.signmode ? 'd-none' : ''}}">
+                            <div t-if="!state.signmode" t-attf-class="col col-lg-5 m-0 p-0">
                                 <Verifier/>
                             </div>
-                            <div t-attf-class="col col-lg-5 m-0 p-0 {{state.signmode ? '' : 'd-none'}}">
+                            <div t-if="state.signmode" t-attf-class="col col-lg-5 m-0 p-0">
                                 <EUSigner url_xml_http_proxy_service="'/signer/proxyHandler'"
                                           url_get_certificates="'/eusign_cp/static/data/CACertificates.p7b'"
                                           url_cas="'/eusign_cp/static/data/CAs.json'"
