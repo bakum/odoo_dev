@@ -31,6 +31,7 @@ class SummarizerService:
                     "model": self.model,
                     "prompt": prompt,
                     "stream": False,
+                    "temperature": 0.3
                 },
                 timeout=600,
             )
