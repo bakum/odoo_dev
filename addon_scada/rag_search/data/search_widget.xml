@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="rag_search_web" model="ir.actions.client">
+            <field name="name">Search</field>
+            <field name="tag">rag_search.search_widget</field>
+        </record>
+
+        <menuitem id="menu_llm_chats_main"
+            name="Search"
+            parent="menu_rag_root"
+            action="rag_search_web"
+            sequence="10"/>
+    </data>
+</odoo>

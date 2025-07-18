@@ -22,6 +22,7 @@
 <!--          </header>-->
           <group>
             <field name="name"/>
+            <field name="lang"/>
           </group>
 
         </sheet>

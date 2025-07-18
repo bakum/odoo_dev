@@ -1,10 +1,10 @@
 from odoo import fields, models
 
 
-class LlmConfigSettings(models.TransientModel):
+class RagConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
-    llm_model_name = fields.Selection(
+    rag_llm_model_name = fields.Selection(
         selection=[
             ('llama3', 'LLaMA 3'),
             ('nous-hermes2', 'Nous Hermes 2 - LLaMA 2 13B'),
@@ -17,8 +17,8 @@ class LlmConfigSettings(models.TransientModel):
         ],
         string='LLM Model Name',
         default='llama3',
-        config_parameter='odoo_llm.llm_model_name',
+        config_parameter='rag_search.rag_llm_model_name',
     )
 
-    ollama_entrypoint = fields.Char(string='Ollama Entrypoint', default='http://localhost:11434',
-                                        config_parameter='odoo_llm.ollama_entrypoint', )
+    rag_ollama_entrypoint = fields.Char(string='Ollama Entrypoint', default='http://localhost:11434',
+                                        config_parameter='rag_search.rag_ollama_entrypoint', )

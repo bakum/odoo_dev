@@ -1,4 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_llm_document,access_llm_document,model_llm_document,base.group_user,1,1,1,1
+odoo_llm.access_llm_document_chunk,access_llm_document_chunk,odoo_llm.model_llm_document_chunk,base.group_user,1,1,1,1
 access_llm_chat_session,access_llm_chat_session,model_llm_chat_session,base.group_user,1,1,1,1
 access_llm_chat_message,access_llm_chat_message,model_llm_chat_message,base.group_user,1,1,1,1

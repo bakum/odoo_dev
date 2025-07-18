@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rag_document,rags.document,model_rag_document,,1,1,1,1
+access_rag_chunk,rags.chunk,model_rag_chunk,,1,1,1,1

@@ -1,0 +1,8 @@
+PyMuPDF
+python-docx
+faiss-cpu
+numpy
+sentence-transformers
+tiktoken
+nltk
+langdetect==1.0.9

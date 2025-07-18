@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+  <t t-name="rag_search.PDFViewer" owl="1">
+    <div class="pdf-viewer-container border rounded p-3">
+      <!-- Навигация по страницам -->
+      <div class="d-flex align-items-center justify-content-center gap-3 mb-3">
+        <button type="button"
+                class="btn btn-sm btn-outline-secondary"
+                t-on-click="() => this.goToPage(-1)"
+                t-att-disabled="state.currentPage &lt;= 1">
+          ← Previous
+        </button>
+        <span>Page <t t-esc="state.currentPage"/> of <t t-esc="state.totalPages"/></span>
+        <button type="button"
+                class="btn btn-sm btn-outline-secondary"
+                t-on-click="() => this.goToPage(1)"
+                t-att-disabled="state.currentPage >= state.totalPages">
+          Next →
+        </button>
+      </div>
+
+      <!-- Контейнер для PDF canvas -->
+      <div t-ref="pdfViewer" style="position: relative; width: 100%; height: auto; overflow: auto;">
+        <!-- Здесь рисуется PDF-страница -->
+      </div>
+    </div>
+  </t>
+</templates>

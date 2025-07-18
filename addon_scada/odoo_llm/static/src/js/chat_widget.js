@@ -22,6 +22,14 @@ export class ChatWidget extends Component {
         });
 
         onMounted(async () => {
+            // this.keepAliveInterval = setInterval(() => {
+            //     fetch('/web/session/keepalive', {
+            //         method: 'GET',
+            //         credentials: 'same-origin', // отправляем куки с сессией
+            //     }).catch(() => {
+            //         // Игнорируем ошибки
+            //     });
+            // }, 60000); // каждые 60 секунд
             await this.loadSessions();
             this.adjustMessageHeight()
             window.addEventListener("resize", this.adjustMessageHeight);
@@ -34,6 +42,7 @@ export class ChatWidget extends Component {
 
         onWillUnmount(() => {
             window.removeEventListener("resize", this.adjustMessageHeight);
+            // clearInterval(this.keepAliveInterval);
         });
     }
 
@@ -64,7 +73,7 @@ export class ChatWidget extends Component {
 
     async loadSessions() {
         this.state.sessions = await this.orm.searchRead("llm.chat.session", [["create_uid", "=", parseInt(this.userId)]], ["id", "name"], {
-            order: "id desc", limit: 10
+            order: "id desc", limit: 5
         });
     }
 
@@ -74,6 +83,7 @@ export class ChatWidget extends Component {
         this.state.session_id = sessionId;
         const session = this.state.sessions.find((s) => s.id === sessionId);
         this.state.header = session?.name || '';
+        // this.state.messages = await this.orm.searchRead("llm.chat.message", [['session_id', '=', sessionId]], ["id", "author", "content"]);
         this.state.isLoading = true;
 
         try {
@@ -125,6 +135,51 @@ export class ChatWidget extends Component {
         this.state.header = title;
     }
 
+    async streamResponse() {
+        const text = this.state.inputText.trim();
+        if (!text) return;
+
+        if (!this.state.session_id) {
+            await this.createNewSession(text);
+            await this.loadSessions();
+        }
+
+        const id = Date.now().toString();
+        this.state.messages.push({id, author: "user", content: text});
+        this.state.inputText = "";
+        this.state.isLoading = true;
+
+        const botId = Date.now().toString();
+        this.state.messages.push({id: botId, author: "bot", content: ""});
+
+        const botMsg = this.state.messages.find(m => m.id === botId);
+        const source = new EventSource(`/llm/chat/stream/${this.state.session_id}&text=${encodeURIComponent(text)}`,{ withCredentials: true });
+
+        source.onmessage = (event) => {
+            if (event.data === "[DONE]") {
+                source.close();
+                this.state.isLoading = false;
+                return;
+            }
+            if (event.data.startsWith("[ERROR]")) {
+                botMsg.content = _t("⚠ Request error.") + " " + event.data.slice(7);
+                source.close();
+                this.state.isLoading = false;
+                return;
+            }
+
+            botMsg.content += event.data;
+            this.scrollToBottom();
+        };
+
+        source.onerror = (err) => {
+            console.error("SSE error:", err);
+            botMsg.content += "\n⚠ [stream error]";
+            source.close();
+            this.state.isLoading = false;
+        };
+    }
+
     async sendMessage() {
         const text = this.state.inputText.trim();
         if (!text) return;
@@ -161,6 +216,7 @@ export class ChatWidget extends Component {
         if (ev.key === "Enter" && !ev.shiftKey) {
             ev.preventDefault();
             this.sendMessage();
+            // this.streamResponse()
         }
     }
 

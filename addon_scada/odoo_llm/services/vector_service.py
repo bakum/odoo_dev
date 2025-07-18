@@ -3,6 +3,7 @@ from odoo import api, models
 class VectorService(models.AbstractModel):
     _name = "llm.vector.service"
     _description = "Vector Search Service"
+    _inherit = 'llm.vector.service.abstract'
 
     @api.model
     def index_all(self):
@@ -11,6 +12,8 @@ class VectorService(models.AbstractModel):
     @api.model
     def semantic_search(self, query, k=5):
         emb = self.env['llm.embedding_service'].embed(query)
-        idxs, dists = self.env['llm.vector.index'].search(emb, top_k=k)
-        docs = self.env['llm.document'].browse(idxs)
-        return list(zip(docs, dists))
+        retrieved = self.env['llm.vector.index'].search(emb, top_k=k)  # возвращает [(chunk, dist), ...]
+        return retrieved
+        # idxs, dists = self.env['llm.vector.index'].search(emb, top_k=k)
+        # docs = self.env['llm.document'].browse(idxs)
+        # return list(zip(docs, dists))

@@ -1,0 +1,41 @@
+<odoo>
+    <data>
+        <record id="view_rag_document_tree" model="ir.ui.view">
+            <field name="name">rag.document.tree</field>
+            <field name="model">rag.document</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="filename"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_rag_document_form" model="ir.ui.view">
+            <field name="name">rag.document.form</field>
+            <field name="model">rag.document</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_reindex" type="object" class="btn-primary" string="Reindex"/>
+                        <button name="action_reindex_all" type="object" class="btn-primary" string="Reindex All"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="file" filename="name"/>
+                            <field name="filename"/>
+                            <field name="chunk_ids"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_rag_document" model="ir.actions.act_window">
+            <field name="name">Documents</field>
+            <field name="res_model">rag.document</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

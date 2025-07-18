@@ -6,6 +6,16 @@ class ChatSession(models.Model):
 
     name        = fields.Char("Session", default="New")
     message_ids = fields.One2many("llm.chat.message", "session_id", string="Messages")
+    lang = fields.Selection(
+        selection=[
+            ('ru', 'Russian'),
+            ('uk', 'Ukrainian'),
+            ('en', 'English'),
+        ],
+        string='Language',
+        default='uk',
+        help='Detected language of this chat session'
+    )
 
     def open_chat(self):
         self.ensure_one()

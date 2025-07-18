@@ -1,0 +1,19 @@
+<odoo>
+    <record id="view_rag_chunk_tree" model="ir.ui.view">
+        <field name="name">rag.chunk.tree</field>
+        <field name="model">rag.chunk</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="document_id"/>
+                <field name="position"/>
+                <field name="content"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_rag_chunk" model="ir.actions.act_window">
+        <field name="name">Chunks</field>
+        <field name="res_model">rag.chunk</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

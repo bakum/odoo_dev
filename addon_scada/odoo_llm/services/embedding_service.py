@@ -33,6 +33,7 @@ from .ollama_client import OllamaClient
 class TextPlusEmbeddingService(models.AbstractModel):
     _name = "llm.embedding_service"
     _description = "Text Generation + Embedding Service"
+    _inherit = 'llm.embedding.service.abstract'
 
     # _embedding_model = SentenceTransformer('all-MiniLM-L6-v2')  # Загружается один раз при инициализации
     _embedding_model = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')  # Загружается один раз при инициализации
@@ -53,9 +54,9 @@ class TextPlusEmbeddingService(models.AbstractModel):
         return response
 
     @api.model
-    def generate_text(self, prompt):
+    def generate_text(self, prompt, history=None):
         client = OllamaClient(model=self._get_llm_model(), entrypoint=self._get_entrypoint())
-        res = client.ask(prompt)
+        res = client.ask(prompt, history)
         return res
 
     @api.model
@@ -68,3 +69,9 @@ class TextPlusEmbeddingService(models.AbstractModel):
 
     def deserialize(self, blob):
         return json.loads(blob)
+
+    @api.model
+    def stream_text(self, prompt, history=None):
+        client = OllamaClient(model=self._get_llm_model(), entrypoint=self._get_entrypoint())
+        for chunk in client.stream_text(prompt, history):
+            yield chunk

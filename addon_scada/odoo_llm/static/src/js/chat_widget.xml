@@ -12,6 +12,7 @@
                 </div>
                 <button class="btn btn-outline-primary w-100 mb-2"
                         title="Click to start a new session"
+                        t-att-disabled="state.isLoading"
                         data-bs-toggle="tooltip" t-on-click="onNewSessionClick">
                     <i class="fa fa-plus-circle me-1"></i> New Session
                 </button>
@@ -27,6 +28,7 @@
                                     t-att-class="state.session_id === s.id ? 'active' : ''"
                                     style="min-width: 0;"
                                     title="Click to load session messages"
+                                    t-att-disabled="state.isLoading"
                                     data-bs-toggle="tooltip"
                                 >
                                     <t t-esc="s.name" />
@@ -34,6 +36,7 @@
                                 <button class="btn btn-sm btn-danger" t-att-id="s.id"
                                         title="Delete session"
                                         data-bs-toggle="tooltip"
+                                        t-att-disabled="state.isLoading"
                                         t-on-click="deleteSession">
                                     <i t-att-id="s.id" class="fa fa-trash"></i>
                                 </button>
@@ -60,7 +63,7 @@
                         <t t-foreach="state.messages" t-as="msg" t-key="msg.id">
                             <div class="d-flex flex-column mb-2">
                                 <div t-attf-class="#{msg.author === 'bot' ? 'align-self-start bg-light text-dark' : 'align-self-end bg-primary text-white'} rounded p-2">
-                                    <pre class="m-0" style="white-space: pre-wrap;"><t t-esc="msg.content" /></pre>
+                                    <pre class="m-0" style="white-space: pre-wrap;"><t t-out="msg.content" /></pre>
                                 </div>
                             </div>
                         </t>

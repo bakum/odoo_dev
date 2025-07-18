@@ -1,0 +1,7 @@
+<odoo>
+    <data>
+        <menuitem id="menu_rag_root" name="RAG Search"/>
+        <menuitem id="menu_rag_documents" name="Documents" parent="menu_rag_root" action="action_rag_document" sequence="20"/>
+        <menuitem id="menu_rag_chunks" name="Chunks" parent="menu_rag_root" action="action_rag_chunk" sequence="30"/>
+    </data>
+</odoo>

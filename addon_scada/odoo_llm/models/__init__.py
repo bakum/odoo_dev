@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from . import document
+from . import document_chunk
 from . import vector_index_file
 from . import chat_session
 from . import chat_message

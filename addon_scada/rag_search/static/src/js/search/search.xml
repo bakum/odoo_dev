@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="rag_search.SemanticSearch" owl="1">
+        <div class="container-fluid">
+            <!-- Верхняя прозрачная панель-->
+            <div style="position: sticky; top: 0; z-index: 800; background-color: rgba(255,255,255,0.5); backdrop-filter: saturate(180%) blur(10px); padding: 0.5rem 1rem;">
+              <div class="d-flex align-items-center gap-3">
+                <label class="form-check-label" for="scoreLevel">Score Level</label>
+                <select class="form-select" id="scoreLevel" style="width: auto;" t-model="state.score_level" t-att-disabled="state.isLoading">
+                  <option value="">Select score level...</option>
+                  <option value="0.70">Lowest</option>
+                  <option value="0.75">Low</option>
+                  <option value="0.80">Intermediate</option>
+                  <option value="0.85">High</option>
+                  <option value="0.90">Highest</option>
+                </select>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="toggleOption" t-att-disabled="state.isLoading" t-model="state.summarized"/>
+                  <label class="form-check-label" for="toggleOption">AI comment</label>
+                </div>
+              </div>
+            </div>
+            <!-- Начальный экран -->
+          <t t-transition="fade" t-if="!state.hasSearched">
+            <div class="d-flex flex-column align-items-center"
+                   style="min-height: 100vh; padding-top: 25vh;">
+                <div class="input-group" style="max-width: 600px;">
+                  <input t-model="state.query"
+                         placeholder="Search..."
+                         t-on-keydown="onKeydown"
+                         class="form-control form-control-lg text-center"
+                         t-att-disabled="state.isLoading"
+                         style="font-size: 1.5rem;" />
+                  <button class="btn btn-primary btn-lg"
+                          t-on-click="search"
+                          t-att-disabled="state.isLoading"
+                          style="padding: 0 1.5rem;">
+                    <i class="fa fa-search fa-2x" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <div class="mt-3" style="height: 20px;">
+                  <img t-if="state.isLoading"
+                       src="/rag_search/static/src/img/dots.svg"
+                       alt="Загрузка..."
+                       style="width: 60px; height: 15px;" />
+                </div>
+              </div>
+          </t>
+            <!-- Экран с результатами -->
+          <t t-transition="fade" t-if="state.hasSearched">
+            <div class="row" style="height: 90vh; overflow: hidden;">
+                <div t-att-class="state.pdfPanelVisible ? 'col-md-7' : 'col-12'" style="height: 100%; overflow-y: auto;">
+                    <div class="card shadow d-flex">
+                    <div class="p-4">
+                       <div class="d-flex align-items-center gap-2">
+                            <input t-model="state.query"
+                                   placeholder="Search..."
+                                   t-on-keydown="onKeydown"
+                                   class="form-control"
+                                   t-att-disabled="state.isLoading"
+                                   style="max-width: 600px;" />
+
+                            <button class="btn btn-primary" t-att-disabled="state.isLoading" t-on-click="search">Find</button>
+                           <button t-if="state.results.length > 0" class="btn btn-outline-secondary" t-on-click="togglePdfPanel">
+                                <t t-esc="state.pdfPanelVisible ? 'Hide preview' : 'Show preview'" />
+                            </button>
+
+                            <div class="ms-2 text-muted" t-if="state.tokenCount !== null">
+                                <small><i class="fa fa-commenting-o" aria-hidden="true"></i> Tokens: <t t-esc="state.tokenCount" /></small>
+                            </div>
+                        </div>
+                        <div t-ref="messages" class="card-body overflow-auto">
+                            <div class="d-flex flex-column mb-2">
+                                <t t-if="state.isLoading">
+                                  <div class="d-flex align-items-center mb-2" style="height: 20px;">
+                                    <img src="/rag_search/static/src/img/dots.svg"
+                                         alt="typing…"
+                                         style="width: 60px; height: 15px;" />
+                                  </div>
+                                </t>
+                                <div t-if="state.summary.length > 0" class="align-self-start bg-light text-dark rounded p-2">
+                                    <pre class="m-0" style="white-space: pre-wrap;"><t t-out="this.state.summary" /></pre>
+                                </div>
+                            </div>
+                        </div>
+                        <t t-if="state.results.length > state.showLimit">
+                            <button class="btn btn-outline-secondary mt-3"
+                                    t-on-click="toggleExpand">
+                                <t t-esc="state.expanded ? 'Show less...' : 'Show more...'"/>
+                            </button>
+                        </t>
+                        <div class="mt-4" t-if="state.results.length" style="max-height: 600px; overflow-y: auto;">
+                            <div t-foreach="state.expanded ? state.results : state.results.slice(0, state.showLimit)" t-as="res" t-key="res.id" class="card my-2 p-2">
+                                <strong t-esc="res.document"/>
+                                <div>
+                                    Page: <t t-esc="res.page_number"/>
+            <!--                        / Позиция: <t t-esc="res.position"/>-->
+                                    / Score: <t t-esc="res.score"/>
+                                    / Symbols: <t t-esc="res.char_start"/> - <t t-esc="res.char_end"/>
+                                </div>
+                                <div class="mt-2" t-attf-innerHTML="res.highlighted"/>
+                                <div class="d-flex align-items-center gap-2 mt-2">
+                                    <div t-if="res.page_number">
+                                        <a class="text-primary" target="_blank" t-att-href="'/web/content/rag.document/' + res.doc_id + '/file/' + '?download=false#page=' + res.page_number">
+                                            <i class="fa fa-download" aria-hidden="true"></i> Download
+                                        </a>
+                                    </div>
+                                    <button class="btn btn-sm btn-outline-secondary"
+                                            t-on-click="() => this.selectResult(res)">
+                                       <i class="fa fa-eye" aria-hidden="true"></i> Show
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <t t-if="state.pdfPanelVisible">
+                    <div class="col-md-5 border-start" style="height: 100%; overflow-y: auto;">
+                        <t t-if="state.selectedResult">
+                            <t t-if="state.selectedResult.document.endsWith('.pdf')">
+                                <PDFViewer
+                                    url="'/web/content/rag.document/' + state.selectedResult.doc_id + '/file?download=false'"
+                                    pageNumber="state.selectedResult.page_number"
+                                    charStart="state.selectedResult.char_start"
+                                />
+                            </t>
+                            <t t-elif="state.selectedResult.document.endsWith('.docx')">
+                                <WordViewer
+                                    url="'/web/content/rag.document/' + state.selectedResult.doc_id + '/file?download=false'"
+                                />
+                            </t>
+                            <t t-else="">
+                                <div class="text-muted mt-4 text-center">⚠️ Unsupported document format</div>
+                            </t>
+                        </t>
+                        <t t-else="">
+                            <div class="text-muted mt-4 text-center">Select a fragment to view</div>
+                        </t>
+                    </div>
+                </t>
+            </div>
+          </t>
+        </div>
+    </t>
+</templates>
