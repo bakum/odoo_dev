@@ -6,7 +6,7 @@
             <div style="position: sticky; top: 0; z-index: 800; background-color: rgba(255,255,255,0.5); backdrop-filter: saturate(180%) blur(10px); padding: 0.5rem 1rem;">
               <div class="d-flex align-items-center gap-3">
                 <label class="form-check-label" for="scoreLevel">Score Level</label>
-                <select class="form-select" id="scoreLevel" style="width: auto;" t-model="state.score_level" t-att-disabled="state.isLoading">
+                <select class="form-select" id="scoreLevel" style="width: auto;" t-model="state.score_level" t-att-disabled="llm.state.isLoading">
                   <option value="">Select score level...</option>
                   <option value="0.70">Lowest</option>
                   <option value="0.75">Low</option>
@@ -15,7 +15,7 @@
                   <option value="0.90">Highest</option>
                 </select>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="toggleOption" t-att-disabled="state.isLoading" t-model="state.summarized"/>
+                  <input class="form-check-input" type="checkbox" id="toggleOption" t-att-disabled="llm.state.isLoading" t-model="state.summarized"/>
                   <label class="form-check-label" for="toggleOption">AI comment</label>
                 </div>
               </div>
@@ -26,20 +26,21 @@
                    style="min-height: 100vh; padding-top: 25vh;">
                 <div class="input-group" style="max-width: 600px;">
                   <input t-model="state.query"
+                         t-ref="queryInput"
                          placeholder="Search..."
                          t-on-keydown="onKeydown"
                          class="form-control form-control-lg text-center"
-                         t-att-disabled="state.isLoading"
+                         t-att-disabled="llm.state.isLoading"
                          style="font-size: 1.5rem;" />
                   <button class="btn btn-primary btn-lg"
                           t-on-click="search"
-                          t-att-disabled="state.isLoading"
+                          t-att-disabled="llm.state.isLoading"
                           style="padding: 0 1.5rem;">
                     <i class="fa fa-search fa-2x" aria-hidden="true"></i>
                   </button>
                 </div>
                 <div class="mt-3" style="height: 20px;">
-                  <img t-if="state.isLoading"
+                  <img t-if="llm.state.isLoading"
                        src="/rag_search/static/src/img/dots.svg"
                        alt="Загрузка..."
                        style="width: 60px; height: 15px;" />
@@ -53,14 +54,16 @@
                     <div class="card shadow d-flex">
                     <div class="p-4">
                        <div class="d-flex align-items-center gap-2">
+                           <div class="input-group" style="max-width: 600px;">
                             <input t-model="state.query"
                                    placeholder="Search..."
                                    t-on-keydown="onKeydown"
                                    class="form-control"
-                                   t-att-disabled="state.isLoading"
+                                   t-att-disabled="llm.state.isLoading"
                                    style="max-width: 600px;" />
 
-                            <button class="btn btn-primary" t-att-disabled="state.isLoading" t-on-click="search">Find</button>
+                            <button class="btn btn-primary" t-att-disabled="llm.state.isLoading" t-on-click="search"><i class="fa fa-search" aria-hidden="true"></i></button>
+                           </div>
                            <button t-if="state.results.length > 0" class="btn btn-outline-secondary" t-on-click="togglePdfPanel">
                                 <t t-esc="state.pdfPanelVisible ? 'Hide preview' : 'Show preview'" />
                             </button>
@@ -71,7 +74,7 @@
                         </div>
                         <div t-ref="messages" class="card-body overflow-auto">
                             <div class="d-flex flex-column mb-2">
-                                <t t-if="state.isLoading">
+                                <t t-if="llm.state.isLoading">
                                   <div class="d-flex align-items-center mb-2" style="height: 20px;">
                                     <img src="/rag_search/static/src/img/dots.svg"
                                          alt="typing…"

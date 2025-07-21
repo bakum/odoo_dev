@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+<t t-name="llm_chat.ChatMessage" owl="1">
+  <div t-attf-class="chat-message {{ props.msg.sender }}">
+    <div class="bubble">
+      <t t-esc="props.msg.text"/>
+    </div>
+  </div>
+</t>
+</templates>

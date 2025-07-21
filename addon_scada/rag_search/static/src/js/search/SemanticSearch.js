@@ -1,10 +1,11 @@
 /** @odoo-module **/
 
-import {Component, useState, xml} from "@odoo/owl";
+import {Component, useState, useRef} from "@odoo/owl";
 import {useService} from "@web/core/utils/hooks";
 import {registry} from "@web/core/registry";
 import {PDFViewer} from "../PDFViewer/PDFViewer";
 import {WordViewer} from "../WordViewer/WordViewer";
+import {useAutoFocus, useLLM} from "../hooks/hooks";
 
 export class SemanticSearch extends Component {
     static components = {PDFViewer, WordViewer};
@@ -15,10 +16,10 @@ export class SemanticSearch extends Component {
         return text.replace(pattern, (match) => `<mark>${match}</mark>`);
     }
 
-    onKeydown(ev) {
+    async onKeydown(ev) {
         if (ev.key === "Enter" && !ev.shiftKey) {
             ev.preventDefault();
-            this.search();
+            await this.search();
         }
     }
 
@@ -38,6 +39,9 @@ export class SemanticSearch extends Component {
             selectedResult: null, // ← для правой панели
             hasSearched: false,
         });
+        this.queryInputRef = useRef('queryInput'); // Ссылка на input для автофокуса
+        useAutoFocus(this.queryInputRef);
+        this.llm = useLLM('/rag/search');
     }
 
     togglePdfPanel() {
@@ -62,12 +66,13 @@ export class SemanticSearch extends Component {
         this.state.expanded = false; // Сброс состояния развёрнутости
 
         try {
-            const raw = await this.rpc("/rag/search", {
-                query: this.state.query,
-                top_k: 10,
-                threshold: parseFloat(this.state.score_level) || 0.80,
-                summarized: this.state.summarized,
-            });
+            // const raw = await this.rpc("/rag/search", {
+            //     query: this.state.query,
+            //     top_k: 10,
+            //     threshold: parseFloat(this.state.score_level) || 0.80,
+            //     summarized: this.state.summarized,
+            // });
+            const raw = await this.llm.search(this.state.query, parseFloat(this.state.score_level) || 0.80, this.state.summarized);
             // Проверка на ошибку
             if (raw.error) {
                 console.error("Search error:", raw.error);

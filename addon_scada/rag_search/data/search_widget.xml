@@ -6,10 +6,21 @@
             <field name="tag">rag_search.search_widget</field>
         </record>
 
+        <record id="rag_search_bot" model="ir.actions.client">
+            <field name="name">Chat-bot</field>
+            <field name="tag">rag_search.chat_widget</field>
+        </record>
+
         <menuitem id="menu_llm_chats_main"
             name="Search"
             parent="menu_rag_root"
             action="rag_search_web"
             sequence="10"/>
+
+<!--        <menuitem id="menu_rag_search_chats_main"-->
+<!--            name="Chat-bot"-->
+<!--            parent="menu_rag_root"-->
+<!--            action="rag_search_bot"-->
+<!--            sequence="15"/>-->
     </data>
 </odoo>

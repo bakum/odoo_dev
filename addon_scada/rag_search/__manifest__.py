@@ -16,12 +16,18 @@
     'assets': {
         'web.assets_backend': [
             # 'rag_search/static/src/js/PDFViewer/utils/pdf_loader.js'
+            'rag_search/static/src/js/chat/components/**/*.js',
+            'rag_search/static/src/js/chat/components/**/*.xml',
+            'rag_search/static/src/js/hooks/**/*.js',
             'rag_search/static/src/js/WordViewer/WordViewer.js',
             'rag_search/static/src/js/WordViewer/WordViewer.xml',
             'rag_search/static/src/js/PDFViewer/PDFViewer.js',
             'rag_search/static/src/js/PDFViewer/PDFViewer.xml',
             'rag_search/static/src/js/search/SemanticSearch.js',
             'rag_search/static/src/js/search/search.xml',
+            'rag_search/static/src/js/chat/ChatInterface.js',
+            'rag_search/static/src/js/chat/ChatInterface.xml',
+            'rag_search/static/src/js/chat/ChatInterface.css'
         ]
     },
     "external_dependencies": {
