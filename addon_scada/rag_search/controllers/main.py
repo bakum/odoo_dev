@@ -70,7 +70,7 @@ class RAGSearchController(http.Controller):
                 ('Cache-Control', 'no-cache'),
                 ('X-Accel-Buffering', 'no'),  # Для Nginx
             ]
-            return Response(generate(), headers=headers, status=200)
+            return Response(generate(), headers=headers, status=200, direct_passthrough=True)
         except Exception as e:
             _logger.exception("Error in stream_chat(): %s", e)
             return Response(f"data: [Stream error: {e}]\n\n", status=500)
