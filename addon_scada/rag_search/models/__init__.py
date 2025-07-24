@@ -1,1 +1,1 @@
-from . import rag_document, rag_chunk, rag_config
+from . import rag_document, rag_chunk, rag_config, rag_entity, rag_relation

@@ -8,6 +8,7 @@ import docx  # Для DOCX
 
 from ..services.chunking_service import ChunkingService
 from ..services.index_service import RagIndexService  # импорт нового сервиса
+from ..services.triple_extractor_service import TripleExtractorService
 
 
 class RagDocument(models.Model):
@@ -25,6 +26,22 @@ class RagDocument(models.Model):
     chunk_ids = fields.One2many("rag.chunk", "document_id", string="Chunks")
     language = fields.Char("Language")
     preview = fields.Text("Preview", compute="_compute_preview")
+
+    @api.model
+    def _extract_knowledge_graph(self):
+        self.ensure_one()
+        service = TripleExtractorService()
+        triples = service.extract_triples(self.chunk_ids)
+        for subj_name, relation, obj_name in triples:
+            subj = self.env['rag.entity']._get_or_create(subj_name.strip())
+            obj = self.env['rag.entity']._get_or_create(obj_name.strip())
+
+            self.env['rag.relation'].create({
+                'subject_id': subj.id,
+                'object_id': obj.id,
+                'relation': relation.strip(),
+                'document_id': self.id,
+            })
 
     @api.onchange('file', 'name')
     def _compute_filename(self):
@@ -108,3 +125,7 @@ class RagDocument(models.Model):
         index_service = RagIndexService(self.env)
         index_service.compute_embeddings()
         index_service.build_index()
+
+    def action_extract_knowledge(self):
+        for doc in self:
+            doc._extract_knowledge_graph()

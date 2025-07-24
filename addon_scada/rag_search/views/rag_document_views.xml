@@ -18,6 +18,7 @@
                 <form>
                     <header>
                         <button name="action_reindex" type="object" class="btn-primary" string="Reindex"/>
+                        <button name="action_extract_knowledge" type="object" class="btn-primary" string="Extract Knowledge"/>
                         <button name="action_reindex_all" type="object" class="btn-primary" string="Reindex All"/>
                     </header>
                     <sheet>
