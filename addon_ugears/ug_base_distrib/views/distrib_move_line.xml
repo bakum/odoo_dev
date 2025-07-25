@@ -16,6 +16,9 @@
                             <field name="operation"/>
                             <field name="product_id" options="{'no_create': True, 'no_open': True}"/>
                             <field name="product_uom_qty"/>
+                            <field name="sell_in"/>
+                            <field name="sell_in_curr"/>
+                            <field name="sell_in_acc"/>
                         </group>
                         <group id="header_right_group">
                             <field name="distrib_id"/>
