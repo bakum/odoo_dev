@@ -20,9 +20,9 @@ class ReportDistribSales(models.Model):
     product_tmpl_id = fields.Many2one('product.template', readonly=True, groups="ug_base_distrib.group_distrib_manager")
     product_category_id = fields.Many2one('product.category', readonly=True, string='Category')
     beginning_stock = fields.Float(string='Beginning stock, pcs', readonly=True, group_operator='sum')
-    sell_in = fields.Float(string='UGmodels Sell-In. pcs', readonly=True, group_operator='sum')
-    sell_in_curr = fields.Float(string='UGmodels Sell-In', readonly=True, group_operator='sum')
-    sell_in_acc = fields.Float(string='UGmodels Sell-In, (acc)', readonly=True, group_operator='sum',
+    sell_in = fields.Float(string='UGmodels Sell-In. pcs', readonly=True, group_operator='max')
+    sell_in_curr = fields.Float(string='UGmodels Sell-In', readonly=True, group_operator='max')
+    sell_in_acc = fields.Float(string='UGmodels Sell-In, (acc)', readonly=True, group_operator='max',
                                groups="ug_base_distrib.group_distrib_manager")
 
     balance = fields.Float(string='pcs', readonly=True)
@@ -96,15 +96,15 @@ class ReportDistribSales(models.Model):
                     ELSE NULL
                 END AS BEGINNING_STOCK,
                 CASE
-                    WHEN C.ROW_NUM = 1 THEN SELL_IN
+                    WHEN C.ID = DML.CHANNEL_ID THEN SELL_IN
                     ELSE NULL
                 END AS SELL_IN,
                 CASE
-                    WHEN C.ROW_NUM = 1 THEN SELL_IN_CURR
+                    WHEN C.ID = DML.CHANNEL_ID THEN SELL_IN_CURR
                     ELSE NULL
                 END AS SELL_IN_CURR,
                 CASE
-                    WHEN C.ROW_NUM = 1 THEN SELL_IN_ACC
+                    WHEN C.ID = DML.CHANNEL_ID THEN SELL_IN_ACC
                     ELSE NULL
                 END AS SELL_IN_ACC,
                 OPERATION,
