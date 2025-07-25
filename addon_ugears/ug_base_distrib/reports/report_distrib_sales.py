@@ -20,9 +20,9 @@ class ReportDistribSales(models.Model):
     product_tmpl_id = fields.Many2one('product.template', readonly=True, groups="ug_base_distrib.group_distrib_manager")
     product_category_id = fields.Many2one('product.category', readonly=True, string='Category')
     beginning_stock = fields.Float(string='Beginning stock, pcs', readonly=True, group_operator='sum')
-    sell_in = fields.Float(string='UGmodels Sell-In. pcs', readonly=True, group_operator='max')
-    sell_in_curr = fields.Float(string='UGmodels Sell-In', readonly=True, group_operator='max')
-    sell_in_acc = fields.Float(string='UGmodels Sell-In, (acc)', readonly=True, group_operator='max',
+    sell_in = fields.Float(string='UGmodels Sell-In. pcs', readonly=True, group_operator='sum')
+    sell_in_curr = fields.Float(string='UGmodels Sell-In', readonly=True, group_operator='sum')
+    sell_in_acc = fields.Float(string='UGmodels Sell-In, (acc)', readonly=True, group_operator='sum',
                                groups="ug_base_distrib.group_distrib_manager")
 
     balance = fields.Float(string='pcs', readonly=True)
