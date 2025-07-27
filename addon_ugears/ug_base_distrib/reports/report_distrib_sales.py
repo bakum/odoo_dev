@@ -40,147 +40,168 @@ class ReportDistribSales(models.Model):
         tools.drop_view_if_exists(self._cr, 'report_distrib_sales')
         query = """
         CREATE or REPLACE VIEW report_distrib_sales AS (
-            WITH
-                CHANNELS (ID, ROW_NUM) AS (
-                    SELECT
-                        DSC.ID,
-                        ROW_NUMBER() OVER (
-                            ORDER BY
-                                DSC.ID
-                        ) AS ROW_NUM
-                    FROM
-                        DISTRIB_SALES_CHANNELS DSC
-                ),
-                MOVE_OUT (
-                    ID,
+        WITH
+            -- Пронумерованные каналы
+            CHANNELS (ID, ROW_NUM) AS (
+                SELECT
+                    DSC.ID,
+                    ROW_NUMBER() OVER (
+                        ORDER BY
+                            DSC.ID
+                    ) AS ROW_NUM
+                FROM
+                    DISTRIB_SALES_CHANNELS DSC
+            ),
+            -- Основной набор данных
+            MOVE_OUT AS (
+                SELECT
+                    CASE
+                        WHEN C.ROW_NUM = 1 THEN DML.ID
+                        ELSE C.ROW_NUM
+                    END AS ID,
                     DISTRIB_ID,
                     CURRENCY_ID,
-                    CHANNEL_ID,
+                    C.ID AS CHANNEL_ID,
                     PRODUCT_ID,
-                    PRODUCT_TMPL_ID,
-                    BARCODE,
-                    DEFAULT_CODE,
+                    PP.PRODUCT_TMPL_ID,
+                    DML.BARCODE,
+                    DML.DEFAULT_CODE,
                     FULL_NAME,
                     PRODUCT_CATEGORY_ID,
                     STATE,
-                    BEGINNING_STOCK,
-                    SELL_IN,
-                    SELL_IN_CURR,
-                    SELL_IN_ACC,
+                    CASE
+                        WHEN C.ROW_NUM = 1 THEN BEGINNING_STOCK
+                        ELSE NULL
+                    END AS BEGINNING_STOCK,
+                    CASE
+                        WHEN C.ROW_NUM = 1
+                        AND OPERATION = 'inc' THEN BALANCE
+                        WHEN C.ROW_NUM = 1
+                        AND OPERATION = 'out' THEN 0
+                        ELSE NULL
+                    END AS SELL_IN,
+                    CASE
+                        WHEN C.ROW_NUM = 1
+                        AND OPERATION = 'inc' THEN PRICE_TOTAL
+                        WHEN C.ROW_NUM = 1
+                        AND OPERATION = 'out' THEN 0
+                        ELSE NULL
+                    END AS SELL_IN_CURR,
+                    CASE
+                        WHEN C.ROW_NUM = 1
+                        AND OPERATION = 'inc' THEN PRICE_TOTAL * RATE
+                        WHEN C.ROW_NUM = 1
+                        AND OPERATION = 'out' THEN 0
+                        ELSE NULL
+                    END AS SELL_IN_ACC,
                     OPERATION,
-                    PRICE_TOTAL,
+                    CASE
+                        WHEN C.ID = DML.CHANNEL_ID
+                        AND OPERATION = 'out' THEN PRICE_TOTAL
+                        WHEN OPERATION = 'inc' THEN 0
+                        ELSE NULL
+                    END AS PRICE_TOTAL,
+                    DATE_TRUNC('MONTH', DATE)::DATE AS DATE,
+                    CASE
+                        WHEN C.ID = DML.CHANNEL_ID
+                        AND OPERATION = 'out' THEN BALANCE
+                        WHEN OPERATION = 'inc' THEN 0
+                        ELSE NULL
+                    END AS BALANCE,
+                    CASE
+                        WHEN C.ID = DML.CHANNEL_ID
+                        AND OPERATION = 'out' THEN PRICE_TOTAL * RATE
+                        WHEN OPERATION = 'inc' THEN 0
+                        ELSE NULL
+                    END AS PRICE_TOTAL_ACC
+                FROM
+                    DISTRIB_DISTRIBUTORS_MOVE_LINE DML
+                    LEFT JOIN PRODUCT_PRODUCT PP ON PP.ID = DML.PRODUCT_ID,
+                    CHANNELS C
+                WHERE
+                    STATE IN ('done')
+                    AND OPERATION IN ('out', 'inc')
+                    AND NOT IS_INVENTORY
+                    AND DML.DISPLAY_TYPE = 'product'
+            ),
+            -- Только по одной строке с BEGINNING_STOCK на группу
+            BEGINNING_STOCKS AS (
+                SELECT
+                    ID,
+                    DISTRIB_ID,
+                    PRODUCT_ID,
                     DATE,
-                    BALANCE,
-                    PRICE_TOTAL_ACC
-                ) AS (
-                    SELECT
-                        DML.ID,
-                        DISTRIB_ID,
-                        CURRENCY_ID,
-                        C.ID,
-                        PRODUCT_ID,
-                        PP.PRODUCT_TMPL_ID,
-                        DML.BARCODE,
-                        DML.DEFAULT_CODE,
-                        FULL_NAME,
-                        PRODUCT_CATEGORY_ID,
-                        STATE,
-                        CASE
-                            WHEN C.ROW_NUM = 1 THEN BEGINNING_STOCK
-                            ELSE NULL
-                        END AS BEGINNING_STOCK,
-                        CASE
-                            WHEN C.ROW_NUM = 1 THEN SELL_IN
-                            ELSE NULL
-                        END AS SELL_IN,
-                        CASE
-                            WHEN C.ROW_NUM = 1 THEN SELL_IN_CURR
-                            ELSE NULL
-                        END AS SELL_IN_CURR,
-                        CASE
-                            WHEN C.ROW_NUM = 1 THEN SELL_IN_ACC
-                            ELSE NULL
-                        END AS SELL_IN_ACC,
-                        OPERATION,
-                        CASE
-                            WHEN C.ID = DML.CHANNEL_ID THEN PRICE_TOTAL
-                            ELSE NULL
-                        END AS PRICE_TOTAL,
-                        DATE_TRUNC('MONTH', DATE)::DATE,
-                        CASE
-                            WHEN C.ID = DML.CHANNEL_ID THEN BALANCE
-                            ELSE NULL
-                        END AS BALANCE,
-                        CASE
-                            WHEN C.ID = DML.CHANNEL_ID THEN PRICE_TOTAL * RATE
-                            ELSE NULL
-                        END AS PRICE_TOTAL_ACC
-                    FROM
-                        DISTRIB_DISTRIBUTORS_MOVE_LINE DML
-                        LEFT JOIN PRODUCT_PRODUCT PP ON PP.ID = DML.PRODUCT_ID,
-                        CHANNELS C
-                    WHERE
-                        STATE IN ('done')
-                        AND OPERATION IN ('out')
-                        AND NOT IS_INVENTORY
-                        AND DML.DISPLAY_TYPE = 'product'
-                ),
-                MOVE_OUT_AGG AS (
-                    SELECT
-                        ID,
-                        DATE,
-                        DISTRIB_ID,
-                        CURRENCY_ID,
-                        CHANNEL_ID,
-                        PRODUCT_ID,
-                        PRODUCT_TMPL_ID,
-                        BARCODE,
-                        DEFAULT_CODE,
-                        FULL_NAME,
-                        PRODUCT_CATEGORY_ID,
-                        CASE
-                            WHEN BALANCE IS NOT NULL THEN SELL_IN
-                            ELSE NULL
-                        END AS SELL_IN,
-                        CASE
-                            WHEN BALANCE IS NOT NULL THEN SELL_IN_CURR
-                            ELSE NULL
-                        END AS SELL_IN_CURR,
-                        CASE
-                            WHEN BALANCE IS NOT NULL THEN SELL_IN_ACC
-                            ELSE NULL
-                        END AS SELL_IN_ACC,
-                        PRICE_TOTAL,
-                        BALANCE BALANCE,
-                        PRICE_TOTAL_ACC,
-                        CASE
-                            WHEN BALANCE IS NOT NULL THEN BEGINNING_STOCK
-                            ELSE NULL
-                        END AS BEGINNING_STOCK
-                    FROM
-                        MOVE_OUT
-                )
-            SELECT
-                ID,
-                DATE,
-                DISTRIB_ID,
-                CURRENCY_ID,
-                CHANNEL_ID,
-                PRODUCT_ID,
-                PRODUCT_TMPL_ID,
-                BARCODE,
-                DEFAULT_CODE,
-                FULL_NAME,
-                PRODUCT_CATEGORY_ID,
-                SELL_IN,
-                SELL_IN_CURR,
-                SELL_IN_ACC,
-                PRICE_TOTAL,
-                - BALANCE BALANCE,
-                PRICE_TOTAL_ACC,
-                BEGINNING_STOCK
-            FROM
-                MOVE_OUT_AGG
+                    BEGINNING_STOCK
+                FROM
+                    (
+                        SELECT
+                            *,
+                            ROW_NUMBER() OVER (
+                                PARTITION BY
+                                    DISTRIB_ID,
+                                    PRODUCT_ID,
+                                    DATE
+                                ORDER BY
+                                    ID
+                            ) AS RN
+                        FROM
+                            MOVE_OUT
+                        WHERE
+                            BEGINNING_STOCK IS NOT NULL
+                    ) T
+                WHERE
+                    RN = 1
+            ),
+            -- Финальная агрегация
+            MOVE_OUT_AGG AS (
+                SELECT
+                    M.ID,
+                    M.DATE,
+                    M.DISTRIB_ID,
+                    M.CURRENCY_ID,
+                    M.CHANNEL_ID,
+                    M.PRODUCT_ID,
+                    M.PRODUCT_TMPL_ID,
+                    M.BARCODE,
+                    M.DEFAULT_CODE,
+                    M.FULL_NAME,
+                    M.PRODUCT_CATEGORY_ID,
+                    M.SELL_IN,
+                    M.SELL_IN_CURR,
+                    M.SELL_IN_ACC,
+                    M.PRICE_TOTAL,
+                    - M.BALANCE AS BALANCE,
+                    M.PRICE_TOTAL_ACC,
+                    BS.BEGINNING_STOCK
+                FROM
+                    MOVE_OUT M
+                    LEFT JOIN BEGINNING_STOCKS BS ON BS.DISTRIB_ID = M.DISTRIB_ID
+                    AND BS.PRODUCT_ID = M.PRODUCT_ID
+                    AND BS.DATE = M.DATE
+                    AND BS.ID = M.ID
+            )
+            -- Вывод
+        SELECT
+            ID,
+            DATE,
+            DISTRIB_ID,
+            CURRENCY_ID,
+            CHANNEL_ID,
+            PRODUCT_ID,
+            PRODUCT_TMPL_ID,
+            BARCODE,
+            DEFAULT_CODE,
+            FULL_NAME,
+            PRODUCT_CATEGORY_ID,
+            SELL_IN,
+            SELL_IN_CURR,
+            SELL_IN_ACC,
+            PRICE_TOTAL,
+            BALANCE,
+            PRICE_TOTAL_ACC,
+            BEGINNING_STOCK
+        FROM
+            MOVE_OUT_AGG
     );
     """
         report_period = self.env['ir.config_parameter'].sudo().get_param('distrib.report_distrib_quantity_period',

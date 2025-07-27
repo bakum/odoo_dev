@@ -19,6 +19,7 @@
                             <field name="sell_in"/>
                             <field name="sell_in_curr"/>
                             <field name="sell_in_acc"/>
+                            <field name="beginning_stock"/>
                         </group>
                         <group id="header_right_group">
                             <field name="distrib_id"/>
