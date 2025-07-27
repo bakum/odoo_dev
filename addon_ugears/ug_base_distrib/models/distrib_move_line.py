@@ -6,6 +6,8 @@ from odoo.exceptions import ValidationError
 import threading
 import logging
 
+from odoo.tools import create_index
+
 _logger = logging.getLogger(__name__)
 
 
@@ -189,6 +191,14 @@ class DistributorMoveLines(models.Model):
     barcode = fields.Char(string='EAN', related='product_id.barcode', depends=['product_id'], store=True,
                           precompute=True)
     default_code = fields.Char(related='product_id.default_code', depends=['product_id'], store=True, precompute=True)
+
+    def init(self):
+        create_index(self._cr, 'idx_dml_distrib_product_date ', 'distrib_distributors_move_line',
+                     ["distrib_id", "product_id", "date"])
+        create_index(self._cr, 'idx_dml_product_id  ', 'distrib_distributors_move_line',
+                     ["product_id"])
+        create_index(self._cr, 'idx_dml_channel_id   ', 'distrib_distributors_move_line',
+                     ["channel_id"])
 
     def _recalculate_full_name_for_all(self):
         new_cr = self.pool.cursor()
