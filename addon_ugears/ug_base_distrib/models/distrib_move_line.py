@@ -193,12 +193,14 @@ class DistributorMoveLines(models.Model):
     default_code = fields.Char(related='product_id.default_code', depends=['product_id'], store=True, precompute=True)
 
     def init(self):
-        create_index(self._cr, 'idx_dml_distrib_product_date ', 'distrib_distributors_move_line',
-                     ["distrib_id", "product_id", "date"])
+        create_index(self._cr, 'idx_dml_distrib_product_date_id ', 'distrib_distributors_move_line',
+                     ["distrib_id", "product_id", "date", "id"])
         create_index(self._cr, 'idx_dml_product_id  ', 'distrib_distributors_move_line',
                      ["product_id"])
         create_index(self._cr, 'idx_dml_channel_id   ', 'distrib_distributors_move_line',
                      ["channel_id"])
+        create_index(self._cr, 'idx_dml_filter_fields   ', 'distrib_distributors_move_line',
+                     ["state", "operation", "is_inventory", "display_type"])
 
     def _recalculate_full_name_for_all(self):
         new_cr = self.pool.cursor()
