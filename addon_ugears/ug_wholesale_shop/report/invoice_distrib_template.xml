@@ -8,9 +8,11 @@
             <t t-set="order" t-value="doc.get_source_orders()"/>
             <t t-if="order">
                 <t t-set="palettes_list" t-value="order._get_packing_list()"/>
+                <t t-set="region_id" t-value="order.partner_id.get_distributor_region()"/>
             </t>
             <t t-else="">
                 <t t-set="palettes_list" t-value="False"/>
+                <t t-set="region_id" t-value="False"/>
             </t>
             <style>
                 @font-face {
@@ -331,23 +333,26 @@
                         </span>
                     </td>
                 </tr>
-                <tr>
-                    <td colspan="5" class="text-end" style="border-left: none; border-bottom: none;">
-                        <span>"Reverse charge applies in accordance with Article 138 of DIRECTIVE 2006/112/EC”</span>
-                    </td>
-                    <td>
-                        <span>VAT 0%</span>
-                    </td>
-                    <td class="text-end">
-                        <span>0.00</span>
-                    </td>
-                </tr>
+                <t t-if="region_id and region_id.id">
+                    <tr t-if="region_id.name == 'EMEA'">
+                        <td colspan="5" class="text-end" style="border-left: none; border-bottom: none;">
+                            <span>"Reverse charge applies in accordance with Article 138 of DIRECTIVE 2006/112/EC”</span>
+                        </td>
+                        <td>
+                            <span>VAT 0%</span>
+                        </td>
+                        <td class="text-end">
+                            <span>0.00</span>
+                        </td>
+                    </tr>
+                </t>
                 <tr>
                     <td colspan="5" class="text-end" style="border-left: none; border-bottom: none; border-top: none;">
                         <span>Gross weight of Shipment (kg):</span>
                     </td>
                     <td t-if="order" colspan="2" class="text-end">
-                        <span t-raw="'%s' % (round(order.brutto_total/1000,2))"/>
+<!--                        <span t-raw="'%s' % (round(order.brutto_total/1000,2))"/>-->
+                        <span />
                     </td>
                     <td t-else="" colspan="2" class="text-end"><span> </span></td>
                 </tr>
@@ -356,7 +361,8 @@
                         <span>Net weight of Shipment (kg):</span>
                     </td>
                     <td t-if="order" colspan="2" class="text-end">
-                        <span t-raw="round(order.netto_total/1000,2)"/>
+<!--                        <span t-raw="round(order.netto_total/1000,2)"/>-->
+                        <span />
                     </td>
                     <td t-else="" colspan="2" class="text-end"><span> </span></td>
                 </tr>
@@ -365,7 +371,8 @@
                         <span>Number of pallets:</span>
                     </td>
                     <td t-if="palettes_list and palettes_list['palettes']" colspan="2" class="text-end">
-                        <span t-raw="len(palettes_list['palettes'])"/></td>
+<!--                        <span t-raw="len(palettes_list['palettes'])"/></td>-->
+                        <span/></td>
                     <td colspan="2" t-else="" class="text-end"><span> </span></td>
                 </tr>
             </table>
