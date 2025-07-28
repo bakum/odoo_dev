@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="rag_search.GraphComponent" owl="1">
+        <div t-ref="graphContainer" style="height: 600px; width: 100%; border: 1px solid #ccc;"> </div>
+    </t>
+</templates>
