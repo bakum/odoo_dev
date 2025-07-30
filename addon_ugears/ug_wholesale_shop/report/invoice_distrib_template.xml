@@ -397,7 +397,7 @@
                     <div class="text-center">
                         <div class="text-muted">
                             Page: <span class="page"/> / <span class="topage" /><br/>
-                            <span t-field="doc.name if not factura else number_facture"/>
+                            <span t-esc="doc.name if not factura else number_facture"/>
                         </div>
                     </div>
                 </div>
