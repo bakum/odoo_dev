@@ -51,7 +51,7 @@ class AccountMove(models.Model):
     @api.onchange('number_facture')
     def onchange_number_facture(self):
         for vals in self:
-            vals.payment_reference = vals['number_facture']
+            vals.payment_reference = vals['number_facture'] if vals['number_facture'] else vals._get_invoice_computed_reference()
 
     def convert_invoice_to_proforma(self):
         """
