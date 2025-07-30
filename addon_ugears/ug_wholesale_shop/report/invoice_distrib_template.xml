@@ -52,7 +52,7 @@
                         <strong><span style="font-size: 1.2em;" t-esc="'Invoice' if factura else 'Proforma Invoice'"/></strong>
                     </td>
                     <td width="47%" align="left" style="vertical-align: middle;" class="text-muted">
-                        <span style="font-size: 1.2em;" t-esc="doc.name if not factura else doc.number_facture"/>
+                        <span style="font-size: 1.2em;" t-esc="doc.convert_invoice_to_proforma(doc.name) if not factura else doc.number_facture"/>
                     </td>
                      <td width="26%">
                      </td>
@@ -231,7 +231,7 @@
                         <span>Invoice No.:</span>
                     </td>
                     <td align="left" style="vertical-align: top;">
-                        <span t-esc="doc.name"/>
+                        <span t-esc="doc.convert_invoice_to_proforma(doc.name)"/>
                     </td>
                     <td align="left" style="vertical-align: top;">
                         <span>According to PO No.</span>
@@ -397,7 +397,7 @@
                     <div class="text-center">
                         <div class="text-muted">
                             Page: <span class="page"/> / <span class="topage" /><br/>
-                            <span t-esc="doc.name if not factura else doc.number_facture"/>
+                            <span t-esc="doc.convert_invoice_to_proforma(doc.name) if not factura else doc.number_facture"/>
                         </div>
                     </div>
                 </div>

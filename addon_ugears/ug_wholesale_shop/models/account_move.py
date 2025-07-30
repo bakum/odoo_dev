@@ -48,6 +48,14 @@ class AccountMove(models.Model):
     number_facture = fields.Char('Invoice number', required=False, readonly=False, copy=False,
                                  tracking=True)
 
+    def convert_invoice_to_proforma(self, number):
+        """
+        Преобразует номер из INV/... в PI/...
+        """
+        if number.startswith("INV/"):
+            return number.replace("INV/", "PI/", 1)
+        return number
+
     @api.depends('commercial_partner_id', 'company_id')
     def _compute_bank_partner_id(self):
         for move in self:
