@@ -13,6 +13,10 @@
                         <field name="bank_customer_id" invisible="1"/>
                         <field name="customer_bank_id" context="{'default_partner_id': bank_customer_id, 'default_currency_id': currency_id}" domain="['&amp;',('partner_id', '=', bank_customer_id),('currency_id', '=', currency_id)]" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                     </xpath>
+                    <xpath expr="//field[@name='to_check']" position="after">
+                        <field name="date_facture"/>
+                        <field name="number_facture"/>
+                    </xpath>
                 </data>
             </field>
         </record>

@@ -6,7 +6,8 @@ class AccountMove(models.Model):
     _inherit = ['account.move', 'utm.mixin']
 
     def _compute_bank_beneficiary_id(self):
-        default_beneficiary = self.env['ir.config_parameter'].sudo().get_param('distrib.default_beneficiary', default=False)
+        default_beneficiary = self.env['ir.config_parameter'].sudo().get_param('distrib.default_beneficiary',
+                                                                               default=False)
         return int(default_beneficiary) if default_beneficiary else self.company_id.partner_id.id
 
     bank_customer_id = fields.Many2one(
@@ -38,6 +39,14 @@ class AccountMove(models.Model):
              "A Company or bank account if this is a Customer Invoice",
         tracking=True,
     )
+
+    date_facture = fields.Date(
+        string="Invoice date",
+        required=False, readonly=False, copy=False,
+        tracking=True)
+
+    number_facture = fields.Char('Invoice number', required=False, readonly=False, copy=False,
+                                 tracking=True)
 
     @api.depends('commercial_partner_id', 'company_id')
     def _compute_bank_partner_id(self):

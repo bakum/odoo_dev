@@ -49,10 +49,10 @@
                    cellpadding="2" style="border-collapse: collapse;" id="o_main_table">
                  <tr>
                      <td width="17%" align="left" style="vertical-align: middle;">
-                        <strong><span style="font-size: 1.2em;">Invoice</span></strong>
+                        <strong><span style="font-size: 1.2em;" t-esc="'Invoice' if factura else 'Proforma Invoice'"/></strong>
                     </td>
                     <td width="47%" align="left" style="vertical-align: middle;" class="text-muted">
-                        <span style="font-size: 1.2em;" t-field="doc.name"/>
+                        <span style="font-size: 1.2em;" t-esc="doc.name if not factura else doc.number_facture"/>
                     </td>
                      <td width="26%">
                      </td>
@@ -204,7 +204,12 @@
                         <span>Dated:</span>
                     </td>
                     <td width="10%" align="left" style="vertical-align: top;">
-                        <span t-field="doc.invoice_date" t-options="{'format': 'dd/MM/YYYY'}"/>
+                        <t t-if="not factura">
+                            <span t-field="doc.invoice_date" t-options="{'format': 'dd/MM/YYYY'}"/>
+                        </t>
+                        <t t-else="">
+                            <span t-field="doc.date_facture" t-options="{'format': 'dd/MM/YYYY'}"/>
+                        </t>
                     </td>
                 </tr>
                 <tr>
@@ -404,7 +409,17 @@
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
                 <t t-call="ug_wholesale_shop.report_distrib_invoice_document" t-lang="doc.partner_id.lang">
-<!--                     <t t-set="palettes_list" t-value="doc._get_packing_list()"/>-->
+                     <t t-set="factura" t-value="False"/>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_distrib_factura">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="ug_wholesale_shop.report_distrib_invoice_document" t-lang="doc.partner_id.lang">
+                     <t t-set="factura" t-value="True"/>
                 </t>
             </t>
         </t>
