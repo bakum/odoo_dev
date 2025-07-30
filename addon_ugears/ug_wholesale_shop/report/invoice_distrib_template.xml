@@ -231,7 +231,7 @@
                         <span>Invoice No.:</span>
                     </td>
                     <td align="left" style="vertical-align: top;">
-                        <span t-field="doc.name"/>
+                        <span t-esc="doc.name if not factura else doc.number_facture"/>
                     </td>
                     <td align="left" style="vertical-align: top;">
                         <span>According to PO No.</span>
@@ -397,7 +397,7 @@
                     <div class="text-center">
                         <div class="text-muted">
                             Page: <span class="page"/> / <span class="topage" /><br/>
-                            <span t-esc="doc.name if not factura else number_facture"/>
+                            <span t-esc="doc.name if not factura else doc.number_facture"/>
                         </div>
                     </div>
                 </div>
