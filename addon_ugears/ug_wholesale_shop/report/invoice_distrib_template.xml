@@ -231,7 +231,7 @@
                         <span>Invoice No.:</span>
                     </td>
                     <td align="left" style="vertical-align: top;">
-                        <span t-esc="doc.name if not factura else doc.number_facture"/>
+                        <span t-esc="doc.name"/>
                     </td>
                     <td align="left" style="vertical-align: top;">
                         <span>According to PO No.</span>
