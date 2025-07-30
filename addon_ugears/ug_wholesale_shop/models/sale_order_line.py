@@ -21,6 +21,18 @@ class SaleOrder(models.Model):
 
     def _prepare_incoming_line(self, **optional_values):
         self.ensure_one()
+        price_unit = self.price_unit
+        distributor = self.order_id.partner_id.distrib_ids[:1]
+        if distributor:
+            distributor_currency = distributor.currency_id
+            if self.currency_id and distributor_currency and self.currency_id != distributor_currency:
+                conversion_date = self.order_id.date_order or fields.Date.today()
+                price_unit = self.currency_id._convert(
+                    self.price_unit,
+                    distributor_currency,
+                    self.company_id or self.env.company,
+                    conversion_date
+                )
         res = {
             'display_type': self.display_type or 'product',
             'sequence': self.sequence,
@@ -28,7 +40,7 @@ class SaleOrder(models.Model):
             'product_id': self.product_id.id,
             'product_uom_id': self.product_uom.id,
             'product_uom_qty': self.qty_to_distrib_deliver,
-            'price_unit': self.price_unit,
+            'price_unit': price_unit,
             'discount': self.discount,
             'sale_line_ids': [Command.link(self.id)],
         }
