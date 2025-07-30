@@ -48,6 +48,11 @@ class AccountMove(models.Model):
     number_facture = fields.Char('Invoice number', required=False, readonly=False, copy=False,
                                  tracking=True)
 
+    @api.onchange('number_facture')
+    def onchange_number_facture(self):
+        for vals in self:
+            vals.payment_reference = vals['number_facture']
+
     def convert_invoice_to_proforma(self):
         """
         Преобразует номер из INV/... в PI/...
