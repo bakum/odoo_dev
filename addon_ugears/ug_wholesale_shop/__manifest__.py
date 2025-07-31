@@ -36,6 +36,7 @@
         'report/invoice_distrib_template.xml',
         'report/invoice_distrib_action.xml',
         'report/order_template_xls.xml',
+        'views/account_move_migration.xml'
     ],
     'assets': {
         'web.assets_frontend': [

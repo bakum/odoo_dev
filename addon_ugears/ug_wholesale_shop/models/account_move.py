@@ -1,4 +1,5 @@
 from odoo import models, fields, api
+import re
 
 
 class AccountMove(models.Model):
@@ -47,6 +48,41 @@ class AccountMove(models.Model):
 
     number_facture = fields.Char('Invoice number', required=False, readonly=False, copy=False,
                                  tracking=True)
+
+
+    def migrate_invoice_prefix(self, old_prefix='INV/', new_prefix='PI/'):
+        # убедимся, что это строки
+        old_prefix = str(old_prefix)
+        new_prefix = str(new_prefix)
+
+        moves = self.search([
+            ('move_type', '=', 'out_invoice'),
+            ('name', 'like', old_prefix + '%'),
+            ('state', '!=', 'cancel'),
+        ])
+
+        pattern = re.compile(rf'^{re.escape(old_prefix)}(?P<rest>.+)$')
+        count = 0
+
+        for move in moves:
+            m = pattern.match(move.name)
+            if not m:
+                continue
+
+            new_name = new_prefix + m.group('rest')
+            move.name = new_name
+            move.sequence_prefix = new_prefix
+            count += 1
+
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': "Migration complete",
+                'message': f"{count} invoices updated from {old_prefix} to {new_prefix}",
+                'sticky': False,
+            }
+        }
 
     @api.onchange('number_facture')
     def onchange_number_facture(self):
