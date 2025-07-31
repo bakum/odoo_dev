@@ -11,6 +11,8 @@
                         <field name="guid" readonly="1" attrs="{'invisible': [('is_company','=', False)]}"/>
                         <field name="distrib_ids" widget="many2many_tags" domain="[('partner_id', '=', False)]"
                                groups="ug_base_distrib.group_distrib_manager"/>
+                        <field name="vat_value"/>
+                        <field name="ico_code"/>
                     </xpath>
                 </data>
             </field>

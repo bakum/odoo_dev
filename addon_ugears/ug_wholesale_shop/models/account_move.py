@@ -1,6 +1,8 @@
 from odoo import models, fields, api
 import re
 
+from odoo.tools import float_round, formatLang
+
 
 class AccountMove(models.Model):
     _name = 'account.move'
@@ -49,6 +51,31 @@ class AccountMove(models.Model):
     number_facture = fields.Char('Invoice number', required=False, readonly=False, copy=False,
                                  tracking=True)
 
+    def format_amount(self, amount, currency=None):
+        """Форматирует сумму с валютой."""
+        self.ensure_one()
+        currency = currency or self.currency_id
+        return formatLang(self.env, amount, currency_obj=currency)
+
+    def is_internal_invoice(self):
+        if self.partner_id and self.bank_beneficiary_id:
+            if self.partner_id.country_id and self.bank_beneficiary_id.country_id:
+                return self.partner_id.country_id == self.bank_beneficiary_id.country_id
+        return False
+
+    def get_invoice_totals(self):
+        self.ensure_one()
+        precision = 2  # или взять из валюты: self.currency_id.decimal_places
+        total_wo_vat = float_round(self.amount_total, precision_digits=precision)
+        vat = float_round(total_wo_vat * self.partner_id.vat_value / 100, precision_digits=precision)
+        total_w_vat = float_round(total_wo_vat + vat, precision_digits=precision)
+
+        return {
+            'total_wo_vat': total_wo_vat,
+            'vat': vat,
+            'total_w_vat': total_w_vat,
+            'vat_value': self.partner_id.vat_value,
+        }
 
     def migrate_invoice_prefix(self, old_prefix='INV/', new_prefix='PI/'):
         # убедимся, что это строки

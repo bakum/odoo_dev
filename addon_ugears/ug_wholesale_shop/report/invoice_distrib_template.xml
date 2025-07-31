@@ -14,6 +14,7 @@
                 <t t-set="palettes_list" t-value="False"/>
                 <t t-set="region_id" t-value="False"/>
             </t>
+            <t t-set="totals_vat" t-value="doc.get_invoice_totals()"/>
             <style>
                 @font-face {
                     font-family: 'CustomFont';
@@ -87,6 +88,16 @@
                         <span t-field="beneficiary.country_id.code"/>
                     </td>
                 </tr>
+                <tr>
+                    <td> </td>
+                    <td> </td>
+                    <td align="left" style="vertical-align: top;" class="text-muted d-md-table-cell">
+                        <span>ICO:</span>
+                    </td>
+                    <td align="left" style="vertical-align: top;" class="text-muted">
+                        <span t-field="beneficiary.ico_code"/>
+                    </td>
+                </tr>
                  <tr>
                     <td> </td>
                     <td align="left" style="vertical-align: top;">
@@ -152,6 +163,16 @@
                     </td>
                     <td align="left" style="vertical-align: top;" class="text-muted">
                         <span t-field="doc.partner_id.country_id.code"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td> </td>
+                    <td> </td>
+                    <td align="left" style="vertical-align: top;" class="text-muted d-md-table-cell">
+                        <span>ICO:</span>
+                    </td>
+                    <td align="left" style="vertical-align: top;" class="text-muted">
+                        <span t-field="doc.partner_id.ico_code"/>
                     </td>
                 </tr>
                 <tr>
@@ -231,13 +252,13 @@
                         <span>Invoice No.:</span>
                     </td>
                     <td align="left" style="vertical-align: top;">
-                        <span t-esc="doc.convert_invoice_to_proforma()"/>
+                        <span t-if="factura" t-esc="doc.number_facture"/>
                     </td>
                     <td align="left" style="vertical-align: top;">
                         <span>According to PO No.</span>
                     </td>
                     <td align="left" style="vertical-align: top;">
-                        <span> </span>
+                        <span t-if="order" t-esc="order.name"/>
                     </td>
                 </tr>
                 <tr>
@@ -334,11 +355,11 @@
                     <td width="10%"/>
                     <td width="10%" class="text-end">
                         <span class="text-nowrap">
-                            <span class="oe_currency_value" t-raw="doc.amount_total"/>
+                            <span class="oe_currency_value" t-esc="doc.format_amount(totals_vat['total_wo_vat'])"/>
                         </span>
                     </td>
                 </tr>
-                <t t-if="region_id and region_id.id">
+                <t t-if="region_id and region_id.id and not doc.is_internal_invoice()">
                     <tr t-if="region_id.name == 'EMEA'">
                         <td colspan="5" class="text-end" style="border-left: none; border-bottom: none;">
                             <span>"Reverse charge applies in accordance with Article 138 of DIRECTIVE 2006/112/EC”</span>
@@ -348,6 +369,32 @@
                         </td>
                         <td class="text-end">
                             <span>0.00</span>
+                        </td>
+                    </tr>
+                </t>
+                <t t-if="doc.is_internal_invoice()">
+<!--                    <tr>-->
+<!--                        <td colspan="5" class="text-end" style="border-left: none; border-bottom: none; border-top: none;">-->
+<!--                            <span>Subtotal:</span>-->
+<!--                        </td>-->
+<!--                        <td colspan="2" class="text-end">-->
+<!--                            <span t-esc="doc.format_amount(totals_vat['total_wo_vat'])"/>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+                    <tr>
+                        <td colspan="5" class="text-end" style="border-left: none; border-bottom: none; border-top: none;">
+                            <span t-esc="'VAT {}%'.format(totals_vat['vat_value'])"/>
+                        </td>
+                        <td colspan="2" class="text-end">
+                            <span t-esc="doc.format_amount(totals_vat['vat'])"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" class="text-end" style="border-left: none; border-bottom: none; border-top: none;">
+                            <span>Total inc. VAT:</span>
+                        </td>
+                        <td colspan="2" class="text-end">
+                            <span t-esc="doc.format_amount(totals_vat['total_w_vat'])"/>
                         </td>
                     </tr>
                 </t>
@@ -389,7 +436,7 @@
                         <div class="row">
                             Terms of Payment: <span t-field="doc.invoice_payment_term_id"/>
                         </div>
-                        <div class="row mt-2">
+                        <div t-if="factura" class="row mt-2">
                             <span>__________________________________________________</span><span t-field="doc.invoice_user_id"/>
                         </div>
                     </div>
