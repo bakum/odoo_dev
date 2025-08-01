@@ -7,6 +7,12 @@
             <form>
                 <sheet>
                     <header>
+                        <button name="action_fill_currency_for_all"
+                            type="object"
+                            string="Fill Currency from Pricelist"
+                            class="btn-primary"
+                            attrs="{'invisible': [('currency_id', '!=', False)]}"
+                            groups="ug_base_distrib.group_distrib_manager"/>
                         <button name="%(action_change_pricelist)d" class="btn-primary" data-hotkey="v" string="Change Pricelist" type="action"
                                 context="{
                                 'default_distrib_id': id,
@@ -59,7 +65,7 @@
                                 <group>
                                     <field name="has_move" invisible="1"/>
                                     <field name="pricelist_id" options="{'no_open': True, 'no_quick_create': True}" attrs="{'readonly': [('has_move', '!=', False)]}"/>
-                                    <field name="currency_id" options="{'no_open': True, 'no_quick_create': True}"/>
+                                    <field name="currency_id" options="{'no_open': True, 'no_quick_create': True}" attrs="{'readonly': [('has_move', '!=', False)]}"/>
                                 </group>
                             </group>
                         </page>

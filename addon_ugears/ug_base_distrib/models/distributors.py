@@ -1,4 +1,7 @@
 from odoo import models, fields, api, _
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class Distributors(models.Model):
@@ -22,9 +25,36 @@ class Distributors(models.Model):
     state_id = fields.Many2one('res.country.state', "State", tracking=True)
     partner_id = fields.Many2one('res.partner', 'Partner', tracking=True, required=True)
     pricelist_id = fields.Many2one('product.pricelist', 'Pricelist', tracking=True, required=True)
-    currency_id = fields.Many2one('res.currency', compute="_compute_currency")
+    currency_id = fields.Many2one(
+        'res.currency',
+        string="Currency",
+        required=False,
+        tracking=True
+    )
     region_id = fields.Many2one('distrib.regions', "Region", tracking=True)
     has_move = fields.Boolean(string="Has Move", compute="_compute_has_move")
+
+    def action_fill_currency_for_all(self):
+        """Заполнить currency_id у всех дистрибьюторов, если не установлено"""
+        distributors = self.search([('currency_id', '=', False)])
+        updated = 0
+        for rec in distributors:
+            if rec.pricelist_id and rec.pricelist_id.currency_id:
+                rec.currency_id = rec.pricelist_id.currency_id.id
+                updated += 1
+
+        _logger.info("✅ Установлена валюта у %s дистрибьюторов", updated)
+
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'type': 'success',
+                'title': _('Currencies Updated'),
+                'message': _('Updated %s distributors.') % updated,
+                'sticky': False,
+            }
+        }
 
     def _compute_has_move(self):
         all_moves = self.env['distrib.distributors.move'].sudo()
