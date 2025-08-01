@@ -28,7 +28,7 @@ class Distributors(models.Model):
     currency_id = fields.Many2one(
         'res.currency',
         string="Currency",
-        required=False,
+        required=True,
         tracking=True
     )
     region_id = fields.Many2one('distrib.regions', "Region", tracking=True)
