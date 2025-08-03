@@ -45,7 +45,7 @@ class MarketingExpenses(models.Model):
         readonly=True, copy=False, index=True,
         default='draft')
     currency_id = fields.Many2one(
-        related='distrib_id.pricelist_id.currency_id',
+        related='distrib_id.currency_id',
         store=True, index=True, precompute=True)
     user_id = fields.Many2one(
         comodel_name='res.users',

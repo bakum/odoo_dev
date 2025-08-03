@@ -151,6 +151,7 @@ class UgImportInventory(models.TransientModel):
         return {
             'name': self.env.context.get('inventory_name'),
             'distrib_id': self.distrib_id.id,
+            'currency_id': self.distrib_id.currency_id.id,
             'state': 'draft',
             'is_inventory': True,
             'operation': 'out' if out else 'inc',
@@ -186,6 +187,7 @@ class UgImportInventory(models.TransientModel):
                         'name': products.product_id.get_product_multiline_description_sale(),
                         # 'product_uom_id': product_uom_id.id,
                         'distrib_id': self.distrib_id.id,
+                        'currency_id': self.distrib_id.currency_id.id,
                         'product_uom_qty': qtt,
                         'operation': 'inc',
                     }))
@@ -197,6 +199,7 @@ class UgImportInventory(models.TransientModel):
                         'name': products.product_id.get_product_multiline_description_sale(),
                         # 'product_uom_id': product_uom_id.id,
                         'distrib_id': self.distrib_id.id,
+                        'currency_id': self.distrib_id.currency_id.id,
                         'product_uom_qty': -qtt,
                         'operation': 'out',
                     }))
@@ -230,6 +233,7 @@ class UgImportInventory(models.TransientModel):
                     'name': quant.product_id.get_product_multiline_description_sale(),
                     # 'product_uom_id': product_uom_id.id,
                     'distrib_id': self.distrib_id.id,
+                    'currency_id': self.distrib_id.currency_id.id,
                     'product_uom_qty': qtt_on_date,
                     'operation': 'out',
                 }))
@@ -239,6 +243,7 @@ class UgImportInventory(models.TransientModel):
                     'name': quant.product_id.get_product_multiline_description_sale(),
                     # 'product_uom_id': product_uom_id.id,
                     'distrib_id': self.distrib_id.id,
+                    'currency_id': self.distrib_id.currency_id.id,
                     'product_uom_qty': -qtt_on_date,
                     'operation': 'inc',
                 }))    

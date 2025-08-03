@@ -437,6 +437,7 @@ def apply_moves_from_request(data_for_edit, partner_guid):
             }))
     move_values = {
         'distrib_id': existing_distributor.id,
+        'currency_id': existing_distributor.currency_id.id,
         'date_order': date_order,
     }
     DistribMove = http.request.env['distrib.distributors.move'].sudo()

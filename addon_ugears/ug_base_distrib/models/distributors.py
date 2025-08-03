@@ -29,6 +29,7 @@ class Distributors(models.Model):
         'res.currency',
         string="Currency",
         required=True,
+        index=True,
         tracking=True
     )
     region_id = fields.Many2one('distrib.regions', "Region", tracking=True)
@@ -62,10 +63,10 @@ class Distributors(models.Model):
         for rec in self:
             rec.has_move = all_moves.search_count(domain) > 0
 
-    @api.depends('pricelist_id')
-    def _compute_currency(self):
-        for rec in self:
-            rec.currency_id = self.pricelist_id.currency_id
+    # @api.depends('pricelist_id')
+    # def _compute_currency(self):
+    #     for rec in self:
+    #         rec.currency_id = self.pricelist_id.currency_id
 
     @api.model_create_multi
     def create(self, vals_list):

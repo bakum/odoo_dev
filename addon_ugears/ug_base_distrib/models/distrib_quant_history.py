@@ -160,7 +160,7 @@ class DistributorQuantHistory(models.Model):
         uom = self.product_id.uom_id
 
         price = pricelist_rule._compute_price(
-            product, qty, uom, order_date, self.distrib_id.pricelist_id.currency_id)
+            product, qty, uom, order_date, self.distrib_id.currency_id)
 
         return price
 

@@ -43,7 +43,7 @@ class DistributorMoveLines(models.Model):
         store=True, index=True, precompute=True)
 
     currency_id = fields.Many2one(
-        related='move_id.distrib_id.pricelist_id.currency_id',
+        related='move_id.distrib_id.currency_id',
         store=True, index=True, precompute=True)
 
     # channel_id = fields.Many2one(
@@ -521,7 +521,7 @@ class DistributorMoveLines(models.Model):
         uom = self.product_uom or self.product_id.uom_id
 
         price = pricelist_rule._compute_price(
-            product, qty, uom, order_date, self.distrib_id.pricelist_id.currency_id)
+            product, qty, uom, order_date, self.distrib_id.currency_id)
 
         return price
 
@@ -557,7 +557,7 @@ class DistributorMoveLines(models.Model):
             qty,
             uom,
             order_date,
-            target_currency=self.distrib_id.pricelist_id.currency_id,
+            target_currency=self.distrib_id.currency_id,
         )
 
         return price

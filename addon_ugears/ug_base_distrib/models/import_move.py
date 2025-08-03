@@ -58,6 +58,7 @@ class UgImportMove(models.TransientModel):
         values = {
             'operation': self.operation,
             'distrib_id': self.distrib_id.id,
+            'currency_id': self.distrib_id.currency_id.id,
             # 'channel_id': self.channel_id,
             'user_id': self.env.user.id,
             'date_order': self.date_order,

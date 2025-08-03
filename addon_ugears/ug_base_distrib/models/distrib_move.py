@@ -6,6 +6,7 @@ import time
 import threading
 
 import logging
+
 _logger = logging.getLogger(__name__)
 
 LOCKED_FIELD_STATES = {
@@ -80,7 +81,7 @@ class DistributorMove(models.Model):
         states=LOCKED_FIELD_STATES)
 
     currency_id = fields.Many2one(
-        related='distrib_id.pricelist_id.currency_id',
+        related='distrib_id.currency_id',
         store=True, index=True, precompute=True)
 
     amount_untaxed = fields.Monetary(
@@ -122,7 +123,7 @@ class DistributorMove(models.Model):
         if not distrib_id.discount_available:
             return
         if self.price_total_no_discount < distrib_id.discount_after:
-            self.move_line.update({'discount' : 0})
+            self.move_line.update({'discount': 0})
         else:
             for line in self.move_line:
                 Rules = self.env['distrib.discount.rules']
@@ -132,6 +133,12 @@ class DistributorMove(models.Model):
                     continue
                 line.update({'discount': distrib_id.discount_value})
             # self.move_line.update({'discount' : distrib_id.discount_value})
+
+    # @api.onchange('distrib_id')
+    # def _onchange_distrib_id_currency(self):
+    #     for line in self:
+    #         if line.distrib_id and line.distrib_id.currency_id:
+    #             line.currency_id = line.distrib_id.currency_id.id
 
     @api.depends("move_line.discount_total", "move_line.price_total_no_discount")
     def _compute_discount_total(self):
@@ -230,7 +237,8 @@ class DistributorMove(models.Model):
         return super(DistributorMove, self).create(vals_list)
 
     def write(self, vals):
-        restrict_date_str = self.env['ir.config_parameter'].sudo().get_param('distrib.restrict_date', default='1970-01-01 00:00:00')
+        restrict_date_str = self.env['ir.config_parameter'].sudo().get_param('distrib.restrict_date',
+                                                                             default='1970-01-01 00:00:00')
         restrict_date = fields.Datetime.from_string(restrict_date_str)
         context = dict(self.env.context or {})
         recalc_totals = context.get('recalc_totals', False)
@@ -251,9 +259,12 @@ class DistributorMove(models.Model):
                             ml.product_id, quantity, distrib_id=ml.distrib_id)
                         # Quant._update_available_quantity(ml.product_id, quantity, distrib_id=ml.distrib_id, in_date=in_date)
                         QuantHistory = self.env['distrib.quant.history']
-                        QuantHistory.with_context(recalc_totals=recalc_totals)._update_available_quantity(ml.product_id, quantity, distrib_id=ml.distrib_id,
+                        QuantHistory.with_context(recalc_totals=recalc_totals)._update_available_quantity(ml.product_id,
+                                                                                                          quantity,
+                                                                                                          distrib_id=ml.distrib_id,
                                                                                                           in_out=ml.operation,
-                                                                                                          in_date=ml.date, is_inventory=ml.is_inventory)
+                                                                                                          in_date=ml.date,
+                                                                                                          is_inventory=ml.is_inventory)
                 elif vals['state'] == 'cancel':
                     if self.date_order <= restrict_date:
                         raise UserError(_('You cannot change the state if the date is before the restriction date.'))
@@ -268,9 +279,12 @@ class DistributorMove(models.Model):
                             ml.product_id, -quantity, distrib_id=ml.distrib_id)
                         # Quant._update_available_quantity(ml.product_id, quantity, distrib_id=ml.distrib_id, in_date=in_date)
                         QuantHistory = self.env['distrib.quant.history']
-                        QuantHistory.with_context(recalc_totals=recalc_totals)._update_available_quantity(ml.product_id, -quantity, distrib_id=ml.distrib_id,
+                        QuantHistory.with_context(recalc_totals=recalc_totals)._update_available_quantity(ml.product_id,
+                                                                                                          -quantity,
+                                                                                                          distrib_id=ml.distrib_id,
                                                                                                           in_out=ml.operation,
-                                                                                                          in_date=ml.date, is_inventory=ml.is_inventory)
+                                                                                                          in_date=ml.date,
+                                                                                                          is_inventory=ml.is_inventory)
             # if vals['state'] in ['done','cancel']:
             #     if self.date_order <= restrict_date:
             #         raise UserError(_('You cannot change the state if the date is before the restriction date.'))
@@ -350,6 +364,7 @@ class DistributorMove(models.Model):
                     'sticky': False,
                 }
             }
+
     def action_cancel_multi(self):
         moves = []
         # context = dict(self.env.context or {})

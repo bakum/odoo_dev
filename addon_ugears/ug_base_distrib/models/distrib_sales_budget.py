@@ -43,7 +43,7 @@ class DistributorSaleBudget(models.Model):
         readonly=False, index=True, tracking=True
     )
     currency_id = fields.Many2one(
-        related='distrib_id.pricelist_id.currency_id',
+        related='distrib_id.currency_id',
         store=True, index=True, precompute=True)
     year = fields.Char("Year", store=True, tracking=True, compute='_compute_year')
     is_manager = fields.Boolean(compute='_compute_is_manager')
