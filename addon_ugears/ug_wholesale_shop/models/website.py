@@ -14,6 +14,15 @@ class Website(models.Model):
         compute='_compute_palette_id',
         string='Default Palette')
 
+    def _check_and_update_distributor_pricelist(self, order):
+        session_pl = request.session.get('website_sale_current_pl')
+        distrib_pl = self.env.user.distrib_id.pricelist_id.id if self.env.user.distrib_id else None
+
+        if distrib_pl and session_pl != distrib_pl:
+            request.session['website_sale_current_pl'] = distrib_pl
+            order.write({'pricelist_id': distrib_pl})
+            order._recompute_prices()
+
     def sale_get_order(self, force_create=False, update_pricelist=False):
         """ Return the current sales order after mofications specified by params.
 
@@ -133,6 +142,7 @@ class Website(models.Model):
             request.session['website_sale_current_pl'] = pricelist_id
             sale_order_sudo.write({'pricelist_id': pricelist_id})
             sale_order_sudo._recompute_prices()
+        self._check_and_update_distributor_pricelist(sale_order_sudo)
         sale_order_sudo._apply_discount_if_needed()
         return sale_order_sudo
 
