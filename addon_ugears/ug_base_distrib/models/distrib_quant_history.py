@@ -161,6 +161,13 @@ class DistributorQuantHistory(models.Model):
 
         price = pricelist_rule._compute_price(
             product, qty, uom, order_date, self.distrib_id.currency_id)
+        if self.distrib_id.pricelist_id.currency_id != self.distrib_id.currency_id:
+            price = self.distrib_id.pricelist_id.currency_id._convert(
+                price,
+                self.distrib_id.currency_id,
+                self.env.company,
+                order_date,
+            )
 
         return price
 

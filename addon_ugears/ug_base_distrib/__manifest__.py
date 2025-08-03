@@ -62,6 +62,9 @@
             'ug_base_distrib/static/src/terms/**/*.js',
         ],
     },
+    'test': [
+        'tests/test_distrib_currency.py'
+    ],
     'depends': [
         'base',
         'product',
