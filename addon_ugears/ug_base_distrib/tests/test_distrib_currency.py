@@ -1,4 +1,3 @@
-
 from odoo.tests.common import TransactionCase
 from odoo import fields
 
@@ -35,7 +34,7 @@ class TestDistributorCurrency(TransactionCase):
 
         self.move = self.env['distrib.distributors.move'].create({
             'distrib_id': self.distributor.id,
-            'operation' : 'inc'
+            'operation': 'inc'
         })
 
     def test_currency_is_independent(self):
@@ -98,3 +97,47 @@ class TestDistributorCurrency(TransactionCase):
             msg=f"Ожидаемая цена {expected_price}, но получено {actual_price}"
         )
 
+    def test_same_currency_no_conversion(self):
+        """Если валюты совпадают, цена не должна конвертироваться."""
+
+        # Установим валюту дистрибутора = валюте прайслиста (EUR)
+        self.distributor.write({
+            'currency_id': self.EUR.id,
+        })
+
+        # Создаём строку перемещения
+        line = self.env['distrib.distributors.move.line'].create({
+            'move_id': self.move.id,
+            'product_id': self.product.id,
+            'product_uom': self.uom.id,
+            'product_uom_qty': 1,
+        })
+
+        # Ожидаемая цена — без пересчёта
+        expected_price = 120
+        actual_price = line.price_unit
+
+        self.assertAlmostEqual(
+            actual_price, expected_price, delta=0.01,
+            msg=f"Ожидалось {expected_price} EUR, получено {actual_price}"
+        )
+
+    def test_line_currency_matches_distributor_when_same(self):
+        """Если валюты совпадают, currency_id строки всё равно должен быть валюта дистрибутора"""
+
+        self.distributor.write({
+            'currency_id': self.EUR.id,
+        })
+
+        line = self.env['distrib.distributors.move.line'].create({
+            'move_id': self.move.id,
+            'product_id': self.product.id,
+            'product_uom': self.uom.id,
+            'product_uom_qty': 1,
+        })
+
+        self.assertEqual(
+            line.currency_id.id,
+            self.distributor.currency_id.id,
+            "currency_id строки должна быть валютой дистрибутора (EUR)"
+        )
