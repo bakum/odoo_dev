@@ -42,7 +42,7 @@ class DistributorQuantHistory(models.Model):
         'Ending Quantity',
         readonly=True, compute='_compute_quantity_begin', store=True, precompute=True)
     currency_id = fields.Many2one(
-        related='distrib_id.pricelist_id.currency_id',
+        related='distrib_id.currency_id',
         store=True, index=True, precompute=True)
     pricelist_item_id = fields.Many2one(
         comodel_name='product.pricelist.item',
