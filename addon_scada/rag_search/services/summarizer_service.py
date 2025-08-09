@@ -38,7 +38,7 @@ class SummarizerService:
         )
 
         try:
-            timeout_seconds = (10, 1200)  # connect 10 сек, ответ до 30 минут
+            timeout_seconds = (10, 1200)  # connect 10 сек, ответ до 20 минут
             response = requests.post(
                 f"{self.ollama_url}/api/generate",
                 json={
