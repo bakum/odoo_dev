@@ -12,10 +12,11 @@ class DistribChangePricelist(models.TransientModel):
     def save_pricelist(self):
         if (self.distrib_id.pricelist_id.id == self.pricelist_id.id):
             return
-        sql = """
-            UPDATE distrib_distributors
-            SET pricelist_id = %s
-            WHERE id = %s
-        """ % (self.pricelist_id.id, self.distrib_id.id)
-        self._cr.execute(sql)
-        self._cr.commit()
+        # sql = """
+        #     UPDATE distrib_distributors
+        #     SET pricelist_id = %s
+        #     WHERE id = %s
+        # """ % (self.pricelist_id.id, self.distrib_id.id)
+        # self._cr.execute(sql)
+        # self._cr.commit()
+        self.distrib_id.write({'pricelist_id': self.pricelist_id.id})
