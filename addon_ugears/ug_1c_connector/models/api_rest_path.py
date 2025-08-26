@@ -2,6 +2,8 @@
 
 from copy import deepcopy
 
+from requests import delete
+
 from odoo import api, fields, models, _
 from odoo.tools import safe_eval
 
@@ -68,7 +70,7 @@ class ApiRestPath(models.Model):
     field_ids = fields.Many2many(
         'ir.model.fields', domain="[('model_id', '=', model_id)]",
         string='Fields')
-    limit = fields.Integer(string='Limit of results', default=500)
+    limit = fields.Integer(string='Limit of results', default=LIMIT_MAX)
     # Create / Update
     warning_required = fields.Boolean(
         compute='_compute_warning_required', compute_sudo=True)
@@ -379,9 +381,10 @@ class ApiRestPath(models.Model):
             'in': 'query',
             'default': self.limit,
             'description':
-                _('Maximum number of records to return. {}').format(
-                    _('(Maximum: {})').format(
-                        self.limit) if self.limit else ''),
+                _('Maximum number of records to return. All records if 0. {}').format(
+                    # _('(Maximum: {})').format(
+                    #     self.limit) if self.limit else ''),
+                    ''),
             'required': False,
             'type': 'integer',
         }
@@ -435,16 +438,16 @@ class ApiRestPath(models.Model):
 
     def _search_treatment_kwargs(self, kwargs):
         self.ensure_one()
-        # Limit
-        limit = kwargs.get('limit', 0)
-        max_limit = self.limit if self.limit else LIMIT_MAX
-        kwargs['limit'] = \
-            limit if (limit and limit <= max_limit) else max_limit
+        limit = kwargs.get('limit', self.limit)
+        max_limit = self.limit or LIMIT_MAX
+        if limit > 0:
+            kwargs['limit'] = min(limit, max_limit)
+        elif not limit:
+            kwargs.pop('limit', None)
         domain = kwargs.get('domain', [])
         if self.filter_domain:
             domain += self._eval_domain(self.filter_domain)
         kwargs['domain'] = domain
-        # Fields
         self._treatment_fields(kwargs)
         return kwargs
 
