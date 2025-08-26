@@ -79,6 +79,7 @@ class ApiRestPath(models.Model):
     unlink_domain = fields.Char(default="[]")
     # Custom function
     function_apply_on_record = fields.Boolean()
+    is_pdf = fields.Boolean(string='The function returns PDF')
     function_domain = fields.Char(default="[]")
     function = fields.Char()
     function_parameter_ids = fields.One2many(
@@ -133,7 +134,7 @@ class ApiRestPath(models.Model):
             'tags': self.tag_id and [self.tag_id.name or ''] or [],
             'description': self.description or '',
             'deprecated': self.deprecated,
-            'produces': ['application/json'],
+            'produces': ['application/json'] if not self.is_pdf else ['application/pdf'],
             'responses': {
                 '200': {
                     'description': 'OK',

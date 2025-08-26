@@ -90,6 +90,9 @@ class api_management():
             kwargs['_api_path'] = path
             try:
                 result = decode_bytes(func(*args, **kwargs))
+                # --- если вернулся Response (PDF/файл/stream), не трогаем его
+                if isinstance(result, Response):
+                    return result
                 response_data = json.dumps(result)
                 # Create log
                 if version.active_log:

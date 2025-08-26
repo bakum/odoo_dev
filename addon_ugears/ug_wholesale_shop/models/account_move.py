@@ -114,7 +114,8 @@ class AccountMove(models.Model):
     @api.onchange('number_facture')
     def onchange_number_facture(self):
         for vals in self:
-            vals.payment_reference = vals['number_facture'] if vals['number_facture'] else vals._get_invoice_computed_reference()
+            vals.payment_reference = vals['number_facture'] if vals[
+                'number_facture'] else vals._get_invoice_computed_reference()
 
     def convert_invoice_to_proforma(self):
         """
@@ -176,3 +177,11 @@ class AccountMove(models.Model):
 
     def _message_auto_subscribe_followers(self, updated_values, default_subtype_ids):
         return []
+
+    def api_generate_invoice_pdf(self, is_factura=True, **kwargs):
+        return {
+            "report_pdf": True,
+            "report_xmlid": "ug_wholesale_shop.action_report_distrib_invoice" if not is_factura else "ug_wholesale_shop.action_report_distrib_invoice_factura",  # xml_id отчета
+            "ids": self.ids,
+            "filename": f"invoice_{self.id}.pdf"
+        }

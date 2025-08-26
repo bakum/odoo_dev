@@ -3,7 +3,7 @@
 import json
 
 from odoo import _
-from odoo.http import Controller, request, route
+from odoo.http import Controller, request, route, content_disposition
 from ..tools import api_management, eval_request_params, RecordNotFoundError
 
 
@@ -129,4 +129,27 @@ class RestApi(Controller):
         else:
             record = model_obj.browse()
         kwargs = _api_path._custom_treatment_values(kwargs)
-        return getattr(record, _api_path.function)(**kwargs)
+        result = getattr(record, _api_path.function)(**kwargs)
+
+        # --- если метод возвращает PDF
+        if isinstance(result, dict) and result.get("report_pdf"):
+            xmlid = result["report_xmlid"]
+            if isinstance(xmlid, list):
+                xmlid = xmlid[0]  # берём первый элемент
+            report = request.env.ref(xmlid).sudo()
+            ids = result.get("ids") or record.ids
+            if isinstance(ids, int):
+                ids = [ids]
+            elif isinstance(ids, (list, tuple)) and len(ids) > 0 and isinstance(ids[0], (list, tuple)):
+                # разворачиваем вложенный список [[42]] → [42]
+                ids = ids[0]
+            pdf_content, _t = report._render_qweb_pdf(report, result.get("ids", ids))
+
+            headers = [
+                ('Content-Type', 'application/pdf'),
+                ('Content-Disposition', content_disposition(result.get("filename", "report.pdf")))
+            ]
+            return request.make_response(pdf_content, headers=headers)
+
+        # --- обычный JSON ответ
+        return result

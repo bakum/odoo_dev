@@ -90,10 +90,15 @@
                     </group>
                     <group string="Settings for custom function"
                            attrs="{'invisible': [('method', 'not in', ['custom'])]}">
-                        <field name="function_apply_on_record" attrs="{'required': [('method', '=', 'custom')]}"/>
-                        <field name="function_domain" widget="domain" options="{'model': 'model', 'in_dialog': True}"
+                        <group>
+                            <field name="function_apply_on_record" attrs="{'required': [('method', '=', 'custom')]}"/>
+                            <field name="function_domain" widget="domain" options="{'model': 'model', 'in_dialog': True}"
                                attrs="{'invisible': [('function_apply_on_record', '=', False)]}"/>
-                        <field name="function" attrs="{'required': [('method', '=', 'custom')]}"/>
+                        </group>
+                        <group>
+                            <field name="is_pdf" attrs="{'required': [('method', '=', 'custom')]}"/>
+                            <field name="function" attrs="{'required': [('method', '=', 'custom')]}"/>
+                        </group>
                         <field name="function_parameter_ids">
                             <tree editable="bottom">
                                 <field name="path_id" invisible="1" />
