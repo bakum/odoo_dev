@@ -92,6 +92,9 @@ class api_management():
                 result = decode_bytes(func(*args, **kwargs))
                 # --- если вернулся Response (PDF/файл/stream), не трогаем его
                 if isinstance(result, Response):
+                    if version.active_log:
+                        request.env['api.rest.log'].create_log(
+                            version.id, request_data, '', user=user)
                     return result
                 response_data = json.dumps(result)
                 # Create log
