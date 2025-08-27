@@ -48,6 +48,16 @@ class SaleOrder(models.Model):
                                            help="This field is used to prevent sending confirmation email multiple times.",
                                            default=False)
 
+    warehouse_for_moving = fields.Selection(
+        selection=[
+            ('amazon', "Amazon"),
+            ('ecom', "E-Commerce"),
+        ],
+        string="Warehouse for moving",
+        help="To which warehouse the goods need to be moved. If nothing is selected - this is a regular order for a distributor",
+        copy=False, index=True,
+        tracking=True,)                                       
+
     def _default_warehouse(self):
         """ Default warehouse for the sale order """
         return self.env['distrib.places'].search([('places_type', '=', 'warehouse')], order='id desc', limit=1)

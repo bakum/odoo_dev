@@ -86,6 +86,7 @@
                     <xpath expr="//field[@name='team_id']" position="after">
                         <field name="place_warehouse_id" domain="[('places_type', '=', 'warehouse')]"/>
                         <field name="place_taking_googs_id" domain="[('places_type', '=', 'point_of_load')]"/>
+                        <field name="warehouse_for_moving"/>
                     </xpath>
                 </data>
             </field>
