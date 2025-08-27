@@ -56,6 +56,7 @@ class SaleOrder(models.Model):
         string="Warehouse for moving",
         help="To which warehouse the goods need to be moved. If nothing is selected - this is a regular order for a distributor",
         copy=False, index=True,
+        groups="ug_base_distrib.group_distrib_manager",
         tracking=True,)                                       
 
     def _default_warehouse(self):
