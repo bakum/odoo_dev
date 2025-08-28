@@ -16,4 +16,4 @@ class DistribChangeSyncStatus(models.TransientModel):
         string="Syncronization Status", required=True,)
 
     def save_status(self):
-        self.order_id.write({'sync_state': self.sync_state})    
+        self.order_id.write({'sync_state': self.sync_state, 'sync_note': False})    

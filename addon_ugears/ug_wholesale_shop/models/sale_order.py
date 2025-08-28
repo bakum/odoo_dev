@@ -73,7 +73,12 @@ class SaleOrder(models.Model):
         help="Status of syncronization with external system",
         groups="ug_base_distrib.group_distrib_manager",
         copy=False, index=True,
-        default='new', tracking=True)                          
+        default='new', tracking=True)    
+
+    sync_note = fields.Text(string="Syncronization Note",
+                            help="Note of syncronization with external system",
+                            groups="ug_base_distrib.group_distrib_manager",
+                            copy=False)                          
 
     @api.depends('order_line.product_uom_qty')
     def _compute_quantity_amount(self):

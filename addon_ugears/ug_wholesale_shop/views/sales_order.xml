@@ -82,16 +82,6 @@
                                 <div class="clearfix"/>
                             </group>
                         </page>
-                    </xpath>
-                    <xpath expr="//field[@name='team_id']" position="after">
-                        <field name="place_warehouse_id" domain="[('places_type', '=', 'warehouse')]"/>
-                        <field name="place_taking_googs_id" domain="[('places_type', '=', 'point_of_load')]"/>
-                        <field name="warehouse_for_moving"/>
-                    </xpath>
-                    <xpath expr="//field[@name='tax_totals']" position="after">
-                        <field name="amount_qty"/>
-                    </xpath>
-                    <xpath expr="//page[@name='customer_signature']" position="after">
                         <page name="sync" string="Syncronization" groups="ug_base_distrib.group_distrib_manager">
                             <field name="sync_state" widget="statusbar" statusbar_visible="new,deployment,error,done"/>
                             <div class="oe_right">
@@ -103,13 +93,18 @@
                                     groups="ug_base_distrib.group_distrib_manager"
                                     confirm="Are you sure you want to do this?"/> 
                             </div>
-                            <!-- <group>
-                                <field name="sync_state" widget="statusbar" statusbar_visible="new,deployment,error,done"/>
-                            </group>
                             <group>
-                                <field name="sync_state"/>
-                            </group> -->
+                                <field colspan="2" name="sync_note" nolabel="1" placeholder="Syncronization note..." readonly="1"/>
+                            </group>
                         </page>
+                    </xpath>
+                    <xpath expr="//field[@name='team_id']" position="after">
+                        <field name="place_warehouse_id" domain="[('places_type', '=', 'warehouse')]"/>
+                        <field name="place_taking_googs_id" domain="[('places_type', '=', 'point_of_load')]"/>
+                        <field name="warehouse_for_moving"/>
+                    </xpath>
+                    <xpath expr="//field[@name='tax_totals']" position="after">
+                        <field name="amount_qty"/>
                     </xpath>
                 </data>
             </field>

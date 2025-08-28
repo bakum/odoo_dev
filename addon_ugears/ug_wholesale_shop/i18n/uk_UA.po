@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-28 11:21+0000\n"
-"PO-Revision-Date: 2025-08-28 11:21+0000\n"
+"POT-Creation-Date: 2025-08-28 17:57+0000\n"
+"PO-Revision-Date: 2025-08-28 17:57+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1915,6 +1915,11 @@ msgid "New"
 msgstr "Новий"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,help:ug_wholesale_shop.field_sale_order__sync_note
+msgid "Note of syncronization with external system"
+msgstr ""
+
+#. module: ug_wholesale_shop
 #. odoo-python
 #: code:addons/ug_wholesale_shop/models/import_order.py:0
 #, python-format
@@ -1940,7 +1945,7 @@ msgstr "Дата операції"
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_change_sync_status__order_id
 msgid "Order"
-msgstr ""
+msgstr "Замовлення"
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_distributors_move__order_count
@@ -2283,10 +2288,20 @@ msgid "Syncronization"
 msgstr "Синхронізація з зовнішньою системою"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order__sync_note
+msgid "Syncronization Note"
+msgstr ""
+
+#. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_change_sync_status__sync_state
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order__sync_state
 msgid "Syncronization Status"
 msgstr "Статус синхронізації"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.view_sale_order_form_inherit_distrib
+msgid "Syncronization note..."
+msgstr "Примітка зовнішньої системі щодо синхронізації"
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields.selection,name:ug_wholesale_shop.selection__distrib_change_sync_status__sync_state__done
