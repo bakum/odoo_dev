@@ -51,6 +51,18 @@ class AccountMove(models.Model):
     number_facture = fields.Char('Invoice number', required=False, readonly=False, copy=False,
                                  tracking=True)
 
+    amount_qty = fields.Float(string="Total quantity",
+                              store=True, compute='_compute_quantity_amount') 
+
+    @api.depends('invoice_line_ids.quantity')
+    def _compute_quantity_amount(self):
+        for move in self:
+            # order_lines = order.move_line.filtered(lambda x: not x.display_type)
+            move_lines = move.invoice_line_ids
+            amount_qty = sum(move_lines.mapped('quantity'))
+
+            move.amount_qty = amount_qty                                                      
+
     def format_amount(self, amount, currency=None):
         """Форматирует сумму с валютой."""
         self.ensure_one()

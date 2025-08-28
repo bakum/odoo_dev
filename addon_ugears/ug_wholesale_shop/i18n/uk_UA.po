@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-27 06:17+0000\n"
-"PO-Revision-Date: 2025-08-27 06:17+0000\n"
+"POT-Creation-Date: 2025-08-28 11:21+0000\n"
+"PO-Revision-Date: 2025-08-28 11:21+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1254,6 +1254,11 @@ msgid "Archived"
 msgstr "Заархівовано"
 
 #. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.view_sale_order_form_inherit_distrib
+msgid "Are you sure you want to do this?"
+msgstr "Ви впевнені, що хочете це зробити?"
+
+#. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
 msgid "Bank"
 msgstr "Банк"
@@ -1344,6 +1349,11 @@ msgid "Can Full Access"
 msgstr ""
 
 #. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.change_sync_status_view
+msgid "Cancel"
+msgstr "Скасувати"
+
+#. module: ug_wholesale_shop
 #: model:ir.actions.server,name:ug_wholesale_shop.action_confirmation_undo
 msgid "Cancel Confirmation Flag"
 msgstr ""
@@ -1372,6 +1382,26 @@ msgstr "Вага, г"
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_product_template__cartoon_weight_with_model
 msgid "Cartoon weight with model, gram"
 msgstr "Вага коробки з моделлю, г"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.change_sync_status_view
+msgid "Change Status"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model:ir.model,name:ug_wholesale_shop.model_distrib_change_sync_status
+msgid "Change Status for syncronization"
+msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.view_sale_order_form_inherit_distrib
+msgid "Change Sync State"
+msgstr "Змінити статус синхронізації"
+
+#. module: ug_wholesale_shop
+#: model:ir.actions.act_window,name:ug_wholesale_shop.action_change_sync_status
+msgid "Change Sync Status"
+msgstr "Змінити статус синхронізації"
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.alert_warning_logistics
@@ -1444,6 +1474,7 @@ msgid "Country of origin"
 msgstr "Країна походження"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_change_sync_status__create_uid
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__create_uid
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__create_uid
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_places__create_uid
@@ -1453,6 +1484,7 @@ msgid "Created by"
 msgstr ""
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_change_sync_status__create_date
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__create_date
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__create_date
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_places__create_date
@@ -1564,6 +1596,7 @@ msgid "Discount, %"
 msgstr "Знижка, %"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_change_sync_status__display_name
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__display_name
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__display_name
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_places__display_name
@@ -1619,6 +1652,12 @@ msgid "E-Commerce"
 msgstr ""
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields.selection,name:ug_wholesale_shop.selection__distrib_change_sync_status__sync_state__error
+#: model:ir.model.fields.selection,name:ug_wholesale_shop.selection__sale_order__sync_state__error
+msgid "Error on syncronization"
+msgstr "Помилка синхронізації"
+
+#. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__xls_filename
 msgid "Excel Filename"
 msgstr "Ім'я файлу Excel"
@@ -1658,6 +1697,7 @@ msgid "Height, mm"
 msgstr "Довжина, мм"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_change_sync_status__id
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__id
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__id
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_places__id
@@ -1751,6 +1791,7 @@ msgid "Journal Entry"
 msgstr "Запис у журналі"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_change_sync_status____last_update
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line____last_update
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes____last_update
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_places____last_update
@@ -1760,6 +1801,7 @@ msgid "Last Modified on"
 msgstr ""
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_change_sync_status__write_uid
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__write_uid
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__write_uid
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_places__write_uid
@@ -1769,6 +1811,7 @@ msgid "Last Updated by"
 msgstr ""
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_change_sync_status__write_date
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__write_date
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__write_date
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_places__write_date
@@ -1865,6 +1908,8 @@ msgstr "Вага нетто "
 #: code:addons/ug_wholesale_shop/models/sale_order.py:0
 #: code:addons/ug_wholesale_shop/models/sale_order.py:0
 #: code:addons/ug_wholesale_shop/models/sale_order.py:0
+#: model:ir.model.fields.selection,name:ug_wholesale_shop.selection__distrib_change_sync_status__sync_state__new
+#: model:ir.model.fields.selection,name:ug_wholesale_shop.selection__sale_order__sync_state__new
 #, python-format
 msgid "New"
 msgstr "Новий"
@@ -1891,6 +1936,11 @@ msgstr "Кількість палет:"
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__date_order
 msgid "Operation Date"
 msgstr "Дата операції"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_change_sync_status__order_id
+msgid "Order"
+msgstr ""
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_distributors_move__order_count
@@ -2094,6 +2144,12 @@ msgid "Quantity in cartoon"
 msgstr "Одиниць в коробці"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields.selection,name:ug_wholesale_shop.selection__distrib_change_sync_status__sync_state__deployment
+#: model:ir.model.fields.selection,name:ug_wholesale_shop.selection__sale_order__sync_state__deployment
+msgid "Ready for syncronization"
+msgstr "Готовий до синхронізації"
+
+#. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_packages_sizes__ref
 msgid "Ref"
 msgstr "Посилання"
@@ -2139,6 +2195,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_order_package_line__salesman_id
 msgid "Salesperson"
 msgstr ""
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.change_sync_status_view
+msgid "Save"
+msgstr "Зберегти"
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.ug_import_order_from_xls_view
@@ -2191,6 +2252,11 @@ msgid "Source"
 msgstr "Джерело"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,help:ug_wholesale_shop.field_sale_order__sync_state
+msgid "Status of syncronization with external system"
+msgstr "Статус синхронізації із зовнішньою системою"
+
+#. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.reduction_code_promotion
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
 msgid "Subtotal Without Discount:"
@@ -2210,6 +2276,23 @@ msgstr ""
 #, python-format
 msgid "Successfully loaded"
 msgstr "Успішно завантажено"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.view_sale_order_form_inherit_distrib
+msgid "Syncronization"
+msgstr "Синхронізація з зовнішньою системою"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_distrib_change_sync_status__sync_state
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order__sync_state
+msgid "Syncronization Status"
+msgstr "Статус синхронізації"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields.selection,name:ug_wholesale_shop.selection__distrib_change_sync_status__sync_state__done
+#: model:ir.model.fields.selection,name:ug_wholesale_shop.selection__sale_order__sync_state__done
+msgid "Syncronized"
+msgstr "Синронізовано"
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,help:ug_wholesale_shop.field_account_bank_statement_line__bank_beneficiary_id
@@ -2312,8 +2395,8 @@ msgid ""
 "To which warehouse the goods need to be moved. If nothing is selected - this"
 " is a regular order for a distributor"
 msgstr ""
-"На який склад потрібно перемістити товар. Якщо нічого не обрано"
-" - це звичайне замовлення на дистриб'ютора"
+"На який склад потрібно перемістити товар. Якщо нічого не обрано - це "
+"звичайне замовлення на дистриб'ютора"
 
 #. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
@@ -2342,6 +2425,10 @@ msgid "Total netto"
 msgstr "Всього нетто, г"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_account_bank_statement_line__amount_qty
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_account_move__amount_qty
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_account_payment__amount_qty
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order__amount_qty
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__total_qtt
 msgid "Total quantity"
 msgstr "Загальна кількість"

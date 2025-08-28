@@ -26,6 +26,7 @@
         'views/distributors.xml',
         'views/import_order.xml',
         'views/account_move.xml',
+        'wizard/change_sync_status_action.xml',
         'views/sales_order.xml',
         'views/distrib_move.xml',
         'views/config_settings_views.xml',
@@ -36,7 +37,7 @@
         'report/invoice_distrib_template.xml',
         'report/invoice_distrib_action.xml',
         'report/order_template_xls.xml',
-        'views/account_move_migration.xml'
+        'views/account_move_migration.xml',
     ],
     'assets': {
         'web.assets_frontend': [

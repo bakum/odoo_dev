@@ -66,7 +66,13 @@ class ReportDistribSales(models.Model):
                 PP.PRODUCT_TMPL_ID,
                 DML.BARCODE,
                 DML.DEFAULT_CODE,
-                FULL_NAME,
+                CONCAT(
+				PT.NAME -> 'en_US',
+                    '/',
+                    PP.BARCODE,
+                    '/',
+                    PP.DEFAULT_CODE
+			    ) AS FULL_NAME,
                 PRODUCT_CATEGORY_ID,
                 STATE,
                 CASE
@@ -116,7 +122,8 @@ class ReportDistribSales(models.Model):
                 END AS PRICE_TOTAL_ACC
             FROM
                 DISTRIB_DISTRIBUTORS_MOVE_LINE DML
-                LEFT JOIN PRODUCT_PRODUCT PP ON PP.ID = DML.PRODUCT_ID,
+                LEFT JOIN PRODUCT_PRODUCT PP ON PP.ID = DML.PRODUCT_ID
+                LEFT JOIN PRODUCT_TEMPLATE PT ON PT.ID = PP.PRODUCT_TMPL_ID,
                 CHANNELS C
             WHERE
                 STATE IN ('done')

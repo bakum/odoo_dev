@@ -88,8 +88,45 @@
                         <field name="place_taking_googs_id" domain="[('places_type', '=', 'point_of_load')]"/>
                         <field name="warehouse_for_moving"/>
                     </xpath>
+                    <xpath expr="//field[@name='tax_totals']" position="after">
+                        <field name="amount_qty"/>
+                    </xpath>
+                    <xpath expr="//page[@name='customer_signature']" position="after">
+                        <page name="sync" string="Syncronization" groups="ug_base_distrib.group_distrib_manager">
+                            <field name="sync_state" widget="statusbar" statusbar_visible="new,deployment,error,done"/>
+                            <div class="oe_right">
+                                <button name="%(action_change_sync_status)d" class="btn-outline-primary" data-hotkey="v" string="Change Sync State" type="action"
+                                    context="{
+                                    'default_order_id': id,
+                                    'default_sync_state': sync_state
+                                    }"
+                                    groups="ug_base_distrib.group_distrib_manager"
+                                    confirm="Are you sure you want to do this?"/> 
+                            </div>
+                            <!-- <group>
+                                <field name="sync_state" widget="statusbar" statusbar_visible="new,deployment,error,done"/>
+                            </group>
+                            <group>
+                                <field name="sync_state"/>
+                            </group> -->
+                        </page>
+                    </xpath>
                 </data>
             </field>
+        </record>
+
+        <record id="view_sale_order_tree_inherit_distrib" model="ir.ui.view">
+            <field name="name">sale.order.tree.inherit.distrib</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='invoice_status']" position="after">
+                        <field name="sync_state" decoration-success="sync_state == 'done'" decoration-info="sync_state == 'deployment'" decoration-danger="sync_state == 'error'" widget="badge" optional="show"
+                        groups="ug_base_distrib.group_distrib_manager"/>
+                    </xpath>
+                </data>
+            </field>    
         </record>
 
         <record model="ir.actions.server" id="action_confirmation_undo">

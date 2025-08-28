@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="change_sync_status_view" model="ir.ui.view">
+            <field name="name">Change Sync Status</field>
+            <field name="model">distrib.change.sync.status</field>
+            <field name="arch" type="xml">
+                <form string="Change Status">
+                    <header>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="order_id" readonly="1" options="{'no_open': True, 'no_quick_create': True}"/>
+                            <field name="sync_state"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="Save" name="save_status" class="oe_highlight" type="object"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_change_sync_status" model="ir.actions.act_window">
+            <field name="name">Change Sync Status</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">distrib.change.sync.status</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="change_sync_status_view"/>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

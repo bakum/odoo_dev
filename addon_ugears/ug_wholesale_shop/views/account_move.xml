@@ -17,6 +17,9 @@
                         <field name="date_facture"/>
                         <field name="number_facture"/>
                     </xpath>
+                    <xpath expr="//field[@name='tax_totals']" position="after">
+                        <field name="amount_qty"/>
+                    </xpath>
                 </data>
             </field>
         </record>
