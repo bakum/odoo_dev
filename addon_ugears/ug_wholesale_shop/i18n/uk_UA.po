@@ -2422,7 +2422,7 @@ msgstr "Загалом"
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order__total_product_uom_qty
 msgid "Total Product Quantity"
-msgstr ""
+msgstr "Загальна кількість товару"
 
 #. module: ug_wholesale_shop
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order__boxes_total

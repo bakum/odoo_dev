@@ -59,9 +59,6 @@ class SaleOrder(models.Model):
         groups="ug_base_distrib.group_distrib_manager",
         tracking=True,)
 
-    amount_qty = fields.Float(string="Total quantity",
-                              store=True, compute='_compute_quantity_amount')
-
     sync_state = fields.Selection(
         selection=[
             ('new', "New"),
@@ -80,14 +77,14 @@ class SaleOrder(models.Model):
                             groups="ug_base_distrib.group_distrib_manager",
                             copy=False)                          
 
-    @api.depends('order_line.product_uom_qty')
-    def _compute_quantity_amount(self):
-        for order in self:
-            # order_lines = order.move_line.filtered(lambda x: not x.display_type)
-            order_lines = order.order_line
-            amount_qty = sum(order_lines.mapped('product_uom_qty'))
+    # @api.depends('order_line.product_uom_qty')
+    # def _compute_quantity_amount(self):
+    #     for order in self:
+    #         # order_lines = order.move_line.filtered(lambda x: not x.display_type)
+    #         order_lines = order.order_line
+    #         amount_qty = sum(order_lines.mapped('product_uom_qty'))
 
-            order.amount_qty = amount_qty                                                                     
+    #         order.amount_qty = amount_qty                                                                     
 
     def _default_warehouse(self):
         """ Default warehouse for the sale order """

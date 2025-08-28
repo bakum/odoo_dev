@@ -104,7 +104,7 @@
                         <field name="warehouse_for_moving"/>
                     </xpath>
                     <xpath expr="//field[@name='tax_totals']" position="after">
-                        <field name="amount_qty"/>
+                        <field name="total_product_uom_qty"/>
                     </xpath>
                 </data>
             </field>
