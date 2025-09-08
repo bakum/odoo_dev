@@ -2,7 +2,7 @@
 <odoo>
     <template id="report_distrib_invoice_document">
         <t t-call="web.basic_layout">
-            <t t-set="doc" t-value="doc.with_context({'lang':'en_US'})"/>
+            <t t-set="doc" t-value="doc.with_context(lang='en_US')"/>
             <t t-set="partner_bank" t-value="doc.beneficiary_bank_id if doc.beneficiary_bank_id else doc.partner_bank_id"/>
             <t t-set="beneficiary" t-value="doc.bank_beneficiary_id if doc.bank_beneficiary_id else doc.company_id.partner_id"/>
             <t t-set="order" t-value="doc.get_source_orders()"/>

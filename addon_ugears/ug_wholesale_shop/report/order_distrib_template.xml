@@ -2,7 +2,7 @@
 <odoo>
     <template id="report_distriborder_document">
         <t t-call="web.basic_layout">
-            <t t-set="doc" t-value="doc.with_context({'lang':'en_US'})"/>
+            <t t-set="doc" t-value="doc.with_context(lang='en_US')"/>
             <t t-set="no_vat" t-value="true"/>
             <t t-set="palette_weight" t-value="0 if doc.pallet_id.cartoon_weight == 0 else doc.pallet_id.cartoon_weight//1000"/>
             <t t-set="palette_gross" t-value="len(palettes_list['palettes']) * palette_weight + palettes_list['all_weight']//1000"/>
