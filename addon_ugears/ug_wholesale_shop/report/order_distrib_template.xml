@@ -2,7 +2,7 @@
 <odoo>
     <template id="report_distriborder_document">
         <t t-call="web.basic_layout">
-            <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>
+            <t t-set="doc" t-value="doc.with_context({'lang':'en_US'})"/>
             <t t-set="no_vat" t-value="true"/>
             <t t-set="palette_weight" t-value="0 if doc.pallet_id.cartoon_weight == 0 else doc.pallet_id.cartoon_weight//1000"/>
             <t t-set="palette_gross" t-value="len(palettes_list['palettes']) * palette_weight + palettes_list['all_weight']//1000"/>
@@ -102,7 +102,7 @@
                                 <span style="font-size: 0.7em;" t-field="line.product_id.barcode"/>
                             </td>
                             <td name="td_description" class="text-end">
-                                <span style="font-size: 0.8em;" t-field="line.product_id.display_name"/>
+                                <span style="font-size: 0.8em;" t-esc="line.product_id.with_context(lang='en_US').name"/>
                             </td>
                             <td name="td_qtt" class="text-end">
                                 <t t-set="all_qtt" t-value="all_qtt + line.product_uom_qty"/>
