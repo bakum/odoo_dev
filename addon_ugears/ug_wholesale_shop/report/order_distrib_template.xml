@@ -21,7 +21,7 @@
                         </h4>
                     </td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <td align="left">
                         <strong style="margin-left:30px;">The Supplier:</strong>
                     </td>
@@ -30,7 +30,7 @@
                             <span t-field="doc.company_id.partner_id.name" style="margin-left:30px;"/>
                         </h5>
                     </td>
-                </tr>
+                </tr> -->
                 <tr>
                     <td align="left">
                         <strong style="margin-left:30px;">The Buyer:</strong>

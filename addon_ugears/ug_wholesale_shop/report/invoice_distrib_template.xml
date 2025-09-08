@@ -311,7 +311,7 @@
                                 <span style="font-size: 0.7em;" t-field="line.product_id.barcode"/>
                             </td>
                             <td name="td_description" class="text-start">
-                                <span style="font-size: 0.8em;" t-field="line.product_id.display_name"/>
+                                <span style="font-size: 0.8em;" t-esc="line.product_id.with_context(lang='en_US').name"/>
                             </td>
                             <td name="td_qtt" class="text-end">
                                 <t t-set="all_qtt" t-value="all_qtt + line.quantity"/>
