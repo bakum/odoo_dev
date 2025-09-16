@@ -28,7 +28,11 @@
             'rag_search/static/src/js/chat/ChatInterface.js',
             'rag_search/static/src/js/chat/ChatInterface.xml',
             'rag_search/static/src/js/chat/ChatInterface.css'
-        ]
+        ],
+        'web.assets_frontend':[
+            'rag_search/static/src/js/lib/cytoscape/cytoscape.min.js',
+            'rag_search/static/src/js/GraphComponent/graph_component.js'
+        ],
     },
     "external_dependencies": {
         "python":
