@@ -403,8 +403,8 @@
                         <span>Gross weight of Shipment (kg):</span>
                     </td>
                     <td t-if="order" colspan="2" class="text-end">
-<!--                        <span t-raw="'%s' % (round(order.brutto_total/1000,2))"/>-->
-                        <span />
+                        <span t-if="factura" t-raw="'%s' % (round(order.brutto_total/1000,2))"/>
+                        <span t-else=""/>
                     </td>
                     <td t-else="" colspan="2" class="text-end"><span> </span></td>
                 </tr>
@@ -413,8 +413,8 @@
                         <span>Net weight of Shipment (kg):</span>
                     </td>
                     <td t-if="order" colspan="2" class="text-end">
-<!--                        <span t-raw="round(order.netto_total/1000,2)"/>-->
-                        <span />
+                        <span t-if="factura" t-raw="round(order.netto_total/1000,2)"/>
+                        <span t-else=""/>
                     </td>
                     <td t-else="" colspan="2" class="text-end"><span> </span></td>
                 </tr>
@@ -423,8 +423,9 @@
                         <span>Number of pallets:</span>
                     </td>
                     <td t-if="palettes_list and palettes_list['palettes']" colspan="2" class="text-end">
-<!--                        <span t-raw="len(palettes_list['palettes'])"/></td>-->
-                        <span/></td>
+                       <span t-if="factura" t-raw="len(palettes_list['palettes'])"/>
+                        <span t-else=""/>
+                    </td>
                     <td colspan="2" t-else="" class="text-end"><span> </span></td>
                 </tr>
             </table>
