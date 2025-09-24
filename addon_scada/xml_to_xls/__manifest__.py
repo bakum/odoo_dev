@@ -6,7 +6,7 @@
     "depends": ["base", "web"],
     "assets": {
         "web.assets_backend": [
-            "xml_to_xls/static/lib/xlsx.full.min.js",
+            "xml_to_xls/static/lib/xlsx/xlsx.full.min.js",
             # "xml_to_xls/static/lib/handsontable.full.min.js",
             # "xml_to_xls/static/lib/handsontable.min.css",
             "xml_to_xls/static/src/js/widgets/xml_preview/xml_preview.xml",
