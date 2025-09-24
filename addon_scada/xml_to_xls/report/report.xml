@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="report.paperformat" id="xml_to_xsl_paperformat_a4">
+        <field name="name">Report A4</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <template id="report_footer">
+        <div class="footer" style="width: 100%; text-align: right; font-size: 10px; color: #666;">
+            Page <span class="page"></span> of <span class="topage"></span>
+        </div>
+    </template>
+
+    <template id="report_pdf_document">       
+        <t t-foreach="docs" t-as="doc"> 
+            <main>               
+                <div class="page">
+                    <t t-raw="doc.html_table"/>
+                </div>                
+            </main>
+        </t>
+    </template>
+
+    <!-- Определение колонтитула для wkhtmltopdf -->
+    <template id="report_pdf_document_footer">
+        <div class="footer">
+            Page <span class="page"/> of <span class="topage"/>
+        </div>
+    </template>
+
+    <record id="action_report_sheetjs" model="ir.actions.report">
+        <field name="name">Export to PDF</field>
+        <field name="model">xml.import</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xml_to_xls.report_pdf_document</field>
+        <field name="print_report_name">'Report-' + object.name</field>
+        <field name="paperformat_id" ref="xml_to_xls.xml_to_xsl_paperformat_a4"/>
+
+    </record>
+</odoo>

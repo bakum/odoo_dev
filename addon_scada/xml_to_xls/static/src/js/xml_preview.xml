@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-name="xml_to_xsl.Preview" owl="1">
+    <div class="xls-container" t-ref="previewContainer" style="width: 100%; overflow:auto; border:1px solid #ccc; max-height:1200px;">
+        <em t-if="!props.record?.data">XLS preview will appear after generation</em>
+    </div>
+  </t>
+</templates>
