@@ -85,7 +85,7 @@
         </record>
 
         
-        <menuitem id="menu_xml_import" parent="menu_xml_to_xls_root" name="XML Imports" action="action_xml_import"/>
+        <menuitem id="menu_xml_import" parent="menu_xml_to_xls_root" name="XML Imports" action="action_xml_import" sequence="20"/>
     </data>
 </odoo>
 

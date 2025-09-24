@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="xml_to_xls.XmlDashboard" owl="1">
+        <div class="container-fluid">
+          <!-- Начальный экран -->
+          <t t-transition="fade" t-if="!state.hasSearched">
+            <div class="d-flex flex-column align-items-center"
+                   style="min-height: 100vh; padding-top: 25vh;">
+                <div class="input-group" style="max-width: 600px;">
+                  <input t-ref="queryInput"
+                         placeholder="Open XML file..."
+                         class="form-control form-control-lg text-center"
+                         onclick="document.getElementById('xmlFileInput').click();"
+                         style="font-size: 1.2rem;" />
+                  <button class="btn btn-primary btn-lg"
+                          
+                          onclick="document.getElementById('xmlFileInput').click();"
+                          style="padding: 0 1.5rem;">
+                    <i class="fa fa-file-code-o fa-2x" aria-hidden="true"></i>
+                  </button>
+                  <input id="xmlFileInput" type="file"
+                        accept=".xml"
+                        multiple="false" hidden="1"
+                        t-on-change="selectXmlFile"
+                    />
+                </div>
+                <div class="mt-3" style="height: 20px;">
+                  <img t-if="state.isLoading"
+                       src="/xml_to_xls/static/src/img/dots.svg"
+                       alt="Loading..."
+                       style="width: 60px; height: 15px;" />
+                </div>
+              </div>
+          </t>
+            <!-- Экран с результатами -->
+          <t t-transition="fade" t-if="state.hasSearched">
+            <div class="row" style="height: 90vh; overflow: hidden;">
+                <div class="col-12" style="height: 100%; overflow-y: auto;">
+                    <div class="card shadow d-flex">
+                        <div class="p-4">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="input-group" style="max-width: 600px;">
+                                    <input t-ref="queryInput1"
+                                        placeholder="Open XML file..."
+                                        onclick="document.getElementById('xmlFileInput1').click();"
+                                        class="form-control"
+                                        
+                                        style="max-width: 600px;" />
+
+                                    <button class="btn btn-primary" onclick="document.getElementById('xmlFileInput1').click();"><i class="fa fa-file-code-o" aria-hidden="true"></i></button>
+                                    <input id="xmlFileInput1" type="file"
+                                        accept=".xml"
+                                        multiple="false" hidden="1"
+                                        t-on-change="selectXmlFile"
+                                    />
+                                </div>
+                                <div class="mt-3" style="height: 20px;">
+                                    <img t-if="state.isLoading"
+                                        src="/xml_to_xls/static/src/img/dots.svg"
+                                        alt="Loading..."
+                                        style="width: 60px; height: 15px;" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </t>
+        </div>
+    </t>
+</templates>

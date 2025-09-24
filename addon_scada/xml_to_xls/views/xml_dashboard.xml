@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="xml_to_xsl_dashboard" model="ir.actions.client">
+            <field name="name">Dashboard</field>
+            <field name="tag">xml_to_xls.xml_dashboard</field>
+        </record>
+
+        <menuitem id="xml_to_xsl_main"
+            name="Dashboard"
+            parent="menu_xml_to_xls_root"
+            action="xml_to_xsl_dashboard"
+            sequence="10"/>
+    </data>
+</odoo>

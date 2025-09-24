@@ -7,10 +7,13 @@
     "assets": {
         "web.assets_backend": [
             "xml_to_xls/static/lib/xlsx/xlsx.full.min.js",
+            "xml_to_xls/static/src/js/hooks/hooks.js",
             # "xml_to_xls/static/lib/handsontable.full.min.js",
             # "xml_to_xls/static/lib/handsontable.min.css",
             "xml_to_xls/static/src/js/widgets/xml_preview/xml_preview.xml",
             "xml_to_xls/static/src/js/widgets/xml_preview/xls_preview.js",
+            "xml_to_xls/static/src/js/dashboard/dashboard.js",
+            "xml_to_xls/static/src/js/dashboard/dashboard.xml",
             # 'xml_to_xls/static/src/js/xls_preview_simple.js',
         ],
     },
@@ -20,6 +23,7 @@
         "views/xml_import_views.xml",
         "views/res_partner.xml",
         "report/report.xml",
+        "views/xml_dashboard.xml",
     ],
     "installable": True,
     "application": True,
