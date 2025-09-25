@@ -356,4 +356,4 @@ msgstr ""
 #: code:addons/xml_to_xls/static/src/js/components/PDFViewer/PDFViewer.xml:0
 #, python-format
 msgid "← Previous"
-msgstr "Попередня ←"
+msgstr "← Попередня"

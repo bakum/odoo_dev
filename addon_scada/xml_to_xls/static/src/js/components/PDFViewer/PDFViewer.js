@@ -15,6 +15,8 @@ export class PDFViewer extends Component {
         this.state = useState({
             currentPage: this.props.pageNumber || 1,
             totalPages: 1,
+            // progress: 0,
+            loading: false,
         });
         this.pdfDoc = null;   // <--- кэш для документа
 
@@ -60,9 +62,22 @@ export class PDFViewer extends Component {
     try {
         // Загружаем PDF только если он ещё не загружен или URL сменился
         if (!this.pdfDoc || props.url !== this.currentUrl) {
+            this.state.loading = true;
+            // this.state.progress = 0;
+            // Загружаем документ
+            // const loadingTask = pdfjsLib.getDocument(props.url);
+            // loadingTask.onProgress = (progressData) => {
+            //     if (progressData && progressData.total) {
+            //         this.state.progress = Math.round(
+            //             (progressData.loaded / progressData.total) * 100
+            //         );
+            //         console.log(`Loading progress: ${this.state.progress}%`);
+            //     }
+            // };
             this.pdfDoc = await pdfjsLib.getDocument(props.url).promise;
             this.currentUrl = props.url;
             this.state.totalPages = this.pdfDoc.numPages;
+            
         }
         const pdf = this.pdfDoc;
         // this.state.totalPages = pdf.numPages;
@@ -80,7 +95,7 @@ export class PDFViewer extends Component {
         // функция рендера одной страницы
         const renderPage = async (pageNum) => {
             const page = await pdf.getPage(pageNum);
-            const viewport = page.getViewport({scale: 1.2});
+            const viewport = page.getViewport({scale: 1.3});
 
             const wrapper = document.createElement("div");
             wrapper.style.position = "relative";
@@ -143,6 +158,7 @@ export class PDFViewer extends Component {
         }
 
         container.appendChild(spread);
+        this.state.loading = false;
 
     } catch (e) {
         console.error("Error loading PDF:", e);

@@ -3,7 +3,7 @@
   <t t-name="xml_to_xls.PDFViewer" owl="1">
     <div class="pdf-viewer-container border rounded p-3">
       <!-- Навигация по страницам -->
-      <div class="d-flex align-items-center justify-content-center gap-3 mb-3">
+      <div t-if="!state.isLoading" class="d-flex align-items-center justify-content-center gap-3 mb-3">
         <button type="button"
                 class="btn btn-sm btn-outline-secondary"
                 t-on-click="() => this.goToPage(-1)"
@@ -18,13 +18,19 @@
           Next →
         </button>
       </div>
+      <div t-if="state.isLoading" class="mt-3" style="height: 20px;">
+        <img 
+              src="/xml_to_xls/static/src/img/dots.svg"
+              alt="Loading..."
+              style="width: 60px; height: 15px;" />
+      </div>
 
       <!-- Контейнер для PDF canvas -->
-    <div t-ref="pdfViewer"
-        style="position: relative; width: 100%; height: auto; overflow: auto;
-                display: flex; justify-content: center; align-items: flex-start;">
-        <!-- Здесь рисуется PDF-страница -->
-    </div>
+      <div t-ref="pdfViewer"
+          style="position: relative; width: 100%; height: auto; overflow: auto;
+                  display: flex; justify-content: center; align-items: flex-start;">
+          <!-- Здесь рисуется PDF-страница -->
+      </div>
     </div>
   </t>
 </templates>
