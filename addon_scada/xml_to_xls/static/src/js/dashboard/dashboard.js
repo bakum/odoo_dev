@@ -4,13 +4,17 @@ import {Component, useState, useRef, useEffect} from "@odoo/owl";
 import {useService} from "@web/core/utils/hooks";
 import {registry} from "@web/core/registry";
 import {useAutoFocus} from "../hooks/hooks";
+import {PDFViewer} from "../components/PDFViewer/PDFViewer";
 
 export class XmlDashboard extends Component {
+    static components = {PDFViewer};
+
     setup() {
         this.rpc = useService("rpc");
         this.orm = useService("orm");
         this.state = useState({
             xml_filename: "",
+            xls_filename: "#", //http://localhost:8017/web/content/xml.import/53/xls_file/?download=false
             import_id: null,
             hasSearched: false,
             import: [],
@@ -24,6 +28,12 @@ export class XmlDashboard extends Component {
             if (state || xml_filename) 
                 this.queryInputRef1.el.value = this.state.xml_filename;
         }, () => [this.state.hasSearched, this.state.xml_filename]);
+        useEffect((id) => {
+            if (id) 
+                this.state.xls_filename = `/web/content/xml.import/${id}/xls_file/?download=false`;
+            else
+                this.state.xls_filename = "#";
+        }, () => [this.state.import_id]);
     }
 
     selectXmlFile(event) {

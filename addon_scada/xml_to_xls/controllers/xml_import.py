@@ -47,3 +47,27 @@ class XmlImportController(http.Controller):
 
         except Exception as e:
             return {"error": str(e)}
+
+    @http.route('/xml_to_xls/download_pdf/<int:record_id>', type='http', auth="user")
+    def download_pdf(self, record_id, **kwargs):
+        record = request.env['xml.import'].browse(record_id)
+        if not record:
+            return request.not_found()
+
+        # Берём action отчёта
+        report_action = request.env.ref('xml_to_xls.action_report_sheetjs').report_action(record)
+
+        # Генерация PDF
+        pdf_content, content_type = request.env['ir.actions.report']._render_qweb_pdf(
+            report_action['report_name'], [record.id]
+        )
+
+        filename = f"{record.display_name}.pdf"
+
+        return request.make_response(
+            pdf_content,
+            headers=[
+                ('Content-Type', 'application/pdf'),
+                ('Content-Disposition', f'attachment; filename={filename}')
+            ]
+        )

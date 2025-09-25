@@ -42,6 +42,7 @@
             </field>
         </record>
 
-        <menuitem id="menu_xml_partner" parent="menu_xml_to_xls_settings" name="Parners" action="xml_to_xls.partner_template_action"/>
+        <menuitem id="menu_xml_partner" parent="menu_xml_to_xls_settings" name="Parners" 
+            action="xml_to_xls.partner_template_action" groups="xml_to_xls.group_converter_manager"/>
     </data>
 </odoo>

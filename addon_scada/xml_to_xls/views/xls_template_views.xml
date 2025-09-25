@@ -40,6 +40,7 @@
 
         <menuitem id="menu_xml_to_xls_root" name="Regulatory Reporting Converter"/>
         <menuitem id="menu_xml_to_xls_settings" parent="menu_xml_to_xls_root" name="Settings" sequence="30"/>
-        <menuitem id="menu_xls_template" parent="menu_xml_to_xls_settings" name="XLS Report Templates" action="action_xls_template"/>
+        <menuitem id="menu_xls_template" parent="menu_xml_to_xls_settings" name="XLS Report Templates" action="action_xls_template"
+            groups="xml_to_xls.group_converter_manager"/>
     </data>
 </odoo>
