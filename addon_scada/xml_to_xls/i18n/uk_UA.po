@@ -66,7 +66,7 @@ msgstr "Створено користувачем"
 #: model:ir.model.fields,field_description:xml_to_xls.field_xml_import__create_date
 #: model:ir.model.fields,field_description:xml_to_xls.field_xml_xls_template__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Дата створення"
 
 #. module: xml_to_xls
 #: model:ir.actions.client,name:xml_to_xls.xml_to_xsl_dashboard

@@ -53,6 +53,7 @@
                     <field name="partner_id"/>
                     <field name="template_id"/>
                     <field name="create_uid"/>
+                    <field name="create_date"/>
                     <!-- <field name="xml_filename"/>
                     <field name="xls_filename"/> -->
                 </tree>
