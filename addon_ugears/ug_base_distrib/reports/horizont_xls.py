@@ -40,6 +40,8 @@ class HorizontXlsx(models.AbstractModel):
             sheet.write(0, 2, 'Cena', bold_head)
             line_counter = 1
             for line in obj.order_line:
+                if line.display_type in ('line_section', 'line_note'):
+                    continue
                 if line.product_template_id.barcode:
                     sheet.write(line_counter, 0, line.product_template_id.barcode, cell_format)
                 else:
@@ -105,6 +107,8 @@ class OrderToXlsx(models.AbstractModel):
             sheet.write(9, 10, price_total_title, head)
             row_n = 0
             for count, line in enumerate(obj.order_line):
+                if line.display_type in ('line_section', 'line_note'):
+                    continue
                 row_n = 9 + count + 1
                 sheet.write(row_n, 0, count + 1, txt)
                 sheet.write(row_n, 1, '' if not line.product_id.customscode else line.product_id.customscode, txt)
