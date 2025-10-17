@@ -1,0 +1,359 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* xml_to_xls
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-09-25 15:46+0000\n"
+"PO-Revision-Date: 2025-09-25 15:46+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: xml_to_xls
+#: model:ir.actions.report,print_report_name:xml_to_xls.action_report_sheetjs
+msgid "'Report-' + object.name"
+msgstr ""
+
+#. module: xml_to_xls
+#: model:ir.model.fields,field_description:xml_to_xls.field_res_partner__address_eng
+#: model:ir.model.fields,field_description:xml_to_xls.field_res_users__address_eng
+msgid "Address in English"
+msgstr "Адреса англійською"
+
+#. module: xml_to_xls
+#: model:res.groups,name:xml_to_xls.group_converter_manager
+msgid "Administrator"
+msgstr "Адміністратор"
+
+#. module: xml_to_xls
+#: model:ir.model.fields.selection,name:xml_to_xls.selection__xml_xls_template__report_type__balance
+msgid "Balance"
+msgstr "Баланс"
+
+#. module: xml_to_xls
+#: model:ir.model.fields.selection,name:xml_to_xls.selection__xml_xls_template__report_type__bdds
+msgid "Cash flow"
+msgstr "Бюджет руху грошових коштів"
+
+#. module: xml_to_xls
+#: model:ir.model,name:xml_to_xls.model_res_partner
+msgid "Contact"
+msgstr "Контакт"
+
+#. module: xml_to_xls
+#: model_terms:ir.actions.act_window,help:xml_to_xls.action_xml_import
+msgid "Create a new import to generate XLS from XML"
+msgstr ""
+
+#. module: xml_to_xls
+#: model_terms:ir.actions.act_window,help:xml_to_xls.partner_template_action
+msgid "Create a new partner"
+msgstr ""
+
+#. module: xml_to_xls
+#: model:ir.model.fields,field_description:xml_to_xls.field_xml_import__create_uid
+#: model:ir.model.fields,field_description:xml_to_xls.field_xml_xls_template__create_uid
+msgid "Created by"
+msgstr "Створено користувачем"
+
+#. module: xml_to_xls
+#: model:ir.model.fields,field_description:xml_to_xls.field_xml_import__create_date
+#: model:ir.model.fields,field_description:xml_to_xls.field_xml_xls_template__create_date
+msgid "Created on"
+msgstr "Дата створення"
+
+#. module: xml_to_xls
+#: model:ir.actions.client,name:xml_to_xls.xml_to_xsl_dashboard
+#: model:ir.ui.menu,name:xml_to_xls.xml_to_xsl_main
+msgid "Dashboard"
+msgstr "Панель керування"
+
+#. module: xml_to_xls
+#: model:ir.model.fields,field_description:xml_to_xls.field_xml_import__display_name
+#: model:ir.model.fields,field_description:xml_to_xls.field_xml_xls_template__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: xml_to_xls
+#. odoo-javascript
+#: code:addons/xml_to_xls/static/src/js/dashboard/dashboard.xml:0
+#, python-format
+msgid "Download PDF"
+msgstr "Завантажити PDF"
+
+#. module: xml_to_xls
+#. odoo-javascript
+#: code:addons/xml_to_xls/static/src/js/dashboard/dashboard.xml:0
+#, python-format
+msgid "Download XLSX"
+msgstr "Завантажити XLSX"
+
+#. module: xml_to_xls
+#: model:ir.model.fields,field_description:xml_to_xls.field_xml_import__date_end
+msgid "End of Period"
+msgstr "Кінець періоду"
+
+#. module: xml_to_xls
+#: model:ir.model.fields,field_description:xml_to_xls.field_xml_import__date_prev_end
+msgid "End of Period (Prev Year)"
+msgstr "Кінець періоду (минулого року)"
+
+#. module: xml_to_xls
+#: model:ir.actions.report,name:xml_to_xls.action_report_sheetjs
+msgid "Export to PDF"
+msgstr "Експорт в PDF"
+
+#. module: xml_to_xls
+#: model:ir.model.fields,field_description:xml_to_xls.field_xml_import__xls_filename
+msgid "Filled Filename"
+msgstr "Ім'я заповненого файлу"
+
+#. module: xml_to_xls
+#: model:ir.model.fields,field_description:xml_to_xls.field_xml_import__xls_file
+msgid "Filled XLS"
+msgstr "Файл XLS"
+
+#. module: xml_to_xls
+#: model_terms:ir.ui.view,arch_db:xml_to_xls.view_xml_import_form
+msgid "Generate PDF"
+msgstr "Генерувати PDF"
+
+#. module: xml_to_xls
+#: model_terms:ir.ui.view,arch_db:xml_to_xls.view_xml_import_form
+msgid "Generate XLS"
+msgstr "Генерувати XLS"
+
+#. module: xml_to_xls
+#: model_terms:ir.ui.view,arch_db:xml_to_xls.view_xml_import_search
+msgid "Group By"
+msgstr ""
+
+#. module: xml_to_xls
+#: model:ir.model.fields,field_description:xml_to_xls.field_res_partner__guid
+#: model:ir.model.fields,field_description:xml_to_xls.field_res_users__guid
+msgid "Guid 1C:Enterprise"
+msgstr "УІД 1С:Підприємство"
+
+#. module: xml_to_xls
+#: model:ir.module.category,description:xml_to_xls.module_category_xml_to_xls
+msgid "Helps you convert report from xml to xlsx"
+msgstr ""
+
+#. module: xml_to_xls
+#: model:ir.model.fields,field_description:xml_to_xls.field_xml_import__id
+#: model:ir.model.fields,field_description:xml_to_xls.field_xml_xls_template__id
+msgid "ID"
+msgstr ""
+
+#. module: xml_to_xls
+#: model:ir.model.fields,field_description:xml_to_xls.field_res_partner__is_organization
+#: model:ir.model.fields,field_description:xml_to_xls.field_res_users__is_organization
+msgid "Is Organization"
+msgstr "Організація"
+
+#. module: xml_to_xls
+#: model:ir.model.fields,field_description:xml_to_xls.field_xml_import__write_uid
+#: model:ir.model.fields,field_description:xml_to_xls.field_xml_xls_template__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: xml_to_xls
+#: model:ir.model.fields,field_description:xml_to_xls.field_xml_import__write_date
+#: model:ir.model.fields,field_description:xml_to_xls.field_xml_xls_template__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: xml_to_xls
+#. odoo-javascript
+#: code:addons/xml_to_xls/static/src/js/dashboard/dashboard.xml:0
+#: code:addons/xml_to_xls/static/src/js/dashboard/dashboard.xml:0
+#, python-format
+msgid "Loading..."
+msgstr "Завантаження..."
+
+#. module: xml_to_xls
+#: model:ir.model.fields,field_description:xml_to_xls.field_xml_import__name
+#: model:ir.model.fields,field_description:xml_to_xls.field_xml_xls_template__name
+msgid "Name"
+msgstr "Найменування"
+
+#. module: xml_to_xls
+#: model:ir.model.fields,field_description:xml_to_xls.field_res_partner__name_eng
+#: model:ir.model.fields,field_description:xml_to_xls.field_res_users__name_eng
+msgid "Name in English"
+msgstr "Найменування англійською"
+
+#. module: xml_to_xls
+#. odoo-javascript
+#: code:addons/xml_to_xls/static/src/js/components/PDFViewer/PDFViewer.xml:0
+#, python-format
+msgid "Next →"
+msgstr "Наступна →"
+
+#. module: xml_to_xls
+#: model:ir.model.fields,field_description:xml_to_xls.field_res_partner__okpo_code
+#: model:ir.model.fields,field_description:xml_to_xls.field_res_users__okpo_code
+msgid "OKPO Code"
+msgstr "Код ЄДРПОУ"
+
+#. module: xml_to_xls
+#. odoo-javascript
+#: code:addons/xml_to_xls/static/src/js/dashboard/dashboard.xml:0
+#: code:addons/xml_to_xls/static/src/js/dashboard/dashboard.xml:0
+#, python-format
+msgid "Open XML file..."
+msgstr "Відкрити XML файл..."
+
+#. module: xml_to_xls
+#: model_terms:ir.ui.view,arch_db:xml_to_xls.view_xml_partner_search_inherit
+msgid "Organizations"
+msgstr "Організація"
+
+#. module: xml_to_xls
+#. odoo-javascript
+#: code:addons/xml_to_xls/static/src/js/components/PDFViewer/PDFViewer.xml:0
+#, python-format
+msgid "Page"
+msgstr "Сторінка"
+
+#. module: xml_to_xls
+#: model_terms:ir.ui.view,arch_db:xml_to_xls.report_footer
+#: model_terms:ir.ui.view,arch_db:xml_to_xls.report_pdf_document_footer
+msgid "Page <span class=\"page\"/> of <span class=\"topage\"/>"
+msgstr "Сторінка <span class=\"page\"/> з <span class=\"topage\"/>"
+
+#. module: xml_to_xls
+#: model:ir.ui.menu,name:xml_to_xls.menu_xml_partner
+msgid "Parners"
+msgstr "Партнери"
+
+#. module: xml_to_xls
+#: model:ir.model.fields,field_description:xml_to_xls.field_xml_import__partner_id
+#: model_terms:ir.ui.view,arch_db:xml_to_xls.view_xml_import_search
+msgid "Partner"
+msgstr "Партнер"
+
+#. module: xml_to_xls
+#: model:ir.actions.act_window,name:xml_to_xls.partner_template_action
+msgid "Partners"
+msgstr "Партнери"
+
+#. module: xml_to_xls
+#: model_terms:ir.ui.view,arch_db:xml_to_xls.view_xml_import_form
+msgid "Period Dates"
+msgstr "Дати періоду"
+
+#. module: xml_to_xls
+#: model:ir.model.fields,field_description:xml_to_xls.field_xml_import__html_table
+msgid "Preview Table"
+msgstr ""
+
+#. module: xml_to_xls
+#: model:ir.model.fields.selection,name:xml_to_xls.selection__xml_xls_template__report_type__profit_loss
+msgid "Profit and Loss"
+msgstr "Прибутки та збитки"
+
+#. module: xml_to_xls
+#: model:ir.ui.menu,name:xml_to_xls.menu_xml_to_xls_root
+msgid "Regulatory Reporting Converter"
+msgstr "Конвертер регламентованої звітності"
+
+#. module: xml_to_xls
+#: model:ir.model.fields,field_description:xml_to_xls.field_xml_xls_template__report_type
+msgid "Report Type"
+msgstr "Тип звіту"
+
+#. module: xml_to_xls
+#: model:ir.ui.menu,name:xml_to_xls.menu_xml_to_xls_settings
+msgid "Settings"
+msgstr "Налаштування"
+
+#. module: xml_to_xls
+#: model:ir.model.fields,field_description:xml_to_xls.field_xml_import__date_start
+msgid "Start of Period"
+msgstr "Початок періоду"
+
+#. module: xml_to_xls
+#: model_terms:ir.ui.view,arch_db:xml_to_xls.view_xml_import_search
+msgid "Template"
+msgstr "Шаблон"
+
+#. module: xml_to_xls
+#: model:ir.model.fields,field_description:xml_to_xls.field_xml_xls_template__template_filename
+msgid "Template Filename"
+msgstr "Ім'я файлу шаблону"
+
+#. module: xml_to_xls
+#: model:res.groups,name:xml_to_xls.group_converter_user
+msgid "User"
+msgstr "Користувач"
+
+#. module: xml_to_xls
+#: model:ir.ui.menu,name:xml_to_xls.menu_xls_template
+msgid "XLS Report Templates"
+msgstr "Шаблон XLS звітів"
+
+#. module: xml_to_xls
+#: model:ir.model,name:xml_to_xls.model_xml_xls_template
+#: model:ir.model.fields,field_description:xml_to_xls.field_xml_import__template_id
+#: model:ir.model.fields,field_description:xml_to_xls.field_xml_xls_template__template_file
+msgid "XLS Template"
+msgstr "Шаблон XLS"
+
+#. module: xml_to_xls
+#: model:ir.actions.act_window,name:xml_to_xls.action_xls_template
+msgid "XLS Templates"
+msgstr "Шаблони XLS"
+
+#. module: xml_to_xls
+#. odoo-javascript
+#: code:addons/xml_to_xls/static/src/js/widgets/xml_preview/xml_preview.xml:0
+#, python-format
+msgid "XLS preview will appear after generation"
+msgstr ""
+
+#. module: xml_to_xls
+#: model:ir.model.fields,field_description:xml_to_xls.field_xml_import__xml_file
+msgid "XML File"
+msgstr "Файл XML"
+
+#. module: xml_to_xls
+#: model:ir.model.fields,field_description:xml_to_xls.field_xml_import__xml_filename
+msgid "XML Filename"
+msgstr ""
+
+#. module: xml_to_xls
+#: model:ir.model,name:xml_to_xls.model_xml_import
+msgid "XML Import to XLS"
+msgstr ""
+
+#. module: xml_to_xls
+#: model:ir.actions.act_window,name:xml_to_xls.action_xml_import
+#: model:ir.ui.menu,name:xml_to_xls.menu_xml_import
+msgid "XML Imports"
+msgstr "Імпорти XML"
+
+#. module: xml_to_xls
+#: model:ir.module.category,name:xml_to_xls.module_category_xml_to_xls
+msgid "XML Report Converter"
+msgstr ""
+
+#. module: xml_to_xls
+#. odoo-javascript
+#: code:addons/xml_to_xls/static/src/js/components/PDFViewer/PDFViewer.xml:0
+#, python-format
+msgid "of"
+msgstr ""
+
+#. module: xml_to_xls
+#. odoo-javascript
+#: code:addons/xml_to_xls/static/src/js/components/PDFViewer/PDFViewer.xml:0
+#, python-format
+msgid "← Previous"
+msgstr "← Попередня"

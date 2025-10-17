@@ -1,0 +1,98 @@
+<odoo>
+    <data>
+        <record id="view_xml_import_form" model="ir.ui.view">
+            <field name="name">xml.import.form</field>
+            <field name="model">xml.import</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_fill_template" type="object" string="Generate XLS" class="btn-primary"/>
+                        <button name="action_print_report" type="object" string="Generate PDF" class="btn-secondary o_xls_preview_btn"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" readonly="1"/>
+                                <field name="id" invisible="1"/>
+                                <field name="xml_file" filename="xml_filename"/>
+                                <field name="xml_filename" invisible="1"/>
+                                <!-- <field name="html_table" invisible="1"/>                                 -->
+                            </group>
+                            <group>
+                                <field name="partner_id" force_save="1" readonly="id != False"/>
+                                <field name="template_id" force_save="1" readonly="id != False"/> 
+                                <field name="xls_file" filename="xls_filename" invisible="not xls_file" readonly="1"/>
+                                <field name="xls_filename" invisible="1"/>    
+                                
+                            </group>
+                            <group string="Period Dates">
+                                <field name="date_start" force_save="1" readonly="1"/>
+                                <field name="date_end" force_save="1" readonly="1"/>
+                                <field name="date_prev_end" force_save="1" readonly="1"/>
+                            </group>
+                        </group>
+                        <!-- <group colspan="4" style="width:100%">
+                            <field name="xls_file" widget="xls_preview" readonly="1"/>
+                        </group> -->
+                        <!-- <div class="o_xls_preview_container" style="border:1px solid #ccc; overflow:auto; max-height:500px;">
+                            <em>Preview will appear here after generation</em>
+                        </div> -->
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_xml_import_tree" model="ir.ui.view">
+            <field name="name">xml.import.tree</field>
+            <field name="model">xml.import</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="partner_id"/>
+                    <field name="template_id"/>
+                    <field name="create_uid"/>
+                    <field name="create_date"/>
+                    <!-- <field name="xml_filename"/>
+                    <field name="xls_filename"/> -->
+                </list>
+            </field>
+        </record>
+        <record id="view_xml_import_search" model="ir.ui.view">
+            <field name="name">xml.import.search</field>
+            <field name="model">xml.import</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" filter_domain="[('name', 'ilike', self)]"/>
+                    <separator/>
+                    <group expand="0" name="group_by" string="Group By">
+                        <filter name="partner" string="Partner" domain="[]" context="{'group_by' : 'partner_id'}"/>
+                        <filter name="template" string="Template" domain="[]" context="{'group_by' : 'template_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_xml_import" model="ir.actions.act_window">
+            <field name="name">XML Imports</field>
+            <field name="res_model">xml.import</field>
+            <field name="path">xml_import</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{'search_default_partner': 1, 'search_default_template': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new import to generate XLS from XML
+                </p>
+            </field>
+        </record>
+
+        
+        <menuitem id="menu_xml_import" parent="menu_xml_to_xls_root" 
+            name="XML Imports" 
+            action="action_xml_import" 
+            groups="xml_to_xls.group_converter_manager"
+            sequence="20"/>
+    </data>
+</odoo>
+
