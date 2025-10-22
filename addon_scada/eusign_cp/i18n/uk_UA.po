@@ -1,0 +1,402 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* eusign_cp
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-22 14:59+0000\n"
+"PO-Revision-Date: 2025-10-22 14:59+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/verifier/verifier.xml:0
+#, python-format
+msgid "(p7s, pdf, xml, asics або asice)"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "(зазвичай його назва \"Key-6.dat\" або *.pfx, *.pk8, *.zs2, *.jks)"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "1. Оберіть ЦСК"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "2. Файл ключа"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "3. Параметри підпису"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "ASIC-E. Дані та підпис зберігаються в архіві (розширений формат)"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "ASIC-S. Дані та підпис зберігаються в архіві (простий формат)"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "CAdES"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "CAdES-BES – базова перевірка достовірності і цілісності даних"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "CAdES-C – додається посилання на повні дані для перевірки"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "CAdES-T – додається час підписання файлу КЕП"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid ""
+"CAdES-X Long Trusted– Довгостроковий з повними даними ЦСК для перевірки"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "CAdES-X Long – Довгостроковий з повними даними для перевірки"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "CAdES. Дані та підпис зберігаються в CMS файлі (*.p7s)"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/signer.xml:0
+#, python-format
+msgid "Loader"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#: code:addons/eusign_cp/static/src/components/verifier/verifier.xml:0
+#, python-format
+msgid "Logo"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "PAdES-B-B – базова перевірка достовірності і цілісності даних"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "PAdES-B-LT – додаються повні дані для перевірки"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "PAdES-B-LTA – е-підпис для тривалого (архівного) зберігання"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "PAdES-B-T – додається час підписання файлу КЕП"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "PAdES. Дані та підпис зберігаються в PDF файлі (*.pdf)"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "RSA"
+msgstr ""
+
+#. module: eusign_cp
+#: model:ir.actions.act_url,name:eusign_cp.action_open_trusted_services
+#: model:website.menu,name:eusign_cp.menu_eusign
+msgid "Trust services"
+msgstr "Довірчі послуги"
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "XAdES"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "XAdES-B-B – базова перевірка достовірності і цілісності даних"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "XAdES-B-LT – додаються повні дані для перевірки"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "XAdES-B-LTA – е-підпис для тривалого (архівного) зберігання"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "XAdES-B-T – додається час підписання файлу КЕП"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "XAdES. Дані та підпис зберігаються в XML файлі (*.xml)"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/signer.xml:0
+#, python-format
+msgid "Ініціалізація бібліотеки підпису..."
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "Алгоритм підпису:"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "ДСТУ-4145"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/signer.xml:0
+#, python-format
+msgid "Довірчі послуги"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/signer.xml:0
+#, python-format
+msgid ""
+"За допомогою форми можна підписувати файли, що знаходяться на файловій "
+"системі тощо"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "Зчитати"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid ""
+"Оберіть зі списку свого надавача електронних довірчих послуг – суб’єкта,"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "Оберіть файл для підпису (не більше 5 МБ):"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "Обрати"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "Особистий ключ"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "Пароль захисту ключа"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "Пароль захисту ключа:"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/verifier/verifier.xml:0
+#, python-format
+msgid "Перевірити"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/navbar/navbar.xml:0
+#: code:addons/eusign_cp/static/src/components/verifier/verifier.xml:0
+#, python-format
+msgid "Перевірити підпис"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/verifier/verifier.xml:0
+#, python-format
+msgid "Перетягніть сюди підписаний файл"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "Підпис та дані в одному файлі (enveloped)"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "Підпис та дані в окремих файлах (detached)"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "Підписати"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/navbar/navbar.xml:0
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "Підписати документ"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "Тип підпису:"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "Формат контейнера:"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "Формат підпису:"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/verifier/verifier.xml:0
+#, python-format
+msgid "або"
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/signer/eusigner.xml:0
+#, python-format
+msgid "до якого ви зверталися для отримання електронного підпису."
+msgstr ""
+
+#. module: eusign_cp
+#. odoo-javascript
+#: code:addons/eusign_cp/static/src/components/verifier/verifier.xml:0
+#, python-format
+msgid "завантажте його зі свого носія"
+msgstr ""
