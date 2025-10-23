@@ -17,31 +17,9 @@
         'eusign_cp.assets_signer': [
             # bootstrap
             ('include', 'web._assets_helpers'),
-            # ('include', 'web.assets_frontend'),
             'web/static/src/scss/pre_variables.scss',
             'web/static/lib/bootstrap/scss/_variables.scss',
-            ('include', 'web._assets_bootstrap_backend'), # Подключение Bootstrap
-
-            'web/static/lib/jquery/jquery.js',
-            'web/static/lib/popper/popper.js',
-            'web/static/lib/bootstrap/js/dist/dom/data.js',
-            'web/static/lib/bootstrap/js/dist/dom/event-handler.js',
-            'web/static/lib/bootstrap/js/dist/dom/manipulator.js',
-            'web/static/lib/bootstrap/js/dist/dom/selector-engine.js',
-            'web/static/lib/bootstrap/js/dist/base-component.js',
-            'web/static/lib/bootstrap/js/dist/alert.js',
-            'web/static/lib/bootstrap/js/dist/button.js',
-            'web/static/lib/bootstrap/js/dist/carousel.js',
-            'web/static/lib/bootstrap/js/dist/collapse.js',
-            'web/static/lib/bootstrap/js/dist/dropdown.js',
-            'web/static/lib/bootstrap/js/dist/modal.js',
-            'web/static/lib/bootstrap/js/dist/offcanvas.js',
-            'web/static/lib/bootstrap/js/dist/tooltip.js',
-            'web/static/lib/bootstrap/js/dist/popover.js',
-            'web/static/lib/bootstrap/js/dist/scrollspy.js',
-            'web/static/lib/bootstrap/js/dist/tab.js',
-            'web/static/lib/bootstrap/js/dist/toast.js',
-            # ('include', 'web._assets_bootstrap'),
+            ('include', 'web._assets_bootstrap'), # Подключение Bootstrap
             #
             # required for fa icons
             'web/static/src/libs/fontawesome/css/font-awesome.css',
@@ -53,20 +31,7 @@
             'web/static/src/core/browser/browser.js',
             'web/static/src/core/registry.js',
             'web/static/src/core/assets.js',
-            'eusign_cp/static/src/main.js',
-            'eusign_cp/static/src/signer.js',
-            'eusign_cp/static/src/signer.xml',
-            'eusign_cp/static/src/helpers/signable.js',
-            'eusign_cp/static/src/components/signer/eusigner.js',
-            'eusign_cp/static/src/components/signer/eusigner.xml',
-            'eusign_cp/static/src/components/navbar/navbar.js',
-            'eusign_cp/static/src/components/navbar/navbar.xml',
-            'eusign_cp/static/src/components/verifier/verifier.js',
-            'eusign_cp/static/src/components/verifier/verifier.xml',
-            'eusign_cp/static/src/components/downloader/downloader.js',
-            'eusign_cp/static/src/components/downloader/downloader.xml',
-            'eusign_cp/static/src/components/downloader/downloader.css',
-            'eusign_cp/static/src/accordion.css',
+            'eusign_cp/static/src/**/*',
         ],
         'eusign_cp.assets_library': [
             'eusign_cp/static/lib/euutils.js',
@@ -80,7 +45,6 @@
             'eusign_cp/static/lib/fs/jszip.min.js',
             'eusign_cp/static/lib/toastify-js.js',
             'eusign_cp/static/lib/toastify.min.css',
-            'eusign_cp/static/src/signer.css',
         ]
     },
     'depends': ['base', 'web', "website"],
