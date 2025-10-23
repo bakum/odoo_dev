@@ -27,7 +27,8 @@ whenReady(async () => {
     }
     // const root = await mount(OwlSigner, document.body, {templates, dev: env.debug, name: "Owl EUSignCP", env});
     // odoo.__WOWL_DEBUG__ = { root };
-    await mountComponent(OwlSigner, document.body, { name: "Owl EUSignCP", env })
+    const root = await mountComponent(OwlSigner, document.body, { name: "Owl EUSignCP", env })
+    odoo.__WOWL_DEBUG__ = { root };
     // odoo.isReady = true;
 })
 
