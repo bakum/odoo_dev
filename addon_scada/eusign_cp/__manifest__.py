@@ -18,7 +18,7 @@
             # bootstrap
             'web/static/lib/bootstrap/dist/css/bootstrap.css',
 
-            'web/static/lib/jquery/jquery.js',
+            # 'web/static/lib/jquery/jquery.js',
             # required for fa icons
             'web/static/src/libs/fontawesome/css/font-awesome.css',
             #

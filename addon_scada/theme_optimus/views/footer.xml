@@ -27,7 +27,7 @@
                                 <ul class="list-unstyled">
 <!--                                    <li><i class="fa fa-comment fa-fw me-2"/><span><a href="/contactus">Contact us</a></span></li>-->
                                     <li><i class="fa fa-envelope fa-fw me-2"/><span><a href="mailto:report@optimus.com.ua">report@optimus.com.ua</a></span></li>
-                                    <li><i class="fa fa-phone fa-fw me-2"/><span class="o_force_ltr"><a href="tel:+380503209926">+38050-320-99-26 (автовідповідач)</a></span></li>
+                                    <li><i class="fa fa-phone fa-fw me-2"/><span class="o_force_ltr"><a href="tel:+380503209926">+38 050 320-99-26 (автовідповідач)</a></span></li>
                                 </ul>
 <!--                                <div class="s_social_media text-start o_not_editable" data-snippet="s_social_media" data-name="Social Media" contenteditable="false">-->
 <!--                                    <h5 class="s_social_media_title d-none" contenteditable="true">Follow us</h5>-->
