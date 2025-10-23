@@ -17,14 +17,10 @@
         'eusign_cp.assets_signer': [
             # bootstrap
             'web/static/lib/bootstrap/dist/css/bootstrap.css',
-
-            # 'web/static/lib/jquery/jquery.js',
             # required for fa icons
             'web/static/src/libs/fontawesome/css/font-awesome.css',
             #
             # include base files from framework
-            # ('include', 'web._assets_core'),
-
             'web/static/src/module_loader.js',
             # libs
             'web/static/lib/luxon/luxon.js',
@@ -34,13 +30,7 @@
             'web/static/src/session.js',
             'web/static/src/core/**/*.js',
 
-            'eusign_cp/static/src/main.js',
-            'eusign_cp/static/src/signer.js',
-            'eusign_cp/static/src/signer.xml',
-            'eusign_cp/static/src/signer.css',
-            'eusign_cp/static/src/helpers/signable.js',
-            'eusign_cp/static/src/components/**/*',
-            'eusign_cp/static/src/accordion.css',
+            'eusign_cp/static/src/**/*',
         ],
         'eusign_cp.assets_library': [
             'eusign_cp/static/lib/euutils.js',
