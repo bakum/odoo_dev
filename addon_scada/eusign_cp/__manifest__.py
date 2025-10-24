@@ -19,7 +19,7 @@
             ('include', 'web._assets_helpers'),
             'web/static/src/scss/pre_variables.scss',
             'web/static/lib/bootstrap/scss/_variables.scss',
-            ('include', 'web._assets_bootstrap'), # Подключение Bootstrap
+            ('include', 'web._assets_bootstrap_frontend'), # Подключение Bootstrap
             #
             # required for fa icons
             'web/static/src/libs/fontawesome/css/font-awesome.css',
