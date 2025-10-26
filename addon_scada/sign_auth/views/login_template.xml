@@ -1,0 +1,102 @@
+<odoo>
+    <data>
+        <template id="standard_login" name="Standard Login Form">
+         <form class="oe_login_form" role="form" t-attf-action="/web/login" method="post" onsubmit="this.action = '/web/login' + location.hash">
+            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+            <div class="mb-3 field-login">
+                <label for="login" class="form-label">Email</label>
+                <input type="text" placeholder="Email" name="login" t-att-value="login" id="login" t-attf-class="form-control #{'form-control-sm' if form_small else ''}" required="required" autocomplete="username" autofocus="autofocus" autocapitalize="off"/>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" placeholder="Password" name="password" id="password" t-attf-class="form-control #{'form-control-sm' if form_small else ''}" required="required" autocomplete="current-password" t-att-autofocus="'autofocus' if login else None" maxlength="4096"/>
+            </div>
+
+            <p class="alert alert-danger" t-if="error" role="alert">
+                <t t-esc="error"/>
+            </p>
+            <p class="alert alert-success" t-if="message" role="status">
+                <t t-esc="message"/>
+            </p>
+
+            <div t-attf-class="clearfix oe_login_buttons text-center gap-1 d-grid mb-1 {{'pt-2' if form_small else 'pt-3'}}">
+                <button type="submit" class="btn btn-primary">Log in</button>
+                <t t-if="debug">
+                    <button type="submit" name="redirect" value="/web/become" class="btn btn-link btn-sm">Log in as superuser</button>
+                </t>
+                <div class="o_login_auth"/>
+            </div>
+
+            <input type="hidden" name="redirect" t-att-value="redirect"/>
+         </form>
+        </template>
+
+        <template id="custom_login" name="Sing Login Form">
+        <form class="oe_custom_form" role="form" method="post" action="/custom/login">
+            <h6 class="fw-normal text-muted text-center">Оберіть зі списку свого надавача електронних довірчих послуг – суб’єкта,
+            до якого ви зверталися для отримання електронного підпису.</h6>
+            <select id="cert_provider_select" name="cert_provider" class="form-select mt-2"> </select>
+            <div class="input-group mb-3 mt-3">
+                <input type="text" class="form-control" id="PKeyFileName"
+                        placeholder="Особистий ключ" 
+                        aria-label="Особистий ключ" readonly="1"
+                        onclick="document.getElementById('PKeyFileInput').click();"/>
+                <span class="input-group-text"
+                        style="cursor:pointer; pointer-events:auto;"
+                        t-ref="PKeySelectFileButton"
+                        onclick="document.getElementById('PKeyFileInput').click();">Обрати</span>
+            </div>          
+            <input id="PKeyFileInput" type="file"
+                        multiple="false" hidden="1"/>
+            <div class="input-group mb-3">
+                <input type="password" id="PKeyPassword" disabled="1"                                
+                    placeholder="Пароль захисту ключа" class="form-control"
+                    aria-label="Пароль захисту ключа:"/>
+                <span class="input-group-text">Зчитати</span>
+            </div>          
+            <!-- <input type="text" name="cert_id" class="form-control mb-2" placeholder="Сертификат ID"/> -->
+            <button type="submit" class="btn btn-primary w-100">Войти по КЭП</button>
+        </form>
+        </template>
+
+        <template id="custom_login_tabs" inherit_id="web.login">
+        <xpath expr="//form[@class='oe_login_form']" position="replace">
+            <div class="mb-3" t-if="databases and len(databases) &gt; 1">
+                <label for="db" class="col-form-label">Database</label>
+                <div t-attf-class="input-group {{'input-group-sm' if form_small else ''}}">
+                    <input type="text" name="db" t-att-value="request.db" id="db" t-attf-class="form-control #{'form-control-sm' if form_small else ''}" required="required" readonly="readonly"/>
+                    <a role="button" href="/web/database/selector" class="btn btn-secondary">Select <i class="fa fa-database" role="img" aria-label="Database" title="Database"></i></a>
+                </div>
+            </div>
+            <div class="oe_login_tabs d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+            <div class="login-card">
+                <ul class="nav nav-tabs justify-content-center mb-3">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#standard_login">
+                        <i class="fa fa-user-circle-o" aria-hidden="true"></i><span>By details</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#custom_login">
+                        <i class="fa fa-key" aria-hidden="true"></i><span>By the EDS</span></a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="standard_login" class="tab-pane fade show active">
+                        <t t-call="sign_auth.standard_login"/>
+                    </div>
+
+                    <div id="custom_login" class="tab-pane fade">
+                         <!-- <t t-call="sign_auth.custom_login"/> -->
+                         <div id="cert_login_mount"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        </xpath>
+        </template>
+    </data>
+</odoo>
