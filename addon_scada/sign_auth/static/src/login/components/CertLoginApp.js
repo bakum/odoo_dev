@@ -32,25 +32,6 @@ export class CertLoginApp extends Component {
             // const res = await result.json();
             this.setAlert(result.message || 'Authorization error', 'alert-danger', true);           
         }
-
-        // const csrf = odoo.csrf_token; // встроенный токен CSRF
-        // const keyInfo = this.state.keyInfo;
-        // const response = await fetch('/sign/login', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'X-CSRFToken': csrf,
-        //     },
-        //     body: JSON.stringify({ keyInfo }),
-        // });
-
-        // if (response.redirected) {
-        //     window.location.href = response.url; // сервер сам вернёт redirect
-        // } else {
-        //     const result = await response.json();
-        //     this.setAlert(result.message || 'Ошибка авторизации', 'alert-danger', true);
-        // }
-
     }
 
 
