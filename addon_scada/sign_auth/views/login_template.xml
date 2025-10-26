@@ -70,8 +70,10 @@
                     <a role="button" href="/web/database/selector" class="btn btn-secondary">Select <i class="fa fa-database" role="img" aria-label="Database" title="Database"></i></a>
                 </div>
             </div>
+            
             <div class="oe_login_tabs d-flex justify-content-center align-items-center" style="min-height: 80vh;">
             <div class="login-card">
+            <h5 class="text-center text-primary mb-3">Authorization</h5>
                 <ul class="nav nav-tabs justify-content-center mb-3">
                     <li class="nav-item">
                         <a class="nav-link active" data-bs-toggle="tab" href="#standard_login">

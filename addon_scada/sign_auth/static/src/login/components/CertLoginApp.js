@@ -24,7 +24,7 @@ export class CertLoginApp extends Component {
             keyInfo: this.state.keyInfo['ownerInfo'],
         };
         const result = await jsonrpc('/sign/login', payload);
-        this.onChangeMenuItem();
+        // this.onChangeMenuItem();
         if (result.status === 'ok') {
             window.location.href = result.redirect;
         } else {
@@ -32,6 +32,7 @@ export class CertLoginApp extends Component {
             // const res = await result.json();
             this.setAlert(result.message || 'Authorization error', 'alert-danger', true);           
         }
+        this.onChangeMenuItem();
     }
 
 
@@ -66,15 +67,40 @@ export class CertLoginApp extends Component {
         this.PKeyReadButton = useRef("PKeyReadButton")
         this.PKeyFileInput = useRef("PKeyFileInput")
         this.AuthButton = useRef("AuthButton")
+        this.handleTabSwitch = this.handleTabSwitch.bind(this);
 
         useEffect((isKeyReaded) => {
             this.AuthButton.el.disabled = !isKeyReaded
         }, () => [this.state.privateKeyReaded])
 
+        useEffect(() => {
+            const tabLinks = document.querySelectorAll('a[data-bs-toggle="tab"]');
+            tabLinks.forEach((link) => {
+                link.addEventListener("shown.bs.tab", this.handleTabSwitch);
+            });
+
+            return () => {
+                tabLinks.forEach((link) => {
+                    link.removeEventListener("shown.bs.tab", this.handleTabSwitch);
+                });
+            };
+
+        })
+
         onMounted(async () => {
             this.initialize()
         })
     }
+
+    handleTabSwitch(ev) {
+        const previousTab = ev.relatedTarget?.getAttribute("href");
+        const currentTab = ev.target.getAttribute("href");
+
+        if (previousTab === "#custom_login" && currentTab !== "#custom_login") {
+            this.onChangeMenuItem();
+        }
+    }
+
 
     onchangeCASettings(event) {
         this.setCASettings(event.target.selectedIndex);

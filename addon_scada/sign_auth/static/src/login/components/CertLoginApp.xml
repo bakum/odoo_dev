@@ -2,9 +2,9 @@
 <templates xml:space="preserve">
     <t t-name="sign_auth.CertLoginApp" owl="1">   
         <form class="oe_custom_form" role="form" t-on-submit="onSubmit">
-            <h6 class="fw-normal text-muted text-center">Оберіть зі списку свого надавача електронних довірчих послуг – суб’єкта,
-            до якого ви зверталися для отримання електронного підпису.
-            (зазвичай його назва "Key-6.dat" або *.pfx, *.pk8, *.zs2, *.jks)</h6>
+            <h6 class="fw-normal text-muted text-center" style="font-size: 0.8rem;">Оберіть зі списку свого надавача електронних довірчих послуг – суб’єкта,
+            до якого ви зверталися для отримання електронного підпису.<br/>
+            (зазвичай *.dat або *.pfx, *.pk8, *.zs2, *.jks)</h6>
             <select name="cert_provider" t-ref="CAsServersSelect" class="form-select mt-2" t-on-change="onchangeCASettings"> </select>
             <output t-ref="SelectedCertsList" hidden="1"> </output>
             <br/>
@@ -32,7 +32,7 @@
                     t-on-click="readPrivateKeyButtonClick">Зчитати</span>
             </div>          
             <!-- <input type="text" name="cert_id" class="form-control mb-2" placeholder="Сертификат ID"/> -->
-            <button type="submit" disabled="1" t-ref="AuthButton" class="btn btn-primary w-100">Войти по КЭП</button>
+            <button type="submit" disabled="1" t-ref="AuthButton" class="btn btn-primary w-100">Увійти по КЕП</button>
         </form>  
     </t>
 </templates>

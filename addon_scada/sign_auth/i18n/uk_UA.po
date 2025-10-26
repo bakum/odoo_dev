@@ -6,14 +6,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-24 11:24+0000\n"
-"PO-Revision-Date: 2025-10-24 11:24+0000\n"
+"POT-Creation-Date: 2025-10-26 12:32+0000\n"
+"PO-Revision-Date: 2025-10-26 12:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: sign_auth
+#. odoo-javascript
+#: code:addons/sign_auth/static/src/login/components/CertLoginApp.xml:0
+#, python-format
+msgid "(зазвичай *.dat або *.pfx, *.pk8, *.zs2, *.jks)"
+msgstr ""
 
 #. module: sign_auth
 #: model_terms:ir.ui.view,arch_db:sign_auth.custom_login_tabs
@@ -23,7 +30,26 @@ msgstr "<i class=\"fa fa-key\" aria-hidden=\"true\"/><span>По КЕП</span>"
 #. module: sign_auth
 #: model_terms:ir.ui.view,arch_db:sign_auth.custom_login_tabs
 msgid "<i class=\"fa fa-user-circle-o\" aria-hidden=\"true\"/><span>By details</span>"
-msgstr "<i class=\"fa fa-user-circle-o\" aria-hidden=\"true\"/><span>За реквізитами</span>"
+msgstr ""
+"<i class=\"fa fa-user-circle-o\" aria-hidden=\"true\"/><span>За "
+"реквізитами</span>"
+
+#. module: sign_auth
+#: model_terms:ir.ui.view,arch_db:sign_auth.custom_login
+msgid "<span class=\"input-group-text\">Зчитати</span>"
+msgstr ""
+
+#. module: sign_auth
+#: model_terms:ir.ui.view,arch_db:sign_auth.custom_login_tabs
+msgid "Authorization"
+msgstr "Авторизація"
+
+#. module: sign_auth
+#. odoo-javascript
+#: code:addons/sign_auth/static/src/login/components/CertLoginApp.js:0
+#, python-format
+msgid "Clear"
+msgstr "Стерти"
 
 #. module: sign_auth
 #: model_terms:ir.ui.view,arch_db:sign_auth.custom_login_tabs
@@ -46,9 +72,53 @@ msgid "Log in as superuser"
 msgstr "Увійти як суперкористувач"
 
 #. module: sign_auth
+#. odoo-javascript
+#: code:addons/sign_auth/static/src/login/components/CertLoginApp.xml:0
+#, python-format
+msgid "Log in by the EDS"
+msgstr "Увійти по КЕП"
+
+#. module: sign_auth
 #: model_terms:ir.ui.view,arch_db:sign_auth.standard_login
 msgid "Password"
 msgstr "Пароль"
+
+#. module: sign_auth
+#. odoo-javascript
+#: code:addons/sign_auth/static/src/login/components/CertLoginApp.xml:0
+#, python-format
+msgid "Password protect key"
+msgstr "Пароль захисту ключа"
+
+#. module: sign_auth
+#. odoo-javascript
+#: code:addons/sign_auth/static/src/login/components/CertLoginApp.xml:0
+#, python-format
+msgid "Password protect key:"
+msgstr "Пароль захисту ключа:"
+
+#. module: sign_auth
+#. odoo-javascript
+#: code:addons/sign_auth/static/src/login/components/CertLoginApp.xml:0
+#: code:addons/sign_auth/static/src/login/components/CertLoginApp.xml:0
+#, python-format
+msgid "Private key"
+msgstr "Особистий ключ"
+
+#. module: sign_auth
+#. odoo-javascript
+#: code:addons/sign_auth/static/src/login/components/CertLoginApp.js:0
+#: code:addons/sign_auth/static/src/login/components/CertLoginApp.xml:0
+#, python-format
+msgid "Read"
+msgstr "Зчитати"
+
+#. module: sign_auth
+#. odoo-javascript
+#: code:addons/sign_auth/static/src/login/components/CertLoginApp.xml:0
+#, python-format
+msgid "Select"
+msgstr "Обрати"
 
 #. module: sign_auth
 #: model_terms:ir.ui.view,arch_db:sign_auth.custom_login_tabs
@@ -58,11 +128,36 @@ msgid ""
 msgstr ""
 
 #. module: sign_auth
-#: model_terms:ir.ui.view,arch_db:sign_auth.custom_login_tabs
+#: model_terms:ir.ui.view,arch_db:sign_auth.custom_login
 msgid "Войти по КЭП"
 msgstr ""
 
 #. module: sign_auth
-#: model_terms:ir.ui.view,arch_db:sign_auth.custom_login_tabs
-msgid "Сертификат ID"
+#. odoo-javascript
+#: code:addons/sign_auth/static/src/login/components/CertLoginApp.xml:0
+#: model_terms:ir.ui.view,arch_db:sign_auth.custom_login
+#, python-format
+msgid ""
+"Оберіть зі списку свого надавача електронних довірчих послуг – суб’єкта,\n"
+"            до якого ви зверталися для отримання електронного підпису."
+msgstr ""
+
+#. module: sign_auth
+#: model_terms:ir.ui.view,arch_db:sign_auth.custom_login
+msgid "Обрати"
+msgstr ""
+
+#. module: sign_auth
+#: model_terms:ir.ui.view,arch_db:sign_auth.custom_login
+msgid "Особистий ключ"
+msgstr ""
+
+#. module: sign_auth
+#: model_terms:ir.ui.view,arch_db:sign_auth.custom_login
+msgid "Пароль захисту ключа"
+msgstr ""
+
+#. module: sign_auth
+#: model_terms:ir.ui.view,arch_db:sign_auth.custom_login
+msgid "Пароль захисту ключа:"
 msgstr ""
