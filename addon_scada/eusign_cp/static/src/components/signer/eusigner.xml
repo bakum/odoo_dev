@@ -56,7 +56,7 @@
                                 <input type="password" id="PKeyPassword" t-ref="PKeyPassword"
                                  disabled="state.privateKeyReaded"
                                  placeholder="Пароль захисту ключа" class="form-control"
-                                 aria-label="Пароль захисту ключа:"/>
+                                 aria-label="Пароль захисту ключа:" t-on-keydown="onKeyDown"/>
                               <span class="input-group-text"
                                     t-ref="PKeyReadButton"
                                     style="cursor:pointer; pointer-events:auto;"

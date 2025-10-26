@@ -14,6 +14,12 @@ export class EUSigner extends Component {
         url_cas: {type: String, required: true},
     }
 
+    onKeyDown(ev) {
+        if (ev.key === 'Enter') {
+            this.readPrivateKeyButtonClick();
+        }   
+    }
+
     loadFilesFromLocalStorage(localStorageFolder, loadFunc) {
         if (!this.utils.IsStorageSupported())
             this.euSign.RaiseError(EU_ERROR_NOT_SUPPORTED);
@@ -64,7 +70,7 @@ export class EUSigner extends Component {
         };
 
         try {
-            if (this.PKeyReadButton.el.innerHTML == 'Зчитати') {
+            if (!this.state.privateKeyReaded) {
                 // setStatus('зчитування ключа');
 
                 const files = this.PKeyFileInput.el.files;
