@@ -9,10 +9,10 @@
                 <data>
                     <xpath expr="//field[@name='vat']" position="after">
                         <field name="guid" readonly="1" invisible="not is_company"/>
-                        <field name="is_organization"/>
-                        <field name="okpo_code"/>
-                        <field name="name_eng"/>        
-                        <field name="address_eng"/>
+                        <field name="is_organization" invisible="not is_company"/>
+                        <field name="okpo_code" invisible="not is_company"/>
+                        <field name="name_eng" invisible="not is_company"/>        
+                        <field name="address_eng" invisible="not is_company"/>
                     </xpath>
                 </data>
             </field>
