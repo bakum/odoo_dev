@@ -33,7 +33,6 @@ knownHosts = [
     "acsk.oree.com.ua",
     "ca.treasury.gov.ua",
     "ca.depositsign.com",
-    "ca.alfabank.kiev.ua",
     "cesaris.itsway.kiev.ua",
     "ca.credit-agricole.ua",
     "ca.e-life.com.ua",
@@ -51,6 +50,7 @@ knownHosts = [
     "va1-knedp.ssu.gov.ua",
     "root-test.czo.gov.ua",
     "ca-test.czo.gov.ua",
+    "ca.ngu.gov.ua",
     "ca.monobank.ua"
 ]
 UriMaxLength = 255

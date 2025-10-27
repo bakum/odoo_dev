@@ -33,7 +33,6 @@ knownHosts = [
     "acsk.oree.com.ua",
     "ca.treasury.gov.ua",
     "ca.depositsign.com",
-    "ca.alfabank.kiev.ua",
     "cesaris.itsway.kiev.ua",
     "ca.credit-agricole.ua",
     "ca.e-life.com.ua",
@@ -51,6 +50,7 @@ knownHosts = [
     "va1-knedp.ssu.gov.ua",
     "root-test.czo.gov.ua",
     "ca-test.czo.gov.ua",
+    "ca.ngu.gov.ua",
     "ca.monobank.ua"
 ]
 UriMaxLength = 255
@@ -138,7 +138,7 @@ class EUSignerProxyHundler(Controller):
 
         return returnResponse
 
-    @route("/signer/proxyHandler", auth="public", cors="*", csrf=False, methods=["GET", "POST"])
+    @route("/sign_auth/proxyHandler", auth="public", cors="*", csrf=False, methods=["GET", "POST"])
     def proxy(self, **kwargs):
         proxyResponse = self.HandleRequest(request.httprequest.method, request.httprequest.headers, request.httprequest.args, request.httprequest.data)
         if proxyResponse['status'] != 200:
