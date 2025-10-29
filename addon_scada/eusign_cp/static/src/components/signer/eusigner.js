@@ -1019,7 +1019,7 @@ export class EUSigner extends Component {
         }, () => [this.accordionContainer.el])
 
         onMounted(async () => {
-            await this.initialize()
+            this.initialize()
             setTimeout(() => {
                 this.sharedState.loaded = true
                 this.SignFormatOnChange()
