@@ -138,7 +138,7 @@ class EUSignerProxyHundler(Controller):
 
         return returnResponse
 
-    @route("/sign_auth/proxyHandler", auth="public", cors="*", csrf=False, methods=["GET", "POST"])
+    @route("/signer/proxyHandler", auth="public", cors="*", csrf=False, methods=["GET", "POST"])
     def proxy(self, **kwargs):
         proxyResponse = self.HandleRequest(request.httprequest.method, request.httprequest.headers, request.httprequest.args, request.httprequest.data)
         if proxyResponse['status'] != 200:

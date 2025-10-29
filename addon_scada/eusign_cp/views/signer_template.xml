@@ -19,7 +19,7 @@
                     <t t-call-assets="eusign_cp.assets_library"/>
                     <t t-call-assets="eusign_cp.assets_signer"/>
                 </head>
-                <body> </body>
+                <body><div id="eusign_cp_signer"></div> </body>
             </html>
         </template>
     </data>

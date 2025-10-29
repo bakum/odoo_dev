@@ -60,7 +60,16 @@ HttpContentTypeBase64 = "X-user/base64-data"
 
 
 class EUSignerProxyHundler(Controller):
+
+    def get_ca_addresses(self):
+        url = "https://ca.diia.gov.ua/download/Soft/CAs.json"
+        response = requests.get(url)
+        response.raise_for_status()  # выбросит исключение при ошибке запроса
+        data = response.json()
+        return [entry["address"] for entry in data if "address" in entry]
+
     def isKnownHost(self, uriValue):
+        ca_knownHosts = self.get_ca_addresses()
         try:
             if len(uriValue) > UriMaxLength or not re.match(UriRegEx, uriValue):
                 return False
@@ -72,7 +81,7 @@ class EUSignerProxyHundler(Controller):
             host = urlparse(uriValue).hostname
             if host == None or host == "":
                 host = uriValue
-            if host in knownHosts:
+            if host in ca_knownHosts:
                 return True
         except:
             return False
