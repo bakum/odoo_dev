@@ -17,6 +17,10 @@ whenReady(async () => {
     //     isEnterprise: session.server_version_info ? session.server_version_info.slice(-1)[0] === "e" : undefined,
     // };
     // odoo.isReady = false;
+    const root = document.getElementById('eusign_cp_signer');
+    if (!root) {
+        return;
+    }
 
     let env = makeEnv();
     await startServices(env)
@@ -27,8 +31,8 @@ whenReady(async () => {
     }
     // const root = await mount(OwlSigner, document.body, {templates, dev: env.debug, name: "Owl EUSignCP", env});
     // odoo.__WOWL_DEBUG__ = { root };
-    const root = await mountComponent(OwlSigner, document.body, { name: "Owl EUSignCP", env })
-    odoo.__WOWL_DEBUG__ = { root };
+    const root_mounted = await mountComponent(OwlSigner, root, { name: "Owl EUSignCP", env })
+    odoo.__WOWL_DEBUG__ = { root_mounted };
     // odoo.isReady = true;
 })
 
