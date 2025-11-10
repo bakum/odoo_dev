@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_ai_data_item_form_inherit_pdf" model="ir.ui.view">
+            <field name="name">ai.data.item.form.inherit.pdf</field>
+            <field name="model">ai.data.item</field>
+            <field name="inherit_id" ref="ai_base_gt.view_ai_data_item_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='data_source_id']" position="after">
+                    <field name="pdf_file_id" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="view_ai_data_item_tree_inherit_pdf" model="ir.ui.view">
+            <field name="name">ai.data.item.tree.inherit.pdf</field>
+            <field name="model">ai.data.item</field>
+            <field name="inherit_id" ref="ai_base_gt.view_ai_data_item_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='source']" position="after">
+                    <field name="pdf_file_id" optional="show"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

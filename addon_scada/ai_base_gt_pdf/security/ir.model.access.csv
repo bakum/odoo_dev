@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ai_data_source_pdf_model,AI Data Source PDF,model_ai_data_source_pdf,base.group_user,1,1,1,1
+access_ai_data_item_pdf_field,AI Data Item PDF Field,ai_base_gt.model_ai_data_item,base.group_user,1,1,1,1
