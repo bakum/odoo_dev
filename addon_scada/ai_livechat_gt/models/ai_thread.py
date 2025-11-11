@@ -28,25 +28,23 @@ class AiThreadLivechat(models.Model):
     @ai_tool(condition=lambda thread: thread.assistant_id.has_model_access)
     def _generate_view_action(self, model_name: str, domain: list, name: str, view_mode: str = 'tree,form') -> dict:
         """
-        Use this tool when the user asks to 'show', 'open',
-        'find', or 'go to' a list of records.
-
-        This tool does NOT search data, but generates a DICTIONARY (dict)
-        for opening an Odoo View.
-
-        IMPORTANT: Before using this tool, you MUST first
-        use `_get_model_specs` to get the correct field names for constructing the `domain`.
-
-        Your final answer to the user MUST ONLY be the JSON dictionary returned by this tool.
-
+        [ОБЯЗАТЕЛЬНО К ИСПОЛЬЗОВАНИЮ]
+        
+        Используй этот инструмент, когда пользователь просит 'показать', 'открыть', 
+        'найти' или 'перейти' к списку записей. 
+        
+        Твоя единственная цель — сгенерировать этот JSON-словарь. 
+        Твой финальный ответ ДОЛЖЕН БЫТЬ ТОЛЬКО JSON-словарем, 
+        БЕЗ ЛЮБОГО ДОПОЛНИТЕЛЬНОГО ТЕКСТА ИЛИ ПОЯСНЕНИЙ.
+        
         Args:
-        model_name (str): Technical name of the model to open (e.g., 'sale.order', 'account.move').
-        domain (list): Odoo domain (list of lists) for filtering records (e.g., [['state', '=', 'posted']]).
-        name (str): A descriptive name for this view (e.g., 'Open Accounts').
-        view_mode (str): The display mode, defaulting to 'tree,form'.
-
+            model_name (str): ...
+            domain (list): ...
+            name (str): ...
+            view_mode (str): ...
+        
         Returns:
-        dict: A dictionary representing ir.actions.act_window.
+            dict: Словарь, представляющий ir.actions.act_window.
         """
         self.ensure_one()
         
