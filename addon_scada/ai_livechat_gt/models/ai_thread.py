@@ -144,9 +144,9 @@ class AiThreadLivechat(models.Model):
         }
         
         # 2. Odoo ПОКАЗЫВАЕТ группировку в поиске через 'search_default_'
-        for field in group_by_fields:
-            # e.g., 'country_id' -> 'search_default_group_by_country_id': 1
-            action_context[f'search_default_group_by_{field}'] = 1
+        # for field in group_by_fields:
+        #     # e.g., 'country_id' -> 'search_default_group_by_country_id': 1
+        #     action_context[f'search_default_group_by_{field}'] = 1
         
         # --------------------------------
         # 2. (V59) Контекст для Фильтров (Domain)
@@ -214,6 +214,7 @@ class AiThreadLivechat(models.Model):
             # ------------------------
 
             try:
+                # --- (V62) Ищем ЛЮБОЕ ir.actions ---
                 # 1. Ищем ```json ... ```
                 match = re.search(r'```json\s*(\{.*?\})\s*```', content, re.DOTALL)
                 
@@ -222,16 +223,8 @@ class AiThreadLivechat(models.Model):
                     match_string = match.group(0) # group(0) - это вся найденная строка
                     action_json = json.loads(action_json_str)
 
-                if not match:
-                    # 2. Ищем "сырой" JSON-объект
-                    match = re.search(r'(\{\s*"type":\s*"ir\.actions\.act_window".*?\})', content, re.DOTALL)
-                    if match:
-                        action_json_str = match.group(1)
-                        match_string = match.group(1) # group(1) - это и есть вся строка
-                        action_json = json.loads(action_json_str)
-
-                # (V36 - Проверка)
-                if action_json and isinstance(action_json, dict) and action_json.get('type') == 'ir.actions.act_window':
+                # (V62) Проверяем ЛЮБОЕ действие
+                if action_json and isinstance(action_json, dict) and action_json.get('type', '').startswith('ir.actions.'):
                     
                     # --- НОВАЯ ЛОГИКА (V37) ---
                     if match_string:

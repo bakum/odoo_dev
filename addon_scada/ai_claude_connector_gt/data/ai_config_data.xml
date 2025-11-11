@@ -1,0 +1,6 @@
+<odoo noupdate="1">
+    <record id="claude_config" model="ai.config">
+        <field name="name">Claude</field>
+        <field name="type">claude</field>
+    </record>
+</odoo>

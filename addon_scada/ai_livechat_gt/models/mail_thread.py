@@ -89,6 +89,7 @@ class MailThread(models.AbstractModel):
                 channel.write({'ai_thread_id': ai_thread.id})
 
             content = html2plaintext(body)
+            # content = body
             if not content:
                 new_cr.close()
                 return

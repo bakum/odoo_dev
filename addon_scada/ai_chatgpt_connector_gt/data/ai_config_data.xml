@@ -1,0 +1,6 @@
+<odoo noupdate="1">
+    <record id="chatgpt_config" model="ai.config">
+        <field name="name">ChatGPT</field>
+        <field name="type">chatgpt</field>
+    </record>
+</odoo>
