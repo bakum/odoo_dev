@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_ai_data_source_form_inherit_pdf" model="ir.ui.view">
+            <field name="name">ai.data.source.form.inherit.pdf</field>
+            <field name="model">ai.data.source</field>
+            <field name="inherit_id" ref="ai_base_gt.ai_data_source_view_form"/>
+            <field name="arch" type="xml">
+                
+                <xpath expr="//*[@id='text_content_group']" position="after">
+                    <group invisible="type != 'pdf'">
+                        <field name="pdf_file_ids"
+                            nolabel="1"
+                            colspan="2">
+                            
+                            <list editable="bottom">
+                                <field name="sequence" widget="handle"/>
+                                <field name="file_name_pdf"/>
+                                <field name="file_content_pdf" widget="binary" filename="file_name_pdf"/>
+                            </list>
+                        </field>
+                    </group>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>
