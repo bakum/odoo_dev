@@ -216,8 +216,38 @@ class DistributorMove(models.Model):
         create_index(self._cr, 'distrib_move_date_order_id_idx', 'distrib_distributors_move',
                      ["date_order desc", "id desc"])
 
+    # 2. message_post: отключает email только при disable_mail=True
+    def message_post(self, **kwargs):
+        if self.env.context.get('disable_mail'):
+            # Отключаем email и автоуведомления
+            kwargs['notify'] = False
+            kwargs['email_layout_xmlid'] = False
+            kwargs['message_type'] = kwargs.get('message_type', 'comment')
+
+            # Безопасный контекст
+            self = self.with_context(
+                mail_notify_noemail=True,
+                mail_create_nosubscribe=True,
+                mail_create_nolog=True,
+                mail_post_autofollow=False,
+                mail_notrack=True,
+            )
+
+        # Если disable_mail=False → всё работает как обычно
+        return super().message_post(**kwargs)                 
+
     @api.model_create_multi
     def create(self, vals_list):
+        # Добавляем флаг ONLY для create
+        # message_post выключится ТОЛЬКО если увидит этот флаг
+        self = self.with_context(
+            disable_mail=True,              # Наш кастомный флаг
+            mail_create_nosubscribe=True,
+            mail_create_nolog=True,
+            mail_post_autofollow=False,
+            mail_notify_noemail=True,
+            mail_notrack=True,
+        )
         for vals in vals_list:
             if 'operation' in list(vals.keys()):
                 if 'is_inventory' in list(vals.keys()) and vals['is_inventory']:
