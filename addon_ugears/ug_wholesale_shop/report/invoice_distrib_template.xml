@@ -258,7 +258,8 @@
                         <span>According to PO No.</span>
                     </td>
                     <td align="left" style="vertical-align: top;">
-                        <span t-if="order" t-esc="order.name"/>
+                        <!-- <span t-if="order" t-esc="order.name"/> -->
+                        <span t-esc="doc.source_order_name"/>
                     </td>
                 </tr>
                 <tr>

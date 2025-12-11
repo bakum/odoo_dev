@@ -52,7 +52,15 @@ class AccountMove(models.Model):
                                  tracking=True)
 
     amount_qty = fields.Float(string="Total quantity",
-                              store=True, compute='_compute_quantity_amount') 
+                              store=True, compute='_compute_quantity_amount')
+    
+    source_order_name = fields.Char(
+        string="Source Order",
+        compute='_compute_source_order_name',
+        store=True,
+        readonly=True,
+        help="Source sales order number"
+    )
 
     @api.depends('invoice_line_ids.quantity')
     def _compute_quantity_amount(self):
@@ -61,7 +69,13 @@ class AccountMove(models.Model):
             move_lines = move.invoice_line_ids
             amount_qty = sum(move_lines.mapped('quantity'))
 
-            move.amount_qty = amount_qty                                                      
+            move.amount_qty = amount_qty
+    
+    @api.depends('line_ids.sale_line_ids.order_id')
+    def _compute_source_order_name(self):
+        for move in self:
+            source_order = move.get_source_orders()
+            move.source_order_name = source_order.name if source_order else False
 
     def format_amount(self, amount, currency=None):
         """Форматирует сумму с валютой."""
@@ -133,9 +147,10 @@ class AccountMove(models.Model):
         """
         Преобразует номер из INV/... в PI/...
         """
-        if self.name.startswith("INV/"):
-            return self.name.replace("INV/", "PI/", 1)
-        return self.name
+        # if self.name.startswith("INV/"):
+        #     return self.name.replace("INV/", "PI/", 1)
+        # return self.name
+        return self.source_order_name
 
     @api.depends('commercial_partner_id', 'company_id')
     def _compute_bank_partner_id(self):

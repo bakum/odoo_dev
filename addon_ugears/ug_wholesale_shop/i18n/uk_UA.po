@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-28 17:57+0000\n"
-"PO-Revision-Date: 2025-08-28 17:57+0000\n"
+"POT-Creation-Date: 2025-12-11 07:41+0000\n"
+"PO-Revision-Date: 2025-12-11 07:41+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1188,11 +1188,6 @@ msgid "<strong style=\"margin-left:30px;\">The Buyer:</strong>"
 msgstr "<strong style=\"margin-left:30px;\">Покупець:</strong>"
 
 #. module: ug_wholesale_shop
-#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distriborder_document
-msgid "<strong style=\"margin-left:30px;\">The Supplier:</strong>"
-msgstr "<strong style=\"margin-left:30px;\">Постачальник:</strong>"
-
-#. module: ug_wholesale_shop
 #: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.report_distrib_invoice_document
 msgid "<strong><span>The Buyer:</span></strong>"
 msgstr ""
@@ -2257,6 +2252,21 @@ msgid "Source"
 msgstr "Джерело"
 
 #. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_account_bank_statement_line__source_order_name
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_account_move__source_order_name
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_account_payment__source_order_name
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.view_account_invoice_filter_inherit_distrib
+msgid "Source Order"
+msgstr "Замовлення"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,help:ug_wholesale_shop.field_account_bank_statement_line__source_order_name
+#: model:ir.model.fields,help:ug_wholesale_shop.field_account_move__source_order_name
+#: model:ir.model.fields,help:ug_wholesale_shop.field_account_payment__source_order_name
+msgid "Source sales order number"
+msgstr ""
+
+#. module: ug_wholesale_shop
 #: model:ir.model.fields,help:ug_wholesale_shop.field_sale_order__sync_state
 msgid "Status of syncronization with external system"
 msgstr "Статус синхронізації із зовнішньою системою"
@@ -2443,7 +2453,6 @@ msgstr "Всього нетто, г"
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_account_bank_statement_line__amount_qty
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_account_move__amount_qty
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_account_payment__amount_qty
-#: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order__amount_qty
 #: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__total_qtt
 msgid "Total quantity"
 msgstr "Загальна кількість"

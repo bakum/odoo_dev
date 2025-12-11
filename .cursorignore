@@ -1,0 +1,8 @@
+# Игнорируем гигабайты ненужного для ИИ
+*.po
+*.pot
+/addons/hw_*
+/addons/l10n_*
+/.git
+/doc
+/setup
