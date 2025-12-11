@@ -6,7 +6,7 @@
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">ug_wholesale_shop.report_distrib_invoice</field>
         <field name="report_file">ug_wholesale_shop.report_distrib_invoice</field>
-        <field name="print_report_name">'Proforma - %s' % (object.name)</field>
+        <field name="print_report_name">'Proforma - %s' % (object.source_order_name or object.name)</field>
         <field name="binding_model_id" ref="account.model_account_move"/>
         <field name="binding_type">report</field>
         <field name="paperformat_id" ref="ug_wholesale_shop.ug_wholesale_shop_paperformat_a4_invoice"/>
@@ -18,7 +18,7 @@
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">ug_wholesale_shop.report_distrib_factura</field>
         <field name="report_file">ug_wholesale_shop.report_distrib_factura</field>
-        <field name="print_report_name">'Invoice - %s' % (object.name)</field>
+        <field name="print_report_name">'Invoice - %s' % (object.number_facture or object.name)</field>
         <field name="binding_model_id" ref="account.model_account_move"/>
         <field name="binding_type">report</field>
         <field name="paperformat_id" ref="ug_wholesale_shop.ug_wholesale_shop_paperformat_a4_invoice"/>
