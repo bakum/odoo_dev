@@ -182,9 +182,13 @@ class AccountMove(models.Model):
             else:
                 move.bank_customer_id = move.partner_id
 
-    @api.depends('bank_customer_id')
+    @api.depends('bank_customer_id', 'currency_id')
     def _compute_customer_bank_id(self):
         for move in self:
+            # Не пересчитываем, если уже есть значение и bank_customer_id не менялся
+            if move.customer_bank_id and move.customer_bank_id.partner_id == move.bank_customer_id:
+                continue
+            
             bank_ids = move.bank_customer_id.bank_ids.filtered(
                 lambda
                     bank: bank.partner_id == move.commercial_partner_id and bank.currency_id == move.currency_id)

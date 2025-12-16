@@ -345,21 +345,40 @@ class SaleOrder(models.Model):
         }
 
     def _get_distrib_delivered_lines(self, final=False):
-        # pending_section = None
-        invoiceable_line_ids = []
+        """
+        Получить строки заказа для создания прихода дистрибьютора.
+        
+        :param final: Если True, включает строки с отрицательным qty_to_distrib_deliver
+        :return: Набор строк заказа для создания прихода
+        """
+        self.ensure_one()
         precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
+        deliverable_line_ids = []
+        
         for line in self.order_line:
+            # Пропускаем секции
             if line.display_type == 'line_section':
-                # Only invoice the section if one of its lines is invoiceable
-                # pending_section = line
                 continue
-            if line.display_type != 'line_note' and float_is_zero(line.qty_to_distrib_deliver,
-                                                                  precision_digits=precision):
+            
+            # Пропускаем строки с нулевым количеством для доставки (кроме заметок)
+            if line.display_type != 'line_note' and float_is_zero(
+                line.qty_to_distrib_deliver, precision_digits=precision
+            ):
                 continue
-            if line.qty_to_distrib_deliver > 0 or (
-                    line.qty_to_distrib_deliver < 0 and final) or line.display_type == 'line_note':
-                invoiceable_line_ids.append(line.id)
-        return self.env['sale.order.line'].browse(invoiceable_line_ids)
+            
+            # Исключаем продукты типа service - они не требуют физической доставки
+            if line.product_id and line.product_id.type == 'service':
+                continue
+            
+            # Добавляем строку если есть что доставлять или это заметка
+            has_qty_to_deliver = line.qty_to_distrib_deliver > 0
+            has_negative_qty_in_final = line.qty_to_distrib_deliver < 0 and final
+            is_note = line.display_type == 'line_note'
+            
+            if has_qty_to_deliver or has_negative_qty_in_final or is_note:
+                deliverable_line_ids.append(line.id)
+        
+        return self.env['sale.order.line'].browse(deliverable_line_ids)
 
     def create_distrib_move_inc(self):
         self.ensure_one()
