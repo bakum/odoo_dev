@@ -705,6 +705,10 @@ class SaleOrder(models.Model):
         value = {}
         values = []
         for line in self.order_line:
+            # Пропускаємо товари типу service
+            if line.product_id and line.product_id.type == 'service':
+                continue
+                
             pack_quantity = 0 if line.product_id.qty_in_cartoon == 0 else int(
                 line.product_uom_qty / line.product_id.qty_in_cartoon)
             cartoon = line.cartoon_id
