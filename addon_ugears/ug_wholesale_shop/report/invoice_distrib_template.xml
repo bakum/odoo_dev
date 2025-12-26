@@ -315,8 +315,13 @@
                                 <span style="font-size: 0.8em;" t-esc="line.product_id.with_context(lang='en_US').name"/>
                             </td>
                             <td name="td_qtt" class="text-end">
-                                <t t-set="all_qtt" t-value="all_qtt + line.quantity"/>
-                                <span style="font-size: 0.8em;" t-field="line.quantity"/>
+                                <t t-if="line.product_id.detailed_type == 'service'">
+                                    <span style="font-size: 0.8em;">0</span>
+                                </t>
+                                <t t-else="">
+                                    <t t-set="all_qtt" t-value="all_qtt + line.quantity"/>
+                                    <span style="font-size: 0.8em;" t-field="line.quantity"/>
+                                </t>
                             </td>
                             <td name="td_quantity" class="text-end">
 <!--                                <span t-field="line.product_uom"/>-->
