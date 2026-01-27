@@ -83,8 +83,20 @@ class OrderToXlsx(models.AbstractModel):
             sheet.write(0, 0, 'Order Confirmation #', bold)
             sheet.write(0, 1, report_name, bold)
 
+            # Получаем beneficiary из настроек или используем company по умолчанию
+            default_beneficiary_id = obj.env['ir.config_parameter'].sudo().get_param('distrib.default_beneficiary', False)
+            supplier = obj.company_id.partner_id  # Значение по умолчанию
+
+            if default_beneficiary_id:
+                try:
+                    beneficiary = obj.env['res.partner'].browse(int(default_beneficiary_id))
+                    if beneficiary.exists():
+                        supplier = beneficiary
+                except (ValueError, TypeError):
+                    pass  # Используем значение по умолчанию
+
             sheet.write(2, 0, 'The Supplier:', bold)
-            sheet.write(2, 1, obj.company_id.partner_id.name, txt)
+            sheet.write(2, 1, supplier.name, txt)
 
             sheet.write(4, 0, 'The Buyer:', bold)
             sheet.write(4, 1, obj.partner_id.name, txt)
