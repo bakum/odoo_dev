@@ -110,6 +110,7 @@ static_collected
 .vscode/settings.json
 .vscode/launch.json
 /.vscode/
+/.agents/
 Scripts/
 pyvenv.cfg
 #static/
@@ -133,3 +134,4 @@ catalog_group.json
 /external_addons/
 /theme_addons/
 /addon_ugears/ug_shop_distrib/
+skills-lock.json
