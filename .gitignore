@@ -111,6 +111,7 @@ static_collected
 .vscode/launch.json
 /.vscode/
 /.agents/
+/.cursor/
 Scripts/
 pyvenv.cfg
 #static/
