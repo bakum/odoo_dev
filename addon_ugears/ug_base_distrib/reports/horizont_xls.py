@@ -124,12 +124,8 @@ class OrderToXlsx(models.AbstractModel):
                 row_n = 9 + count + 1
                 sheet.write(row_n, 0, count + 1, txt)
                 sheet.write(row_n, 1, '' if not line.product_id.customscode else line.product_id.customscode, txt)
-                field = obj.company_id.country_id._fields
-                translations = field['name']._get_stored_translations(obj.company_id.country_id)
-                if translations and 'en_US' in translations:
-                    sheet.write(row_n, 2, translations['en_US'], txt)
-                else:
-                    sheet.write(row_n, 2, '' if not obj.company_id.country_id.display_name else obj.company_id.country_id.display_name, txt)
+                # Country of origin of the goods, not the legal entity country.
+                sheet.write(row_n, 2, 'Ukraine', txt)
                 sheet.write(row_n, 3, '' if not line.product_id.barcode else line.product_id.barcode, txt)
                 field = line.product_id.product_tmpl_id._fields
                 translations = field['name']._get_stored_translations(line.product_id.product_tmpl_id)
