@@ -62,6 +62,25 @@ class AccountMove(models.Model):
         help="Source sales order number"
     )
 
+    delivery_note_order = fields.Char(
+        string='Order',
+        copy=False,
+        tracking=True,
+        help='Order reference printed on the Delivery Note',
+    )
+    delivery_note_shipping_date = fields.Date(
+        string='Shipping Date',
+        copy=False,
+        tracking=True,
+        help='Shipping date printed on the Delivery Note',
+    )
+    delivery_note_carrier = fields.Char(
+        string='Carrier',
+        copy=False,
+        tracking=True,
+        help='Carrier printed on the Delivery Note',
+    )
+
     @api.depends('invoice_line_ids.quantity')
     def _compute_quantity_amount(self):
         for move in self:

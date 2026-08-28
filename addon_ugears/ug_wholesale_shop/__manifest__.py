@@ -4,7 +4,7 @@
     'website': 'https://ugears.ua',
     'summary': 'Order your products online',
     'category': 'Sales/Distribution Management',
-    'version': '16.0.0.1',
+    'version': '16.0.0.3',
     'license': 'LGPL-3',
     'installable': True,
     'application': True,

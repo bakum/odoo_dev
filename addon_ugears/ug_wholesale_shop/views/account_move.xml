@@ -17,6 +17,9 @@
                         <field name="date_facture"/>
                         <field name="number_facture"/>
                         <field name="source_order_name" readonly="1"/>
+                        <field name="delivery_note_order"/>
+                        <field name="delivery_note_shipping_date"/>
+                        <field name="delivery_note_carrier"/>
                     </xpath>
                     <xpath expr="//field[@name='tax_totals']" position="after">
                         <field name="amount_qty"/>

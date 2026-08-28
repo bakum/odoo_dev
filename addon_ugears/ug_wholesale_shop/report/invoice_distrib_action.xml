@@ -23,4 +23,28 @@
         <field name="binding_type">report</field>
         <field name="paperformat_id" ref="ug_wholesale_shop.ug_wholesale_shop_paperformat_a4_invoice"/>
     </record>
+
+    <record id="action_report_distrib_delivery_note" model="ir.actions.report">
+        <field name="name">Delivery Note (UGears)</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ug_wholesale_shop.report_distrib_delivery_note</field>
+        <field name="report_file">ug_wholesale_shop.report_distrib_delivery_note</field>
+        <field name="print_report_name">'Delivery Note - %s' % (object.source_order_name or object.name)</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="ug_wholesale_shop.ug_wholesale_shop_paperformat_a4_invoice"/>
+    </record>
+
+    <record id="action_report_distrib_commercial_invoice" model="ir.actions.report">
+        <field name="name">Commercial Invoice (UGears)</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ug_wholesale_shop.report_distrib_commercial_invoice</field>
+        <field name="report_file">ug_wholesale_shop.report_distrib_commercial_invoice</field>
+        <field name="print_report_name">'Commercial Invoice - %s' % (object.number_facture or object.name)</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="ug_wholesale_shop.ug_wholesale_shop_paperformat_a4_invoice"/>
+    </record>
 </odoo>

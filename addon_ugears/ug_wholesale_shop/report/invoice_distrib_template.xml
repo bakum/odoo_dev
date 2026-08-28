@@ -478,4 +478,753 @@
             </t>
         </t>
     </template>
+
+    <template id="report_distrib_delivery_note_document">
+        <t t-call="web.basic_layout">
+            <t t-set="doc" t-value="doc.with_context(lang='en_US')"/>
+            <t t-set="beneficiary" t-value="doc.bank_beneficiary_id if doc.bank_beneficiary_id else doc.company_id.partner_id"/>
+            <t t-set="order" t-value="doc.get_source_orders()"/>
+            <t t-if="order">
+                <t t-set="palettes_list" t-value="order._get_packing_list()"/>
+            </t>
+            <t t-else="">
+                <t t-set="palettes_list" t-value="False"/>
+            </t>
+            <style>
+                @font-face {
+                    font-family: 'CustomFont';
+                    src: url('/ug_wholesale_shop/static/fonts/Arimo-Medium.ttf') format('truetype');
+                }
+                body {
+                    font-family: 'CustomFont', sans-serif;
+                    font-size: 14px;
+                }
+            </style>
+            <style>
+                #o_main_table td, #o_main_table th,
+                #o_sub_table td, #o_sub_table th,
+                #o_product_table td, #o_product_table th,
+                #o_sub_sub_table td, #o_sub_sub_table th{
+                    padding: 0px 10px;
+                }
+            </style>
+            <style>
+                #o_main_table td, #o_sub_table td, #o_sub_sub_table td {
+                    padding: 0px 10px;
+                    border: none;
+                }
+            </style>
+            <style>
+                #o_product_table td {
+                    padding: 0px 10px;
+                    border: 1px solid black;
+                }
+            </style>
+
+            <table class="table table-sm o_main_table table-borderless" cellspacing="0"
+                   cellpadding="2" style="border-collapse: collapse;" id="o_main_table">
+                <tr>
+                    <td width="17%" align="left" style="vertical-align: middle;">
+                    </td>
+                    <td width="47%" align="left" style="vertical-align: middle;" class="text-muted">
+                        <span style="font-size: 1.2em;" t-esc="doc.source_order_name"/>
+                    </td>
+                    <td width="26%">
+                    </td>
+                    <td width="10%" align="right">
+                        <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)" class="float-end"
+                            alt="Logo"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="vertical-align: bottom;" class="d-md-table-cell">
+                        <strong><span>The Supplier:</span></strong>
+                    </td>
+                    <td align="left" style="vertical-align: bottom;" class="d-md-table-cell" colspan="3">
+                        <strong><span style="font-size: 1.1em;" t-field="beneficiary.name"/></strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td> </td>
+                    <td align="left" style="vertical-align: top;" class="text-muted d-md-table-cell" colspan="3">
+                        <span t-field="beneficiary.street"/>
+                        <t t-if="beneficiary.street2">
+                            <br/><span t-field="beneficiary.street2"/>
+                        </t>
+                        <t t-if="beneficiary.zip or beneficiary.city">
+                            <br/>
+                            <span t-field="beneficiary.zip"/> <span t-field="beneficiary.city"/>
+                        </t>
+                    </td>
+                </tr>
+            </table>
+            <div class="text-center" style="border-bottom: 1px solid black;"/>
+            <table class="table table-sm o_main_table table-borderless" cellspacing="0"
+                   cellpadding="2" style="border-collapse: collapse;" id="o_sub_table">
+                <tr>
+                    <td width="17%" align="left" style="vertical-align: bottom;" class="d-md-table-cell">
+                        <strong><span>The Buyer:</span></strong>
+                    </td>
+                    <td width="47%" align="left" style="vertical-align: bottom;" class="d-md-table-cell" colspan="3">
+                        <strong><span style="font-size: 1.1em;" t-field="doc.partner_id.name"/></strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td> </td>
+                    <td align="left" style="vertical-align: top;" class="text-muted d-md-table-cell" colspan="3">
+                        <span t-field="doc.partner_id.street"/>
+                        <t t-if="doc.partner_id.street2">
+                            <br/><span t-field="doc.partner_id.street2"/>
+                        </t>
+                        <t t-if="doc.partner_id.zip or doc.partner_id.city">
+                            <br/>
+                            <span t-field="doc.partner_id.zip"/> <span t-field="doc.partner_id.city"/>
+                        </t>
+                    </td>
+                </tr>
+                <tr>
+                    <td t-if="order and order.place_taking_googs_id" colspan="4">
+                        <span t-field="order.place_taking_googs_id"/>
+                    </td>
+                    <td t-else="" colspan="4">
+                        <span/>
+                    </td>
+                </tr>
+            </table>
+            <div class="text-center" style="border-bottom: 1px solid black;"/>
+            <table class="table table-sm o_main_table table-borderless" align="center" id="o_sub_sub_table">
+                <tr>
+                    <td width="17%" align="left" style="vertical-align: top;">
+                        <span>Incoterm:</span>
+                    </td>
+                    <td width="47%" align="left" style="vertical-align: top;">
+                        <span t-esc="doc.invoice_incoterm_id.code"/>
+                    </td>
+                    <td width="26%" align="left" style="vertical-align: top;">
+                        <span>Dated:</span>
+                    </td>
+                    <td width="10%" align="left" style="vertical-align: top;">
+                        <span t-field="doc.invoice_date" t-options="{'format': 'dd/MM/YYYY'}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="vertical-align: top;">
+                        <span>Currency:</span>
+                    </td>
+                    <td align="left" style="vertical-align: top;">
+                        <span t-field="doc.currency_id.name"/>
+                    </td>
+                    <td align="left" style="vertical-align: top;">
+                        <span>Shipping Date:</span>
+                    </td>
+                    <td align="left" style="vertical-align: top;">
+                        <span t-field="doc.delivery_note_shipping_date" t-options="{'format': 'dd/MM/YYYY'}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="vertical-align: top;">
+                        <span>Order:</span>
+                    </td>
+                    <td align="left" style="vertical-align: top;">
+                        <span t-field="doc.delivery_note_order"/>
+                    </td>
+                    <td align="left" style="vertical-align: top;">
+                        <span>Carrier:</span>
+                    </td>
+                    <td align="left" style="vertical-align: top;">
+                        <span t-field="doc.delivery_note_carrier"/>
+                    </td>
+                </tr>
+            </table>
+
+            <t t-set="all_boxes" t-value="0"/>
+            <t t-set="all_qtt" t-value="0"/>
+            <table width="100%" id="o_product_table"
+                   cellspacing="0"
+                   cellpadding="2" class="table table-sm o_main_table">
+                <thead style="display: table-row-group">
+                    <tr class="bg-200 fw-bold">
+                        <th name="th_number" class="text-center" align="center" style="vertical-align: middle;">#</th>
+                        <th name="th_tariff" class="text-center" align="center" style="vertical-align: middle;">Customs tariff number</th>
+                        <th name="th_country" class="text-center" align="center" style="vertical-align: middle;">Country of origin</th>
+                        <th name="th_item" class="text-center" align="center" style="vertical-align: middle;">ITEM</th>
+                        <th name="th_barcode" class="col-md-1 text-center" align="center" style="vertical-align: middle;">Barcode</th>
+                        <th name="th_description" class="col-md-6 text-center" align="center" style="vertical-align: middle;">Description</th>
+                        <th name="th_qtt" class="text-center" align="center" style="vertical-align: middle;">Q-ty</th>
+                        <th name="th_quantity" class="text-center" align="center" style="vertical-align: middle;">Unit</th>
+                        <th name="th_pieces" class="text-center" align="center" style="vertical-align: middle;">Pieces of boxes in box</th>
+                        <th name="th_boxes" class="text-center" align="center" style="vertical-align: middle;">Number of boxes</th>
+                    </tr>
+                </thead>
+                <tbody class="sale_tbody">
+                    <t t-set="current_row_number" t-value="0"/>
+                    <t t-foreach="doc.invoice_line_ids" t-as="line">
+                        <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_narration' if line.display_type == 'line_narration' else 'fst-normal'">
+                            <td name="td_number" align="center">
+                                <t t-set="current_row_number"
+                                   t-value="current_row_number + 1"/>
+                                <span t-esc="current_row_number"
+                                      style="text-indent:10px"/>
+                            </td>
+                            <td name="td_tariff" class="text-start" align="center"><span style="font-size: 0.7em;" t-field="line.product_id.customscode"/></td>
+                            <td name="td_country" class="text-center" align="center">
+                                <span t-if="line.product_id.detailed_type != 'service'" style="font-size: 0.8em;">Ukraine</span>
+                            </td>
+                            <td name="td_item" class="text-start" align="center">
+                                <span style="font-size: 0.7em;" t-esc="'UGRS%s' % line.product_id.default_code if line.product_id.default_code else ''"/>
+                            </td>
+                            <td name="td_barcode" class="text-start">
+                                <span style="font-size: 0.7em;" t-field="line.product_id.barcode"/>
+                            </td>
+                            <td name="td_description" class="text-start">
+                                <span style="font-size: 0.8em;" t-esc="line.product_id.with_context(lang='en_US').name"/>
+                            </td>
+                            <td name="td_qtt" class="text-end">
+                                <t t-if="line.product_id.detailed_type == 'service'">
+                                    <span style="font-size: 0.8em;">0</span>
+                                </t>
+                                <t t-else="">
+                                    <t t-set="all_qtt" t-value="all_qtt + line.quantity"/>
+                                    <span style="font-size: 0.8em;" t-field="line.quantity"/>
+                                </t>
+                            </td>
+                            <td name="td_quantity" class="text-end">
+                                <span style="font-size: 0.8em;">pcs</span>
+                            </td>
+                            <td name="td_pieces" class="text-end">
+                                <span style="font-size: 0.8em;" t-field="line.product_id.qty_in_cartoon"/>
+                            </td>
+                            <td name="td_boxes" class="text-end">
+                                <t t-set="number_of_boxes"
+                                   t-value="0 if line.product_id.qty_in_cartoon == 0 else line.quantity//line.product_id.qty_in_cartoon"/>
+                                <t t-set="all_boxes" t-value="all_boxes + number_of_boxes"/>
+                                <span t-esc="number_of_boxes"
+                                      style="font-size: 0.8em;"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+            <table class="table table-sm table-borderless">
+                <tr class="bg-200 fw-bold">
+                    <td width="70%" class="text-end">Total</td>
+                    <td width="10%" class="text-end">
+                        <span t-esc="all_qtt"/>
+                    </td>
+                    <td width="5%"/>
+                    <td width="15%" class="text-end">
+                        <span t-esc="all_boxes"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="text-end" style="border-left: none; border-bottom: none; border-top: none;">
+                        <span>Gross weight of Shipment (kg):</span>
+                    </td>
+                    <td t-if="order" class="text-end">
+                        <span t-esc="'%s' % (round(order.brutto_total / 1000, 2))"/>
+                    </td>
+                    <td t-else="" class="text-end"><span> </span></td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="text-end" style="border-left: none; border-bottom: none; border-top: none;">
+                        <span>Net weight of Shipment (kg):</span>
+                    </td>
+                    <td t-if="order" class="text-end">
+                        <span t-esc="round(order.netto_total / 1000, 2)"/>
+                    </td>
+                    <td t-else="" class="text-end"><span> </span></td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="text-end" style="border-left: none; border-bottom: none; border-top: none;">
+                        <span>Number of pallets:</span>
+                    </td>
+                    <td t-if="palettes_list and palettes_list['palettes']" class="text-end">
+                        <span t-esc="len(palettes_list['palettes'])"/>
+                    </td>
+                    <td t-else="" class="text-end"><span> </span></td>
+                </tr>
+            </table>
+
+            <div class="mt-3" style="font-size: 0.7em; line-height: 1.35;">
+                heo GmbH, West Campus 1, 76863 Herxheim, Germany | Phone: +49 7276 92928-123 | E-Mail: info@heo.com | Internet: www.heo.com | VAT ID: DE813027049 Registered office: Herxheim/Pfalz, Germany | Board of Directors: Ulrich Dudenhöffer, Christoph Reichelt | Commercial register: Landau HRB 3154 Court of jurisdiction: Landau in der Pfalz | Details of bank account: VR Bank Südliche Weinstraße-Wasgau eG | IBAN: DE03 5489 1300 0080 7822 09 | BIC: GENODE61BZA
+            </div>
+
+            <div t-attf-class="footer o_standard_footer">
+                <div class="text-start" style="border-top: 1px solid black;">
+                    <div class="text-center">
+                        <div class="text-muted">
+                            Page: <span class="page"/> / <span class="topage" /><br/>
+                            <span t-esc="doc.source_order_name"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_distrib_delivery_note">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="ug_wholesale_shop.report_distrib_delivery_note_document" t-lang="doc.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_distrib_commercial_invoice_document">
+        <t t-call="web.basic_layout">
+            <t t-set="doc" t-value="doc.with_context(lang='en_US')"/>
+            <t t-set="partner_bank" t-value="doc.beneficiary_bank_id if doc.beneficiary_bank_id else doc.partner_bank_id"/>
+            <t t-set="beneficiary" t-value="doc.bank_beneficiary_id if doc.bank_beneficiary_id else doc.company_id.partner_id"/>
+            <t t-set="order" t-value="doc.get_source_orders()"/>
+            <t t-if="order">
+                <t t-set="palettes_list" t-value="order._get_packing_list()"/>
+                <t t-set="region_id" t-value="order.partner_id.get_distributor_region()"/>
+            </t>
+            <t t-else="">
+                <t t-set="palettes_list" t-value="False"/>
+                <t t-set="region_id" t-value="False"/>
+            </t>
+            <t t-set="totals_vat" t-value="doc.get_invoice_totals()"/>
+            <style>
+                @font-face {
+                    font-family: 'CustomFont';
+                    src: url('/ug_wholesale_shop/static/fonts/Arimo-Medium.ttf') format('truetype');
+                }
+                body {
+                    font-family: 'CustomFont', sans-serif;
+                    font-size: 14px;
+                }
+            </style>
+            <style>
+                #o_main_table td, #o_main_table th,
+                #o_sub_table td, #o_sub_table th,
+                #o_product_table td, #o_product_table th,
+                #o_sub_sub_table td, #o_sub_sub_table th{
+                    padding: 0px 10px;
+                }
+            </style>
+            <style>
+                #o_main_table td, #o_sub_table td, #o_sub_sub_table td {
+                    padding: 0px 10px;
+                    border: none;
+                }
+            </style>
+            <style>
+                #o_product_table td {
+                    padding: 0px 10px;
+                    border: 1px solid black;
+                }
+            </style>
+
+            <table class="table table-sm o_main_table table-borderless" cellspacing="0"
+                   cellpadding="2" style="border-collapse: collapse;" id="o_main_table">
+                <tr>
+                    <td width="17%" align="left" style="vertical-align: middle;">
+                        <strong><span style="font-size: 1.2em;">Invoice</span></strong>
+                    </td>
+                    <td width="47%" align="left" style="vertical-align: middle;" class="text-muted">
+                        <span style="font-size: 1.2em;" t-esc="doc.number_facture"/>
+                    </td>
+                    <td width="26%">
+                    </td>
+                    <td width="10%" align="right">
+                        <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)" class="float-end"
+                            alt="Logo"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="vertical-align: bottom;" class="d-md-table-cell">
+                        <strong><span>The Supplier:</span></strong>
+                    </td>
+                    <td align="left" style="vertical-align: bottom;" class="d-md-table-cell">
+                        <strong><span style="font-size: 1.1em;" t-field="beneficiary.name"/></strong>
+                    </td>
+                    <td align="left" style="vertical-align: bottom;" class="text-muted d-md-table-cell">
+                        <span>VAT number:</span>
+                    </td>
+                    <td align="left" style="vertical-align: bottom;" class="text-muted d-md-table-cell">
+                        <span t-field="beneficiary.vat"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td> </td>
+                    <td align="left" style="vertical-align: top;" class="text-muted d-md-table-cell">
+                        <span t-field="beneficiary.street"/>
+                    </td>
+                    <td align="left" style="vertical-align: top;" class="text-muted d-md-table-cell">
+                        <span>Country code:</span>
+                    </td>
+                    <td align="left" style="vertical-align: top;" class="text-muted">
+                        <span t-field="beneficiary.country_id.code"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td> </td>
+                    <td> </td>
+                    <td align="left" style="vertical-align: top;" class="text-muted d-md-table-cell">
+                        <span>ICO:</span>
+                    </td>
+                    <td align="left" style="vertical-align: top;" class="text-muted">
+                        <span t-field="beneficiary.ico_code"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td> </td>
+                    <td align="left" style="vertical-align: top;">
+                        <t t-set="bank" t-value="' %s' % '' if not partner_bank else partner_bank.bank_id.name"/>
+                        <div>
+                          <span>Bank <strong><span t-esc="bank"/></strong></span>
+                        </div>
+                    </td>
+                    <td align="left" style="vertical-align: top;">
+                        <span>Account number (IBAN)</span>
+                    </td>
+                    <td align="left" style="vertical-align: top;">
+                        <span t-field="partner_bank.acc_number"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td> </td>
+                    <td align="left" style="vertical-align: top;">
+                        <t t-set="bank_address" t-value="' %s' % '' if not partner_bank else partner_bank.bank_id.street"/>
+                        <span>Bank's Address <span t-esc="bank_address"/></span>
+                    </td>
+                    <td align="left" style="vertical-align: top;">
+                        <span>Bank's SWIFT</span>
+                    </td>
+                    <td align="left" style="vertical-align: top;">
+                        <span t-field="partner_bank.bank_id.bic"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td> </td>
+                    <td t-if="order and order.place_warehouse_id" colspan="3">
+                        <span t-field="order.place_warehouse_id"/>
+                    </td>
+                    <td t-else="" colspan="3">
+                        <span/>
+                    </td>
+                </tr>
+            </table>
+            <div class="text-center" style="border-bottom: 1px solid black;"/>
+            <table class="table table-sm o_main_table table-borderless" cellspacing="0"
+                   cellpadding="2" style="border-collapse: collapse;" id="o_sub_table">
+                <tr>
+                    <td width="17%" align="left" style="vertical-align: bottom;" class="d-md-table-cell">
+                        <strong><span>The Buyer:</span></strong>
+                    </td>
+                    <td width="47%" align="left" style="vertical-align: bottom;" class="d-md-table-cell">
+                        <strong><span style="font-size: 1.1em;" t-field="doc.partner_id.name"/></strong>
+                    </td>
+                    <td width="26%" align="left" style="vertical-align: bottom;" class="text-muted d-md-table-cell">
+                        <span>VAT number:</span>
+                    </td>
+                    <td width="10%" align="left" style="vertical-align: bottom;" class="text-muted d-md-table-cell">
+                        <span t-field="doc.partner_id.vat"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td> </td>
+                    <td align="left" style="vertical-align: top;" class="text-muted d-md-table-cell">
+                        <span t-field="doc.partner_id.street"/>
+                    </td>
+                    <td align="left" style="vertical-align: top;" class="text-muted d-md-table-cell">
+                        <span>Country code:</span>
+                    </td>
+                    <td align="left" style="vertical-align: top;" class="text-muted">
+                        <span t-field="doc.partner_id.country_id.code"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td> </td>
+                    <td> </td>
+                    <td align="left" style="vertical-align: top;" class="text-muted d-md-table-cell">
+                        <span>ICO:</span>
+                    </td>
+                    <td align="left" style="vertical-align: top;" class="text-muted">
+                        <span t-field="doc.partner_id.ico_code"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td> </td>
+                    <td align="left" style="vertical-align: top;">
+                        <t t-set="bank" t-value="' %s' % '' if not doc.customer_bank_id else doc.customer_bank_id.bank_id.name"/>
+                        <div>
+                          <span>Bank <strong><span t-esc="bank"/></strong></span>
+                        </div>
+                    </td>
+                    <td align="left" style="vertical-align: top;">
+                        <span>Account number (IBAN)</span>
+                    </td>
+                    <td align="left" style="vertical-align: top;">
+                        <span t-field="doc.customer_bank_id.acc_number"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td> </td>
+                    <td align="left" style="vertical-align: top;">
+                        <t t-set="bank_address" t-value="' %s' % '' if not doc.customer_bank_id else doc.customer_bank_id.bank_id.street"/>
+                        <span>Bank's Address <span t-esc="bank_address"/></span>
+                    </td>
+                    <td align="left" style="vertical-align: top;">
+                        <span>Bank's SWIFT</span>
+                    </td>
+                    <td align="left" style="vertical-align: top;">
+                        <span t-field="doc.customer_bank_id.bank_id.bic"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td t-if="order and order.place_taking_googs_id" colspan="4">
+                        <span t-field="order.place_taking_googs_id"/>
+                    </td>
+                    <td t-else="" colspan="4">
+                        <span/>
+                    </td>
+                </tr>
+            </table>
+            <div class="text-center" style="border-bottom: 1px solid black;"/>
+            <table class="table table-sm o_main_table table-borderless" align="center" id="o_sub_sub_table">
+                <tr>
+                    <td width="17%" align="left" style="vertical-align: top;">
+                        <span>Incoterm:</span>
+                    </td>
+                    <td width="47%" align="left" style="vertical-align: top;">
+                        <span t-esc="doc.invoice_incoterm_id.code"/>
+                    </td>
+                    <td width="26%" align="left" style="vertical-align: top;">
+                        <span>Shipping Date:</span>
+                    </td>
+                    <td width="10%" align="left" style="vertical-align: top;">
+                        <span t-field="doc.delivery_note_shipping_date" t-options="{'format': 'dd/MM/YYYY'}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="vertical-align: top;">
+                        <span>Currency:</span>
+                    </td>
+                    <td align="left" style="vertical-align: top;">
+                        <span t-field="doc.currency_id.name"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="vertical-align: top;">
+                        <span>Invoice No.:</span>
+                    </td>
+                    <td align="left" style="vertical-align: top;">
+                        <span t-esc="doc.number_facture"/>
+                    </td>
+                    <td align="left" style="vertical-align: top;">
+                        <span>According to PO No.</span>
+                    </td>
+                    <td align="left" style="vertical-align: top;">
+                        <span t-esc="doc.source_order_name"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="vertical-align: top;">
+                        <span>Notes:</span>
+                    </td>
+                    <td colspan="3" align="left" style="vertical-align: top;">
+                        <span t-field="doc.narration"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="vertical-align: top;">
+                        <span>Order:</span>
+                    </td>
+                    <td colspan="3" align="left" style="vertical-align: top;">
+                        <span t-field="doc.delivery_note_order"/>
+                    </td>
+                </tr>
+            </table>
+
+            <t t-set="all_boxes" t-value="0"/>
+            <t t-set="all_qtt" t-value="0"/>
+            <t t-set="price_title" t-value="'Price per 1 pcs, %s' % (doc.currency_id.name)"/>
+            <t t-set="price_total_title" t-value="'Total, %s excl. VAT' % (doc.currency_id.name)"/>
+            <table width="100%" id="o_product_table"
+                   cellspacing="0"
+                   cellpadding="2" class="table table-sm o_main_table">
+                <thead style="display: table-row-group">
+                    <tr class="bg-200 fw-bold">
+                        <th name="th_number" class="text-center" align="center" style="vertical-align: middle;">#</th>
+                        <th name="th_tariff" class="text-center" align="center" style="vertical-align: middle;">Customs tariff number</th>
+                        <th name="th_country" class="text-center" align="center" style="vertical-align: middle;">Country of origin</th>
+                        <th name="th_item" class="text-center" align="center" style="vertical-align: middle;">ITEM</th>
+                        <th name="th_barcode" class="col-md-1 text-center" align="center" style="vertical-align: middle;">Barcode</th>
+                        <th name="th_description" class="col-md-6 text-center" align="center" style="vertical-align: middle;">Description</th>
+                        <th name="th_qtt" class="text-center" align="center" style="vertical-align: middle;">Q-ty</th>
+                        <th name="th_quantity" class="text-center" align="center" style="vertical-align: middle;">Unit</th>
+                        <th name="th_pieces" class="text-center" align="center" style="vertical-align: middle;">Pieces of boxes in box</th>
+                        <th name="th_boxes" class="text-center" align="center" style="vertical-align: middle;">Number of boxes</th>
+                        <th name="th_price" class="text-center" align="center" style="vertical-align: middle;"><span t-esc="price_title"/></th>
+                        <th name="th_subtotal" class="text-center" align="center" style="vertical-align: middle;"><span t-esc="price_total_title"/></th>
+                    </tr>
+                </thead>
+                <tbody class="sale_tbody">
+                    <t t-set="current_row_number" t-value="0"/>
+                    <t t-foreach="doc.invoice_line_ids" t-as="line">
+                        <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_narration' if line.display_type == 'line_narration' else 'fst-normal'">
+                            <td name="td_number" align="center">
+                                <t t-set="current_row_number"
+                                   t-value="current_row_number + 1"/>
+                                <span t-esc="current_row_number"
+                                      style="text-indent:10px"/>
+                            </td>
+                            <td name="td_tariff" class="text-start" align="center"><span style="font-size: 0.7em;" t-field="line.product_id.customscode"/></td>
+                            <td name="td_country" class="text-center" align="center">
+                                <span t-if="line.product_id.detailed_type != 'service'" style="font-size: 0.8em;">Ukraine</span>
+                            </td>
+                            <td name="td_item" class="text-start" align="center">
+                                <span style="font-size: 0.7em;" t-esc="'UGRS%s' % line.product_id.default_code if line.product_id.default_code else ''"/>
+                            </td>
+                            <td name="td_barcode" class="text-start">
+                                <span style="font-size: 0.7em;" t-field="line.product_id.barcode"/>
+                            </td>
+                            <td name="td_description" class="text-start">
+                                <span style="font-size: 0.8em;" t-esc="line.product_id.with_context(lang='en_US').name"/>
+                            </td>
+                            <td name="td_qtt" class="text-end">
+                                <t t-if="line.product_id.detailed_type == 'service'">
+                                    <span style="font-size: 0.8em;">0</span>
+                                </t>
+                                <t t-else="">
+                                    <t t-set="all_qtt" t-value="all_qtt + line.quantity"/>
+                                    <span style="font-size: 0.8em;" t-field="line.quantity"/>
+                                </t>
+                            </td>
+                            <td name="td_quantity" class="text-end">
+                                <span style="font-size: 0.8em;">pcs</span>
+                            </td>
+                            <td name="td_pieces" class="text-end">
+                                <span style="font-size: 0.8em;" t-field="line.product_id.qty_in_cartoon"/>
+                            </td>
+                            <td name="td_boxes" class="text-end">
+                                <t t-set="number_of_boxes"
+                                   t-value="0 if line.product_id.qty_in_cartoon == 0 else line.quantity//line.product_id.qty_in_cartoon"/>
+                                <t t-set="all_boxes" t-value="all_boxes + number_of_boxes"/>
+                                <span t-esc="number_of_boxes"
+                                      style="font-size: 0.8em;"/>
+                            </td>
+                            <td name="td_price" class="text-end">
+                                <span style="font-size: 0.8em;" t-field="line.price_unit"/>
+                            </td>
+                            <td name="td_subtotal" class="text-end o_list_monetary">
+                                <span style="font-size: 0.8em;" t-field="line.price_total"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+            <table class="table table-sm table-borderless">
+                <tr class="bg-200 fw-bold">
+                    <td width="55%" class="text-end">Total Invoice</td>
+                    <td width="10%" class="text-end">
+                        <span t-esc="all_qtt"/>
+                    </td>
+                    <td width="5%"/>
+                    <td width="10%" class="text-end">
+                        <span t-esc="all_boxes"/>
+                    </td>
+                    <td width="10%"/>
+                    <td width="10%"/>
+                    <td width="10%" class="text-end">
+                        <span class="text-nowrap">
+                            <span class="oe_currency_value" t-esc="doc.format_amount(totals_vat['total_wo_vat'])"/>
+                        </span>
+                    </td>
+                </tr>
+                <t t-if="region_id and region_id.id and not doc.is_internal_invoice()">
+                    <tr t-if="region_id.name == 'EMEA'">
+                        <td colspan="5" class="text-end" style="border-left: none; border-bottom: none;">
+                            <span>"Reverse charge applies in accordance with Article 138 of DIRECTIVE 2006/112/EC”</span>
+                        </td>
+                        <td>
+                            <span>VAT 0%</span>
+                        </td>
+                        <td class="text-end">
+                            <span>0.00</span>
+                        </td>
+                    </tr>
+                </t>
+                <t t-if="doc.is_internal_invoice()">
+                    <tr>
+                        <td colspan="5" class="text-end" style="border-left: none; border-bottom: none; border-top: none;">
+                            <span t-esc="'VAT {}%'.format(totals_vat['vat_value'])"/>
+                        </td>
+                        <td colspan="2" class="text-end">
+                            <span t-esc="doc.format_amount(totals_vat['vat'])"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" class="text-end" style="border-left: none; border-bottom: none; border-top: none;">
+                            <span>Total inc. VAT:</span>
+                        </td>
+                        <td colspan="2" class="text-end">
+                            <span t-esc="doc.format_amount(totals_vat['total_w_vat'])"/>
+                        </td>
+                    </tr>
+                </t>
+                <tr>
+                    <td colspan="5" class="text-end" style="border-left: none; border-bottom: none; border-top: none;">
+                        <span>Gross weight of Shipment (kg):</span>
+                    </td>
+                    <td t-if="order" colspan="2" class="text-end">
+                        <span t-esc="'%s' % (round(order.brutto_total / 1000, 2))"/>
+                    </td>
+                    <td t-else="" colspan="2" class="text-end"><span> </span></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="text-end" style="border-left: none; border-bottom: none; border-top: none;">
+                        <span>Net weight of Shipment (kg):</span>
+                    </td>
+                    <td t-if="order" colspan="2" class="text-end">
+                        <span t-esc="round(order.netto_total / 1000, 2)"/>
+                    </td>
+                    <td t-else="" colspan="2" class="text-end"><span> </span></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="text-end" style="border-left: none; border-bottom: none; border-top: none;">
+                        <span>Number of pallets:</span>
+                    </td>
+                    <td t-if="palettes_list and palettes_list['palettes']" colspan="2" class="text-end">
+                        <span t-esc="len(palettes_list['palettes'])"/>
+                    </td>
+                    <td colspan="2" t-else="" class="text-end"><span> </span></td>
+                </tr>
+            </table>
+
+            <div class="mt-3" style="font-size: 0.7em; line-height: 1.35;">
+                heo GmbH, West Campus 1, 76863 Herxheim, Germany | Phone: +49 7276 92928-123 | E-Mail: info@heo.com | Internet: www.heo.com | VAT ID: DE813027049 Registered office: Herxheim/Pfalz, Germany | Board of Directors: Ulrich Dudenhöffer, Christoph Reichelt | Commercial register: Landau HRB 3154 Court of jurisdiction: Landau in der Pfalz | Details of bank account: VR Bank Südliche Weinstraße-Wasgau eG | IBAN: DE03 5489 1300 0080 7822 09 | BIC: GENODE61BZA
+            </div>
+
+            <div t-attf-class="footer o_standard_footer">
+                <div class="text-start" style="border-top: 1px solid black;">
+                    <div class="container">
+                        <div class="row">
+                            Terms of Payment: <span t-field="doc.invoice_payment_term_id"/>
+                        </div>
+                        <div class="row mt-2">
+                            <span>__________________________________________________</span><span t-field="doc.invoice_user_id"/>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="text-muted">
+                            Page: <span class="page"/> / <span class="topage" /><br/>
+                            <span t-esc="doc.number_facture"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_distrib_commercial_invoice">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="ug_wholesale_shop.report_distrib_commercial_invoice_document" t-lang="doc.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
 </odoo>
