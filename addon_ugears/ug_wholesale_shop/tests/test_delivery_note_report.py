@@ -76,7 +76,7 @@ class TestDeliveryNoteReport(TransactionCase):
         invoice = self._create_invoice(product)
         html = self._render_html(invoice)
 
-        self.assertNotIn('Delivery Note', html)
+        self.assertIn('Delivery Note', html)
         self.assertIn('Dated:', html)
         self.assertIn('26/08/2026', html)
         self.assertIn('Shipping Date:', html)

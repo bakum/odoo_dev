@@ -525,6 +525,7 @@
                    cellpadding="2" style="border-collapse: collapse;" id="o_main_table">
                 <tr>
                     <td width="17%" align="left" style="vertical-align: middle;">
+                        <strong><span style="font-size: 1.2em;">Delivery Note</span></strong>
                     </td>
                     <td width="47%" align="left" style="vertical-align: middle;" class="text-muted">
                         <span style="font-size: 1.2em;" t-esc="doc.source_order_name"/>
