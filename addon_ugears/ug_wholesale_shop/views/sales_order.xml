@@ -120,6 +120,9 @@
                         <field name="sync_state" decoration-success="sync_state == 'done'" decoration-info="sync_state == 'deployment'" decoration-danger="sync_state == 'error'" widget="badge" optional="show"
                         groups="ug_base_distrib.group_distrib_manager"/>
                     </xpath>
+                    <xpath expr="//field[@name='tag_ids']" position="after">
+                        <field name="note" optional="hide"/>
+                    </xpath>
                 </data>
             </field>    
         </record>
