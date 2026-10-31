@@ -17,6 +17,9 @@ class UgImportOrder(models.TransientModel):
     def _default_distrib(self):
         return self.env.user.distrib_id
 
+    def _default_no_box_rounding(self):
+        return self.env.user.has_group('ug_wholesale_shop.group_distrib_import_no_rounding')
+
     name = fields.Char('Name', default=_default_name)
     xls_file = fields.Binary(string='Excel file', required=True)
     xls_filename = fields.Char(string='Excel Filename')
@@ -29,6 +32,7 @@ class UgImportOrder(models.TransientModel):
         default=fields.Datetime.now)
 
     total_qtt = fields.Float(string='Total quantity', compute='_compute_amounts')
+    no_box_rounding = fields.Boolean(string='Without box rounding', default=_default_no_box_rounding, readonly=True)
 
     @api.depends('products_ids')
     def get_len_products(self):
@@ -58,6 +62,7 @@ class UgImportOrder(models.TransientModel):
             'team_id': self.distrib_id.partner_id.parent_id.team_id.id or self.distrib_id.partner_id.team_id.id,
             'user_id': self.env.user.id,
             'date_order' : self.date_order,
+            'skip_box_rounding': self.no_box_rounding,
             # 'website_id': self.id,
         }
         return values
@@ -222,9 +227,12 @@ class UgImportOrderList(models.TransientModel):
     default_code = fields.Char('Default code')
     description = fields.Char('Description')
 
-    @api.depends('qtt', 'product_id')
+    @api.depends('qtt', 'product_id', 'wizard_id.no_box_rounding')
     def _compute_product_by_box(self):
         for line in self:
+            if line.wizard_id.no_box_rounding:
+                line.qtt_by_box = line.qtt
+                continue
             package = 0 if line.product_id.qty_in_cartoon == 0 else line.qtt // line.product_id.qty_in_cartoon
             package_float = 0 if line.product_id.qty_in_cartoon == 0 else line.qtt / line.product_id.qty_in_cartoon
             if package_float > package:

@@ -29,7 +29,7 @@ export class StartShop extends Component {
         useBus(this.websiteService.bus, 'UNBLOCK', () => this.unblock());
         onWillStart(() => {
             if (!this.params) {
-                this.initialUrl = '/shop'
+                this.initialUrl = '/shop/start'
             } else {
                 this.initialUrl = this.params.url
             }

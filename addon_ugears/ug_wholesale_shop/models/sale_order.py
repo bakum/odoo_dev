@@ -47,6 +47,9 @@ class SaleOrder(models.Model):
     confirmation_was_sent = fields.Boolean("Confirmation was sent",
                                            help="This field is used to prevent sending confirmation email multiple times.",
                                            default=False)
+    skip_box_rounding = fields.Boolean("Without box rounding",
+                                       help="The order was imported from Excel without rounding quantities to full boxes.",
+                                       copy=False)
 
     warehouse_for_moving = fields.Selection(
         selection=[
@@ -299,7 +302,9 @@ class SaleOrder(models.Model):
         }
 
     def _action_confirm(self):
-        self._recalc_by_package()
+        for order in self:
+            if not order.skip_box_rounding:
+                order._recalc_by_package()
         self.package_line = self._get_package_line_data()
         send_confirmation = self.env['ir.config_parameter'].sudo().get_param('distrib.send_confirmation', default=False)
         if bool(send_confirmation) and not self.confirmation_was_sent:
@@ -709,7 +714,8 @@ class SaleOrder(models.Model):
             if line.product_id and line.product_id.type == 'service':
                 continue
                 
-            pack_quantity = 0 if line.product_id.qty_in_cartoon == 0 else int(
+            # Неповна коробка (замовлення без округлення) рахується як ціла
+            pack_quantity = 0 if line.product_id.qty_in_cartoon == 0 else math.ceil(
                 line.product_uom_qty / line.product_id.qty_in_cartoon)
             cartoon = line.cartoon_id
             pack_found = value.get(cartoon.id) or 0
@@ -781,12 +787,16 @@ class SaleOrder(models.Model):
             for y in line['lines']:
                 product_uom_qty = y.product_uom_qty
                 product_id = y.product_id
-                qtt = 0 if product_id.qty_in_cartoon == 0 else int(product_uom_qty // product_id.qty_in_cartoon)
+                qty_in_cartoon = product_id.qty_in_cartoon
+                qtt = 0 if qty_in_cartoon == 0 else math.ceil(product_uom_qty / qty_in_cartoon)
                 for z in range(qtt):
+                    # Остання коробка може бути неповною (замовлення без округлення)
+                    box_qty = int(min(qty_in_cartoon, product_uom_qty - z * qty_in_cartoon))
                     package = {'rectangles': (product_id.cartoon_id.width, product_id.cartoon_id.height),
                                'max_boxes_on_layer': line['max_boxes_on_layer'],
                                'min_boxes_on_layer': line['min_boxes_on_layer'],
-                               'depth': line['depth'], 'box_id': product_id.cartoon_id.id, 'product_id': product_id.id}
+                               'depth': line['depth'], 'box_id': product_id.cartoon_id.id, 'product_id': product_id.id,
+                               'box_qty': box_qty}
                     rectangles.append(package)
                 # rectangles.append((line['box'].width, line['box'].height))
 
@@ -799,7 +809,7 @@ class SaleOrder(models.Model):
         # rect_count = 1
         for r in rectangles:
             packer.add_rect(*r['rectangles'],
-                            rid=f'box_{rect_count}_{r["max_boxes_on_layer"]}_{r["min_boxes_on_layer"]}_{r["depth"]}_{r["box_id"]}_{r["product_id"]}')
+                            rid=f'box_{rect_count}_{r["max_boxes_on_layer"]}_{r["min_boxes_on_layer"]}_{r["depth"]}_{r["box_id"]}_{r["product_id"]}_{r["box_qty"]}')
             rect_count += 1
 
         for b in bins:
@@ -862,7 +872,7 @@ class SaleOrder(models.Model):
                 dm = [('id', '=', product_id)]
                 product = Product.search(dm)[:1]
                 if product:
-                    all_products_cnt += product.qty_in_cartoon
+                    all_products_cnt += int(x.rid.split('_')[7])
                     all_weights_cnt += product.cartoon_weight_with_model
             layer['product_cnt'] = all_products_cnt
             layer['product_weight'] = all_weights_cnt

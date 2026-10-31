@@ -28,4 +28,7 @@ export class ImportOrderController extends ListController {
         //     'target': 'new'
         // })
     }
+    OnDownloadPricelist() {
+        return this.actionService.doAction("ug_wholesale_shop.report_export_distrib_pricelist_xls", {})
+    }
 }

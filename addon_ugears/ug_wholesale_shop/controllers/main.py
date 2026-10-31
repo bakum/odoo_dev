@@ -274,6 +274,18 @@ class WebsiteWholeSale(WebsiteSale):
         values.update(self._get_additional_extra_shop_values(values, **post))
         return request.render("website_sale.products", values)
 
+    @http.route(['/shop/start'], type='http', auth="user", website=True, sitemap=False)
+    def shop_start(self, **post):
+        """Entry point of the wholesale shop menu: opens the default category from settings."""
+        if not request.env.user.has_group('ug_base_distrib.group_distrib_user'):
+            raise AccessError("You do not have access rights to view this page.")
+        category_id = request.env['ir.config_parameter'].sudo().get_param('distrib.default_shop_category_id')
+        if category_id:
+            category = request.env['product.public.category'].browse(int(category_id)).exists()
+            if category and category.can_access_from_current_website():
+                return request.redirect('/shop/category/%s' % slug(category))
+        return request.redirect('/shop')
+
     @http.route(['/shop/<model("product.template"):product>'], type='http', auth="user", website=True, sitemap=True)
     def product(self, product, category='', search='', **kwargs):
         if not request.env.user.has_group('ug_base_distrib.group_distrib_user'):

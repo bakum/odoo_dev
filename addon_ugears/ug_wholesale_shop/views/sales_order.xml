@@ -102,6 +102,7 @@
                         <field name="place_warehouse_id" domain="[('places_type', '=', 'warehouse')]"/>
                         <field name="place_taking_googs_id" domain="[('places_type', '=', 'point_of_load')]"/>
                         <field name="warehouse_for_moving"/>
+                        <field name="skip_box_rounding" readonly="1" groups="ug_base_distrib.group_distrib_manager"/>
                     </xpath>
                     <xpath expr="//field[@name='tax_totals']" position="after">
                         <field name="total_product_uom_qty"/>

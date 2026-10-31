@@ -2,7 +2,7 @@
 <odoo>
     <record id="shop_action_distrib" model="ir.actions.act_url">
         <field name="name">Wholesale shop</field>
-        <field name="url">/shop</field>
+        <field name="url">/shop/start</field>
         <field name="target">self</field>
     </record>
 

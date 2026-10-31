@@ -2616,3 +2616,78 @@ msgid ""
 "== 'pending') and 'Pending Order' or 'Order' }} (Ref {{ object.name or 'n/a'"
 " }})"
 msgstr ""
+
+#. module: ug_wholesale_shop
+#: model:res.groups,name:ug_wholesale_shop.group_distrib_import_no_rounding
+msgid "Import orders without box rounding"
+msgstr "Імпорт замовлень без округлення до коробок"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_sale_order__skip_box_rounding
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_ug_wholesale_import_order__no_box_rounding
+msgid "Without box rounding"
+msgstr "Без округлення до коробок"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,help:ug_wholesale_shop.field_sale_order__skip_box_rounding
+msgid ""
+"The order was imported from Excel without rounding quantities to full boxes."
+msgstr ""
+"Замовлення імпортовано з Excel без округлення кількості до повних коробок."
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,field_description:ug_wholesale_shop.field_res_config_settings__shop_default_category_id
+msgid "Default shop category"
+msgstr "Категорія магазину за замовчуванням"
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.res_config_settings_wholesale_form
+msgid "<span class=\"o_form_label\">Default shop category</span>"
+msgstr "<span class=\"o_form_label\">Категорія магазину за замовчуванням</span>"
+
+#. module: ug_wholesale_shop
+#: model:ir.model.fields,help:ug_wholesale_shop.field_res_config_settings__shop_default_category_id
+msgid ""
+"Category selected when the wholesale shop is opened from the menu. If not "
+"set, all products are shown."
+msgstr ""
+"Категорія, яка відкривається при вході в оптовий магазин з меню. Якщо не "
+"вказано, показуються всі товари."
+
+#. module: ug_wholesale_shop
+#: model_terms:ir.ui.view,arch_db:ug_wholesale_shop.res_config_settings_wholesale_form
+msgid ""
+"<span class=\"o_form_label\">Category selected when the wholesale shop is "
+"opened from the menu. If not set, all products are shown.</span>"
+msgstr ""
+"<span class=\"o_form_label\">Категорія, яка відкривається при вході в "
+"оптовий магазин з меню. Якщо не вказано, показуються всі товари.</span>"
+
+#. module: ug_wholesale_shop
+#. odoo-javascript
+#: code:addons/ug_wholesale_shop/static/src/views/import_order_button.xml:0
+#: model:ir.actions.report,name:ug_wholesale_shop.report_export_distrib_pricelist_xls
+#, python-format
+msgid "Price list"
+msgstr "Прайс-лист"
+
+#. module: ug_wholesale_shop
+#. odoo-javascript
+#: code:addons/ug_wholesale_shop/static/src/views/import_order_button.xml:0
+#, python-format
+msgid "Order template"
+msgstr "Шаблон замовлення"
+
+#. module: ug_wholesale_shop
+#. odoo-javascript
+#: code:addons/ug_wholesale_shop/static/src/views/import_order_button.xml:0
+#, python-format
+msgid "Download price list"
+msgstr "Завантажити прайс-лист"
+
+#. module: ug_wholesale_shop
+#. odoo-python
+#: code:addons/ug_wholesale_shop/report/pricelist_xls.py:0
+#, python-format
+msgid "No pricelist is assigned to your distributor."
+msgstr "За вашим дистриб'ютором не закріплено прайс-лист."
