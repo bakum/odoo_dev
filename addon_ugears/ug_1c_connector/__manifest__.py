@@ -4,7 +4,7 @@
     'website': 'https://ugears.ua',
     'summary': 'Rest API connector for 1C:Enterprise',
     'category': 'Sales/Distribution Management',
-    'version': '16.0.0.3',
+    'version': '16.0.0.4',
     'license': 'LGPL-3',
     'depends': [
         'base',

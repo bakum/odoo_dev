@@ -359,7 +359,9 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=
                 )
                 return mod
             else:
-                written = http.request.env[modelname].sudo().create(search_criterias)
+                model_sudo = http.request.env[modelname].sudo()
+                apply_translation_source(model_sudo, search_criterias, trans)
+                written = model_sudo.create(search_criterias)
                 mod = {"success": False}
                 for model in written:
                     translate_field(model, trans)
@@ -440,6 +442,41 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=
     except Exception as e:
         mark_1c_exchange('error', success=False, error=e)
         return {"success": False, 'error': str(e)}
+
+
+def translation_source_value(translated):
+    """One non-empty string from a 1C translation payload."""
+    if isinstance(translated, str) and translated:
+        return translated
+    if not isinstance(translated, dict):
+        return False
+    for code in ('en_US', 'uk_UA'):
+        value = translated.get(code)
+        if isinstance(value, str) and value:
+            return value
+    for value in translated.values():
+        if isinstance(value, str) and value:
+            return value
+    return False
+
+
+def apply_translation_source(model, values, trans):
+    """Fill an empty translated field before create().
+
+    1C sends the title in ``name_lang`` and omits ``name``. ``get_trans_from_request``
+    removes ``name_lang`` before insert, and ``translate_field`` runs only after
+    the row exists. A required column such as ``product.public.category.name``
+    then stays null and the insert is rejected. The value copied here is only
+    enough to pass the constraint; ``translate_field`` still writes every language.
+    """
+    if not trans or not isinstance(values, dict):
+        return
+    for field_name, translated in trans.items():
+        if field_name not in model._fields or values.get(field_name):
+            continue
+        source = translation_source_value(translated)
+        if source:
+            values[field_name] = source
 
 
 def translate_field(rec, trans):
