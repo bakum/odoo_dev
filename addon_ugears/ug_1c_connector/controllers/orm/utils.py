@@ -3,12 +3,149 @@ import threading
 
 # import pytz
 
-from odoo import http, fields, SUPERUSER_ID
+from odoo import api, http, fields, SUPERUSER_ID
+from odoo.modules.registry import Registry
 from odoo.osv import expression
 from odoo.tools import float_compare
 import logging
 
 _logger = logging.getLogger(__name__)
+
+_EXCHANGE_ACTIONS = frozenset({
+    'post_create',
+    'post_update',
+    'post_empty',
+    'put_update',
+    'put_skipped',
+    'delete',
+    'error',
+    'other',
+})
+_BODY_HEAD_LIMIT = 2000
+_PAYLOAD_LIMIT = 8000
+_VALUE_LIMIT = 500
+
+
+def mark_1c_exchange(action, success=None, error=None, res_id=None):
+    """Remember the outcome of this request. The HTTP body returned to 1C stays unchanged."""
+    if not http.request:
+        return
+    http.request.ug_1c_exchange = {
+        'action': action if action in _EXCHANGE_ACTIONS else 'other',
+        'success': success,
+        'error': None if error in (None, False) else str(error),
+        'res_id': res_id or None,
+    }
+
+
+def _preview_name(payload):
+    if not isinstance(payload, dict):
+        return False
+    name = payload.get('name')
+    if isinstance(name, str):
+        return name[:120]
+    if isinstance(name, dict):
+        for value in name.values():
+            if isinstance(value, str) and value:
+                return value[:120]
+    return False
+
+
+def _safe_payload(payload):
+    if not isinstance(payload, dict):
+        return False
+    safe = {}
+    for key, value in payload.items():
+        if key == 'image' or (isinstance(key, str) and key.startswith('image_')):
+            size = len(value) if isinstance(value, (str, bytes)) else 0
+            safe[key] = '<binary %s>' % size
+            continue
+        if isinstance(value, str):
+            safe[key] = value if len(value) <= _VALUE_LIMIT else value[:_VALUE_LIMIT] + '...'
+        elif isinstance(value, (dict, list)):
+            text = json.dumps(value, default=str, ensure_ascii=False)
+            safe[key] = text if len(text) <= _VALUE_LIMIT else text[:_VALUE_LIMIT] + '...'
+        else:
+            safe[key] = value
+    text = json.dumps(safe, default=str, ensure_ascii=False)
+    return text[:_PAYLOAD_LIMIT]
+
+
+def _exchange_log_enabled():
+    """Read the switch on a separate cursor.
+
+    The request cursor may already be aborted when a product write fails,
+    and this flag still has to be readable then.
+    """
+    if not http.request:
+        return False
+    try:
+        registry = Registry(http.request.env.cr.dbname)
+        with registry.cursor() as cr:
+            value = api.Environment(cr, SUPERUSER_ID, {})['ir.config_parameter'].get_param(
+                'ug_1c_connector.log_exchange', 'True')
+    except Exception:
+        _logger.exception("Could not read 1C exchange log setting")
+        return False
+    return str(value).strip().lower() in ('1', 'true', 'yes')
+
+
+def log_1c_exchange(modelname, guid, action, success=None, error=None, res_id=None, payload=None):
+    """Write one exchange line to the server log and to api.rest.exchange.log.
+
+    The database row is committed on its own cursor, so it stays when the
+    product write later rolls back. Nothing is written when the switch is off.
+    """
+    if not http.request or not _exchange_log_enabled():
+        return
+    method = http.request.httprequest.method or '?'
+    if method == 'GET' and action != 'error':
+        return
+    raw = http.request.httprequest.data or b''
+    body_head = raw.decode('utf-8', errors='replace')[:_BODY_HEAD_LIMIT]
+    action = action if action in _EXCHANGE_ACTIONS else 'other'
+    _logger.info(
+        "1C exchange %s model=%s guid=%s action=%s success=%s res_id=%s error=%s",
+        method, modelname, guid, action, success, res_id, error,
+    )
+    values = {
+        'request_url': (http.request.httprequest.path or '')[:500],
+        'http_method': method[:16],
+        'model_name': (modelname or '?')[:200],
+        'guid': guid or False,
+        'name_preview': _preview_name(payload),
+        'action': action,
+        'success': bool(success),
+        'res_id': res_id or 0,
+        'error': error or False,
+        'content_type': http.request.httprequest.content_type or False,
+        'body_len': len(raw),
+        'body_head': body_head or False,
+        'payload': _safe_payload(payload),
+    }
+    try:
+        registry = Registry(http.request.env.cr.dbname)
+        with registry.cursor() as cr:
+            api.Environment(cr, SUPERUSER_ID, {})['api.rest.exchange.log'].sudo().create(values)
+    except Exception:
+        _logger.exception("Could not store 1C exchange log")
+
+
+def store_1c_exchange_log(modelname, guid, payload):
+    meta = getattr(http.request, 'ug_1c_exchange', None) or {}
+    error = meta.get('error')
+    parse_error = getattr(http.request, 'ug_1c_parse_error', None)
+    if parse_error:
+        error = 'Body is not JSON: %s%s' % (parse_error, (' | ' + error) if error else '')
+    log_1c_exchange(
+        modelname,
+        guid,
+        meta.get('action') or 'other',
+        success=meta.get('success'),
+        error=error,
+        res_id=meta.get('res_id'),
+        payload=payload,
+    )
 
 CHANNEL_MAP = {
     'qtt_Channel_0001': 'Channel_0001',
@@ -181,6 +318,7 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=
         else:
             moves = http.request.env[modelname].sudo().search_read(kw)
     except Exception as e:
+        mark_1c_exchange('error', success=False, error=e)
         return {"success": False, 'error': str(e)}
 
     id_ext = None
@@ -214,6 +352,11 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=
                             'module': '__import__',
                             'res_id': moves[0].id
                         })
+                mark_1c_exchange(
+                    'post_update' if search_criterias else 'post_empty',
+                    success=bool(written),
+                    res_id=moves[0].id,
+                )
                 return mod
             else:
                 written = http.request.env[modelname].sudo().create(search_criterias)
@@ -239,6 +382,11 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=
                             'res_id': written.id
                         })
 
+                mark_1c_exchange(
+                    'post_create' if search_criterias else 'post_empty',
+                    success=bool(mod.get('success')),
+                    res_id=written[:1].id,
+                )
                 return mod
         elif http.request.httprequest.method == 'PUT':
             mod = {"success": False}
@@ -264,16 +412,33 @@ def apply_update_from_request(kw, search_criterias, modelname, guid=None, trans=
                             'module': '__import__',
                             'res_id': moves[0].id
                         })
-            # else:
-            #     written = False
+                mark_1c_exchange(
+                    'put_update' if search_criterias else 'post_empty',
+                    success=bool(mod.get('success')),
+                    res_id=moves[0].id,
+                )
+            else:
+                mark_1c_exchange(
+                    'put_skipped',
+                    success=False,
+                    error='Record not found. PUT does not create a product',
+                )
             return mod
         elif http.request.httprequest.method == 'DELETE':
+            res_id = moves[0].id if moves else None
             if (len(moves) > 0) and guid:
                 deleted = moves[0].unlink()
             else:
                 deleted = False
+            mark_1c_exchange(
+                'delete',
+                success=bool(deleted),
+                res_id=res_id if deleted else None,
+                error=None if deleted else 'Record not found',
+            )
             return {"success": deleted}
     except Exception as e:
+        mark_1c_exchange('error', success=False, error=e)
         return {"success": False, 'error': str(e)}
 
 
@@ -305,7 +470,10 @@ def parse_data_from_request(kw=None):
         data = json.loads(http.request.httprequest.data)
         if 'params' not in data:
             data['params'] = data.copy()
-    except:
+    except Exception as exc:
+        _logger.warning("1C body is not JSON: %s", exc)
+        if http.request:
+            http.request.ug_1c_parse_error = str(exc)
         data = {'params': {}}
 
     return data['params'] if kw == None else data['params'], get_search_criterias(kw)

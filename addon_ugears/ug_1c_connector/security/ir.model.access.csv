@@ -10,3 +10,5 @@
 "ir_model_access_api_rest_function_parameter","Api REST Function Parameter","model_api_rest_function_parameter",,1,0,0,0
 "ir_model_access_api_rest_function_parameter_system","Api REST Function Parameter","model_api_rest_function_parameter","ug_1c_connector.configuration_manager",1,1,1,1
 "ir_model_access_api_rest_log_system","Api REST Log","model_api_rest_log",,1,0,1,1
+"access_api_rest_exchange_log_manager","api.rest.exchange.log manager","model_api_rest_exchange_log","ug_1c_connector.configuration_manager",1,0,0,1
+"access_api_rest_exchange_log_setting_manager","api.rest.exchange.log.setting manager","model_api_rest_exchange_log_setting","ug_1c_connector.configuration_manager",1,1,1,1

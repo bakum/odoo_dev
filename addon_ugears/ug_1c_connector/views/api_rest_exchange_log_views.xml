@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_api_rest_exchange_log_tree">
+        <field name="name">api.rest.exchange.log.tree</field>
+        <field name="model">api.rest.exchange.log</field>
+        <field name="arch" type="xml">
+            <tree string="1C exchange" create="false" edit="false"
+                  decoration-danger="success == False"
+                  decoration-success="success == True">
+                <field name="create_date"/>
+                <field name="http_method"/>
+                <field name="model_name"/>
+                <field name="guid"/>
+                <field name="name_preview"/>
+                <field name="action"/>
+                <field name="success"/>
+                <field name="res_id"/>
+                <field name="error"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_api_rest_exchange_log_form">
+        <field name="name">api.rest.exchange.log.form</field>
+        <field name="model">api.rest.exchange.log</field>
+        <field name="arch" type="xml">
+            <form string="1C exchange" create="false" edit="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="create_date"/>
+                            <field name="http_method"/>
+                            <field name="model_name"/>
+                            <field name="guid"/>
+                            <field name="name_preview"/>
+                            <field name="action"/>
+                        </group>
+                        <group>
+                            <field name="success"/>
+                            <field name="res_id"/>
+                            <field name="content_type"/>
+                            <field name="body_len"/>
+                            <field name="request_url"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="error"/>
+                        <field name="payload"/>
+                        <field name="body_head"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_api_rest_exchange_log_search">
+        <field name="name">api.rest.exchange.log.search</field>
+        <field name="model">api.rest.exchange.log</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="guid"/>
+                <field name="name_preview"/>
+                <field name="model_name"/>
+                <field name="error"/>
+                <filter name="failed" string="Not saved" domain="[('success', '=', False)]"/>
+                <filter name="products" string="Products"
+                        domain="[('model_name', 'in', ['product.template', 'product.product'])]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_action" string="Action" context="{'group_by': 'action'}"/>
+                    <filter name="group_model" string="Model" context="{'group_by': 'model_name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_api_rest_exchange_log">
+        <field name="name">1C exchange</field>
+        <field name="res_model">api.rest.exchange.log</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_action_api_rest_exchange_log"
+              name="1C exchange"
+              action="action_api_rest_exchange_log"
+              parent="menu_api_rest"
+              sequence="15"
+              groups="ug_1c_connector.configuration_manager"/>
+
+    <record model="ir.ui.view" id="view_api_rest_exchange_log_setting_form">
+        <field name="name">api.rest.exchange.log.setting.form</field>
+        <field name="model">api.rest.exchange.log.setting</field>
+        <field name="arch" type="xml">
+            <form string="1C exchange settings">
+                <group>
+                    <field name="log_exchange" widget="boolean_toggle"/>
+                </group>
+                <footer>
+                    <button name="action_save" type="object" string="Save" class="oe_highlight"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_api_rest_exchange_log_setting">
+        <field name="name">1C exchange settings</field>
+        <field name="res_model">api.rest.exchange.log.setting</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_action_api_rest_exchange_log_setting"
+              name="1C exchange settings"
+              action="action_api_rest_exchange_log_setting"
+              parent="menu_api_rest"
+              sequence="16"
+              groups="ug_1c_connector.configuration_manager"/>
+
+</odoo>

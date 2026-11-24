@@ -4,7 +4,7 @@
     'website': 'https://ugears.ua',
     'summary': 'Rest API connector for 1C:Enterprise',
     'category': 'Sales/Distribution Management',
-    'version': '16.0.0.1',
+    'version': '16.0.0.3',
     'license': 'LGPL-3',
     'depends': [
         'base',
@@ -15,11 +15,13 @@
         # Security
         'security/groups.xml',
         'security/ir.model.access.csv',
+        'data/ir_config_parameter.xml',
         # Views
         'views/api_rest_version_views.xml',
         'views/api_rest_path_views.xml',
         'views/api_rest_tag_views.xml',
         'views/api_rest_log_views.xml',
+        'views/api_rest_exchange_log_views.xml',
         'views/swagger_templates.xml',
     ],
     'assets': {

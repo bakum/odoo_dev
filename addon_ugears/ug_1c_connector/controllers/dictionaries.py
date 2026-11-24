@@ -4,7 +4,7 @@ from odoo import http
 from odoo.tools import date_utils
 from .orm.utils import parse_data_from_request, get_trans_from_request, apply_update_from_request, get_ids_from_request, \
     apply_pricelist_from_request, apply_distrib_from_request, apply_moves_from_request, apply_expenses_from_request, \
-    apply_inventory_from_request
+    apply_inventory_from_request, store_1c_exchange_log, mark_1c_exchange
 
 
 class DictionariesController(http.Controller):
@@ -22,11 +22,20 @@ class DictionariesController(http.Controller):
     def index(self, guid=None, **kw):
         model_name = kw['modelname']
         del kw['modelname']
-        data_for_edit, sk = parse_data_from_request(kw)
-        data_for_translate = get_trans_from_request(data_for_edit)
-        ids = get_ids_from_request(data_for_edit)
-        result_dict = apply_update_from_request(sk, data_for_edit, model_name, guid, data_for_translate, ids)
-        # result = http.request.env[model_name].sudo().search_read(sk)
+        incoming = {}
+        result_dict = {'success': False, 'error': 'unhandled'}
+        try:
+            data_for_edit, sk = parse_data_from_request(kw)
+            incoming = dict(data_for_edit) if isinstance(data_for_edit, dict) else {}
+            data_for_translate = get_trans_from_request(data_for_edit)
+            ids = get_ids_from_request(data_for_edit)
+            result_dict = apply_update_from_request(sk, data_for_edit, model_name, guid, data_for_translate, ids)
+        except Exception as exc:
+            if not getattr(http.request, 'ug_1c_exchange', None):
+                mark_1c_exchange('error', success=False, error=exc)
+            result_dict = {'success': False, 'error': str(exc)}
+        finally:
+            store_1c_exchange_log(model_name, guid, incoming)
 
         if type(result_dict) is dict:
             return json.dumps(result_dict, default=date_utils.json_default)
